@@ -1,0 +1,25 @@
+[{
+    "name": "首次生物",
+    "label": "1951：第一批太空犬",
+    "description": "1951年7月22日第一批狗（Dezik 和 Tsygan）送上太空"
+}, {
+    "name": "人造卫星",
+    "label": "1957: 第一颗人造卫星",
+    "description": "1957年十月4日，发射第一颗人造卫星，第一次接收到来自太空的信号"
+}, {
+    "name": "载人航天",
+    "label": "1961：首次载人航天(尤里加加林)",
+    "description": "首次载人航天(尤里加加林)，首次载人轨道飞行"
+}, {
+    "name": "登陆月球",
+    "label": "1969：人类首次登陆月球",
+    "description": "First human on the Moon, and first space launch from a celestial body other than the Earth. First sample return from the Moon"
+}, {
+    "name": "空间站",
+    "label": "1971: 第一个太空空间站",
+    "description": "Salyut 1 was the first space station of any kind, launched into low Earth orbit by the Soviet Union on April 19, 1971."
+}, {
+    "name": "阿波罗-联盟号试验计划",
+    "label": "1975: First multinational manned mission",
+    "description": "The mission included both joint and separate scientific experiments, and provided useful engineering experience for future joint US–Russian space flights, such as the Shuttle–Mir Program and the International Space Station."
+}]

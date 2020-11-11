@@ -1,0 +1,1510 @@
+[
+    {
+        "id" : "0.0",
+        "parent" : "",
+        "name" : "The World"
+    },
+    {
+        "id" : "1.3",
+        "parent" : "0.0",
+        "name" : "亚洲"
+    },
+    {
+        "id" : "1.1",
+        "parent" : "0.0",
+        "name" : "非洲"
+    },
+    {
+        "id" : "1.2",
+        "parent" : "0.0",
+        "name" : "美洲"
+    },
+    {
+        "id" : "1.4",
+        "parent" : "0.0",
+        "name" : "欧洲"
+    },
+    {
+        "id" : "1.5",
+        "parent" : "0.0",
+        "name" : "大洋洲"
+    },
+    {
+        "id" : "2.1",
+        "parent" : "1.1",
+        "name" : "东非"
+    },
+    {
+        "id" : "3.1",
+        "value" : 104957438,
+        "name" : "埃塞俄比亚",
+        "parent" : "2.1"
+    },
+    {
+        "id" : "3.2",
+        "value" : 57310019,
+        "name" : "坦桑尼亚",
+        "parent" : "2.1"
+    },
+    {
+        "id" : "3.3",
+        "value" : 49699862,
+        "name" : "肯尼亚",
+        "parent" : "2.1"
+    },
+    {
+        "id" : "3.4",
+        "value" : 42862958,
+        "name" : "乌干达",
+        "parent" : "2.1"
+    },
+    {
+        "id" : "3.5",
+        "value" : 29668834,
+        "name" : "莫桑比克",
+        "parent" : "2.1"
+    },
+    {
+        "id" : "3.6",
+        "value" : 25570895,
+        "name" : "马达加斯加岛",
+        "parent" : "2.1"
+    },
+    {
+        "id" : "3.7",
+        "value" : 18622104,
+        "name" : "马拉维",
+        "parent" : "2.1"
+    },
+    {
+        "id" : "3.8",
+        "value" : 17094130,
+        "name" : "赞比亚",
+        "parent" : "2.1"
+    },
+    {
+        "id" : "3.9",
+        "value" : 16529904,
+        "name" : "津巴布韦",
+        "parent" : "2.1"
+    },
+    {
+        "id" : "3.10",
+        "value" : 14742523,
+        "name" : "索马里",
+        "parent" : "2.1"
+    },
+    {
+        "id" : "3.11",
+        "value" : 12575714,
+        "name" : "南苏丹",
+        "parent" : "2.1"
+    },
+    {
+        "id" : "3.12",
+        "value" : 12208407,
+        "name" : "卢旺达",
+        "parent" : "2.1"
+    },
+    {
+        "id" : "3.13",
+        "value" : 10864245,
+        "name" : "布隆迪",
+        "parent" : "2.1"
+    },
+    {
+        "id" : "3.14",
+        "value" : 5068831,
+        "name" : "厄立特里亚国",
+        "parent" : "2.1"
+    },
+    {
+        "id" : "3.15",
+        "value" : 1265138,
+        "name" : "毛里求斯",
+        "parent" : "2.1"
+    },
+    {
+        "id" : "3.16",
+        "value" : 956985,
+        "name" : "吉布提",
+        "parent" : "2.1"
+    },
+    {
+        "id" : "3.17",
+        "value" : 876562,
+        "name" : "留尼汪岛",
+        "parent" : "2.1"
+    },
+    {
+        "id" : "3.18",
+        "value" : 813912,
+        "name" : "科摩罗",
+        "parent" : "2.1"
+    },
+    {
+        "id" : "3.19",
+        "value" : 253045,
+        "name" : "马约特岛",
+        "parent" : "2.1"
+    },
+    {
+        "id" : "3.20",
+        "value" : 94737,
+        "name" : "塞舌尔群岛",
+        "parent" : "2.1"
+    },
+    {
+        "id" : "2.5",
+        "parent" : "1.1",
+        "name" : "西非"
+    },
+    {
+        "id" : "3.42",
+        "value" : 190886311,
+        "name" : "尼日利亚",
+        "parent" : "2.5"
+    },
+    {
+        "id" : "3.43",
+        "value" : 28833629,
+        "name" : "加纳",
+        "parent" : "2.5"
+    },
+    {
+        "id" : "3.44",
+        "value" : 24294750,
+        "name" : "科特迪瓦共和国",
+        "parent" : "2.5"
+    },
+    {
+        "id" : "3.45",
+        "value" : 21477348,
+        "name" : "尼日尔",
+        "parent" : "2.5"
+    },
+    {
+        "id" : "3.46",
+        "value" : 19193382,
+        "name" : "布基纳法索",
+        "parent" : "2.5"
+    },
+    {
+        "id" : "3.47",
+        "value" : 18541980,
+        "name" : "马里",
+        "parent" : "2.5"
+    },
+    {
+        "id" : "3.48",
+        "value" : 15850567,
+        "name" : "塞内加尔",
+        "parent" : "2.5"
+    },
+    {
+        "id" : "3.49",
+        "value" : 12717176,
+        "name" : "几内亚共和国",
+        "parent" : "2.5"
+    },
+    {
+        "id" : "3.50",
+        "value" : 11175692,
+        "name" : "贝宁",
+        "parent" : "2.5"
+    },
+    {
+        "id" : "3.51",
+        "value" : 7797694,
+        "name" : "多哥",
+        "parent" : "2.5"
+    },
+    {
+        "id" : "3.52",
+        "value" : 7557212,
+        "name" : "塞拉利昂",
+        "parent" : "2.5"
+    },
+    {
+        "id" : "3.53",
+        "value" : 4731906,
+        "name" : "利比里亚",
+        "parent" : "2.5"
+    },
+    {
+        "id" : "3.54",
+        "value" : 4420184,
+        "name" : "毛里塔尼亚",
+        "parent" : "2.5"
+    },
+    {
+        "id" : "3.55",
+        "value" : 2100568,
+        "name" : "The Gambia",
+        "parent" : "2.5"
+    },
+    {
+        "id" : "3.56",
+        "value" : 1861283,
+        "name" : "GuineaBissau",
+        "parent" : "2.5"
+    },
+    {
+        "id" : "3.57",
+        "value" : 546388,
+        "name" : "Cabo Verde",
+        "parent" : "2.5"
+    },
+    {
+        "id" : "3.58",
+        "value" : 4049,
+        "name" : "Saint Helena, Ascension and Tristan da Cunha",
+        "parent" : "2.5"
+    },
+    {
+        "id" : "2.3",
+        "parent" : "1.1",
+        "name" : "北非"
+    },
+    {
+        "id" : "3.30",
+        "value" : 97553151,
+        "name" : "Egypt",
+        "parent" : "2.3"
+    },
+    {
+        "id" : "3.31",
+        "value" : 41318142,
+        "name" : "Algeria",
+        "parent" : "2.3"
+    },
+    {
+        "id" : "3.32",
+        "value" : 40533330,
+        "name" : "Sudan",
+        "parent" : "2.3"
+    },
+    {
+        "id" : "3.33",
+        "value" : 35739580,
+        "name" : "Morocco",
+        "parent" : "2.3"
+    },
+    {
+        "id" : "3.34",
+        "value" : 11532127,
+        "name" : "Tunisia",
+        "parent" : "2.3"
+    },
+    {
+        "id" : "3.35",
+        "value" : 6374616,
+        "name" : "Libya",
+        "parent" : "2.3"
+    },
+    {
+        "id" : "3.36",
+        "value" : 552628,
+        "name" : "Western Sahara",
+        "parent" : "2.3"
+    },
+    {
+        "id" : "2.2",
+        "parent" : "1.1",
+        "name" : "Central Africa"
+    },
+    {
+        "id" : "3.21",
+        "value" : 81339988,
+        "name" : "Democratic Republic of the Congo",
+        "parent" : "2.2"
+    },
+    {
+        "id" : "3.22",
+        "value" : 29784193,
+        "name" : "Angola",
+        "parent" : "2.2"
+    },
+    {
+        "id" : "3.23",
+        "value" : 24053727,
+        "name" : "Cameroon",
+        "parent" : "2.2"
+    },
+    {
+        "id" : "3.24",
+        "value" : 14899994,
+        "name" : "Chad",
+        "parent" : "2.2"
+    },
+    {
+        "id" : "3.25",
+        "value" : 5260750,
+        "name" : "Congo",
+        "parent" : "2.2"
+    },
+    {
+        "id" : "3.26",
+        "value" : 4659080,
+        "name" : "Central African Republic",
+        "parent" : "2.2"
+    },
+    {
+        "id" : "3.27",
+        "value" : 2025137,
+        "name" : "Gabon",
+        "parent" : "2.2"
+    },
+    {
+        "id" : "3.28",
+        "value" : 1267689,
+        "name" : "Equatorial Guinea",
+        "parent" : "2.2"
+    },
+    {
+        "id" : "3.29",
+        "value" : 204327,
+        "name" : "Sao Tome and Principe",
+        "parent" : "2.2"
+    },
+    {
+        "id" : "2.4",
+        "parent" : "1.1",
+        "name" : "南美洲"
+    },
+    {
+        "id" : "3.37",
+        "value" : 56717156,
+        "name" : "南非",
+        "parent" : "2.4"
+    },
+    {
+        "id" : "3.38",
+        "value" : 2533794,
+        "name" : "Namibia",
+        "parent" : "2.4"
+    },
+    {
+        "id" : "3.39",
+        "value" : 2291661,
+        "name" : "Botswana",
+        "parent" : "2.4"
+    },
+    {
+        "id" : "3.40",
+        "value" : 2233339,
+        "name" : "Lesotho",
+        "parent" : "2.4"
+    },
+    {
+        "id" : "3.41",
+        "value" : 1367254,
+        "name" : "Swaziland",
+        "parent" : "2.4"
+    },
+    {
+        "id" : "2.9",
+        "parent" : "1.2",
+        "name" : "南美洲"
+    },
+    {
+        "id" : "3.98",
+        "value" : 209288278,
+        "name" : "Brazil",
+        "parent" : "2.9"
+    },
+    {
+        "id" : "3.99",
+        "value" : 49065615,
+        "name" : "Colombia",
+        "parent" : "2.9"
+    },
+    {
+        "id" : "3.100",
+        "value" : 44271041,
+        "name" : "Argentina",
+        "parent" : "2.9"
+    },
+    {
+        "id" : "3.101",
+        "value" : 32165485,
+        "name" : "Peru",
+        "parent" : "2.9"
+    },
+    {
+        "id" : "3.102",
+        "value" : 31977065,
+        "name" : "Venezuela",
+        "parent" : "2.9"
+    },
+    {
+        "id" : "3.103",
+        "value" : 18054726,
+        "name" : "Chile",
+        "parent" : "2.9"
+    },
+    {
+        "id" : "3.104",
+        "value" : 16624858,
+        "name" : "Ecuador",
+        "parent" : "2.9"
+    },
+    {
+        "id" : "3.105",
+        "value" : 11051600,
+        "name" : "Bolivia",
+        "parent" : "2.9"
+    },
+    {
+        "id" : "3.106",
+        "value" : 6811297,
+        "name" : "Paraguay",
+        "parent" : "2.9"
+    },
+    {
+        "id" : "3.107",
+        "value" : 3456750,
+        "name" : "Uruguay",
+        "parent" : "2.9"
+    },
+    {
+        "id" : "3.108",
+        "value" : 777859,
+        "name" : "Guyana",
+        "parent" : "2.9"
+    },
+    {
+        "id" : "3.109",
+        "value" : 563402,
+        "name" : "Suriname",
+        "parent" : "2.9"
+    },
+    {
+        "id" : "3.110",
+        "value" : 282731,
+        "name" : "French Guiana",
+        "parent" : "2.9"
+    },
+    {
+        "id" : "3.111",
+        "value" : 2910,
+        "name" : "Falkland Islands",
+        "parent" : "2.9"
+    },
+    {
+        "id" : "2.8",
+        "parent" : "1.2",
+        "name" : "北美洲"
+    },
+    {
+        "id" : "3.93",
+        "value" : 324459463,
+        "name" : "美国",
+        "parent" : "2.8"
+    },
+    {
+        "id" : "3.94",
+        "value" : 36624199,
+        "name" : "加拿大",
+        "parent" : "2.8"
+    },
+    {
+        "id" : "3.95",
+        "value" : 61349,
+        "name" : "百慕大群岛",
+        "parent" : "2.8"
+    },
+    {
+        "id" : "3.96",
+        "value" : 56480,
+        "name" : "格陵兰",
+        "parent" : "2.8"
+    },
+    {
+        "id" : "3.97",
+        "value" : 6320,
+        "name" : "Saint Pierre and Miquelon",
+        "parent" : "2.8"
+    },
+    {
+        "id" : "2.7",
+        "parent" : "1.2",
+        "name" : "中美洲"
+    },
+    {
+        "id" : "3.85",
+        "value" : 129163276,
+        "name" : "墨西哥",
+        "parent" : "2.7"
+    },
+    {
+        "id" : "3.86",
+        "value" : 16913503,
+        "name" : "危地马拉",
+        "parent" : "2.7"
+    },
+    {
+        "id" : "3.87",
+        "value" : 9265067,
+        "name" : "Honduras",
+        "parent" : "2.7"
+    },
+    {
+        "id" : "3.88",
+        "value" : 6377853,
+        "name" : "El Salvador",
+        "parent" : "2.7"
+    },
+    {
+        "id" : "3.89",
+        "value" : 6217581,
+        "name" : "Nicaragua",
+        "parent" : "2.7"
+    },
+    {
+        "id" : "3.90",
+        "value" : 4905769,
+        "name" : "Costa Rica",
+        "parent" : "2.7"
+    },
+    {
+        "id" : "3.91",
+        "value" : 4098587,
+        "name" : "Panama",
+        "parent" : "2.7"
+    },
+    {
+        "id" : "3.92",
+        "value" : 374681,
+        "name" : "Belize",
+        "parent" : "2.7"
+    },
+    {
+        "id" : "2.6",
+        "parent" : "1.2",
+        "name" : "Caribbean"
+    },
+    {
+        "id" : "3.59",
+        "value" : 11484636,
+        "name" : "Cuba",
+        "parent" : "2.6"
+    },
+    {
+        "id" : "3.60",
+        "value" : 10981229,
+        "name" : "Haiti",
+        "parent" : "2.6"
+    },
+    {
+        "id" : "3.61",
+        "value" : 10766998,
+        "name" : "Dominican Republic",
+        "parent" : "2.6"
+    },
+    {
+        "id" : "3.62",
+        "value" : 3663131,
+        "name" : "Puerto Rico",
+        "parent" : "2.6"
+    },
+    {
+        "id" : "3.63",
+        "value" : 2890299,
+        "name" : "Jamaica",
+        "parent" : "2.6"
+    },
+    {
+        "id" : "3.64",
+        "value" : 1369125,
+        "name" : "Trinidad and Tobago",
+        "parent" : "2.6"
+    },
+    {
+        "id" : "3.65",
+        "value" : 449568,
+        "name" : "Guadeloupe",
+        "parent" : "2.6"
+    },
+    {
+        "id" : "3.66",
+        "value" : 395361,
+        "name" : "Bahamas",
+        "parent" : "2.6"
+    },
+    {
+        "id" : "3.67",
+        "value" : 384896,
+        "name" : "Martinique",
+        "parent" : "2.6"
+    },
+    {
+        "id" : "3.68",
+        "value" : 285719,
+        "name" : "Barbados",
+        "parent" : "2.6"
+    },
+    {
+        "id" : "3.69",
+        "value" : 178844,
+        "name" : "Saint Lucia",
+        "parent" : "2.6"
+    },
+    {
+        "id" : "3.70",
+        "value" : 160539,
+        "name" : "Curaçao",
+        "parent" : "2.6"
+    },
+    {
+        "id" : "3.71",
+        "value" : 109897,
+        "name" : "Saint Vincent and the Grenadines",
+        "parent" : "2.6"
+    },
+    {
+        "id" : "3.72",
+        "value" : 107825,
+        "name" : "Grenada",
+        "parent" : "2.6"
+    },
+    {
+        "id" : "3.73",
+        "value" : 105264,
+        "name" : "Aruba",
+        "parent" : "2.6"
+    },
+    {
+        "id" : "3.74",
+        "value" : 104901,
+        "name" : "United States Virgin Islands",
+        "parent" : "2.6"
+    },
+    {
+        "id" : "3.75",
+        "value" : 102012,
+        "name" : "Antigua and Barbuda",
+        "parent" : "2.6"
+    },
+    {
+        "id" : "3.76",
+        "value" : 73925,
+        "name" : "Dominica",
+        "parent" : "2.6"
+    },
+    {
+        "id" : "3.77",
+        "value" : 61559,
+        "name" : "Cayman Islands",
+        "parent" : "2.6"
+    },
+    {
+        "id" : "3.78",
+        "value" : 55345,
+        "name" : "Saint Kitts and Nevis",
+        "parent" : "2.6"
+    },
+    {
+        "id" : "3.79",
+        "value" : 40120,
+        "name" : "Sint Maarten",
+        "parent" : "2.6"
+    },
+    {
+        "id" : "3.80",
+        "value" : 35446,
+        "name" : "Turks and Caicos Islands",
+        "parent" : "2.6"
+    },
+    {
+        "id" : "3.81",
+        "value" : 31196,
+        "name" : "British Virgin Islands",
+        "parent" : "2.6"
+    },
+    {
+        "id" : "3.82",
+        "value" : 25398,
+        "name" : "Caribbean Netherlands",
+        "parent" : "2.6"
+    },
+    {
+        "id" : "3.83",
+        "value" : 14909,
+        "name" : "Anguilla",
+        "parent" : "2.6"
+    },
+    {
+        "id" : "3.84",
+        "value" : 5177,
+        "name" : "Montserrat",
+        "parent" : "2.6"
+    },
+    {
+        "id" : "2.13",
+        "parent" : "1.3",
+        "name" : "南亚"
+    },
+    {
+        "id" : "3.136",
+        "value" : 1339180127,
+        "name" : "印度",
+        "parent" : "2.13"
+    },
+    {
+        "id" : "3.137",
+        "value" : 197015955,
+        "name" : "巴基斯坦",
+        "parent" : "2.13"
+    },
+    {
+        "id" : "3.138",
+        "value" : 164669751,
+        "name" : "孟加拉国",
+        "parent" : "2.13"
+    },
+    {
+        "id" : "3.139",
+        "value" : 81162788,
+        "name" : "伊朗",
+        "parent" : "2.13"
+    },
+    {
+        "id" : "3.140",
+        "value" : 35530081,
+        "name" : "阿富汗",
+        "parent" : "2.13"
+    },
+    {
+        "id" : "3.141",
+        "value" : 29304998,
+        "name" : "尼泊尔",
+        "parent" : "2.13"
+    },
+    {
+        "id" : "3.142",
+        "value" : 20876917,
+        "name" : "斯里兰卡",
+        "parent" : "2.13"
+    },
+    {
+        "id" : "3.143",
+        "value" : 807610,
+        "name" : "不丹",
+        "parent" : "2.13"
+    },
+    {
+        "id" : "3.144",
+        "value" : 436330,
+        "name" : "马尔代夫",
+        "parent" : "2.13"
+    },
+    {
+        "id" : "2.11",
+        "parent" : "1.3",
+        "name" : "东亚"
+    },
+    {
+        "id" : "3.117",
+        "value" : 1441131303,
+        "name" : "中国",
+        "parent" : "2.11"
+    },
+    {
+        "id" : "3.118",
+        "value" : 127484450,
+        "name" : "日本",
+        "parent" : "2.11"
+    },
+    {
+        "id" : "3.119",
+        "value" : 50982212,
+        "name" : "南韩",
+        "parent" : "2.11"
+    },
+    {
+        "id" : "3.120",
+        "value" : 25490965,
+        "name" : "朝鲜",
+        "parent" : "2.11"
+    },
+    {
+        "id" : "3.123",
+        "value" : 3075647,
+        "name" : "蒙古",
+        "parent" : "2.11"
+    },
+    {
+        "id" : "2.12",
+        "parent" : "1.3",
+        "name" : "东南亚"
+    },
+    {
+        "id" : "3.125",
+        "value" : 263991379,
+        "name" : "印尼",
+        "parent" : "2.12"
+    },
+    {
+        "id" : "3.126",
+        "value" : 104918090,
+        "name" : "菲律宾",
+        "parent" : "2.12"
+    },
+    {
+        "id" : "3.127",
+        "value" : 95540800,
+        "name" : "越南",
+        "parent" : "2.12"
+    },
+    {
+        "id" : "3.128",
+        "value" : 69037513,
+        "name" : "泰国",
+        "parent" : "2.12"
+    },
+    {
+        "id" : "3.129",
+        "value" : 53370609,
+        "name" : "缅甸",
+        "parent" : "2.12"
+    },
+    {
+        "id" : "3.130",
+        "value" : 31624264,
+        "name" : "马来西亚",
+        "parent" : "2.12"
+    },
+    {
+        "id" : "3.131",
+        "value" : 16005373,
+        "name" : "柬埔寨",
+        "parent" : "2.12"
+    },
+    {
+        "id" : "3.132",
+        "value" : 6858160,
+        "name" : "老挝",
+        "parent" : "2.12"
+    },
+    {
+        "id" : "3.133",
+        "value" : 5708844,
+        "name" : "新加坡",
+        "parent" : "2.12"
+    },
+    {
+        "id" : "3.134",
+        "value" : 1296311,
+        "name" : "东帝汶民主共和国",
+        "parent" : "2.12"
+    },
+    {
+        "id" : "3.135",
+        "value" : 428697,
+        "name" : "文莱",
+        "parent" : "2.12"
+    },
+    {
+        "id" : "2.14",
+        "parent" : "1.3",
+        "name" : "西亚"
+    },
+    {
+        "id" : "3.145",
+        "value" : 80745020,
+        "name" : "土耳其",
+        "parent" : "2.14"
+    },
+    {
+        "id" : "3.146",
+        "value" : 38274618,
+        "name" : "伊拉克",
+        "parent" : "2.14"
+    },
+    {
+        "id" : "3.147",
+        "value" : 32938213,
+        "name" : "沙特阿拉伯",
+        "parent" : "2.14"
+    },
+    {
+        "id" : "3.148",
+        "value" : 28250420,
+        "name" : "也门",
+        "parent" : "2.14"
+    },
+    {
+        "id" : "3.149",
+        "value" : 18269868,
+        "name" : "叙利亚",
+        "parent" : "2.14"
+    },
+    {
+        "id" : "3.150",
+        "value" : 9827589,
+        "name" : "阿塞拜疆",
+        "parent" : "2.14"
+    },
+    {
+        "id" : "3.151",
+        "value" : 9702353,
+        "name" : "约旦",
+        "parent" : "2.14"
+    },
+    {
+        "id" : "3.152",
+        "value" : 9400145,
+        "name" : "阿拉伯联合酋长国",
+        "parent" : "2.14"
+    },
+    {
+        "id" : "3.153",
+        "value" : 8321570,
+        "name" : "以色列",
+        "parent" : "2.14"
+    },
+    {
+        "id" : "3.154",
+        "value" : 6082357,
+        "name" : "黎巴嫩",
+        "parent" : "2.14"
+    },
+    {
+        "id" : "3.155",
+        "value" : 4920724,
+        "name" : "勒斯坦",
+        "parent" : "2.14"
+    },
+    {
+        "id" : "3.156",
+        "value" : 4636262,
+        "name" : "阿曼",
+        "parent" : "2.14"
+    },
+    {
+        "id" : "3.157",
+        "value" : 4136528,
+        "name" : "科威特",
+        "parent" : "2.14"
+    },
+    {
+        "id" : "3.158",
+        "value" : 3912061,
+        "name" : "乔治亚州",
+        "parent" : "2.14"
+    },
+    {
+        "id" : "3.159",
+        "value" : 2930450,
+        "name" : "美尼亚",
+        "parent" : "2.14"
+    },
+    {
+        "id" : "3.160",
+        "value" : 2639211,
+        "name" : "卡塔尔",
+        "parent" : "2.14"
+    },
+    {
+        "id" : "3.161",
+        "value" : 1492584,
+        "name" : "巴林王国",
+        "parent" : "2.14"
+    },
+    {
+        "id" : "2.10",
+        "parent" : "1.3",
+        "name" : "中亚"
+    },
+    {
+        "id" : "3.112",
+        "value" : 31910641,
+        "name" : "乌兹别克斯坦",
+        "parent" : "2.10"
+    },
+    {
+        "id" : "3.113",
+        "value" : 18204499,
+        "name" : "哈萨克斯坦",
+        "parent" : "2.10"
+    },
+    {
+        "id" : "3.114",
+        "value" : 8921343,
+        "name" : "塔吉克斯坦",
+        "parent" : "2.10"
+    },
+    {
+        "id" : "3.115",
+        "value" : 6045117,
+        "name" : "吉尔吉斯斯坦",
+        "parent" : "2.10"
+    },
+    {
+        "id" : "3.116",
+        "value" : 5758075,
+        "name" : "土库曼斯坦",
+        "parent" : "2.10"
+    },
+    {
+        "id" : "2.15",
+        "parent" : "1.4",
+        "name" : "东欧"
+    },
+    {
+        "id" : "3.162",
+        "value" : 143989754,
+        "name" : "俄罗斯",
+        "parent" : "2.15"
+    },
+    {
+        "id" : "3.163",
+        "value" : 44222947,
+        "name" : "乌克兰",
+        "parent" : "2.15"
+    },
+    {
+        "id" : "3.164",
+        "value" : 38170712,
+        "name" : "波兰",
+        "parent" : "2.15"
+    },
+    {
+        "id" : "3.165",
+        "value" : 19679306,
+        "name" : "罗马尼亚",
+        "parent" : "2.15"
+    },
+    {
+        "id" : "3.166",
+        "value" : 10618303,
+        "name" : "捷克",
+        "parent" : "2.15"
+    },
+    {
+        "id" : "3.167",
+        "value" : 9721559,
+        "name" : "匈牙利",
+        "parent" : "2.15"
+    },
+    {
+        "id" : "3.168",
+        "value" : 9468338,
+        "name" : "白俄罗斯",
+        "parent" : "2.15"
+    },
+    {
+        "id" : "3.169",
+        "value" : 7084571,
+        "name" : "保加利亚",
+        "parent" : "2.15"
+    },
+    {
+        "id" : "3.170",
+        "value" : 5447662,
+        "name" : "斯洛伐克",
+        "parent" : "2.15"
+    },
+    {
+        "id" : "3.171",
+        "value" : 4051212,
+        "name" : "摩尔多瓦",
+        "parent" : "2.15"
+    },
+    {
+        "id" : "3.172",
+        "value" : 1179551,
+        "name" : "塞浦路斯",
+        "parent" : "2.15"
+    },
+    {
+        "id" : "2.16",
+        "parent" : "1.4",
+        "name" : "北欧"
+    },
+    {
+        "id" : "3.173",
+        "value" : 66181585,
+        "name" : "英国",
+        "parent" : "2.16"
+    },
+    {
+        "id" : "3.174",
+        "value" : 9910701,
+        "name" : "瑞典",
+        "parent" : "2.16"
+    },
+    {
+        "id" : "3.175",
+        "value" : 5733551,
+        "name" : "丹麦",
+        "parent" : "2.16"
+    },
+    {
+        "id" : "3.176",
+        "value" : 5523231,
+        "name" : "芬兰",
+        "parent" : "2.16"
+    },
+    {
+        "id" : "3.177",
+        "value" : 5305383,
+        "name" : "挪威",
+        "parent" : "2.16"
+    },
+    {
+        "id" : "3.178",
+        "value" : 4761657,
+        "name" : "爱尔兰",
+        "parent" : "2.16"
+    },
+    {
+        "id" : "3.179",
+        "value" : 2890297,
+        "name" : "立陶宛",
+        "parent" : "2.16"
+    },
+    {
+        "id" : "3.180",
+        "value" : 1949670,
+        "name" : "拉脱维亚",
+        "parent" : "2.16"
+    },
+    {
+        "id" : "3.181",
+        "value" : 1309632,
+        "name" : "爱沙尼亚",
+        "parent" : "2.16"
+    },
+    {
+        "id" : "3.182",
+        "value" : 335025,
+        "name" : "冰岛",
+        "parent" : "2.16"
+    },
+    {
+        "id" : "3.183",
+        "value" : 165314,
+        "name" : "Guernsey and  Jersey",
+        "parent" : "2.16"
+    },
+    {
+        "id" : "3.184",
+        "value" : 84287,
+        "name" : "Isle of Man",
+        "parent" : "2.16"
+    },
+    {
+        "id" : "3.185",
+        "value" : 49290,
+        "name" : "Faroe Islands",
+        "parent" : "2.16"
+    },
+    {
+        "id" : "2.17",
+        "parent" : "1.4",
+        "name" : "Southern Europe"
+    },
+    {
+        "id" : "3.186",
+        "value" : 59359900,
+        "name" : "Italy",
+        "parent" : "2.17"
+    },
+    {
+        "id" : "3.187",
+        "value" : 46354321,
+        "name" : "Spain",
+        "parent" : "2.17"
+    },
+    {
+        "id" : "3.188",
+        "value" : 11159773,
+        "name" : "Greece",
+        "parent" : "2.17"
+    },
+    {
+        "id" : "3.189",
+        "value" : 10329506,
+        "name" : "Portugal",
+        "parent" : "2.17"
+    },
+    {
+        "id" : "3.190",
+        "value" : 8790574,
+        "name" : "Serbia",
+        "parent" : "2.17"
+    },
+    {
+        "id" : "3.191",
+        "value" : 4189353,
+        "name" : "Croatia",
+        "parent" : "2.17"
+    },
+    {
+        "id" : "3.192",
+        "value" : 3507017,
+        "name" : "Bosnia and Herzegovina",
+        "parent" : "2.17"
+    },
+    {
+        "id" : "3.193",
+        "value" : 2930187,
+        "name" : "Albania",
+        "parent" : "2.17"
+    },
+    {
+        "id" : "3.194",
+        "value" : 2083160,
+        "name" : "Republic of Macedonia",
+        "parent" : "2.17"
+    },
+    {
+        "id" : "3.195",
+        "value" : 2079976,
+        "name" : "Slovenia",
+        "parent" : "2.17"
+    },
+    {
+        "id" : "3.196",
+        "value" : 628960,
+        "name" : "Montenegro",
+        "parent" : "2.17"
+    },
+    {
+        "id" : "3.197",
+        "value" : 430835,
+        "name" : "Malta",
+        "parent" : "2.17"
+    },
+    {
+        "id" : "3.198",
+        "value" : 76965,
+        "name" : "Andorra",
+        "parent" : "2.17"
+    },
+    {
+        "id" : "3.199",
+        "value" : 34571,
+        "name" : "Gibraltar",
+        "parent" : "2.17"
+    },
+    {
+        "id" : "3.200",
+        "value" : 33400,
+        "name" : "San Marino",
+        "parent" : "2.17"
+    },
+    {
+        "id" : "3.201",
+        "value" : 792,
+        "name" : "Vatican City",
+        "parent" : "2.17"
+    },
+    {
+        "id" : "2.18",
+        "parent" : "1.4",
+        "name" : "Western Europe"
+    },
+    {
+        "id" : "3.202",
+        "value" : 82114224,
+        "name" : "Germany",
+        "parent" : "2.18"
+    },
+    {
+        "id" : "3.203",
+        "value" : 64979548,
+        "name" : "France",
+        "parent" : "2.18"
+    },
+    {
+        "id" : "3.204",
+        "value" : 17035938,
+        "name" : "Netherlands",
+        "parent" : "2.18"
+    },
+    {
+        "id" : "3.205",
+        "value" : 11429336,
+        "name" : "Belgium",
+        "parent" : "2.18"
+    },
+    {
+        "id" : "3.206",
+        "value" : 8735453,
+        "name" : "Austria",
+        "parent" : "2.18"
+    },
+    {
+        "id" : "3.207",
+        "value" : 8476005,
+        "name" : "Switzerland",
+        "parent" : "2.18"
+    },
+    {
+        "id" : "3.208",
+        "value" : 583455,
+        "name" : "Luxembourg",
+        "parent" : "2.18"
+    },
+    {
+        "id" : "3.209",
+        "value" : 38695,
+        "name" : "Monaco",
+        "parent" : "2.18"
+    },
+    {
+        "id" : "3.210",
+        "value" : 37922,
+        "name" : "Liechtenstein",
+        "parent" : "2.18"
+    },
+    {
+        "id" : "2.19",
+        "parent" : "1.5",
+        "name" : "Australia and New Zealand"
+    },
+    {
+        "id" : "3.211",
+        "value" : 24450561,
+        "name" : "Australia",
+        "parent" : "2.19"
+    },
+    {
+        "id" : "3.212",
+        "value" : 4705818,
+        "name" : "New Zealand",
+        "parent" : "2.19"
+    },
+    {
+        "id" : "2.20",
+        "parent" : "1.5",
+        "name" : "Melanesia"
+    },
+    {
+        "id" : "3.213",
+        "parent" : "2.20",
+        "name" : "Papua New Guinea"
+    },
+    {
+        "id" : "3.214",
+        "value" : 905502,
+        "name" : "Fiji",
+        "parent" : "2.20"
+    },
+    {
+        "id" : "3.215",
+        "value" : 611343,
+        "name" : "Solomon Islands",
+        "parent" : "2.20"
+    },
+    {
+        "id" : "3.216",
+        "value" : 276255,
+        "name" : "New Caledonia",
+        "parent" : "2.20"
+    },
+    {
+        "id" : "3.217",
+        "value" : 276244,
+        "name" : "Vanuatu",
+        "parent" : "2.20"
+    },
+    {
+        "id" : "2.21",
+        "parent" : "1.5",
+        "name" : "Micronesia"
+    },
+    {
+        "id" : "3.218",
+        "value" : 164229,
+        "name" : "Guam",
+        "parent" : "2.21"
+    },
+    {
+        "id": "3.219",
+        "parent": "2.21",
+        "name": "Kiribati",
+        "value": 116398
+    }, {
+        "id": "3.220",
+        "parent": "2.21",
+        "name": "Federated States of Micronesia",
+        "value": 105544
+    }, {
+        "id": "3.221",
+        "parent": "2.21",
+        "name": "Northern Mariana Islands",
+        "value": 55144
+    }, {
+        "id": "3.222",
+        "parent": "2.21",
+        "name": "Marshall Islands",
+        "value": 53127
+    }, {
+        "id": "3.223",
+        "parent": "2.21",
+        "name": "Palau",
+        "value": 21729
+    }, {
+        "id": "3.224",
+        "parent": "2.21",
+        "name": "Nauru",
+        "value": 11359
+    },
+
+    {
+        "id": "2.22",
+        "parent": "1.5",
+        "name": "Polynesia"
+    },
+
+    {
+        "id": "3.225",
+        "parent": "2.22",
+        "name": "French Polynesia",
+        "value": 283007
+    }, {
+        "id": "3.226",
+        "parent": "2.22",
+        "name": "Samoa",
+        "value": 196440
+    }, {
+        "id": "3.227",
+        "parent": "2.22",
+        "name": "Tonga",
+        "value": 108020
+    }, {
+        "id": "3.228",
+        "parent": "2.22",
+        "name": "American Samoa",
+        "value": 55641
+    }, {
+        "id": "3.229",
+        "parent": "2.22",
+        "name": "Cook Islands",
+        "value": 17380
+    }, {
+        "id": "3.230",
+        "parent": "2.22",
+        "name": "Wallis and Futuna",
+        "value": 11773
+    }, {
+        "id": "3.231",
+        "parent": "2.22",
+        "name": "Tuvalu",
+        "value": 11192
+    }, {
+        "id": "3.232",
+        "parent": "2.22",
+        "name": "Niue",
+        "value": 1618
+    }, {
+        "id": "3.233",
+        "parent": "2.22",
+        "name": "Tokelau",
+        "value": 1300
+    }
+]
