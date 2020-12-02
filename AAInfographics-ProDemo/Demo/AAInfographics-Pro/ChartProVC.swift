@@ -228,7 +228,7 @@ class ChartProVC: AABaseChartVC {
             .series(seriesElementArr)
     }
     
-    private func dependencywheelChart() -> AAOptions  {
+    private func dependencywheelChart() -> AAOptions {
         AAOptions()
             .chart(AAChart()
                     .marginLeft(20)
@@ -272,8 +272,7 @@ class ChartProVC: AABaseChartVC {
                     .visible(true)
                     .categories(["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"])
                     .title(AATitle()
-                            .text(""))
-            )
+                            .text("")))
             .colorAxis(AAColorAxis()
                         .min(0)
                         .minColor("#FFFFFF")
@@ -283,17 +282,15 @@ class ChartProVC: AABaseChartVC {
                         .align(.right)
                         .layout(.vertical)
                         .verticalAlign(.top)
-                        .y(25)
-            )
+                        .y(25))
             .tooltip(AATooltip()
                         .enabled(true)
                         .formatter("""
                     function () {
                     return '<b>' + this.series.xAxis.categories[this.point.x] + '</b> sold <br><b>' +
-                        this.point.value + '</b> items on <br><b>' + this.series.yAxis.categories[this.point.y] + '</b>'            }
-                    """
-                        )
-            )
+                        this.point.value + '</b> items on <br><b>' + this.series.yAxis.categories[this.point.y] + '</b>'
+                    }
+                    """))
             .series([
                 AASeriesElement()
                     .name("Sales")
@@ -301,8 +298,7 @@ class ChartProVC: AABaseChartVC {
                     .data(AAOptionsData.heatmapData)
                     .dataLabels(AADataLabels()
                                     .enabled(true)
-                                    .color(AAColor.red)
-                    )
+                                    .color(AAColor.red))
             ])
     }
     
@@ -324,19 +320,16 @@ class ChartProVC: AABaseChartVC {
                                             .maxSize("120%")
                                             .zMin(0)
                                             .zMax(1000)
-                                            .layoutAlgorithm(AALayoutAlgorithm() //只有layoutAlgorithm这一段不一样
+                                            .layoutAlgorithm(AALayoutAlgorithm() //packedbubbleChart 和 packedbubbleSplitChart 只有layoutAlgorithm这一段不一样
                                                                 .gravitationalConstant(0.02)
-                                                                .splitSeries(false)
-                                            )
+                                                                .splitSeries(false))
                                             .dataLabels(AADataLabels()
                                                             .enabled(true)
                                                             .format("{point.name}")
-                                                            .filter([
-                                                                "property": "y",
-                                                                "operator": ">",
-                                                                "value": 250
-                                                            ])
-                                            )))
+                                                            .filter(AAFilter()
+                                                                        .property("y")
+                                                                        .operator(">")
+                                                                        .value(250)))))
             .series(AAOptionsSeries.packedbubbleSeries)
     }
     
@@ -357,7 +350,7 @@ class ChartProVC: AABaseChartVC {
                                             .maxSize("120%")
                                             .zMin(0)
                                             .zMax(1000)
-                                            .layoutAlgorithm(AALayoutAlgorithm() //只有layoutAlgorithm这一段不一样
+                                            .layoutAlgorithm(AALayoutAlgorithm() //packedbubbleChart 和 packedbubbleSplitChart 只有layoutAlgorithm这一段不一样
                                                                 .gravitationalConstant(0.05)
                                                                 .splitSeries(true)
                                                                 .seriesInteraction(false)
@@ -366,12 +359,10 @@ class ChartProVC: AABaseChartVC {
                                             .dataLabels(AADataLabels()
                                                             .enabled(true)
                                                             .format("{point.name}")
-                                                            .filter([
-                                                                "property": "y",
-                                                                "operator": ">",
-                                                                "value": 250
-                                                            ])
-                                            )))
+                                                            .filter(AAFilter()
+                                                                        .property("y")
+                                                                        .operator(">")
+                                                                        .value(250)))))
             .series(AAOptionsSeries.packedbubbleSeries)
     }
     
@@ -511,17 +502,14 @@ class ChartProVC: AABaseChartVC {
                     .text("世界 5 大金字塔"))
             .xAxis(AAXAxis()
                     .visible(true)
-                    .type("category")
-            )
+                    .type("category"))
             .yAxis(AAYAxis()
                     .visible(true)
                     .title(AATitle()
-                            .text("高度 (m)"))
-            )
+                            .text("高度 (m)")))
             .tooltip(AATooltip()
                         .enabled(true)
-                        .valueSuffix(" m")
-            )
+                        .valueSuffix(" m"))
             .series([
                 AASeriesElement()
                     .name("Height")
@@ -591,8 +579,7 @@ class ChartProVC: AABaseChartVC {
                     .text("矩形树图"))
             .colorAxis(AAColorAxis()
                         .minColor("#FFFFFF")
-                        .maxColor("#FF0000")
-            )
+                        .maxColor("#FF0000"))
             .series([
                 AASeriesElement()
                     .data(AAOptionsData.treemapWithColorAxisData)

@@ -54,7 +54,7 @@ public class AADataLabels: AAObject {
     public var crop: Bool?
     public var inside: Bool?
     public var overflow: String?
-    public var filter: Any?
+    public var filter: AAFilter?
     
     @discardableResult
     public func enabled(_ prop: Bool?) -> AADataLabels {
@@ -185,7 +185,7 @@ public class AADataLabels: AAObject {
     }
     
     @discardableResult
-    public func filter(_ prop: Any?) -> AADataLabels {
+    public func filter(_ prop: AAFilter?) -> AADataLabels {
         filter = prop
         return self
     }
@@ -251,5 +251,33 @@ public extension AAStyle {
         .fontSize(fontSize)
         .fontWeight(weight)
         .textOutline(outline)
+    }
+}
+
+public class AAFilter: AAObject {
+    public var property: String?
+    public var `operator`: String?
+    public var value: Float?
+    
+    @discardableResult
+    public func property(_ prop: String?) -> AAFilter {
+        property = prop
+        return self
+    }
+    
+    @discardableResult
+    public func `operator`(_ prop: String?) -> AAFilter {
+        `operator` = prop
+        return self
+    }
+    
+    @discardableResult
+    public func value(_ prop: Float?) -> AAFilter {
+        value = prop
+        return self
+    }
+    
+    public override init() {
+        
     }
 }
