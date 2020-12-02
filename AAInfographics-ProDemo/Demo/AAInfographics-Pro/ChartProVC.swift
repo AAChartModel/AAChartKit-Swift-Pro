@@ -632,12 +632,15 @@ class ChartProVC: AABaseChartVC {
                     .gridLineWidth(0))
             .legend(AALegend()
                         .enabled(false))
-            .series([[
-                "borderRadius":2,
-                "pointPadding": 0,
-                "groupPadding": 0,
-                "data": AAOptionsData.xrangeData
-            ]])
+            .plotOptions(AAPlotOptions()
+                            .series(AASeries()
+                                        .pointPadding(0)
+                                        .groupPadding(0)))
+            .series([
+                AASeriesElement()
+                    .borderRadius(2)
+                    .data(AAOptionsData.xrangeData)
+            ])
     }
     
     private func vectorChart() -> AAOptions {

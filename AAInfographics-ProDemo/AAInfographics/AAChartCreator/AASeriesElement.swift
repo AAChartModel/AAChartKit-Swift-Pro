@@ -38,6 +38,7 @@
     public var lineWidth: Float?           //The line width, It is only valid for line, spline, area, areaspline, arearange and arearangespline chart types
     public var borderWidth: Float?         //The border width, It is only valid for column, bar, pie, columnrange, pyramid and funnel chart types
     public var borderColor: String?        //The border color, It is only valid for column, bar, pie, columnrange, pyramid and funnel chart types
+    public var borderRadius: Float?       //The border radius, It is only valid for column, bar, pie, columnrange, pyramid and funnel chart types
     public var fillColor: Any?             //The fill color, It is only valid for area, areaspline, arearange and arearangespline chart types
     public var fillOpacity: Float?         //The fill opacity, It is only valid for area, areaspline, arearange and arearangespline chart types. Note that when you set an explicit fillColor, the fillOpacity is not applied. Instead, you should define the opacity in the fillColor with an rgba color definition. Deafualt value：0.75.
     public var threshold: Float?           //The threshold, also called zero level or base level. For line type series this is only used in conjunction with negativeColor. default：0.
@@ -102,6 +103,12 @@
     @discardableResult
     public func borderColor(_ prop: String) -> AASeriesElement {
         borderColor = prop
+        return self
+    }
+    
+    @discardableResult
+    public func borderRadius(_ prop: Float) -> AASeriesElement {
+        borderRadius = prop
         return self
     }
     
