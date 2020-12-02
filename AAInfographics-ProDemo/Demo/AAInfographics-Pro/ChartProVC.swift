@@ -119,21 +119,22 @@ class ChartProVC: AABaseChartVC {
             .legend(AALegend()
                         .enabled(false))
             .series([
-                        AASeriesElement()
-                            .type(.treemap)
-                            .levels([
-                                AALevels()
-                                    .level(1)
-                                    .layoutAlgorithm("sliceAndDice")
-                                    .dataLabels(AADataLabels()
-                                                    .enabled(true)
-                                                    .align(.left)
-                                                    .verticalAlign(.top)
-                                                    .style(AAStyle()
-                                                            .fontSize(15)
-                                                            .fontWeight(.bold)))
-                            ])
-                            .data(AAOptionsData.treemapWithLevelsData)]);
+                AASeriesElement()
+                    .type(.treemap)
+                    .levels([
+                        AALevels()
+                            .level(1)
+                            .layoutAlgorithm("sliceAndDice")
+                            .dataLabels(AADataLabels()
+                                        .enabled(true)
+                                            .align(.left)
+                                            .verticalAlign(.top)
+                                            .style(AAStyle()
+                                                    .fontSize(15)
+                                                    .fontWeight(.bold)))
+                    ])
+                    .data(AAOptionsData.treemapWithLevelsData)
+            ]);
         
         return aaOptions;
     }
