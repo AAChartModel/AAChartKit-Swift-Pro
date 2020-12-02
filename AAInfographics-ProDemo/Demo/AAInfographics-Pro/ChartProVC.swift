@@ -176,7 +176,7 @@ class ChartProVC: AABaseChartVC {
     
     private func sunburstChart() -> AAOptions {
         let aaChart = AAChart()
-            .type(.variwide)
+            .type(.sunburst)
         
         let aaTitle = AATitle()
             .text("2017 世界人口分布")
@@ -193,22 +193,21 @@ class ChartProVC: AABaseChartVC {
         
         let seriesElementArr = [
             AASeriesElement()
-                .type(.sunburst)
                 .allowDrillToNode(true)
                 .levels([
                     AALevels()
                         .level(2)
                         .colorByPoint(true)
                         .layoutAlgorithm("sliceAndDice")
-                    //                              .dataLabels({
-                    //                                      "rotationMode": "parallel"
-                    //                              })
+                        .dataLabels(AADataLabels()
+                                        .rotationMode("parallel"))
                     ,
                     AALevels()
                         .level(3)
                         .colorVariation(AAColorVariation()
                                             .key("brightness")
-                                            .to(-0.5)),
+                                            .to(-0.5))
+                    ,
                     AALevels()
                         .level(4)
                         .colorVariation(AAColorVariation()
@@ -244,12 +243,12 @@ class ChartProVC: AABaseChartVC {
                     .dataLabels(AADataLabels()
                                     .enabled(true)
                                     .color("#333")
-                                    //                         .textPath({
-                                    //                             "enabled": true,
-                                    //                             "attributes": {
-                                    //                                     "dy": 5
-                                    //                             }
-                                    //                                      })
+                                    .textPath([
+                                        "enabled": true,
+                                        "attributes": [
+                                            "dy": 5
+                                        ]
+                                    ])
                                     .distance(10))
             ])
     }
