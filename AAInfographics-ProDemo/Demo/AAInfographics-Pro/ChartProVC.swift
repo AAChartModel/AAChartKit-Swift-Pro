@@ -75,25 +75,19 @@ class ChartProVC: AABaseChartVC {
                     .keys(["from", "to", "weight"])
                     .data(AAOptionsData.sankeyData),
             ])
-        ;
-        
     }
     
     private func variablepieChart() -> AAOptions {
         let aaChart = AAChart()
-            .type(.variablepie);
-        
+            .type(.variablepie)
         let aaTitle = AATitle()
-            .text("不同国家人口密度及面积对比");
-        
+            .text("不同国家人口密度及面积对比")
         let aaSubtitle = AASubtitle()
-            .text("扇区长度（圆周方法）表示面积，宽度（纵向）表示人口密度");
-        
+            .text("扇区长度（圆周方法）表示面积，宽度（纵向）表示人口密度")
         let aaTooltip = AATooltip()
             .enabled(true)
             .headerFormat("")
-            .pointFormat(#"<span style="color:{point.color}\">○</span> <b> {point.name}</b><br/>"面积 (平方千米): <b>{point.y}</b><br/>"人口密度 (每平方千米人数): <b>{point.z}</b><br/>""#.aa_toPureJSString());
-        
+            .pointFormat(#"<span style="color:{point.color}\">○</span> <b> {point.name}</b><br/>"面积 (平方千米): <b>{point.y}</b><br/>"人口密度 (每平方千米人数): <b>{point.z}</b><br/>""#.aa_toPureJSString())
         let aaOptionsQ = AAOptions()
             .chart(aaChart)
             .title(aaTitle)
@@ -106,10 +100,8 @@ class ChartProVC: AABaseChartVC {
                     .dataLabels(AADataLabels()
                                     .enabled(false))
                     .data(AAOptionsData.variablepieData)
-            ]);
-        
-        return aaOptionsQ;
-        
+            ])
+        return aaOptionsQ
     }
     
     private func treemapWithLevelsData() -> AAOptions {
@@ -134,35 +126,28 @@ class ChartProVC: AABaseChartVC {
                                                     .fontWeight(.bold)))
                     ])
                     .data(AAOptionsData.treemapWithLevelsData)
-            ]);
-        
-        return aaOptions;
+            ])
+        return aaOptions
     }
     
     private func variwideChart() -> AAOptions {
         let aaChart = AAChart()
-            .type(.variwide);
-        
+            .type(.variwide)
         let aaTitle = AATitle()
-            .text("2016 年欧洲各国人工成本");
-        
+            .text("2016 年欧洲各国人工成本")
         let aaSubtitle = AASubtitle()
-            .text("数据来源:EUROSTAT");
-        
+            .text("数据来源:EUROSTAT")
         let aaXAxis = AAXAxis()
             .visible(true)
             .type("category")
             .title(AATitle()
                     .text("* 柱子宽度与 GDP 成正比"))
-        ;
         
         let aaTooltip = AATooltip()
             .enabled(true)
-            .pointFormat("人工成本： <b>€ {point.y}/h</b><br>' + 'GDP: <b>€ {point.z} 百万</b><br>");
-        
+            .pointFormat("人工成本： <b>€ {point.y}/h</b><br>' + 'GDP: <b>€ {point.z} 百万</b><br>")
         let aaLegend = AALegend()
-            .enabled(false);
-        
+            .enabled(false)
         let seriesElementArr = [
             AASeriesElement()
                 .name("人工成本")
@@ -170,8 +155,7 @@ class ChartProVC: AABaseChartVC {
                 .dataLabels(AADataLabels()
                                 .enabled(true)
                                 .format("€{point.y:.0f}"))
-                .colorByPoint((true))];
-        
+                .colorByPoint((true))]
         let aaOptionsQ = AAOptions()
             .chart(aaChart)
             .title(aaTitle)
@@ -179,30 +163,23 @@ class ChartProVC: AABaseChartVC {
             .xAxis(aaXAxis)
             .tooltip(aaTooltip)
             .legend(aaLegend)
-            .series(seriesElementArr);
-        
-        return aaOptionsQ;
-        
+            .series(seriesElementArr)
+        return aaOptionsQ
     }
     
     private func sunburstChart() -> AAOptions {
         let aaChart = AAChart()
-            .type(.variwide);
-        
+            .type(.variwide)
         let aaTitle = AATitle()
-            .text("2017 世界人口分布");
-        
+            .text("2017 世界人口分布")
         let aaSubtitle = AASubtitle()
-            .text(#"数据来源:<href="https://en.wikipedia.org/wiki/List_of_countries_by_population_(United_Nations)">Wikipedia</a>"#.aa_toPureJSString());
-        
+            .text(#"数据来源:<href="https://en.wikipedia.org/wiki/List_of_countries_by_population_(United_Nations)">Wikipedia</a>"#.aa_toPureJSString())
         
         let aaTooltip = AATooltip()
             .enabled(true)
-            .pointFormat("<b>{point.name}</b>的人口数量是：<b>{point.value}</b>");
-        
+            .pointFormat("<b>{point.name}</b>的人口数量是：<b>{point.value}</b>")
         let aaLegend = AALegend()
-            .enabled(false);
-        
+            .enabled(false)
         let seriesElementArr = [
             AASeriesElement()
                 .type(.sunburst)
@@ -229,17 +206,15 @@ class ChartProVC: AABaseChartVC {
                     
                 ])
                 .data(AAOptionsData.sunburstData)
-        ];
-        
+        ]
         let aaOptions = AAOptions()
             .chart(aaChart)
             .title(aaTitle)
             .subtitle(aaSubtitle)
             .tooltip(aaTooltip)
             .legend(aaLegend)
-            .series(seriesElementArr);
-        
-        return aaOptions;
+            .series(seriesElementArr)
+        return aaOptions
     }
     
     private func dependencywheelChart() -> AAOptions  {
@@ -265,7 +240,7 @@ class ChartProVC: AABaseChartVC {
                                     //                             }
                                     //                                      })
                                     .distance(10))
-            ]);
+            ])
     }
     
     
@@ -304,8 +279,7 @@ class ChartProVC: AABaseChartVC {
                         .formatter("""
                     function () {
                     return '<b>' + this.series.xAxis.categories[this.point.x] + '</b> sold <br><b>' +
-                        this.point.value + '</b> items on <br><b>' + this.series.yAxis.categories[this.point.y] + '</b>';
-                    }
+                        this.point.value + '</b> items on <br><b>' + this.series.yAxis.categories[this.point.y] + '</b>'            }
                     """
                         )
             )
@@ -319,7 +293,6 @@ class ChartProVC: AABaseChartVC {
                                     .color("red")
                     )
             ])
-        ;
     }
     
     
@@ -354,7 +327,6 @@ class ChartProVC: AABaseChartVC {
                                                             ])
                                             )))
             .series(AAOptionsSeries.packedbubbleSeries)
-        ;
         
         
     }
@@ -392,7 +364,6 @@ class ChartProVC: AABaseChartVC {
                                                             ])
                                             )))
             .series(AAOptionsSeries.packedbubbleSeries)
-        ;
     }
     
     
@@ -404,43 +375,39 @@ class ChartProVC: AABaseChartVC {
                         AASeriesElement()
                             .type(.venn)
                             .data(AAOptionsData.vennData)])
-        ;
     }
     
     private func dumbbellChart() -> AAOptions {
         let aaChart = AAChart()
             .type(.dumbbell)
-            .inverted(true);
+            .inverted(true)
         
         let aaTitle = AATitle()
-            .text("各国预期寿命变化");
+            .text("各国预期寿命变化")
         
         let aaSubtitle = AASubtitle()
-            .text("1960 vs 2018");
+            .text("1960 vs 2018")
         
         let aaXAxis = AAXAxis()
             .visible(true)
             .type("category")
-        ;
         
         let aaYAxis = AAYAxis()
             .visible(true)
             .title(AATitle()
                     .text("Life Expectancy (years)"))
-        ;
         
         let aaTooltip = AATooltip()
             .enabled(true)
-        ;
         
         let aaLegend = AALegend()
-            .enabled(false);
+            .enabled(false)
         
         let seriesElementArr = [
             AASeriesElement()
                 .name("各国预期寿命变化")
                 .data(AAOptionsData.dumbbellData)
-        ];
+        ]
         
         let aaOptionsQ = AAOptions()
             .chart(aaChart)
@@ -450,44 +417,40 @@ class ChartProVC: AABaseChartVC {
             .yAxis(aaYAxis)
             .tooltip(aaTooltip)
             .legend(aaLegend)
-            .series(seriesElementArr);
-        
-        return aaOptionsQ;
+            .series(seriesElementArr)
+        return aaOptionsQ
     }
     
     private func lollipopChart() -> AAOptions {
         let aaChart = AAChart()
-            .type(.lollipop);
+            .type(.lollipop)
         
         let aaTitle = AATitle()
-            .text("世界十大人口国家");
+            .text("世界十大人口国家")
         
         let aaSubtitle = AASubtitle()
-            .text("2018");
+            .text("2018")
         
         let aaXAxis = AAXAxis()
             .visible(true)
             .type("category")
-        ;
         
         let aaYAxis = AAYAxis()
             .visible(true)
             .title(AATitle()
                     .text("人口"))
-        ;
         
         let aaTooltip = AATooltip()
             .enabled(true)
-        ;
         
         let aaLegend = AALegend()
-            .enabled(false);
+            .enabled(false)
         
         let seriesElementArr = [
             AASeriesElement()
                 .name("Population")
                 .data(AAOptionsData.lollipopData)
-        ];
+        ]
         
         let aaOptionsQ = AAOptions()
             .chart(aaChart)
@@ -497,9 +460,8 @@ class ChartProVC: AABaseChartVC {
             .yAxis(aaYAxis)
             .tooltip(aaTooltip)
             .legend(aaLegend)
-            .series(seriesElementArr);
-        
-        return aaOptionsQ;
+            .series(seriesElementArr)
+        return aaOptionsQ
     }
     
     private func streamgraphChart() -> AAOptions {
@@ -530,7 +492,7 @@ class ChartProVC: AABaseChartVC {
                         .enabled(true))
             .legend(AALegend()
                         .enabled(false))
-            .series(AAOptionsSeries.streamgraphSeries);
+            .series(AAOptionsSeries.streamgraphSeries)
     }
     
     private func columnpyramidChart() -> AAOptions {
@@ -558,7 +520,6 @@ class ChartProVC: AABaseChartVC {
                     .colorByPoint(true)
                     .data(AAOptionsData.columnpyramidData)
             ])
-        ;
     }
     
     private func tilemapChart() -> AAOptions {
@@ -612,7 +573,6 @@ class ChartProVC: AABaseChartVC {
                     .colorByPoint(true)
                     .data(AAOptionsData.tilemapData)
             ])
-        ;
     }
     
     private func treemapWithColorAxisData() -> AAOptions {
@@ -629,7 +589,6 @@ class ChartProVC: AABaseChartVC {
                 AASeriesElement()
                     .data(AAOptionsData.treemapWithColorAxisData)
             ])
-        ;
     }
     
     private func drilldownTreemapChart() -> AAOptions {
@@ -655,7 +614,6 @@ class ChartProVC: AABaseChartVC {
                                     .borderWidth(3)])
                     .data(AAOptionsData.drilldownTreemapData)
             ])
-        ;
     }
     
     private func xrangeChart() -> AAOptions {
@@ -685,7 +643,6 @@ class ChartProVC: AABaseChartVC {
                 "groupPadding": 0,
                 "data": AAOptionsData.xrangeData
             ]])
-        ;
     }
     
     private func vectorChart() -> AAOptions {
@@ -700,7 +657,6 @@ class ChartProVC: AABaseChartVC {
                     .name("Sample vector field")
                     .data(AAOptionsData.vectorData)
             ])
-        ;
     }
     
     private func bellcurveChart() -> AAOptions {
@@ -742,9 +698,8 @@ class ChartProVC: AABaseChartVC {
                                         .fillColor("#ffffff")//点的填充色(用来设置折线连接点的填充色)
                                         .lineWidth(2)//外沿线的宽度(用来设置折线连接点的轮廓描边的宽度)
                                         .lineColor(""))//外沿线的颜色(用来设置折线连接点的轮廓描边颜色，当值为空字符串时，默认取数据点或数据列的颜色))
-                            .data(AAOptionsData.bellcurveData)]);
-        
-        return aaOptions;
+                            .data(AAOptionsData.bellcurveData)])
+        return aaOptions
     }
     
     private func timelineChart() -> AAOptions {
@@ -760,9 +715,8 @@ class ChartProVC: AABaseChartVC {
             .series([
                 AASeriesElement()
                     .data(AAOptionsData.timelineData)
-            ]);
-        
-        return aaOptions;
+            ])
+        return aaOptions
     }
     
     private func itemChart() -> AAOptions {
@@ -783,9 +737,8 @@ class ChartProVC: AABaseChartVC {
                     .dataLabels(AADataLabels()
                                     .enabled(false))
                     .size("170%")
-            ]);
-        
-        return aaOptions;
+            ])
+        return aaOptions
     }
     
     private func windbarbChart() -> AAOptions {
@@ -809,9 +762,8 @@ class ChartProVC: AABaseChartVC {
                                 .fillColor("#ffffff")//点的填充色(用来设置折线连接点的填充色)
                                 .lineWidth(5)//外沿线的宽度(用来设置折线连接点的轮廓描边的宽度)
                                 .lineColor(""))//外沿线的颜色(用来设置折线连接点的轮廓描边颜色，当值为空字符串时，默认取数据点或数据列的颜色))
-            ]);
-        
-        return aaOptions;
+            ])
+        return aaOptions
     }
     
     private func networkgraphChart() -> AAOptions {
@@ -827,9 +779,8 @@ class ChartProVC: AABaseChartVC {
                     .dataLabels(AADataLabels()
                                     .enabled(false))
                     .data(AAOptionsData.networkgraphData),
-            ]);
-        
-        return aaOptions;
+            ])
+        return aaOptions
     }
     
     private func wordcloudChart() -> AAOptions {
@@ -841,9 +792,8 @@ class ChartProVC: AABaseChartVC {
             .series([
                 AASeriesElement()
                     .data(AAOptionsData.wordcloudData),
-            ]);
-        
-        return aaOptions;
+            ])
+        return aaOptions
     }
     
     private func eulerChart() -> AAOptions {
@@ -862,8 +812,7 @@ class ChartProVC: AABaseChartVC {
             .series([
                 AASeriesElement()
                     .data(AAOptionsData.eulerData),
-            ]);
-        
-        return aaOptions;
+            ])
+        return aaOptions
     }
 }
