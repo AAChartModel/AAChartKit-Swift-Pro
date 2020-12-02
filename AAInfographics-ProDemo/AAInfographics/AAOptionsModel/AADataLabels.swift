@@ -56,7 +56,7 @@ public class AADataLabels: AAObject {
     public var overflow: String?
     public var filter: AAFilter?
     public var rotationMode: String?
-    public var textPath: Any?
+    public var textPath: AATextPath?
     
     
     @discardableResult
@@ -200,7 +200,7 @@ public class AADataLabels: AAObject {
     }
     
     @discardableResult
-    public func textPath(_ prop: Any?) -> AADataLabels {
+    public func textPath(_ prop: AATextPath?) -> AADataLabels {
         textPath = prop
         return self
     }
@@ -289,6 +289,28 @@ public class AAFilter: AAObject {
     @discardableResult
     public func value(_ prop: Float?) -> AAFilter {
         value = prop
+        return self
+    }
+    
+    public override init() {
+        
+    }
+}
+
+public class AATextPath: AAObject {
+    public var enabled: Bool?
+    public var attributes: [String: Any]?
+    public var value: Float?
+    
+    @discardableResult
+    public func enabled(_ prop: Bool?) -> AATextPath {
+        enabled = prop
+        return self
+    }
+    
+    @discardableResult
+    public func attributes(_ prop: [String: Any]?) -> AATextPath {
+        attributes = prop
         return self
     }
     
