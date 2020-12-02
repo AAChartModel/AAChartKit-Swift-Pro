@@ -243,12 +243,11 @@ class ChartProVC: AABaseChartVC {
                     .dataLabels(AADataLabels()
                                     .enabled(true)
                                     .color("#333")
-                                    .textPath([
-                                        "enabled": true,
-                                        "attributes": [
-                                            "dy": 5
-                                        ]
-                                    ])
+                                    .textPath(AATextPath()
+                                                .enabled(true)
+                                                .attributes([
+                                                    "dy": 5
+                                                ]))
                                     .distance(10))
             ])
     }
@@ -560,8 +559,7 @@ class ChartProVC: AABaseChartVC {
                                                         .format("{point.hc-a2}")
                                                         .color("#ffffff")
                                                         .style(AAStyle()
-                                                                .textOutline("none"))
-                                        )))
+                                                                .textOutline("none")))))
             .series([
                 AASeriesElement()
                     .name("Height")
