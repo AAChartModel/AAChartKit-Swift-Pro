@@ -674,18 +674,18 @@ class ChartProVC: AABaseChartVC {
             //        .text("Bell curve")
             //                  ])
             .series([
-                //                        [
-                //                            "name": "Bell curve",
-                //                            "type": "bellcurve",
-                //                            "xAxis": 1,
-                //                            "yAxis": 1,
-                //                            "baseSeries": 1,
-                //                            "zIndex": -1
-                //                        ],
+                [
+                    "name": "Bell curve",
+                    "type": AAChartType.bellcurve.rawValue,
+                    "xAxis": 1,
+                    "yAxis": 1,
+                    "baseSeries": 1,
+                    "zIndex": -1
+                ],
                 AASeriesElement()
                     .name("Bell curve")
                     .type(.bellcurve)
-                    ,
+                ,
                 AASeriesElement()
                     .name("Data")
                     .type(.scatter)
@@ -738,9 +738,8 @@ class ChartProVC: AABaseChartVC {
         AAOptions()
             .title(AATitle()
                     .text("AAChartKit-Pro Wind Barbst"))
-            //    .xAxis((id){
-            //        "offset": 40
-            //                  })
+            .xAxis(AAXAxis()
+                    .offset(40))
             .series([
                 AASeriesElement()
                     .type(.windbarb)
