@@ -63,6 +63,13 @@
                     lang: aaOptions.defaultOptions
                 });
             }
+            
+            if (aaOptions.xAxisArray) {
+                aaOptions.xAxis = aaOptions.xAxisArray
+            }
+            if (aaOptions.yAxisArray) {
+                aaOptions.yAxis = aaOptions.yAxisArray
+            }
 
             if (aaOptions.plotOptions) {
                 configurePlotOptions(aaOptions);

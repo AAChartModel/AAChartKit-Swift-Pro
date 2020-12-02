@@ -661,30 +661,30 @@ class ChartProVC: AABaseChartVC {
         AAOptions()
             .title(AATitle()
                     .text("Bell curve"))
-            //    .xAxisArray([
-            //        AATitle()
-            //        .text("Data"),
-            //        AATitle()
-            //        .text("Bell curve")
-            //                  ])
-            //    .yAxisArray([
-            //        AATitle()
-            //        .text("Data"),
-            //        AATitle()
-            //        .text("Bell curve")
-            //                  ])
+            .xAxisArray([
+                AAXAxis()
+                    .title(AATitle()
+                            .text("Data")),
+                AAXAxis()
+                    .title(AATitle()
+                            .text("Bell curve")),
+            ])
+            .yAxisArray([
+                AAYAxis()
+                    .title(AATitle()
+                            .text("Data")),
+                AAYAxis()
+                    .title(AATitle()
+                            .text("Bell curve")),
+            ])
             .series([
-                [
-                    "name": "Bell curve",
-                    "type": AAChartType.bellcurve.rawValue,
-                    "xAxis": 1,
-                    "yAxis": 1,
-                    "baseSeries": 1,
-                    "zIndex": -1
-                ],
                 AASeriesElement()
                     .name("Bell curve")
                     .type(.bellcurve)
+                    .xAxis(1)
+                    .yAxis(1)
+                    .baseSeries(1)
+                    .zIndex(-1)
                 ,
                 AASeriesElement()
                     .name("Data")

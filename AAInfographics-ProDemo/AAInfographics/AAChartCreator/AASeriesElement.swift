@@ -69,6 +69,9 @@
     
     public var levels: [AALevels]?
     public var allowDrillToNode: Bool?
+    public var xAxis: Int?
+    public var baseSeries: Int?
+    
     
     @discardableResult
     public func type(_ prop: AAChartType) -> AASeriesElement {
@@ -289,6 +292,18 @@
     @discardableResult
     public func allowDrillToNode(_ prop: Bool) -> AASeriesElement {
         allowDrillToNode = prop
+        return self
+    }
+    
+    @discardableResult
+    public func xAxis(_ prop: Int) -> AASeriesElement {
+        xAxis = prop
+        return self
+    }
+    
+    @discardableResult
+    public func baseSeries(_ prop: Int) -> AASeriesElement {
+        baseSeries = prop
         return self
     }
 
