@@ -199,8 +199,6 @@ class ChartProVC: AABaseChartVC {
                         .level(2)
                         .colorByPoint(true)
                         .layoutAlgorithm("sliceAndDice")
-                        .dataLabels(AADataLabels()
-                                        .rotationMode("parallel"))
                     ,
                     AALevels()
                         .level(3)

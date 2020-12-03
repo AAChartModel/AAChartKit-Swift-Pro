@@ -55,7 +55,6 @@ public class AADataLabels: AAObject {
     public var inside: Bool?
     public var overflow: String?
     public var filter: AAFilter?
-    public var rotationMode: String?
     public var textPath: AATextPath?
     
     
@@ -190,12 +189,6 @@ public class AADataLabels: AAObject {
     @discardableResult
     public func filter(_ prop: AAFilter?) -> AADataLabels {
         filter = prop
-        return self
-    }
-    
-    @discardableResult
-    public func rotationMode(_ prop: String?) -> AADataLabels {
-        rotationMode = prop
         return self
     }
     
