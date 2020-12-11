@@ -21,14 +21,6 @@ class AAOptionsData {
         return getJsonDataWithJsonFileName("heatmapData")
     }
 
-    public class var packedbubbleData : [Any] {
-        return getJsonDataWithJsonFileName("packedbubbleData")
-    }
-
-    public class var packedbubbleSplitData : [Any] {
-        return getJsonDataWithJsonFileName("packedbubbleSplitData")
-    }
-
     public class var columnpyramidData : [Any] {
         return getJsonDataWithJsonFileName("columnpyramidData")
     }
