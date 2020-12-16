@@ -9,10 +9,10 @@ import UIKit
 
 public class AALayoutAlgorithm: AAObject {
     public var gravitationalConstant: Any?
-    public var splitSeries: Any?
-    public var seriesInteraction: Any?
-    public var dragBetweenSeries: Any?
-    public var parentNodeLimit: Any?
+    public var splitSeries: String?
+    public var seriesInteraction: Bool?
+    public var dragBetweenSeries: Bool?
+    public var parentNodeLimit: Bool?
     
     @discardableResult
     public func gravitationalConstant(_ prop: Any?) -> AALayoutAlgorithm {
@@ -21,25 +21,25 @@ public class AALayoutAlgorithm: AAObject {
     }
     
     @discardableResult
-    public func splitSeries(_ prop: Any?) -> AALayoutAlgorithm {
+    public func splitSeries(_ prop: String?) -> AALayoutAlgorithm {
         splitSeries = prop
         return self
     }
     
     @discardableResult
-    public func seriesInteraction(_ prop: Any?) -> AALayoutAlgorithm {
+    public func seriesInteraction(_ prop: Bool?) -> AALayoutAlgorithm {
         seriesInteraction = prop
         return self
     }
     
     @discardableResult
-    public func dragBetweenSeries(_ prop: Any?) -> AALayoutAlgorithm {
+    public func dragBetweenSeries(_ prop: Bool?) -> AALayoutAlgorithm {
         dragBetweenSeries = prop
         return self
     }
     
     @discardableResult
-    public func parentNodeLimit(_ prop: Any?) -> AALayoutAlgorithm {
+    public func parentNodeLimit(_ prop: Bool?) -> AALayoutAlgorithm {
         parentNodeLimit = prop
         return self
     }
