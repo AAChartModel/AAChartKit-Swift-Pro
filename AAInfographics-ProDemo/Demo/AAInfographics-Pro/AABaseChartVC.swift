@@ -21,13 +21,15 @@
  * -------------------------------------------------------------------------------
  * And if you want to contribute for this project, please contact me as well
  * GitHub        : https://github.com/AAChartModel
- * StackOverflow : https://stackoverflow.com/users/7842508/codeforu
+ * StackOverflow : https://stackoverflow.com/users/12302132/codeforu
  * JianShu       : https://www.jianshu.com/u/f1e6753d4254
  * SegmentFault  : https://segmentfault.com/u/huanghunbieguan
  *
  *********************************************************************************
  
  */
+
+//给作者我自己看的备忘录:pro 版本的 AAOptions, AAPlotOptions, AADataLabels, AAChartModel, AASeriesElement等文件都和 normal 版本不同, 下一次同步两者之间的文件时要注意区分
 
 import UIKit
 

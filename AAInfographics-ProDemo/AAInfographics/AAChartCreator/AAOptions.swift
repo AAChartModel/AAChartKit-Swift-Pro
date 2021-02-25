@@ -22,7 +22,7 @@
  * -------------------------------------------------------------------------------
  * And if you want to contribute for this project, please contact me as well
  * GitHub        : https://github.com/AAChartModel
- * StackOverflow : https://stackoverflow.com/users/7842508/codeforu
+ * StackOverflow : https://stackoverflow.com/users/12302132/codeforu
  * JianShu       : https://www.jianshu.com/u/f1e6753d4254
  * SegmentFault  : https://segmentfault.com/u/huanghunbieguan
  *
@@ -240,17 +240,17 @@ public class AAOptionsConstructor {
         _ aaChartModel: AAChartModel,
         _ aaPlotOptions: AAPlotOptions
     ) {
-        let chartType = aaChartModel.chartType!
+        let aaChartType = aaChartModel.chartType!
         
         //Data point markers related configuration. Only linear graphs have data point markers.
-        if     chartType == .area
-            || chartType == .areaspline
-            || chartType == .line
-            || chartType == .spline
-            || chartType == .scatter
-            || chartType == .arearange
-            || chartType == .areasplinerange
-            || chartType == .polygon {
+        if     aaChartType == .area
+            || aaChartType == .areaspline
+            || aaChartType == .line
+            || aaChartType == .spline
+            || aaChartType == .scatter
+            || aaChartType == .arearange
+            || aaChartType == .areasplinerange
+            || aaChartType == .polygon {
             let aaMarker = AAMarker()
                 .radius(aaChartModel.markerRadius) //Curve connection point radius, default is 4
                 .symbol(aaChartModel.markerSymbol?.rawValue) //Curve connection point type: "circle", "square", "diamond", "triangle", "triangle-down", the default is "circle"
@@ -274,7 +274,7 @@ public class AAOptionsConstructor {
         _ aaPlotOptions: AAPlotOptions,
         _ aaChartModel: AAChartModel
     ) {
-        let chartType = aaChartModel.chartType!
+        let aaChartType = aaChartModel.chartType!
         
         let aaDataLabels = AADataLabels()
             .enabled(aaChartModel.dataLabelsEnabled)
@@ -283,7 +283,7 @@ public class AAOptionsConstructor {
                 .style(aaChartModel.dataLabelsStyle)
         }
         
-        switch chartType {
+        switch aaChartType {
         case .column:
             let aaColumn = AAColumn()
                 .borderWidth(0)
@@ -326,25 +326,25 @@ public class AAOptionsConstructor {
         _ aaOptions: AAOptions,
         _ aaChartModel: AAChartModel
     ) {
-        let chartType = aaChartModel.chartType
+        let aaChartType = aaChartModel.chartType
         //The related configuration of the x-axis and the Y-axis, the fan, pyramid, funnel, and meter and dial charts do not need to set the relevant content of the X-axis and Y-axis
-        if (   chartType == .column
-            || chartType == .bar
-            || chartType == .area
-            || chartType == .areaspline
-            || chartType == .line
-            || chartType == .spline
-            || chartType == .scatter
-            || chartType == .bubble
-            || chartType == .columnrange
-            || chartType == .arearange
-            || chartType == .areasplinerange
-            || chartType == .boxplot
-            || chartType == .waterfall
-            || chartType == .polygon
-            || chartType == .gauge) {
+        if (   aaChartType == .column
+            || aaChartType == .bar
+            || aaChartType == .area
+            || aaChartType == .areaspline
+            || aaChartType == .line
+            || aaChartType == .spline
+            || aaChartType == .scatter
+            || aaChartType == .bubble
+            || aaChartType == .columnrange
+            || aaChartType == .arearange
+            || aaChartType == .areasplinerange
+            || aaChartType == .boxplot
+            || aaChartType == .waterfall
+            || aaChartType == .polygon
+            || aaChartType == .gauge) {
             
-            if chartType != .gauge {
+            if aaChartType != .gauge {
                 let aaXAxisLabelsEnabled = aaChartModel.xAxisLabelsEnabled
                 let aaXAxisLabels = AALabels()
                     .enabled(aaXAxisLabelsEnabled) //Set whether the x-axis displays text
