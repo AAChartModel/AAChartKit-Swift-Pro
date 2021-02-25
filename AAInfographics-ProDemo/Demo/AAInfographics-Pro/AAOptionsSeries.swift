@@ -10,11 +10,11 @@ import UIKit
 class AAOptionsSeries {
     
     public class var packedbubbleSeries : [Any] {
-        return getJsonDataWithJsonFileName("packedbubbleSeries")
+        getJsonDataWithJsonFileName("packedbubbleSeries")
     }
-
+    
     public class var streamgraphSeries : [Any] {
-        return getJsonDataWithJsonFileName("streamgraphSeries")
+        getJsonDataWithJsonFileName("streamgraphSeries")
     }
     
     //https://www.jianshu.com/p/a4b2bd5deca6
@@ -27,7 +27,6 @@ class AAOptionsSeries {
             let jsonArr = jsonData as! NSArray
             
             return jsonArr as! [Any]
-
         } catch let error as Error? {
             print("读取本地数据出现错误!",error ?? "WARNING!!!!")
         }

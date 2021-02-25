@@ -10,90 +10,90 @@ import UIKit
 class AAOptionsData {
     
     public class var variablepieData: [Any] {
-        return getJsonDataWithJsonFileName("variablepieData")
+        getJsonDataWithJsonFileName("variablepieData")
     }
-
+    
     public class var variwideData : [Any] {
-        return getJsonDataWithJsonFileName("variwideData")
+        getJsonDataWithJsonFileName("variwideData")
     }
-
+    
     public class var heatmapData : [Any] {
-        return getJsonDataWithJsonFileName("heatmapData")
+        getJsonDataWithJsonFileName("heatmapData")
     }
-
+    
     public class var columnpyramidData : [Any] {
-        return getJsonDataWithJsonFileName("columnpyramidData")
+        getJsonDataWithJsonFileName("columnpyramidData")
     }
-
+    
     public class var treemapWithColorAxisData : [Any] {
-        return getJsonDataWithJsonFileName("treemapWithColorAxisData")
+        getJsonDataWithJsonFileName("treemapWithColorAxisData")
     }
-
+    
     public class var drilldownTreemapData : [Any] {
-        return getJsonDataWithJsonFileName("drilldownTreemapData")
+        getJsonDataWithJsonFileName("drilldownTreemapData")
     }
-
-
-
-
+    
+    
+    
+    
     public class var sankeyData : [Any] {
-        return getJsonDataWithJsonFileName("sankeyData")
+        getJsonDataWithJsonFileName("sankeyData")
     }
-
+    
     public class var dependencywheelData : [Any] {
-        return getJsonDataWithJsonFileName("dependencywheelData")
+        getJsonDataWithJsonFileName("dependencywheelData")
     }
-
+    
     public class var sunburstData : [Any] {
-        return getJsonDataWithJsonFileName("sunburstData")
+        getJsonDataWithJsonFileName("sunburstData")
     }
-
+    
     public class var dumbbellData : [Any] {
-        return getJsonDataWithJsonFileName("dumbbellData")
+        getJsonDataWithJsonFileName("dumbbellData")
     }
-
+    
     public class var vennData : [Any] {
-        return getJsonDataWithJsonFileName("vennData")
+        getJsonDataWithJsonFileName("vennData")
     }
-
+    
     public class var lollipopData : [Any] {
-        return getJsonDataWithJsonFileName("lollipopData")
+        getJsonDataWithJsonFileName("lollipopData")
     }
-
+    
     public class var tilemapData : [Any] {
-        return getJsonDataWithJsonFileName("tilemapData")
+        getJsonDataWithJsonFileName("tilemapData")
     }
-
+    
     public class var treemapWithLevelsData : [Any] {
-        return getJsonDataWithJsonFileName("treemapWithLevelsData")
+        getJsonDataWithJsonFileName("treemapWithLevelsData")
     }
-
+    
     public class var bellcurveData : [Any] {
-        return getJsonDataWithJsonFileName("bellcurveData")
+        getJsonDataWithJsonFileName("bellcurveData")
     }
-
+    
     public class var timelineData : [Any] {
-        return getJsonDataWithJsonFileName("timelineData")
+        getJsonDataWithJsonFileName("timelineData")
     }
-
+    
     public class var itemData : [Any] {
-        return getJsonDataWithJsonFileName("itemData")
+        getJsonDataWithJsonFileName("itemData")
     }
-
+    
     public class var windbarbData : [Any] {
-        return getJsonDataWithJsonFileName("windbarbData")
+        getJsonDataWithJsonFileName("windbarbData")
     }
-
+    
     public class var networkgraphData : [Any] {
-        return getJsonDataWithJsonFileName("networkgraphData")
+        getJsonDataWithJsonFileName("networkgraphData")
     }
-
+    
     public class var wordcloudData : [Any] {
-        return getJsonDataWithJsonFileName("wordcloudData")
+        getJsonDataWithJsonFileName("wordcloudData")
     }
-
+    
     public class var eulerData : [Any] {
-        return getJsonDataWithJsonFileName("eulerData")
+        getJsonDataWithJsonFileName("eulerData")
     }
     
     public class var xrangeData: [Any] {
@@ -123,13 +123,13 @@ class AAOptionsData {
         }
         return dataArr
     }
-
-    public class var vectorData : [Any] {
-        return getJsonDataWithJsonFileName("vectorData")
-    }
-
     
-
+    public class var vectorData : [Any] {
+        getJsonDataWithJsonFileName("vectorData")
+    }
+    
+    
+    
     
     
     //https://www.jianshu.com/p/a4b2bd5deca6
@@ -142,11 +142,11 @@ class AAOptionsData {
             let jsonArr = jsonData as! NSArray
             
             return jsonArr as! [Any]
-
+            
         } catch let error as Error? {
             print("读取本地数据出现错误!",error ?? "WARNING!!!!")
         }
         return [Any]()
     }
-
+    
 }
