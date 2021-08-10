@@ -217,8 +217,6 @@ public class AAOptionsConstructor {
         
         let aaLegend = AALegend()
             .enabled(aaChartModel.legendEnabled)
-            .itemStyle(AAItemStyle()
-                        .color(aaChartModel.axesTextColor)) //The default legend text color is the same as the X-axis text color
         
         let aaOptions = AAOptions()
             .chart(aaChart)
@@ -256,7 +254,7 @@ public class AAOptionsConstructor {
                 .symbol(aaChartModel.markerSymbol?.rawValue) //Curve connection point type: "circle", "square", "diamond", "triangle", "triangle-down", the default is "circle"
             if (aaChartModel.markerSymbolStyle == .innerBlank) {
                 aaMarker
-                    .fillColor("#ffffff") //The fill color of the point (used to set the fill color of the polyline connection point)
+                    .fillColor(AAColor.white) //The fill color of the point (used to set the fill color of the polyline connection point)
                     .lineWidth(0.4 * aaChartModel.markerRadius!) //The width of the outer line (used to set the width of the outline stroke of the polyline connection point)
                     .lineColor("") //The color of the outer edge (used to set the outline stroke color of the polyline connection point. When the value is an empty string, the color of the data point or data column is taken by default)
             } else if (aaChartModel.markerSymbolStyle == .borderBlank) {
@@ -289,7 +287,8 @@ public class AAOptionsConstructor {
                 .borderWidth(0)
                 .borderRadius(aaChartModel.borderRadius)
             if (aaChartModel.polar == true) {
-                aaColumn.pointPadding(0)
+                aaColumn
+                    .pointPadding(0)
                     .groupPadding(0.005)
             }
             aaPlotOptions.column(aaColumn)
@@ -298,24 +297,25 @@ public class AAOptionsConstructor {
                 .borderWidth(0)
                 .borderRadius(aaChartModel.borderRadius)
             if (aaChartModel.polar == true) {
-                aaBar.pointPadding(0)
+                aaBar
+                    .pointPadding(0)
                     .groupPadding(0.005)
             }
             aaPlotOptions.bar(aaBar)
         case .pie:
-            let aaPie = AAPie()
-                .allowPointSelect(true)
-                .cursor("pointer")
-                .showInLegend(true)
             if (aaChartModel.dataLabelsEnabled == true) {
                 aaDataLabels.format("<b>{point.name}</b>: {point.percentage:.1f} %")
             }
-            aaPlotOptions.pie(aaPie)
+            aaPlotOptions
+                .pie(AAPie()
+                         .allowPointSelect(true)
+                         .cursor("pointer")
+                         .showInLegend(true))
         case .columnrange:
             aaPlotOptions
                 .columnrange(AAColumnrange()
-                              .borderRadius(aaChartModel.borderRadius)
-                              .borderWidth(0))
+                                 .borderRadius(aaChartModel.borderRadius)
+                                 .borderWidth(0))
             
         default: break
         }
@@ -328,7 +328,7 @@ public class AAOptionsConstructor {
     ) {
         let aaChartType = aaChartModel.chartType
         //The related configuration of the x-axis and the Y-axis, the fan, pyramid, funnel, and meter and dial charts do not need to set the relevant content of the X-axis and Y-axis
-        if (   aaChartType == .column
+        if     aaChartType == .column
             || aaChartType == .bar
             || aaChartType == .area
             || aaChartType == .areaspline
@@ -342,7 +342,7 @@ public class AAOptionsConstructor {
             || aaChartType == .boxplot
             || aaChartType == .waterfall
             || aaChartType == .polygon
-            || aaChartType == .gauge) {
+            || aaChartType == .gauge {
             
             if aaChartType != .gauge {
                 let aaXAxisLabelsEnabled = aaChartModel.xAxisLabelsEnabled
@@ -350,8 +350,7 @@ public class AAOptionsConstructor {
                     .enabled(aaXAxisLabelsEnabled) //Set whether the x-axis displays text
                 if aaXAxisLabelsEnabled == true {
                     aaXAxisLabels
-                        .style(AAStyle()
-                                .color(aaChartModel.axesTextColor))
+                        .style(aaChartModel.xAxisLabelsStyle)
                 }
                 
                 let aaXAxis = AAXAxis()
@@ -362,11 +361,8 @@ public class AAOptionsConstructor {
                     .visible(aaChartModel.xAxisVisible) //whether the x axis is visible
                     .tickInterval(aaChartModel.xAxisTickInterval) //Number of x-axis coordinate point intervals
                     .title(AATitle()
-                            .text(aaChartModel.xAxisTitle) //y axis title
-                            .style(AAStyle()
-                                    .color(aaChartModel.axesTextColor)))
-                
-                
+                            .text(aaChartModel.xAxisTitle)) //y axis title
+                                            
                 aaOptions.xAxis(aaXAxis)
             }
             
@@ -375,8 +371,7 @@ public class AAOptionsConstructor {
                 .enabled(aaChartModel.yAxisLabelsEnabled)
             if aaYAxisLabelsEnabled == true {
                 aaYAxisLabels
-                    .style(AAStyle()
-                            .color(aaChartModel.axesTextColor))
+                    .style(aaChartModel.yAxisLabelsStyle)
             }
             
             let aaYAxis = AAYAxis()
@@ -389,9 +384,7 @@ public class AAOptionsConstructor {
                 .lineWidth(aaChartModel.yAxisLineWidth) //Set the width of the y-axis axis, which is 0 to hide the y-axis axis
                 .visible(aaChartModel.yAxisVisible)
                 .title(AATitle()
-                        .text(aaChartModel.yAxisTitle) //y axis title
-                        .style(AAStyle()
-                                .color(aaChartModel.axesTextColor)))
+                        .text(aaChartModel.yAxisTitle)) //y axis title
             
             aaOptions.yAxis(aaYAxis)
         }

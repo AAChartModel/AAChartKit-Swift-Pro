@@ -144,7 +144,7 @@ class ChartProVC: AABaseChartVC {
         
         let aaXAxis = AAXAxis()
             .visible(true)
-            .type("category")
+            .type(.category)
             .title(AATitle()
                     .text("* 柱子宽度与 GDP 成正比"))
         
@@ -388,7 +388,7 @@ class ChartProVC: AABaseChartVC {
         
         let aaXAxis = AAXAxis()
             .visible(true)
-            .type("category")
+            .type(.category)
         
         let aaYAxis = AAYAxis()
             .visible(true)
@@ -430,7 +430,7 @@ class ChartProVC: AABaseChartVC {
         
         let aaXAxis = AAXAxis()
             .visible(true)
-            .type("category")
+            .type(.category)
         
         let aaYAxis = AAYAxis()
             .visible(true)
@@ -476,7 +476,7 @@ class ChartProVC: AABaseChartVC {
                         .text("1924-2014"))
             .xAxis(AAXAxis()
                     .visible(true)
-                    .type("category")
+                    .type(.category)
                     .categories([
                         "", "1924", "1928", "1932", "1936", "1940", "1944", "1948", "1952", "1956", "1960",
                         "1964", "1968", "1972", "1976", "1980", "1984", "1988", "1992", "1994", "1998",
@@ -499,7 +499,7 @@ class ChartProVC: AABaseChartVC {
                     .text("世界 5 大金字塔"))
             .xAxis(AAXAxis()
                     .visible(true)
-                    .type("category"))
+                    .type(.category))
             .yAxis(AAYAxis()
                     .visible(true)
                     .title(AATitle()
