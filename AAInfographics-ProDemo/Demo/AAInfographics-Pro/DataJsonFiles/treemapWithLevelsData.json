@@ -1,54 +1,56 @@
-[{
+[
+    {
         "id": "A",
         "name": "苹果",
         "color": "#EC2500"
-}, {
+    }, {
         "id": "B",
         "name": "香蕉",
         "color": "#ECE100"
-}, {
+    }, {
         "id": "O",
         "name": "橘子",
         "color": "#EC9800"
-}, {
+    }, {
         "name": "小张",
         "parent": "A",
         "value": 5
-}, {
+    }, {
         "name": "小彭",
         "parent": "A",
         "value": 3
-}, {
+    }, {
         "name": "小潘",
         "parent": "A",
         "value": 4
-}, {
+    }, {
         "name": "小张",
         "parent": "B",
         "value": 4
-}, {
+    }, {
         "name": "小彭",
         "parent": "B",
         "value": 10
-}, {
+    }, {
         "name": "小潘",
         "parent": "B",
         "value": 1
-}, {
+    }, {
         "name": "小张",
         "parent": "O",
         "value": 1
-}, {
+    }, {
         "name": "小彭",
         "parent": "O",
         "value": 3
-}, {
+    }, {
         "name": "小潘",
         "parent": "O",
         "value": 3
-}, {
+    }, {
         "name": "阿苏",
         "parent": "wiki",
         "value": 2,
         "color": "#9EDE00"
-}]
+    }
+]

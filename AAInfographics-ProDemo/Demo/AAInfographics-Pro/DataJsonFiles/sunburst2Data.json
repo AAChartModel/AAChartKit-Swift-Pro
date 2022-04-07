@@ -1,0 +1,499 @@
+[
+  {
+    "name": "(anonymous)",
+    "id": "39",
+    "parent": "38",
+    "value": 16716,
+    "color": "#7cb5ec"
+  },
+  {
+    "name": "a.objectEach",
+    "id": "38",
+    "parent": "37",
+    "value": 16716,
+    "color": "#7cb5ec"
+  },
+  {
+    "name": "u",
+    "id": "37",
+    "parent": "36",
+    "value": 16716,
+    "color": "#7cb5ec"
+  },
+  {
+    "name": "a.merge",
+    "id": "36",
+    "parent": "35",
+    "value": 16716,
+    "color": "#7cb5ec"
+  },
+  {
+    "name": "setOptions",
+    "id": "35",
+    "parent": "34",
+    "value": 16716,
+    "color": "#7cb5ec"
+  },
+  {
+    "name": "init",
+    "id": "34",
+    "parent": "33",
+    "value": 16716,
+    "color": "#7cb5ec"
+  },
+  {
+    "name": "I",
+    "id": "33",
+    "parent": "32",
+    "value": 16716,
+    "color": "#7cb5ec"
+  },
+  {
+    "name": "(anonymous)",
+    "id": "32",
+    "parent": "31",
+    "value": 16716,
+    "color": "#7cb5ec"
+  },
+  {
+    "name": "forEach",
+    "id": "31",
+    "parent": "30",
+    "value": 33116,
+    "color": "#90ed7d"
+  },
+  {
+    "name": "getAxes",
+    "id": "30",
+    "parent": "20",
+    "value": 33116,
+    "color": "#7cb5ec"
+  },
+  {
+    "name": "a.objectEach",
+    "id": "25",
+    "parent": "24",
+    "value": 16416,
+    "color": "#7cb5ec"
+  },
+  {
+    "name": "attr",
+    "id": "24",
+    "parent": "23",
+    "value": 16416,
+    "color": "#7cb5ec"
+  },
+  {
+    "name": "init",
+    "id": "23",
+    "parent": "22",
+    "value": 16416,
+    "color": "#7cb5ec"
+  },
+  {
+    "name": "a.SVGRenderer",
+    "id": "22",
+    "parent": "21",
+    "value": 16416,
+    "color": "#7cb5ec"
+  },
+  {
+    "name": "getContainer",
+    "id": "21",
+    "parent": "20",
+    "value": 32832,
+    "color": "#7cb5ec"
+  },
+  {
+    "name": "forEach",
+    "id": "29",
+    "parent": "28",
+    "value": 16412,
+    "color": "#90ed7d"
+  },
+  {
+    "name": "(anonymous)",
+    "id": "28",
+    "parent": "27",
+    "value": 16412,
+    "color": "#7cb5ec"
+  },
+  {
+    "name": "forEach",
+    "id": "27",
+    "parent": "26",
+    "value": 16412,
+    "color": "#90ed7d"
+  },
+  {
+    "name": "resetMargins",
+    "id": "26",
+    "parent": "20",
+    "value": 16412,
+    "color": "#7cb5ec"
+  },
+  {
+    "name": "E.buildStacks",
+    "id": "83",
+    "parent": "82",
+    "value": 16872,
+    "color": "#7cb5ec"
+  },
+  {
+    "name": "(anonymous)",
+    "id": "82",
+    "parent": "80",
+    "value": 16872,
+    "color": "#7cb5ec"
+  },
+  {
+    "name": "a.fireEvent",
+    "id": "80",
+    "parent": "79",
+    "value": 33304,
+    "color": "#7cb5ec"
+  },
+  {
+    "name": "getSeriesExtremes",
+    "id": "79",
+    "parent": "78",
+    "value": 33304,
+    "color": "#7cb5ec"
+  },
+  {
+    "name": "setTickInterval",
+    "id": "81",
+    "parent": "78",
+    "value": 16632,
+    "color": "#7cb5ec"
+  },
+  {
+    "name": "setScale",
+    "id": "78",
+    "parent": "77",
+    "value": 49936,
+    "color": "#7cb5ec"
+  },
+  {
+    "name": "(anonymous)",
+    "id": "77",
+    "parent": "76",
+    "value": 49936,
+    "color": "#7cb5ec"
+  },
+  {
+    "name": "render",
+    "id": "123",
+    "parent": "122",
+    "value": 17056,
+    "color": "#7cb5ec"
+  },
+  {
+    "name": "(anonymous)",
+    "id": "122",
+    "parent": "76",
+    "value": 17056,
+    "color": "#7cb5ec"
+  },
+  {
+    "name": "forEach",
+    "id": "76",
+    "parent": "47",
+    "value": 66992,
+    "color": "#90ed7d"
+  },
+  {
+    "name": "renderItem",
+    "id": "61",
+    "parent": "60",
+    "value": 16560,
+    "color": "#7cb5ec"
+  },
+  {
+    "name": "forEach",
+    "id": "60",
+    "parent": "55",
+    "value": 16560,
+    "color": "#90ed7d"
+  },
+  {
+    "name": "E.stroke-widthSetter.E.strokeSetter",
+    "id": "70",
+    "parent": "69",
+    "value": 16400,
+    "color": "#7cb5ec"
+  },
+  {
+    "name": "(anonymous)",
+    "id": "69",
+    "parent": "68",
+    "value": 16400,
+    "color": "#7cb5ec"
+  },
+  {
+    "name": "a.objectEach",
+    "id": "68",
+    "parent": "67",
+    "value": 16400,
+    "color": "#7cb5ec"
+  },
+  {
+    "name": "attr",
+    "id": "67",
+    "parent": "55",
+    "value": 16400,
+    "color": "#7cb5ec"
+  },
+  {
+    "name": "positionItems",
+    "id": "71",
+    "parent": "55",
+    "value": 16464,
+    "color": "#7cb5ec"
+  },
+  {
+    "name": "render",
+    "id": "55",
+    "parent": "54",
+    "value": 49424,
+    "color": "#7cb5ec"
+  },
+  {
+    "name": "init",
+    "id": "54",
+    "parent": "53",
+    "value": 49424,
+    "color": "#7cb5ec"
+  },
+  {
+    "name": "a.Legend",
+    "id": "53",
+    "parent": "47",
+    "value": 49424,
+    "color": "#7cb5ec"
+  },
+  {
+    "name": "setTitle",
+    "id": "48",
+    "parent": "47",
+    "value": 16432,
+    "color": "#7cb5ec"
+  },
+  {
+    "name": "buildText",
+    "id": "98",
+    "parent": "97",
+    "value": 16400,
+    "color": "#7cb5ec"
+  },
+  {
+    "name": "add",
+    "id": "97",
+    "parent": "94",
+    "value": 16400,
+    "color": "#7cb5ec"
+  },
+  {
+    "name": "a.numberFormat",
+    "id": "96",
+    "parent": "95",
+    "value": 16400,
+    "color": "#7cb5ec"
+  },
+  {
+    "name": "defaultLabelFormatter",
+    "id": "95",
+    "parent": "94",
+    "value": 16400,
+    "color": "#7cb5ec"
+  },
+  {
+    "name": "addLabel",
+    "id": "94",
+    "parent": "93",
+    "value": 32800,
+    "color": "#7cb5ec"
+  },
+  {
+    "name": "a.Tick",
+    "id": "93",
+    "parent": "92",
+    "value": 32800,
+    "color": "#7cb5ec"
+  },
+  {
+    "name": "generateTick",
+    "id": "92",
+    "parent": "91",
+    "value": 32800,
+    "color": "#7cb5ec"
+  },
+  {
+    "name": "(anonymous)",
+    "id": "91",
+    "parent": "90",
+    "value": 32800,
+    "color": "#7cb5ec"
+  },
+  {
+    "name": "forEach",
+    "id": "90",
+    "parent": "89",
+    "value": 32800,
+    "color": "#90ed7d"
+  },
+  {
+    "name": "a.fireEvent",
+    "id": "108",
+    "parent": "107",
+    "value": 16408,
+    "color": "#7cb5ec"
+  },
+  {
+    "name": "autoLabelAlign",
+    "id": "107",
+    "parent": "105",
+    "value": 16408,
+    "color": "#7cb5ec"
+  },
+  {
+    "name": "renderUnsquish",
+    "id": "105",
+    "parent": "89",
+    "value": 32808,
+    "color": "#7cb5ec"
+  },
+  {
+    "name": "getOffset",
+    "id": "89",
+    "parent": "88",
+    "value": 65608,
+    "color": "#7cb5ec"
+  },
+  {
+    "name": "(anonymous)",
+    "id": "88",
+    "parent": "87",
+    "value": 65608,
+    "color": "#7cb5ec"
+  },
+  {
+    "name": "forEach",
+    "id": "87",
+    "parent": "86",
+    "value": 65608,
+    "color": "#90ed7d"
+  },
+  {
+    "name": "getAxisMargins",
+    "id": "86",
+    "parent": "47",
+    "value": 65608,
+    "color": "#7cb5ec"
+  },
+  {
+    "name": "plotGroup",
+    "id": "140",
+    "parent": "136",
+    "value": 16464,
+    "color": "#7cb5ec"
+  },
+  {
+    "name": "render",
+    "id": "136",
+    "parent": "135",
+    "value": 49948,
+    "color": "#7cb5ec"
+  },
+  {
+    "name": "(anonymous)",
+    "id": "135",
+    "parent": "134",
+    "value": 66860,
+    "color": "#7cb5ec"
+  },
+  {
+    "name": "forEach",
+    "id": "134",
+    "parent": "133",
+    "value": 66860,
+    "color": "#90ed7d"
+  },
+  {
+    "name": "renderSeries",
+    "id": "133",
+    "parent": "47",
+    "value": 66860,
+    "color": "#7cb5ec"
+  },
+  {
+    "name": "render",
+    "id": "47",
+    "parent": "20",
+    "value": 298564,
+    "color": "#7cb5ec"
+  },
+  {
+    "name": "firstRender",
+    "id": "20",
+    "parent": "8",
+    "value": 380924,
+    "color": "#7cb5ec"
+  },
+  {
+    "name": "(anonymous)",
+    "id": "8",
+    "parent": "7",
+    "value": 397316,
+    "color": "#7cb5ec"
+  },
+  {
+    "name": "a.fireEvent",
+    "id": "7",
+    "parent": "6",
+    "value": 397316,
+    "color": "#7cb5ec"
+  },
+  {
+    "name": "init",
+    "id": "6",
+    "parent": "5",
+    "value": 397316,
+    "color": "#7cb5ec"
+  },
+  {
+    "name": "getArgs",
+    "id": "5",
+    "parent": "4",
+    "value": 397316,
+    "color": "#7cb5ec"
+  },
+  {
+    "name": "a.Chart",
+    "id": "4",
+    "parent": "3",
+    "value": 397316,
+    "color": "#7cb5ec"
+  },
+  {
+    "name": "a.chart",
+    "id": "3",
+    "parent": "2",
+    "value": 397316,
+    "color": "#7cb5ec"
+  },
+  {
+    "name": "(anonymous)",
+    "id": "2",
+    "parent": "1",
+    "value": 397316,
+    "color": "#7cb5ec"
+  },
+  {
+    "name": "(root)",
+    "id": "1",
+    "parent": "",
+    "value": 397316,
+    "color": "#90ed7d"
+  }
+]

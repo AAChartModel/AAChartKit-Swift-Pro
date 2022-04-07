@@ -19,31 +19,6 @@
 		44D27D91255A631500D0C636 /* AABaseChartVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D27D7E255A631500D0C636 /* AABaseChartVC.swift */; };
 		44D27DA4255A64A700D0C636 /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D27DA3255A64A700D0C636 /* MainVC.swift */; };
 		44D27DAC255A6C0700D0C636 /* AAJSFiles.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 44D27DAB255A6C0700D0C636 /* AAJSFiles.bundle */; };
-		44D27DCC255A6CE400D0C636 /* packedbubbleSeries.json in Resources */ = {isa = PBXBuildFile; fileRef = 44D27DB2255A6CE300D0C636 /* packedbubbleSeries.json */; };
-		44D27DCD255A6CE400D0C636 /* streamgraphSeries.json in Resources */ = {isa = PBXBuildFile; fileRef = 44D27DB3255A6CE300D0C636 /* streamgraphSeries.json */; };
-		44D27DCE255A6CE400D0C636 /* drilldownTreemapData.json in Resources */ = {isa = PBXBuildFile; fileRef = 44D27DB5255A6CE300D0C636 /* drilldownTreemapData.json */; };
-		44D27DCF255A6CE400D0C636 /* treemapWithColorAxisData.json in Resources */ = {isa = PBXBuildFile; fileRef = 44D27DB6255A6CE400D0C636 /* treemapWithColorAxisData.json */; };
-		44D27DD0255A6CE400D0C636 /* windbarbData.json in Resources */ = {isa = PBXBuildFile; fileRef = 44D27DB7255A6CE400D0C636 /* windbarbData.json */; };
-		44D27DD1255A6CE400D0C636 /* lollipopData.json in Resources */ = {isa = PBXBuildFile; fileRef = 44D27DB8255A6CE400D0C636 /* lollipopData.json */; };
-		44D27DD2255A6CE400D0C636 /* heatmapData.json in Resources */ = {isa = PBXBuildFile; fileRef = 44D27DB9255A6CE400D0C636 /* heatmapData.json */; };
-		44D27DD3255A6CE400D0C636 /* sunburstData.json in Resources */ = {isa = PBXBuildFile; fileRef = 44D27DBA255A6CE400D0C636 /* sunburstData.json */; };
-		44D27DD4255A6CE400D0C636 /* itemData.json in Resources */ = {isa = PBXBuildFile; fileRef = 44D27DBB255A6CE400D0C636 /* itemData.json */; };
-		44D27DD5255A6CE400D0C636 /* columnpyramidData.json in Resources */ = {isa = PBXBuildFile; fileRef = 44D27DBC255A6CE400D0C636 /* columnpyramidData.json */; };
-		44D27DD6255A6CE400D0C636 /* variablepieData.json in Resources */ = {isa = PBXBuildFile; fileRef = 44D27DBD255A6CE400D0C636 /* variablepieData.json */; };
-		44D27DD7255A6CE400D0C636 /* wordcloudData.json in Resources */ = {isa = PBXBuildFile; fileRef = 44D27DBE255A6CE400D0C636 /* wordcloudData.json */; };
-		44D27DD8255A6CE400D0C636 /* bigHeatmapData.json in Resources */ = {isa = PBXBuildFile; fileRef = 44D27DBF255A6CE400D0C636 /* bigHeatmapData.json */; };
-		44D27DD9255A6CE400D0C636 /* bellcurveData.json in Resources */ = {isa = PBXBuildFile; fileRef = 44D27DC0255A6CE400D0C636 /* bellcurveData.json */; };
-		44D27DDA255A6CE400D0C636 /* treemapWithLevelsData.json in Resources */ = {isa = PBXBuildFile; fileRef = 44D27DC1255A6CE400D0C636 /* treemapWithLevelsData.json */; };
-		44D27DDB255A6CE400D0C636 /* sankeyData.json in Resources */ = {isa = PBXBuildFile; fileRef = 44D27DC2255A6CE400D0C636 /* sankeyData.json */; };
-		44D27DDC255A6CE400D0C636 /* timelineData.json in Resources */ = {isa = PBXBuildFile; fileRef = 44D27DC3255A6CE400D0C636 /* timelineData.json */; };
-		44D27DDD255A6CE400D0C636 /* vennData.json in Resources */ = {isa = PBXBuildFile; fileRef = 44D27DC4255A6CE400D0C636 /* vennData.json */; };
-		44D27DDE255A6CE400D0C636 /* variwideData.json in Resources */ = {isa = PBXBuildFile; fileRef = 44D27DC5255A6CE400D0C636 /* variwideData.json */; };
-		44D27DDF255A6CE400D0C636 /* eulerData.json in Resources */ = {isa = PBXBuildFile; fileRef = 44D27DC6255A6CE400D0C636 /* eulerData.json */; };
-		44D27DE0255A6CE400D0C636 /* dumbbellData.json in Resources */ = {isa = PBXBuildFile; fileRef = 44D27DC7255A6CE400D0C636 /* dumbbellData.json */; };
-		44D27DE1255A6CE400D0C636 /* dependencywheelData.json in Resources */ = {isa = PBXBuildFile; fileRef = 44D27DC8255A6CE400D0C636 /* dependencywheelData.json */; };
-		44D27DE2255A6CE400D0C636 /* vectorData.json in Resources */ = {isa = PBXBuildFile; fileRef = 44D27DC9255A6CE400D0C636 /* vectorData.json */; };
-		44D27DE3255A6CE400D0C636 /* tilemapData.json in Resources */ = {isa = PBXBuildFile; fileRef = 44D27DCA255A6CE400D0C636 /* tilemapData.json */; };
-		44D27DE4255A6CE400D0C636 /* networkgraphData.json in Resources */ = {isa = PBXBuildFile; fileRef = 44D27DCB255A6CE400D0C636 /* networkgraphData.json */; };
 		44D27DEB255A6DD100D0C636 /* AAColorAxis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D27DEA255A6DD100D0C636 /* AAColorAxis.swift */; };
 		44D27DF3255A706C00D0C636 /* AALevelsElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D27DF2255A706C00D0C636 /* AALevelsElement.swift */; };
 		44D27DF8255A726400D0C636 /* AAPackedbubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D27DF7255A726400D0C636 /* AAPackedbubble.swift */; };
@@ -82,6 +57,38 @@
 		8441A76126C2568F007EAAA7 /* AAExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8441A75E26C2568E007EAAA7 /* AAExtension.swift */; };
 		8441A76226C2568F007EAAA7 /* AAColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8441A75F26C2568F007EAAA7 /* AAColor.swift */; };
 		8441A76326C2568F007EAAA7 /* AAGradientColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8441A76026C2568F007EAAA7 /* AAGradientColor.swift */; };
+		84A5691127FEC88700883553 /* streamgraphSeries.json in Resources */ = {isa = PBXBuildFile; fileRef = 84A5690F27FEC88700883553 /* streamgraphSeries.json */; };
+		84A5691227FEC88700883553 /* packedbubbleSeries.json in Resources */ = {isa = PBXBuildFile; fileRef = 84A5691027FEC88700883553 /* packedbubbleSeries.json */; };
+		84A5693127FEC89F00883553 /* sankeyData.json in Resources */ = {isa = PBXBuildFile; fileRef = 84A5691327FEC89B00883553 /* sankeyData.json */; };
+		84A5693227FEC89F00883553 /* organizationNodesData.json in Resources */ = {isa = PBXBuildFile; fileRef = 84A5691427FEC89B00883553 /* organizationNodesData.json */; };
+		84A5693327FEC89F00883553 /* lollipopData.json in Resources */ = {isa = PBXBuildFile; fileRef = 84A5691527FEC89B00883553 /* lollipopData.json */; };
+		84A5693427FEC89F00883553 /* networkgraphData.json in Resources */ = {isa = PBXBuildFile; fileRef = 84A5691627FEC89B00883553 /* networkgraphData.json */; };
+		84A5693527FEC89F00883553 /* eulerData.json in Resources */ = {isa = PBXBuildFile; fileRef = 84A5691727FEC89C00883553 /* eulerData.json */; };
+		84A5693627FEC89F00883553 /* wordcloudData.json in Resources */ = {isa = PBXBuildFile; fileRef = 84A5691827FEC89C00883553 /* wordcloudData.json */; };
+		84A5693727FEC89F00883553 /* bigHeatmapData.json in Resources */ = {isa = PBXBuildFile; fileRef = 84A5691927FEC89C00883553 /* bigHeatmapData.json */; };
+		84A5693827FEC89F00883553 /* drilldownTreemapData.json in Resources */ = {isa = PBXBuildFile; fileRef = 84A5691A27FEC89C00883553 /* drilldownTreemapData.json */; };
+		84A5693927FEC89F00883553 /* treemapWithLevelsData.json in Resources */ = {isa = PBXBuildFile; fileRef = 84A5691B27FEC89C00883553 /* treemapWithLevelsData.json */; };
+		84A5693A27FEC89F00883553 /* heatmapData.json in Resources */ = {isa = PBXBuildFile; fileRef = 84A5691C27FEC89C00883553 /* heatmapData.json */; };
+		84A5693B27FEC89F00883553 /* flameData.json in Resources */ = {isa = PBXBuildFile; fileRef = 84A5691D27FEC89C00883553 /* flameData.json */; };
+		84A5693C27FEC89F00883553 /* vennData.json in Resources */ = {isa = PBXBuildFile; fileRef = 84A5691E27FEC89C00883553 /* vennData.json */; };
+		84A5693D27FEC89F00883553 /* organizationData.json in Resources */ = {isa = PBXBuildFile; fileRef = 84A5691F27FEC89D00883553 /* organizationData.json */; };
+		84A5693E27FEC89F00883553 /* bellcurveData.json in Resources */ = {isa = PBXBuildFile; fileRef = 84A5692027FEC89D00883553 /* bellcurveData.json */; };
+		84A5693F27FEC89F00883553 /* variwideData.json in Resources */ = {isa = PBXBuildFile; fileRef = 84A5692127FEC89D00883553 /* variwideData.json */; };
+		84A5694027FEC89F00883553 /* itemData.json in Resources */ = {isa = PBXBuildFile; fileRef = 84A5692227FEC89D00883553 /* itemData.json */; };
+		84A5694127FEC89F00883553 /* tilemapData.json in Resources */ = {isa = PBXBuildFile; fileRef = 84A5692327FEC89D00883553 /* tilemapData.json */; };
+		84A5694227FEC89F00883553 /* variablepieData.json in Resources */ = {isa = PBXBuildFile; fileRef = 84A5692427FEC89D00883553 /* variablepieData.json */; };
+		84A5694327FEC89F00883553 /* sunburst2Data.json in Resources */ = {isa = PBXBuildFile; fileRef = 84A5692527FEC89D00883553 /* sunburst2Data.json */; };
+		84A5694427FEC89F00883553 /* treemapWithColorAxisData.json in Resources */ = {isa = PBXBuildFile; fileRef = 84A5692627FEC89D00883553 /* treemapWithColorAxisData.json */; };
+		84A5694527FEC89F00883553 /* windbarbData.json in Resources */ = {isa = PBXBuildFile; fileRef = 84A5692727FEC89D00883553 /* windbarbData.json */; };
+		84A5694627FEC89F00883553 /* dependencywheelData.json in Resources */ = {isa = PBXBuildFile; fileRef = 84A5692827FEC89E00883553 /* dependencywheelData.json */; };
+		84A5694727FEC89F00883553 /* arcdiagram1Data.json in Resources */ = {isa = PBXBuildFile; fileRef = 84A5692927FEC89E00883553 /* arcdiagram1Data.json */; };
+		84A5694827FEC89F00883553 /* arcdiagram2Data.json in Resources */ = {isa = PBXBuildFile; fileRef = 84A5692A27FEC89E00883553 /* arcdiagram2Data.json */; };
+		84A5694927FEC89F00883553 /* columnpyramidData.json in Resources */ = {isa = PBXBuildFile; fileRef = 84A5692B27FEC89E00883553 /* columnpyramidData.json */; };
+		84A5694A27FEC89F00883553 /* sunburstData.json in Resources */ = {isa = PBXBuildFile; fileRef = 84A5692C27FEC89E00883553 /* sunburstData.json */; };
+		84A5694B27FEC89F00883553 /* timelineData.json in Resources */ = {isa = PBXBuildFile; fileRef = 84A5692D27FEC89E00883553 /* timelineData.json */; };
+		84A5694C27FEC89F00883553 /* dumbbellData.json in Resources */ = {isa = PBXBuildFile; fileRef = 84A5692E27FEC89E00883553 /* dumbbellData.json */; };
+		84A5694D27FEC89F00883553 /* vectorData.json in Resources */ = {isa = PBXBuildFile; fileRef = 84A5692F27FEC89F00883553 /* vectorData.json */; };
+		84A5694E27FEC89F00883553 /* arcdiagram3Data.json in Resources */ = {isa = PBXBuildFile; fileRef = 84A5693027FEC89F00883553 /* arcdiagram3Data.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -121,31 +128,6 @@
 		44D27D7E255A631500D0C636 /* AABaseChartVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AABaseChartVC.swift; sourceTree = "<group>"; };
 		44D27DA3255A64A700D0C636 /* MainVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
 		44D27DAB255A6C0700D0C636 /* AAJSFiles.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AAJSFiles.bundle; sourceTree = "<group>"; };
-		44D27DB2255A6CE300D0C636 /* packedbubbleSeries.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = packedbubbleSeries.json; sourceTree = "<group>"; };
-		44D27DB3255A6CE300D0C636 /* streamgraphSeries.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = streamgraphSeries.json; sourceTree = "<group>"; };
-		44D27DB5255A6CE300D0C636 /* drilldownTreemapData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = drilldownTreemapData.json; sourceTree = "<group>"; };
-		44D27DB6255A6CE400D0C636 /* treemapWithColorAxisData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = treemapWithColorAxisData.json; sourceTree = "<group>"; };
-		44D27DB7255A6CE400D0C636 /* windbarbData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = windbarbData.json; sourceTree = "<group>"; };
-		44D27DB8255A6CE400D0C636 /* lollipopData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = lollipopData.json; sourceTree = "<group>"; };
-		44D27DB9255A6CE400D0C636 /* heatmapData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = heatmapData.json; sourceTree = "<group>"; };
-		44D27DBA255A6CE400D0C636 /* sunburstData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sunburstData.json; sourceTree = "<group>"; };
-		44D27DBB255A6CE400D0C636 /* itemData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = itemData.json; sourceTree = "<group>"; };
-		44D27DBC255A6CE400D0C636 /* columnpyramidData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = columnpyramidData.json; sourceTree = "<group>"; };
-		44D27DBD255A6CE400D0C636 /* variablepieData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = variablepieData.json; sourceTree = "<group>"; };
-		44D27DBE255A6CE400D0C636 /* wordcloudData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = wordcloudData.json; sourceTree = "<group>"; };
-		44D27DBF255A6CE400D0C636 /* bigHeatmapData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = bigHeatmapData.json; sourceTree = "<group>"; };
-		44D27DC0255A6CE400D0C636 /* bellcurveData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = bellcurveData.json; sourceTree = "<group>"; };
-		44D27DC1255A6CE400D0C636 /* treemapWithLevelsData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = treemapWithLevelsData.json; sourceTree = "<group>"; };
-		44D27DC2255A6CE400D0C636 /* sankeyData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sankeyData.json; sourceTree = "<group>"; };
-		44D27DC3255A6CE400D0C636 /* timelineData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = timelineData.json; sourceTree = "<group>"; };
-		44D27DC4255A6CE400D0C636 /* vennData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = vennData.json; sourceTree = "<group>"; };
-		44D27DC5255A6CE400D0C636 /* variwideData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = variwideData.json; sourceTree = "<group>"; };
-		44D27DC6255A6CE400D0C636 /* eulerData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = eulerData.json; sourceTree = "<group>"; };
-		44D27DC7255A6CE400D0C636 /* dumbbellData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = dumbbellData.json; sourceTree = "<group>"; };
-		44D27DC8255A6CE400D0C636 /* dependencywheelData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = dependencywheelData.json; sourceTree = "<group>"; };
-		44D27DC9255A6CE400D0C636 /* vectorData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = vectorData.json; sourceTree = "<group>"; };
-		44D27DCA255A6CE400D0C636 /* tilemapData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = tilemapData.json; sourceTree = "<group>"; };
-		44D27DCB255A6CE400D0C636 /* networkgraphData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = networkgraphData.json; sourceTree = "<group>"; };
 		44D27DEA255A6DD100D0C636 /* AAColorAxis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AAColorAxis.swift; sourceTree = "<group>"; };
 		44D27DF2255A706C00D0C636 /* AALevelsElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AALevelsElement.swift; sourceTree = "<group>"; };
 		44D27DF7255A726400D0C636 /* AAPackedbubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AAPackedbubble.swift; sourceTree = "<group>"; };
@@ -184,6 +166,38 @@
 		8441A75E26C2568E007EAAA7 /* AAExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AAExtension.swift; sourceTree = "<group>"; };
 		8441A75F26C2568F007EAAA7 /* AAColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AAColor.swift; sourceTree = "<group>"; };
 		8441A76026C2568F007EAAA7 /* AAGradientColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AAGradientColor.swift; sourceTree = "<group>"; };
+		84A5690F27FEC88700883553 /* streamgraphSeries.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = streamgraphSeries.json; sourceTree = "<group>"; };
+		84A5691027FEC88700883553 /* packedbubbleSeries.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = packedbubbleSeries.json; sourceTree = "<group>"; };
+		84A5691327FEC89B00883553 /* sankeyData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sankeyData.json; sourceTree = "<group>"; };
+		84A5691427FEC89B00883553 /* organizationNodesData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = organizationNodesData.json; sourceTree = "<group>"; };
+		84A5691527FEC89B00883553 /* lollipopData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = lollipopData.json; sourceTree = "<group>"; };
+		84A5691627FEC89B00883553 /* networkgraphData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = networkgraphData.json; sourceTree = "<group>"; };
+		84A5691727FEC89C00883553 /* eulerData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = eulerData.json; sourceTree = "<group>"; };
+		84A5691827FEC89C00883553 /* wordcloudData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = wordcloudData.json; sourceTree = "<group>"; };
+		84A5691927FEC89C00883553 /* bigHeatmapData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = bigHeatmapData.json; sourceTree = "<group>"; };
+		84A5691A27FEC89C00883553 /* drilldownTreemapData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = drilldownTreemapData.json; sourceTree = "<group>"; };
+		84A5691B27FEC89C00883553 /* treemapWithLevelsData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = treemapWithLevelsData.json; sourceTree = "<group>"; };
+		84A5691C27FEC89C00883553 /* heatmapData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = heatmapData.json; sourceTree = "<group>"; };
+		84A5691D27FEC89C00883553 /* flameData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = flameData.json; sourceTree = "<group>"; };
+		84A5691E27FEC89C00883553 /* vennData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = vennData.json; sourceTree = "<group>"; };
+		84A5691F27FEC89D00883553 /* organizationData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = organizationData.json; sourceTree = "<group>"; };
+		84A5692027FEC89D00883553 /* bellcurveData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = bellcurveData.json; sourceTree = "<group>"; };
+		84A5692127FEC89D00883553 /* variwideData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = variwideData.json; sourceTree = "<group>"; };
+		84A5692227FEC89D00883553 /* itemData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = itemData.json; sourceTree = "<group>"; };
+		84A5692327FEC89D00883553 /* tilemapData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = tilemapData.json; sourceTree = "<group>"; };
+		84A5692427FEC89D00883553 /* variablepieData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = variablepieData.json; sourceTree = "<group>"; };
+		84A5692527FEC89D00883553 /* sunburst2Data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sunburst2Data.json; sourceTree = "<group>"; };
+		84A5692627FEC89D00883553 /* treemapWithColorAxisData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = treemapWithColorAxisData.json; sourceTree = "<group>"; };
+		84A5692727FEC89D00883553 /* windbarbData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = windbarbData.json; sourceTree = "<group>"; };
+		84A5692827FEC89E00883553 /* dependencywheelData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = dependencywheelData.json; sourceTree = "<group>"; };
+		84A5692927FEC89E00883553 /* arcdiagram1Data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = arcdiagram1Data.json; sourceTree = "<group>"; };
+		84A5692A27FEC89E00883553 /* arcdiagram2Data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = arcdiagram2Data.json; sourceTree = "<group>"; };
+		84A5692B27FEC89E00883553 /* columnpyramidData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = columnpyramidData.json; sourceTree = "<group>"; };
+		84A5692C27FEC89E00883553 /* sunburstData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sunburstData.json; sourceTree = "<group>"; };
+		84A5692D27FEC89E00883553 /* timelineData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = timelineData.json; sourceTree = "<group>"; };
+		84A5692E27FEC89E00883553 /* dumbbellData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = dumbbellData.json; sourceTree = "<group>"; };
+		84A5692F27FEC89F00883553 /* vectorData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = vectorData.json; sourceTree = "<group>"; };
+		84A5693027FEC89F00883553 /* arcdiagram3Data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = arcdiagram3Data.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -355,8 +369,8 @@
 		44D27DB1255A6CE300D0C636 /* SeriesJsonFiles */ = {
 			isa = PBXGroup;
 			children = (
-				44D27DB2255A6CE300D0C636 /* packedbubbleSeries.json */,
-				44D27DB3255A6CE300D0C636 /* streamgraphSeries.json */,
+				84A5691027FEC88700883553 /* packedbubbleSeries.json */,
+				84A5690F27FEC88700883553 /* streamgraphSeries.json */,
 			);
 			path = SeriesJsonFiles;
 			sourceTree = "<group>";
@@ -364,29 +378,36 @@
 		44D27DB4255A6CE300D0C636 /* DataJsonFiles */ = {
 			isa = PBXGroup;
 			children = (
-				44D27DB5255A6CE300D0C636 /* drilldownTreemapData.json */,
-				44D27DB6255A6CE400D0C636 /* treemapWithColorAxisData.json */,
-				44D27DB7255A6CE400D0C636 /* windbarbData.json */,
-				44D27DB8255A6CE400D0C636 /* lollipopData.json */,
-				44D27DB9255A6CE400D0C636 /* heatmapData.json */,
-				44D27DBA255A6CE400D0C636 /* sunburstData.json */,
-				44D27DBB255A6CE400D0C636 /* itemData.json */,
-				44D27DBC255A6CE400D0C636 /* columnpyramidData.json */,
-				44D27DBD255A6CE400D0C636 /* variablepieData.json */,
-				44D27DBE255A6CE400D0C636 /* wordcloudData.json */,
-				44D27DBF255A6CE400D0C636 /* bigHeatmapData.json */,
-				44D27DC0255A6CE400D0C636 /* bellcurveData.json */,
-				44D27DC1255A6CE400D0C636 /* treemapWithLevelsData.json */,
-				44D27DC2255A6CE400D0C636 /* sankeyData.json */,
-				44D27DC3255A6CE400D0C636 /* timelineData.json */,
-				44D27DC4255A6CE400D0C636 /* vennData.json */,
-				44D27DC5255A6CE400D0C636 /* variwideData.json */,
-				44D27DC6255A6CE400D0C636 /* eulerData.json */,
-				44D27DC7255A6CE400D0C636 /* dumbbellData.json */,
-				44D27DC8255A6CE400D0C636 /* dependencywheelData.json */,
-				44D27DC9255A6CE400D0C636 /* vectorData.json */,
-				44D27DCA255A6CE400D0C636 /* tilemapData.json */,
-				44D27DCB255A6CE400D0C636 /* networkgraphData.json */,
+				84A5692927FEC89E00883553 /* arcdiagram1Data.json */,
+				84A5692A27FEC89E00883553 /* arcdiagram2Data.json */,
+				84A5693027FEC89F00883553 /* arcdiagram3Data.json */,
+				84A5692027FEC89D00883553 /* bellcurveData.json */,
+				84A5691927FEC89C00883553 /* bigHeatmapData.json */,
+				84A5692B27FEC89E00883553 /* columnpyramidData.json */,
+				84A5692827FEC89E00883553 /* dependencywheelData.json */,
+				84A5691A27FEC89C00883553 /* drilldownTreemapData.json */,
+				84A5692E27FEC89E00883553 /* dumbbellData.json */,
+				84A5691727FEC89C00883553 /* eulerData.json */,
+				84A5691D27FEC89C00883553 /* flameData.json */,
+				84A5691C27FEC89C00883553 /* heatmapData.json */,
+				84A5692227FEC89D00883553 /* itemData.json */,
+				84A5691527FEC89B00883553 /* lollipopData.json */,
+				84A5691627FEC89B00883553 /* networkgraphData.json */,
+				84A5691F27FEC89D00883553 /* organizationData.json */,
+				84A5691427FEC89B00883553 /* organizationNodesData.json */,
+				84A5691327FEC89B00883553 /* sankeyData.json */,
+				84A5692527FEC89D00883553 /* sunburst2Data.json */,
+				84A5692C27FEC89E00883553 /* sunburstData.json */,
+				84A5692327FEC89D00883553 /* tilemapData.json */,
+				84A5692D27FEC89E00883553 /* timelineData.json */,
+				84A5692627FEC89D00883553 /* treemapWithColorAxisData.json */,
+				84A5691B27FEC89C00883553 /* treemapWithLevelsData.json */,
+				84A5692427FEC89D00883553 /* variablepieData.json */,
+				84A5692127FEC89D00883553 /* variwideData.json */,
+				84A5692F27FEC89F00883553 /* vectorData.json */,
+				84A5691E27FEC89C00883553 /* vennData.json */,
+				84A5692727FEC89D00883553 /* windbarbData.json */,
+				84A5691827FEC89C00883553 /* wordcloudData.json */,
 			);
 			path = DataJsonFiles;
 			sourceTree = "<group>";
@@ -506,35 +527,42 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84A5693E27FEC89F00883553 /* bellcurveData.json in Resources */,
+				84A5691127FEC88700883553 /* streamgraphSeries.json in Resources */,
+				84A5694227FEC89F00883553 /* variablepieData.json in Resources */,
+				84A5693927FEC89F00883553 /* treemapWithLevelsData.json in Resources */,
+				84A5693A27FEC89F00883553 /* heatmapData.json in Resources */,
+				84A5693127FEC89F00883553 /* sankeyData.json in Resources */,
+				84A5694327FEC89F00883553 /* sunburst2Data.json in Resources */,
+				84A5693727FEC89F00883553 /* bigHeatmapData.json in Resources */,
+				84A5694E27FEC89F00883553 /* arcdiagram3Data.json in Resources */,
+				84A5694927FEC89F00883553 /* columnpyramidData.json in Resources */,
+				84A5693D27FEC89F00883553 /* organizationData.json in Resources */,
+				84A5693227FEC89F00883553 /* organizationNodesData.json in Resources */,
+				84A5693C27FEC89F00883553 /* vennData.json in Resources */,
+				84A5693827FEC89F00883553 /* drilldownTreemapData.json in Resources */,
+				84A5693627FEC89F00883553 /* wordcloudData.json in Resources */,
+				84A5694527FEC89F00883553 /* windbarbData.json in Resources */,
+				84A5694127FEC89F00883553 /* tilemapData.json in Resources */,
 				44D27C7F255A3CB300D0C636 /* LaunchScreen.storyboard in Resources */,
+				84A5694427FEC89F00883553 /* treemapWithColorAxisData.json in Resources */,
+				84A5694827FEC89F00883553 /* arcdiagram2Data.json in Resources */,
+				84A5694727FEC89F00883553 /* arcdiagram1Data.json in Resources */,
+				84A5694027FEC89F00883553 /* itemData.json in Resources */,
 				44D27C7C255A3CB300D0C636 /* Assets.xcassets in Resources */,
-				44D27DE4255A6CE400D0C636 /* networkgraphData.json in Resources */,
-				44D27DE2255A6CE400D0C636 /* vectorData.json in Resources */,
+				84A5693427FEC89F00883553 /* networkgraphData.json in Resources */,
+				84A5693F27FEC89F00883553 /* variwideData.json in Resources */,
+				84A5693327FEC89F00883553 /* lollipopData.json in Resources */,
+				84A5694A27FEC89F00883553 /* sunburstData.json in Resources */,
 				44D27DAC255A6C0700D0C636 /* AAJSFiles.bundle in Resources */,
-				44D27DCD255A6CE400D0C636 /* streamgraphSeries.json in Resources */,
-				44D27DDB255A6CE400D0C636 /* sankeyData.json in Resources */,
-				44D27DDF255A6CE400D0C636 /* eulerData.json in Resources */,
-				44D27DD9255A6CE400D0C636 /* bellcurveData.json in Resources */,
-				44D27DD0255A6CE400D0C636 /* windbarbData.json in Resources */,
-				44D27DD3255A6CE400D0C636 /* sunburstData.json in Resources */,
-				44D27DE3255A6CE400D0C636 /* tilemapData.json in Resources */,
-				44D27DDC255A6CE400D0C636 /* timelineData.json in Resources */,
-				44D27DDE255A6CE400D0C636 /* variwideData.json in Resources */,
-				44D27DCE255A6CE400D0C636 /* drilldownTreemapData.json in Resources */,
-				44D27DDD255A6CE400D0C636 /* vennData.json in Resources */,
-				44D27DDA255A6CE400D0C636 /* treemapWithLevelsData.json in Resources */,
-				44D27DD7255A6CE400D0C636 /* wordcloudData.json in Resources */,
-				44D27DCF255A6CE400D0C636 /* treemapWithColorAxisData.json in Resources */,
-				44D27DD5255A6CE400D0C636 /* columnpyramidData.json in Resources */,
+				84A5691227FEC88700883553 /* packedbubbleSeries.json in Resources */,
+				84A5693B27FEC89F00883553 /* flameData.json in Resources */,
+				84A5693527FEC89F00883553 /* eulerData.json in Resources */,
+				84A5694D27FEC89F00883553 /* vectorData.json in Resources */,
+				84A5694627FEC89F00883553 /* dependencywheelData.json in Resources */,
 				44D27C7A255A3CAF00D0C636 /* Main.storyboard in Resources */,
-				44D27DD2255A6CE400D0C636 /* heatmapData.json in Resources */,
-				44D27DE0255A6CE400D0C636 /* dumbbellData.json in Resources */,
-				44D27DE1255A6CE400D0C636 /* dependencywheelData.json in Resources */,
-				44D27DD6255A6CE400D0C636 /* variablepieData.json in Resources */,
-				44D27DD1255A6CE400D0C636 /* lollipopData.json in Resources */,
-				44D27DCC255A6CE400D0C636 /* packedbubbleSeries.json in Resources */,
-				44D27DD4255A6CE400D0C636 /* itemData.json in Resources */,
-				44D27DD8255A6CE400D0C636 /* bigHeatmapData.json in Resources */,
+				84A5694C27FEC89F00883553 /* dumbbellData.json in Resources */,
+				84A5694B27FEC89F00883553 /* timelineData.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

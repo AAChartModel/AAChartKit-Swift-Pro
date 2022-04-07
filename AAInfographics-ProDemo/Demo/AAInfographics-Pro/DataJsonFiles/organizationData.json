@@ -1,0 +1,13 @@
+[
+    ["股东", "董事会"],
+    ["董事会", "CEO"],
+    ["CEO", "CTO"],
+    ["CEO", "CPO"],
+    ["CEO", "CSO"],
+    ["CEO", "CMO"],
+    ["CEO", "HR"],
+    ["CTO", "Product"],
+    ["CTO", "Web"],
+    ["CSO", "Sales"],
+    ["CMO", "Market"]
+]

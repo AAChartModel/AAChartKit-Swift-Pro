@@ -1,29 +1,38 @@
-[{
+[
+    {
         "name": "A",
         "value": 6,
+        "color": "url(#highcharts-default-pattern-0)",
         "colorValue": 1
-}, {
+    }, {
         "name": "B",
         "value": 6,
+        "color": "url(#highcharts-default-pattern-1)",
         "colorValue": 2
-}, {
+    }, {
         "name": "C",
         "value": 4,
+        "color": "url(#highcharts-default-pattern-2)",
         "colorValue": 3
-}, {
+    }, {
         "name": "D",
         "value": 3,
+        "color": "url(#highcharts-default-pattern-3)",
         "colorValue": 4
-}, {
+    }, {
         "name": "E",
         "value": 2,
+        "color": "url(#highcharts-default-pattern-4)",
         "colorValue": 5
-}, {
+    }, {
         "name": "F",
         "value": 2,
+        "color": "url(#highcharts-default-pattern-5)",
         "colorValue": 6
-}, {
+    }, {
         "name": "G",
         "value": 1,
+        "color": "url(#highcharts-default-pattern-6)",
         "colorValue": 7
-}]
+    }
+]
