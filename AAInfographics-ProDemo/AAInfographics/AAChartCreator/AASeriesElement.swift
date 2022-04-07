@@ -67,7 +67,7 @@
     public var dataSorting: AADataSorting?
     public var reversed: Bool?             //Only useful for pyramid chart and funnel chart
     
-    public var levels: [AALevels]?
+    public var levels: [AALevelsElement]?
     public var allowDrillToNode: Bool?
     public var xAxis: Int?
     public var baseSeries: Int?
@@ -284,7 +284,7 @@
     }
     
     @discardableResult
-    public func levels(_ prop: [AALevels]) -> AASeriesElement {
+    public func levels(_ prop: [AALevelsElement]) -> AASeriesElement {
         levels = prop
         return self
     }

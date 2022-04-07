@@ -11,7 +11,7 @@ public class AAColorAxis: AAObject {
     public var min: Any?
     public var minColor: String?
     public var maxColor: String?
-    public var dataClasses: [AADataClasses]?
+    public var dataClasses: [AADataClassesElement]?
     
     @discardableResult
     public func min(_ prop: Any?) -> AAColorAxis {
@@ -32,7 +32,7 @@ public class AAColorAxis: AAObject {
     }
     
     @discardableResult
-    public func dataClasses(_ prop: [AADataClasses]?) -> AAColorAxis {
+    public func dataClasses(_ prop: [AADataClassesElement]?) -> AAColorAxis {
         dataClasses = prop
         return self
     }
@@ -43,32 +43,32 @@ public class AAColorAxis: AAObject {
     
 }
 
-public class AADataClasses: AAObject {
+public class AADataClassesElement: AAObject {
     public var from: Any?
     public var to: Any?
     public var color: String?
     public var name: String?
     
     @discardableResult
-    public func from(_ prop: Any?) -> AADataClasses {
+    public func from(_ prop: Any?) -> AADataClassesElement {
         from = prop
         return self
     }
     
     @discardableResult
-    public func to(_ prop: Any?) -> AADataClasses {
+    public func to(_ prop: Any?) -> AADataClassesElement {
         to = prop
         return self
     }
     
     @discardableResult
-    public func color(_ prop: String?) -> AADataClasses {
+    public func color(_ prop: String?) -> AADataClassesElement {
         color = prop
         return self
     }
     
     @discardableResult
-    public func name(_ prop: String?) -> AADataClasses {
+    public func name(_ prop: String?) -> AADataClassesElement {
         name = prop
         return self
     }

@@ -117,7 +117,7 @@ class ChartProVC: AABaseChartVC {
                 AASeriesElement()
                     .type(.treemap)
                     .levels([
-                        AALevels()
+                        AALevelsElement()
                             .level(1)
                             .layoutAlgorithm("sliceAndDice")
                             .dataLabels(AADataLabels()
@@ -195,18 +195,18 @@ class ChartProVC: AABaseChartVC {
             AASeriesElement()
                 .allowDrillToNode(true)
                 .levels([
-                    AALevels()
+                    AALevelsElement()
                         .level(2)
                         .colorByPoint(true)
                         .layoutAlgorithm("sliceAndDice")
                     ,
-                    AALevels()
+                    AALevelsElement()
                         .level(3)
                         .colorVariation(AAColorVariation()
                                             .key("brightness")
                                             .to(-0.5))
                     ,
-                    AALevels()
+                    AALevelsElement()
                         .level(4)
                         .colorVariation(AAColorVariation()
                                             .key("brightness")
@@ -527,22 +527,22 @@ class ChartProVC: AABaseChartVC {
                     .visible(false))
             .colorAxis(AAColorAxis()
                         .dataClasses([
-                            AADataClasses()
+                            AADataClassesElement()
                                 .from(0)
                                 .to(1000000)
                                 .color("#F9EDB3")
                                 .name("< 1M"),
-                            AADataClasses()
+                            AADataClassesElement()
                                 .from(1000000)
                                 .to(5000000)
                                 .color("#FFC428")
                                 .name("1M - 5M"),
-                            AADataClasses()
+                            AADataClassesElement()
                                 .from(5000000)
                                 .to(20000000)
                                 .color("#F9EDB3")
                                 .name("5M - 20M"),
-                            AADataClasses()
+                            AADataClassesElement()
                                 .from(20000000)
                                 .color("#FF2371")
                                 .name("> 20M"),
@@ -598,7 +598,7 @@ class ChartProVC: AABaseChartVC {
                 AASeriesElement()
                     .type(.treemap)
                     .levels([
-                        AALevels()
+                        AALevelsElement()
                             .level(1)
                             .dataLabels(AADataLabels()
                                             .enabled(true))

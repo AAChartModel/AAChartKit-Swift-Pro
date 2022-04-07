@@ -45,7 +45,7 @@
 		44D27DE3255A6CE400D0C636 /* tilemapData.json in Resources */ = {isa = PBXBuildFile; fileRef = 44D27DCA255A6CE400D0C636 /* tilemapData.json */; };
 		44D27DE4255A6CE400D0C636 /* networkgraphData.json in Resources */ = {isa = PBXBuildFile; fileRef = 44D27DCB255A6CE400D0C636 /* networkgraphData.json */; };
 		44D27DEB255A6DD100D0C636 /* AAColorAxis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D27DEA255A6DD100D0C636 /* AAColorAxis.swift */; };
-		44D27DF3255A706C00D0C636 /* AALevels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D27DF2255A706C00D0C636 /* AALevels.swift */; };
+		44D27DF3255A706C00D0C636 /* AALevelsElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D27DF2255A706C00D0C636 /* AALevelsElement.swift */; };
 		44D27DF8255A726400D0C636 /* AAPackedbubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D27DF7255A726400D0C636 /* AAPackedbubble.swift */; };
 		44D27DFD255A733D00D0C636 /* AATreemap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D27DFC255A733D00D0C636 /* AATreemap.swift */; };
 		44D27E02255A735700D0C636 /* AALayoutAlgorithm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D27E01255A735700D0C636 /* AALayoutAlgorithm.swift */; };
@@ -147,7 +147,7 @@
 		44D27DCA255A6CE400D0C636 /* tilemapData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = tilemapData.json; sourceTree = "<group>"; };
 		44D27DCB255A6CE400D0C636 /* networkgraphData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = networkgraphData.json; sourceTree = "<group>"; };
 		44D27DEA255A6DD100D0C636 /* AAColorAxis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AAColorAxis.swift; sourceTree = "<group>"; };
-		44D27DF2255A706C00D0C636 /* AALevels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AALevels.swift; sourceTree = "<group>"; };
+		44D27DF2255A706C00D0C636 /* AALevelsElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AALevelsElement.swift; sourceTree = "<group>"; };
 		44D27DF7255A726400D0C636 /* AAPackedbubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AAPackedbubble.swift; sourceTree = "<group>"; };
 		44D27DFC255A733D00D0C636 /* AATreemap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AATreemap.swift; sourceTree = "<group>"; };
 		44D27E01255A735700D0C636 /* AALayoutAlgorithm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AALayoutAlgorithm.swift; sourceTree = "<group>"; };
@@ -395,7 +395,7 @@
 			isa = PBXGroup;
 			children = (
 				44D27DEA255A6DD100D0C636 /* AAColorAxis.swift */,
-				44D27DF2255A706C00D0C636 /* AALevels.swift */,
+				44D27DF2255A706C00D0C636 /* AALevelsElement.swift */,
 				44D27DF7255A726400D0C636 /* AAPackedbubble.swift */,
 				44D27DFC255A733D00D0C636 /* AATreemap.swift */,
 				44D27E01255A735700D0C636 /* AALayoutAlgorithm.swift */,
@@ -602,7 +602,7 @@
 				8441A75126C2565A007EAAA7 /* AAStates.swift in Sources */,
 				8441A75A26C25665007EAAA7 /* AAOptions.swift in Sources */,
 				44D27E07255A793200D0C636 /* AAOptionsData.swift in Sources */,
-				44D27DF3255A706C00D0C636 /* AALevels.swift in Sources */,
+				44D27DF3255A706C00D0C636 /* AALevelsElement.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

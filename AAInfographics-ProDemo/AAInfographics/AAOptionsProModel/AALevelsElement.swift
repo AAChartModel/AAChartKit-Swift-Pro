@@ -7,7 +7,7 @@
 
 import UIKit
 
-public class AALevels: AAObject {
+public class AALevelsElement: AAObject {
     public var borderColor: String?
     public var borderDashStyle: String?
     public var borderWidth: Any?
@@ -20,61 +20,61 @@ public class AALevels: AAObject {
     public var colorVariation: Any?
     
     @discardableResult
-    public func borderColor(_ prop: String?) -> AALevels {
+    public func borderColor(_ prop: String?) -> AALevelsElement {
         borderColor = prop
         return self
     }
     
     @discardableResult
-    public func borderDashStyle(_ prop: String?) -> AALevels {
+    public func borderDashStyle(_ prop: String?) -> AALevelsElement {
         borderDashStyle = prop
         return self
     }
     
     @discardableResult
-    public func borderWidth(_ prop: Any?) -> AALevels {
+    public func borderWidth(_ prop: Any?) -> AALevelsElement {
         borderWidth = prop
         return self
     }
     
     @discardableResult
-    public func color(_ prop: String?) -> AALevels {
+    public func color(_ prop: String?) -> AALevelsElement {
         color = prop
         return self
     }
     
     @discardableResult
-    public func colorByPoint(_ prop: Any?) -> AALevels {
+    public func colorByPoint(_ prop: Any?) -> AALevelsElement {
         colorByPoint = prop
         return self
     }
     
     @discardableResult
-    public func dataLabels(_ prop: AADataLabels?) -> AALevels {
+    public func dataLabels(_ prop: AADataLabels?) -> AALevelsElement {
         dataLabels = prop
         return self
     }
     
     @discardableResult
-    public func layoutAlgorithm(_ prop: String?) -> AALevels {
+    public func layoutAlgorithm(_ prop: String?) -> AALevelsElement {
         layoutAlgorithm = prop
         return self
     }
     
     @discardableResult
-    public func layoutStartingDirection(_ prop: String?) -> AALevels {
+    public func layoutStartingDirection(_ prop: String?) -> AALevelsElement {
         layoutStartingDirection = prop
         return self
     }
     
     @discardableResult
-    public func level(_ prop: Any?) -> AALevels {
+    public func level(_ prop: Any?) -> AALevelsElement {
         level = prop
         return self
     }
     
     @discardableResult
-    public func colorVariation(_ prop: AAColorVariation?) -> AALevels {
+    public func colorVariation(_ prop: AAColorVariation?) -> AALevelsElement {
         colorVariation = prop
         return self
     }
