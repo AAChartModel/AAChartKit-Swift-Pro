@@ -861,7 +861,7 @@ class ChartProVC: AABaseChartVC {
                 .text("Main train connections in Europe"))
             .series([
                 AASeriesElement()
-                    .keys(["from", "to", "weight", ])
+                    .keys(["from", "to", "weight"])
                     .type(.arcdiagram)
                     .name("Train connections")
                     .linkWeight(1)
@@ -885,7 +885,7 @@ class ChartProVC: AABaseChartVC {
             .series([
                 AASeriesElement()
                     .linkWeight(1)
-                    .keys(["from", "to", "weight", ])
+                    .keys(["from", "to", "weight"])
                     .type(.arcdiagram)
                     .marker(AAMarker()
                         .symbol(AAChartSymbolType.triangle.rawValue)
@@ -911,7 +911,7 @@ class ChartProVC: AABaseChartVC {
                 .text("Highcharts Inverted Arc Diagram"))
             .series([
                 AASeriesElement()
-                    .keys(["from", "to", "weight", ])
+                    .keys(["from", "to", "weight"])
 //                    .centerPos("50%")
                     .type(.arcdiagram)
                     .dataLabels(AADataLabels()
