@@ -323,7 +323,7 @@ class ChartProVC: AABaseChartVC {
                                             .zMax(1000)
                                             .layoutAlgorithm(AALayoutAlgorithm() //packedbubbleChart 和 packedbubbleSplitChart 只有layoutAlgorithm这一段不一样
                                                                 .gravitationalConstant(0.02)
-                                                                .splitSeries("false")
+                                                                .splitSeries(false)
                                             )
                                             .dataLabels(AADataLabels()
                                                             .enabled(true)
@@ -354,7 +354,7 @@ class ChartProVC: AABaseChartVC {
                                             .zMax(1000)
                                             .layoutAlgorithm(AALayoutAlgorithm() //packedbubbleChart 和 packedbubbleSplitChart 只有layoutAlgorithm这一段不一样
                                                                 .gravitationalConstant(0.05)
-                                                                .splitSeries("true")
+                                                                .splitSeries(true)
                                                                 .seriesInteraction(false)
                                                                 .dragBetweenSeries(true)
                                                                 .parentNodeLimit(true))
