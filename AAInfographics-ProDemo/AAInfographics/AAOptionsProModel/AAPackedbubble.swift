@@ -14,6 +14,7 @@ public class AAPackedbubble: AAObject {
     public var zMax: Any?
     public var layoutAlgorithm: AALayoutAlgorithm?
     public var dataLabels: AADataLabels?
+    public var useSimulation: Bool?
     
     @discardableResult
     public func minSize(_ prop: String?) -> AAPackedbubble {
@@ -48,6 +49,12 @@ public class AAPackedbubble: AAObject {
     @discardableResult
     public func dataLabels(_ prop: AADataLabels?) -> AAPackedbubble {
         dataLabels = prop
+        return self
+    }
+    
+    @discardableResult
+    public func useSimulation(_ prop: Bool?) -> AAPackedbubble {
+        useSimulation = prop
         return self
     }
     
