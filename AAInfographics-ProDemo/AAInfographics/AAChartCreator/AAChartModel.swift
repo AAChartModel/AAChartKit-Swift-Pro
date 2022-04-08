@@ -112,6 +112,10 @@ public enum AAChartType: String {
     case windbarb
     case networkgraph
     case wordcloud
+    
+    case organization;
+    case arcdiagram;
+    case flame;
 }
 
 public enum AAChartLayoutType: String {
