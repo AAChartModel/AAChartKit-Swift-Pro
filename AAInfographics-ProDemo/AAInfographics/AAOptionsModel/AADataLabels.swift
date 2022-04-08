@@ -56,7 +56,10 @@ public class AADataLabels: AAObject {
     public var overflow: String?
     public var filter: AAFilter?
     public var textPath: AATextPath?
-    
+    public var linkTextPath: AATextPath?
+    public var padding: Float? //When either the borderWidth or the backgroundColor is set, this is the padding within the box. Defaults to 5.
+    public var nodeFormat: String? //The format string specifying what to show for nodes in the sankey diagram. By default the nodeFormatter returns {point.name}. Defaults to undefined.
+
     
     @discardableResult
     public func enabled(_ prop: Bool?) -> AADataLabels {
@@ -195,6 +198,24 @@ public class AADataLabels: AAObject {
     @discardableResult
     public func textPath(_ prop: AATextPath?) -> AADataLabels {
         textPath = prop
+        return self
+    }
+    
+    @discardableResult
+    public func linkTextPath(_ prop: AATextPath?) -> AADataLabels {
+        linkTextPath = prop
+        return self
+    }
+    
+    @discardableResult
+    public func padding(_ prop: Float?) -> AADataLabels {
+        padding = prop
+        return self
+    }
+    
+    @discardableResult
+    public func nodeFormat(_ prop: String?) -> AADataLabels {
+        nodeFormat = prop
         return self
     }
     
