@@ -52,6 +52,8 @@ public class AAYAxis: AAObject {
     public var allowDecimals: Bool? // Does the y-axis allow decimals to be displayed?
     public var max: Double? // y-axis maximum
     public var min: Double? // y-axis minimum  (set to 0, there will be no negative numbers)
+    public var maxPadding: Float? //Padding of the max value relative to the length of the axis. A padding of 0.05 will make a 100px axis 5px longer. This is useful when you don't want the highest data value to appear on the edge of the plot area. When the axis' max option is set or a max extreme is set using axis.setExtremes(), the maxPadding will be ignored. Defaults to 0.01.
+    public var minPadding: Float? //Padding of the min value relative to the length of the axis. A padding of 0.05 will make a 100px axis 5px longer. This is useful when you don't want the lowest data value to appear on the edge of the plot area.  Defaults to 0.05
     // private var minPadding: // Padding of the min value relative to the length of the axis. A padding of 0.05 will make a 100px axis 5px longer. This is useful when you don't want the lowest data value to appear on the edge of the plot area. The default is: 0.05.
     public var minTickInterval: Int? //The minimum tick interval allowed in axis values. For example on zooming in on an axis with daily data, this can be used to prevent the axis from showing hours. Defaults to the closest distance between two points on the axis.
     public var minorGridLineColor: String? //Color of the minor, secondary grid lines.
@@ -191,6 +193,18 @@ public class AAYAxis: AAObject {
     @discardableResult
     public func min(_ prop: Double?) -> AAYAxis {
         min = prop
+        return self
+    }
+    
+    @discardableResult
+    public func maxPadding(_ prop: Float?) -> AAYAxis {
+        maxPadding = prop
+        return self
+    }
+    
+    @discardableResult
+    public func minPadding(_ prop: Float?) -> AAYAxis {
+        minPadding = prop
         return self
     }
     
