@@ -30,7 +30,7 @@
  
  */
 
- public class AASeriesElement: AAObject {
+public class AASeriesElement: AAObject {
     public var type: String?               //A chart type series. If the type option is not specified, it is inherited from `chart.type`.
     public var name: String?               //The name of the series as shown in the legend, tooltip etc.
     public var data: [Any]?                //An array of data points for the series
@@ -71,7 +71,15 @@
     public var allowDrillToNode: Bool?
     public var xAxis: Int?
     public var baseSeries: Int?
-    
+     
+    public var nodes: [Any]?
+    public var nodeWidth: Float?
+    public var cursor: String?
+    public var offset: String?            //The offset of an arc diagram nodes column in relation to the plotArea. The offset equal to 50% places nodes in the center of a chart. By default the series is placed so that the biggest node is touching the bottom border of the plotArea. Defaults to '100%'.
+    public var linkWeight: Int?           //The global link weight. If not set, width is calculated per link, depending on the weight value. Defaults to undefined.
+    public var centeredLinks: Bool?       //The option to center links rather than position them one after another. Defaults to false.
+     
+
     
     @discardableResult
     public func type(_ prop: AAChartType) -> AASeriesElement {
@@ -304,6 +312,42 @@
     @discardableResult
     public func baseSeries(_ prop: Int) -> AASeriesElement {
         baseSeries = prop
+        return self
+    }
+     
+    @discardableResult
+    public func nodes(_ prop: [Any]) -> AASeriesElement {
+        nodes = prop
+        return self
+    }
+    
+    @discardableResult
+    public func nodeWidth(_ prop: Float) -> AASeriesElement {
+        nodeWidth = prop
+        return self
+    }
+    
+    @discardableResult
+    public func cursor(_ prop: String) -> AASeriesElement {
+        cursor = prop
+        return self
+    }
+    
+    @discardableResult
+    public func offset(_ prop: String) -> AASeriesElement {
+        offset = prop
+        return self
+    }
+    
+    @discardableResult
+    public func linkWeight(_ prop: Int) -> AASeriesElement {
+        linkWeight = prop
+        return self
+    }
+    
+    @discardableResult
+    public func centeredLinks(_ prop: Bool) -> AASeriesElement {
+        centeredLinks = prop
         return self
     }
 
