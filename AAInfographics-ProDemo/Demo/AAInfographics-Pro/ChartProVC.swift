@@ -818,7 +818,7 @@ class ChartProVC: AABaseChartVC {
                     .type(.organization)
                     .name("Highsoft")
                     .keys(["from", "to"])
-//                    .data()
+                    .data(AAOptionsData.organizationData)
                     .levels([
                         AALevelsElement()
                             .level(0)
@@ -841,7 +841,7 @@ class ChartProVC: AABaseChartVC {
                             .level(4)
                             .color("#359154")
                         ])
-//                    .nodes()
+//                    .nodes(AAOptionsData.organizationNodesData)
                     .colorByPoint(false)
                     .color("#007ad0")
                     .dataLabels(AADataLabels()
@@ -872,7 +872,7 @@ class ChartProVC: AABaseChartVC {
                         .align(.left)
                         .color(AAColor.black))
 //                    .offset("65%")
-//                    .data([])
+                    .data(AAOptionsData.arcdiagram1Data)
                 ])
     }
     
@@ -899,7 +899,7 @@ class ChartProVC: AABaseChartVC {
 //                        .linkTextPath(AATextPath()
 //                            .enabled(true))
                                )
-//                    .data([])
+                    .data(AAOptionsData.arcdiagram2Data)
                 ])
     }
     
@@ -923,7 +923,7 @@ class ChartProVC: AABaseChartVC {
 //                        .padding(0)
                                )
 //                    .offset("60%")
-//                    .data([])
+                    .data(AAOptionsData.arcdiagram3Data)
                 ])
     }
     
@@ -962,14 +962,14 @@ class ChartProVC: AABaseChartVC {
             .series([
                 AASeriesElement()
                     .type(.flame)
-                    .data([])
+                    .data(AAOptionsData.flameData)
                     .yAxis(1)
                     .xAxis(1),
                 AASeriesElement()
 //                    .visible(false)
                     .size("100%")
                     .type(.sunburst)
-                    .data([])
+                    .data(AAOptionsData.sunburst2Data)
                     .allowDrillToNode(true)
 //                    .cursor("pointer")
                     .levels([
@@ -981,8 +981,7 @@ class ChartProVC: AABaseChartVC {
                         ])
                     .dataLabels(AADataLabels()
                         .textPath(AATextPath()
-//                            .attributes(AAAttributes()
-//                                .dy(5))
+                            .attributes(["dy": 5])
                             .enabled(true)))
                 ])
             .tooltip(AATooltip()
