@@ -95,6 +95,40 @@ class AAOptionsData {
     public class var eulerData : [Any] {
         getJsonDataWithJsonFileName("eulerData")
     }
+
+    
+    public class var organizationData : [Any] {
+        getJsonDataWithJsonFileName("organizationData")
+    }
+    
+    public class var organizationLevelsData : [Any] {
+        getJsonDataWithJsonFileName("organizationLevelsData")
+    }
+    
+    public class var organizationNodesData : [Any] {
+        getJsonDataWithJsonFileName("organizationNodesData")
+    }
+    
+    
+    public class var arcdiagram1Data : [Any] {
+        getJsonDataWithJsonFileName("arcdiagram1Data")
+    }
+    
+    public class var arcdiagram2Data : [Any] {
+        getJsonDataWithJsonFileName("arcdiagram2Data")
+    }
+    
+    public class var arcdiagram3Data : [Any] {
+        getJsonDataWithJsonFileName("arcdiagram3Data")
+    }
+    
+    public class var flameData : [Any] {
+        getJsonDataWithJsonFileName("flameData")
+    }
+    
+    public class var sunburst2Data : [Any] {
+        getJsonDataWithJsonFileName("sunburst2Data")
+    }
     
     public class var xrangeData: [Any] {
         func getSingleGroupCategoryDataElementArrayWithY(_ y: Int) -> [Any] {
