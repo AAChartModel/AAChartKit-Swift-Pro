@@ -73,7 +73,13 @@ class MainVC: UIViewController {
               "windbarbChart---风羽图",
               "networkgraphChart---力导关系图✢✣✤✥",
               "wordcloudChart---词云️图☁️",
-              "eulerChart---欧拉图"
+              "eulerChart---欧拉图",
+              "organizationChart---组织结构图",
+              "arcdiagramChart1---弧形图1",
+              "arcdiagramChart2---弧形图2",
+              "arcdiagramChart3---弧形图3",
+              "flameChart---火焰🔥图",
+              "packedbubbleSpiralChart---渐进变化的气泡🎈图"
             ],
         ]
         
