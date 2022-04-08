@@ -101,10 +101,6 @@ class AAOptionsData {
         getJsonDataWithJsonFileName("organizationData")
     }
     
-    public class var organizationLevelsData : [Any] {
-        getJsonDataWithJsonFileName("organizationLevelsData")
-    }
-    
     public class var organizationNodesData : [Any] {
         getJsonDataWithJsonFileName("organizationNodesData")
     }
