@@ -53,6 +53,7 @@ public class AATooltip: AAObject {
     public var pointFormatter: String?
     public var positioner: String?
     public var dateTimeLabelFormats: AADateTimeLabelFormats?
+    public var outside: Bool?
     
     @discardableResult
     public func backgroundColor(_ prop: String?) -> AATooltip {
@@ -171,6 +172,12 @@ public class AATooltip: AAObject {
     @discardableResult
     public func dateTimeLabelFormats(_ prop: AADateTimeLabelFormats?) -> AATooltip {
         dateTimeLabelFormats = prop
+        return self
+    }
+    
+    @discardableResult
+    public func outside(_ prop: Bool?) -> AATooltip {
+        outside = prop
         return self
     }
     
