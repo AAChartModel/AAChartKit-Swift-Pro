@@ -18,6 +18,7 @@ public class AALevelsElement: AAObject {
     public var layoutStartingDirection: String?
     public var level: Any?
     public var colorVariation: Any?
+    public var height: Float?
     
     @discardableResult
     public func borderColor(_ prop: String?) -> AALevelsElement {
@@ -76,6 +77,12 @@ public class AALevelsElement: AAObject {
     @discardableResult
     public func colorVariation(_ prop: AAColorVariation?) -> AALevelsElement {
         colorVariation = prop
+        return self
+    }
+    
+    @discardableResult
+    public func height(_ prop: Float?) -> AALevelsElement {
+        height = prop
         return self
     }
     
