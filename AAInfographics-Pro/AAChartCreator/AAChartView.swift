@@ -240,6 +240,24 @@ public class AAChartView: WKWebView {
         })
     }
     
+    fileprivate func configurePlotOptionsSeriesPointEvents(_ aaOptions: AAOptions) {
+        if aaOptions.plotOptions == nil {
+            aaOptions.plotOptions = (AAPlotOptions()
+                .series(AASeries()
+                    .point(AAPoint()
+                        .events(AAPointEvents()))))
+        } else if aaOptions.plotOptions?.series == nil {
+            aaOptions.plotOptions?.series = (AASeries()
+                .point(AAPoint()
+                    .events(AAPointEvents())))
+        } else if aaOptions.plotOptions?.series?.point == nil {
+            aaOptions.plotOptions?.series?.point = AAPoint()
+                .events(AAPointEvents())
+        } else if aaOptions.plotOptions?.series?.point?.events == nil {
+            aaOptions.plotOptions?.series?.point?.events = AAPointEvents()
+        }
+    }
+    
     private func configureOptionsJsonStringWithAAOptions(_ aaOptions: AAOptions) {
         if isClearBackgroundColor == true {
             aaOptions.chart?.backgroundColor = "rgba(0,0,0,0)"
@@ -247,9 +265,11 @@ public class AAChartView: WKWebView {
         
         if clickEventEnabled == true {
             aaOptions.clickEventEnabled = true
+            configurePlotOptionsSeriesPointEvents(aaOptions)
         }
         if touchEventEnabled == true {
             aaOptions.touchEventEnabled = true
+            configurePlotOptionsSeriesPointEvents(aaOptions)
         }
         
         #if DEBUG
@@ -266,6 +286,10 @@ public class AAChartView: WKWebView {
         
         optionsJson = aaOptions.toJSON()!
     }
+    
+//    private func configurePlotOptionsSeriesPointEvents(_ aaOptions: AAOptions) {
+//
+//    }
     
     private func addClickEventMessageHandler() {
         configuration.userContentController.add(AALeakAvoider.init(delegate: self), name: kUserContentMessageNameClick)
