@@ -242,17 +242,11 @@ public class AAChartView: WKWebView {
     
     fileprivate func configurePlotOptionsSeriesPointEvents(_ aaOptions: AAOptions) {
         if aaOptions.plotOptions == nil {
-            aaOptions.plotOptions = (AAPlotOptions()
-                .series(AASeries()
-                    .point(AAPoint()
-                        .events(AAPointEvents()))))
+            aaOptions.plotOptions = AAPlotOptions().series(AASeries().point(AAPoint().events(AAPointEvents())))
         } else if aaOptions.plotOptions?.series == nil {
-            aaOptions.plotOptions?.series = (AASeries()
-                .point(AAPoint()
-                    .events(AAPointEvents())))
+            aaOptions.plotOptions?.series = AASeries().point(AAPoint().events(AAPointEvents()))
         } else if aaOptions.plotOptions?.series?.point == nil {
-            aaOptions.plotOptions?.series?.point = AAPoint()
-                .events(AAPointEvents())
+            aaOptions.plotOptions?.series?.point = AAPoint().events(AAPointEvents())
         } else if aaOptions.plotOptions?.series?.point?.events == nil {
             aaOptions.plotOptions?.series?.point?.events = AAPointEvents()
         }
