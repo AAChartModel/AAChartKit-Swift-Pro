@@ -135,6 +135,18 @@ public class AAYAxis: AAAxis {
     }
     
     @discardableResult
+    public func maxPadding(_ prop: Float?) -> AAYAxis {
+        maxPadding = prop
+        return self
+    }
+    
+    @discardableResult
+    public func minPadding(_ prop: Float?) -> AAYAxis {
+        minPadding = prop
+        return self
+    }
+    
+    @discardableResult
     public func minRange(_ prop: Int?) -> AAYAxis {
         minRange = prop
         return self
