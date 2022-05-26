@@ -233,6 +233,7 @@
 		44D27C66255A3CAF00D0C636 = {
 			isa = PBXGroup;
 			children = (
+				84B238C1283F707400193B9A /* AAInfographics-Pro */,
 				44D27C71255A3CAF00D0C636 /* AAInfographics-ProDemo */,
 				44D27C88255A3CB300D0C636 /* AAInfographics-ProDemoTests */,
 				44D27C93255A3CB400D0C636 /* AAInfographics-ProDemoUITests */,
@@ -288,13 +289,6 @@
 		44D27D31255A62F000D0C636 /* AAInfographics-Pro */ = {
 			isa = PBXGroup;
 			children = (
-				44D27D32255A62F000D0C636 /* AAChartCreator */,
-				44D27D3D255A62F100D0C636 /* AAOptionsModel */,
-				44D27DE9255A6D9100D0C636 /* AAOptionsProModel */,
-				44D27D39255A62F000D0C636 /* AATool */,
-				44D27DAB255A6C0700D0C636 /* AAJSFiles.bundle */,
-				27F872A925E797690068380F /* ProjectBundlePathLoader.swift */,
-				84B2386B283F6D4C00193B9A /* PackageBundlePathLoader.swift */,
 			);
 			path = "AAInfographics-Pro";
 			sourceTree = "<group>";
@@ -422,6 +416,20 @@
 				44D27E01255A735700D0C636 /* AALayoutAlgorithm.swift */,
 			);
 			path = AAOptionsProModel;
+			sourceTree = "<group>";
+		};
+		84B238C1283F707400193B9A /* AAInfographics-Pro */ = {
+			isa = PBXGroup;
+			children = (
+				44D27D32255A62F000D0C636 /* AAChartCreator */,
+				44D27D3D255A62F100D0C636 /* AAOptionsModel */,
+				44D27DE9255A6D9100D0C636 /* AAOptionsProModel */,
+				44D27D39255A62F000D0C636 /* AATool */,
+				44D27DAB255A6C0700D0C636 /* AAJSFiles.bundle */,
+				27F872A925E797690068380F /* ProjectBundlePathLoader.swift */,
+				84B2386B283F6D4C00193B9A /* PackageBundlePathLoader.swift */,
+			);
+			path = "AAInfographics-Pro";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
