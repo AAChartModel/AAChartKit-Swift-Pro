@@ -82,7 +82,7 @@ class AABaseChartVC: UIViewController {
     
     private func setupChartView() {
         aaChartView = AAChartView()
-        aaChartView!.scrollEnabled = false
+        aaChartView!.isScrollEnabled = false
         aaChartView!.delegate = self as AAChartViewDelegate
         aaChartView!.aa_adaptiveScreenRotation()
         view.addSubview(aaChartView!)
@@ -205,7 +205,6 @@ class AABaseChartVC: UIViewController {
         }
         if (chartConfiguration is AAChartModel) {
             let aaChartModel = chartConfiguration as! AAChartModel
-            aaChartModel.touchEventEnabled = true
             self.aaChartView?.aa_drawChartWithChartModel(aaChartModel)
         } else if (chartConfiguration is AAOptions) {
             let aaOptions = chartConfiguration as! AAOptions
@@ -228,7 +227,6 @@ class AABaseChartVC: UIViewController {
         }
         if (chartConfiguration is AAChartModel) {
             let aaChartModel = chartConfiguration as! AAChartModel
-            aaChartModel.touchEventEnabled = true
             self.aaChartView?.aa_refreshChartWholeContentWithChartModel(aaChartModel)
         } else if (chartConfiguration is AAOptions) {
             let aaOptions = chartConfiguration as! AAOptions
@@ -240,7 +238,7 @@ class AABaseChartVC: UIViewController {
                 .style(AAStyle()
                     .color(AAColor.red)
                     .fontSize(9))
-            self.aaChartView?.scrollEnabled = true
+            self.aaChartView?.isScrollEnabled = true
             self.aaChartView?.aa_refreshChartWholeContentWithChartOptions(aaOptions)
         }
     }
