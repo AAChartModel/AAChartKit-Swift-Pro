@@ -283,10 +283,6 @@ public class AAChartView: WKWebView {
         optionsJson = aaOptions.toJSON()!
     }
     
-//    private func configurePlotOptionsSeriesPointEvents(_ aaOptions: AAOptions) {
-//
-//    }
-    
     private func addClickEventMessageHandler() {
         configuration.userContentController.add(AALeakAvoider.init(delegate: self), name: kUserContentMessageNameClick)
     }
