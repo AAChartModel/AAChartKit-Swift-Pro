@@ -253,7 +253,7 @@
 			isa = PBXGroup;
 			children = (
 				4490AFC8255C08B300C27B2D /* AAInfographics-ProDemo.entitlements */,
-				44D27D31255A62F000D0C636 /* AAInfographics */,
+				44D27D31255A62F000D0C636 /* AAInfographics-Pro */,
 				44D27D76255A631500D0C636 /* Demo */,
 				44D27C72255A3CAF00D0C636 /* AppDelegate.swift */,
 				44D27C74255A3CAF00D0C636 /* SceneDelegate.swift */,
@@ -284,7 +284,7 @@
 			path = "AAInfographics-ProDemoUITests";
 			sourceTree = "<group>";
 		};
-		44D27D31255A62F000D0C636 /* AAInfographics */ = {
+		44D27D31255A62F000D0C636 /* AAInfographics-Pro */ = {
 			isa = PBXGroup;
 			children = (
 				44D27D32255A62F000D0C636 /* AAChartCreator */,
@@ -294,7 +294,7 @@
 				44D27DAB255A6C0700D0C636 /* AAJSFiles.bundle */,
 				27F872A925E797690068380F /* ProjectBundlePathLoader.swift */,
 			);
-			path = AAInfographics;
+			path = "AAInfographics-Pro";
 			sourceTree = "<group>";
 		};
 		44D27D32255A62F000D0C636 /* AAChartCreator */ = {
