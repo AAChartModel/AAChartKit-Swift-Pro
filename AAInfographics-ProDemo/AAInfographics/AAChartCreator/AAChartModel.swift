@@ -88,6 +88,34 @@ public enum AAChartType: String {
     case polygon         //A polygon series can be used to draw any freeform shape in the cartesian coordinate system. A fill is applied with the color option, and stroke is applied through lineWidth and lineColor options.
     case gauge           //Gauges are circular plots displaying one or more values with a dial pointing to values along the perimeter.
     case errorbar        //Error bars are a graphical representation of the variability of data and are used on graphs to indicate the error, or uncertainty in a reported measurement.
+    
+    case sankey
+    case variablepie
+    case treemap
+    case variwide
+    case sunburst
+    case dependencywheel
+    case heatmap
+    case packedbubble
+    case venn
+    case dumbbell
+    case lollipop
+    case streamgraph
+    case columnpyramid
+    case xrange
+    
+    case tilemap
+    case vector
+    case bellcurve
+    case timeline
+    case item
+    case windbarb
+    case networkgraph
+    case wordcloud
+    
+    case organization;
+    case arcdiagram;
+    case flame;
 }
 
 public enum AAChartLayoutType: String {
