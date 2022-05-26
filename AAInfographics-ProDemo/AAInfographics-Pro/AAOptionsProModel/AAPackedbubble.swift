@@ -5,7 +5,6 @@
 //  Created by AnAn on 2020/11/10.
 //
 
-import UIKit
 
 public class AAPackedbubble: AAObject {
     public var minSize: String?
