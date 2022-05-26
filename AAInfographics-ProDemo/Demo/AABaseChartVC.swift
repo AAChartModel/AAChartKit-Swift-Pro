@@ -261,6 +261,29 @@ extension AABaseChartVC: AAChartViewDelegate {
     open func aaChartViewDidFinishLoad(_ aaChartView: AAChartView) {
        print("🚀🚀🚀, AAChartView Did Finished Load!!!")
     }
+    
+    open func aaChartView(_ aaChartView: AAChartView, clickEventMessage: AAClickEventMessageModel) {
+           print(
+               """
+
+               clicked point series element name: \(clickEventMessage.name ?? "")
+               🖱🖱🖱WARNING!!!!!!!!!!!!!!!!!!!! Click Event Message !!!!!!!!!!!!!!!!!!!! WARNING🖱🖱🖱
+               ==========================================================================================
+               ------------------------------------------------------------------------------------------
+               user finger moved over!!!,get the move over event message: {
+               category = \(String(describing: clickEventMessage.category))
+               index = \(String(describing: clickEventMessage.index))
+               name = \(String(describing: clickEventMessage.name))
+               offset = \(String(describing: clickEventMessage.offset))
+               x = \(String(describing: clickEventMessage.x))
+               y = \(String(describing: clickEventMessage.y))
+               }
+               +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+               
+               
+               """
+           )
+       }
 
     open func aaChartView(_ aaChartView: AAChartView, moveOverEventMessage: AAMoveOverEventMessageModel) {
         print(
