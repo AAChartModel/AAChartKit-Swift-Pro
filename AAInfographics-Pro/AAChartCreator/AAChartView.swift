@@ -269,7 +269,9 @@ public class AAChartView: WKWebView {
         }
         if touchEventEnabled == true {
             aaOptions.touchEventEnabled = true
-            configurePlotOptionsSeriesPointEvents(aaOptions)
+            if aaOptions.clickEventEnabled == false {//避免重复判断
+                configurePlotOptionsSeriesPointEvents(aaOptions)
+            }
         }
         
         #if DEBUG
