@@ -5,8 +5,6 @@
 //  Created by AnAn on 2020/11/10.
 //
 
-import UIKit
-
 public class AAColorAxis: AAObject {
     public var min: Any?
     public var minColor: String?
