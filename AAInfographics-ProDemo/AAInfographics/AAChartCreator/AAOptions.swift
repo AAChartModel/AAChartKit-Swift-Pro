@@ -48,11 +48,9 @@ public class AAOptions: AAObject {
     public var colors: [Any]?
     public var credits: AACredits?
     public var defaultOptions: AALang?
-    public var touchEventEnabled: Bool?
     
-    
-    public var colorAxis: AAColorAxis?
-    
+    public var clickEventEnabled: Bool?//Please DO NOT use this property
+    public var touchEventEnabled: Bool?//Please DO NOT use this property
     
     @discardableResult
     public func chart(_ prop: AAChart?) -> AAOptions {
@@ -144,22 +142,17 @@ public class AAOptions: AAObject {
         return self
     }
     
-    @discardableResult
-    public func touchEventEnabled(_ prop: Bool?) -> AAOptions {
-        touchEventEnabled = prop
-        return self
-    }
-    
-    @discardableResult
-    public func colorAxis(_ prop: AAColorAxis?) -> AAOptions {
-        colorAxis = prop
-        return self
-    }
-    
     public override init() {
         let aaCredits = AACredits()
         aaCredits.enabled = false
         credits = aaCredits
+    }
+    
+    
+    @available(*, unavailable, message: "This setter function is useless now, please remove it directly")
+    public func touchEventEnabled(_ prop: Bool?) -> AAOptions {
+//        touchEventEnabled = prop
+        return self
     }
 }
 
@@ -204,12 +197,10 @@ public class AAOptionsConstructor {
             .series(AASeries()
                         .stacking(aaChartModel.stacking))
         
-        if (aaChartModel.animationType != .linear) {
-            aaPlotOptions.series?
-                .animation(AAAnimation()
-                            .easing(aaChartModel.animationType)
-                            .duration(aaChartModel.animationDuration))
-        }
+        aaPlotOptions.series?
+            .animation(AAAnimation()
+                        .easing(aaChartModel.animationType)
+                        .duration(aaChartModel.animationDuration))
         
         configurePlotOptionsMarkerStyle(aaChartModel, aaPlotOptions)
         configurePlotOptionsDataLabels(aaPlotOptions, aaChartModel)
@@ -226,7 +217,6 @@ public class AAOptionsConstructor {
             .legend(aaLegend)
             .series(aaChartModel.series)
             .colors(aaChartModel.colorsTheme)
-            .touchEventEnabled(aaChartModel.touchEventEnabled)
         
         configureAxisContentAndStyle(aaOptions, aaChartModel)
         
@@ -251,12 +241,12 @@ public class AAOptionsConstructor {
             let aaMarker = AAMarker()
                 .radius(aaChartModel.markerRadius) //Curve connection point radius, default is 4
                 .symbol(aaChartModel.markerSymbol?.rawValue) //Curve connection point type: "circle", "square", "diamond", "triangle", "triangle-down", the default is "circle"
-            if (aaChartModel.markerSymbolStyle == .innerBlank) {
+            if aaChartModel.markerSymbolStyle == .innerBlank {
                 aaMarker
                     .fillColor(AAColor.white) //The fill color of the point (used to set the fill color of the polyline connection point)
                     .lineWidth(0.4 * aaChartModel.markerRadius!) //The width of the outer line (used to set the width of the outline stroke of the polyline connection point)
                     .lineColor("") //The color of the outer edge (used to set the outline stroke color of the polyline connection point. When the value is an empty string, the color of the data point or data column is taken by default)
-            } else if (aaChartModel.markerSymbolStyle == .borderBlank) {
+            } else if aaChartModel.markerSymbolStyle == .borderBlank {
                 aaMarker
                     .lineWidth(2.0)
                     .lineColor(aaChartModel.backgroundColor)
@@ -267,7 +257,7 @@ public class AAOptionsConstructor {
     }
     
     
-    private static  func configurePlotOptionsDataLabels(
+    private static func configurePlotOptionsDataLabels(
         _ aaPlotOptions: AAPlotOptions,
         _ aaChartModel: AAChartModel
     ) {
@@ -360,7 +350,7 @@ public class AAOptionsConstructor {
                     .visible(aaChartModel.xAxisVisible) //whether the x axis is visible
                     .tickInterval(aaChartModel.xAxisTickInterval) //Number of x-axis coordinate point intervals
                     .title(AATitle()
-                            .text(aaChartModel.xAxisTitle)) //y axis title
+                            .text(aaChartModel.xAxisTitle)) //x axis title
                                             
                 aaOptions.xAxis(aaXAxis)
             }
@@ -377,6 +367,7 @@ public class AAOptionsConstructor {
                 .labels(aaYAxisLabels) //Set the y-axis text
                 .min(aaChartModel.yAxisMin) //Set the minimum value of the y-axis. If the minimum value is equal to zero, negative values ​​cannot be displayed.
                 .max(aaChartModel.yAxisMax) //Maximum y-axis
+                .tickPositions(aaChartModel.yAxisTickPositions)
                 .allowDecimals(aaChartModel.yAxisAllowDecimals) //Whether to display decimals
                 .reversed(aaChartModel.yAxisReversed)
                 .gridLineWidth(aaChartModel.yAxisGridLineWidth) //y-axis grid line width

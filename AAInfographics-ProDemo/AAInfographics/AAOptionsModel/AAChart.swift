@@ -42,7 +42,7 @@ public class AAChart: AAObject {
     public var polar: Bool?
     public var animation: AAAnimation?
     public var inverted: Bool?
-    public var margin: [Float]? //Margin between the outer edge of the chart and the drawing area. The numbers in the array represent the top, right, bottom, and left ([👆, 👉, 👇, 👈]). You can also use marginTop, marginRight, marginBottom, and marginLeft to set the margins in a certain direction.
+    public var margin: [Any?]? //Margin between the outer edge of the chart and the drawing area. The numbers in the array represent the top, right, bottom, and left ([👆, 👉, 👇, 👈]). You can also use marginTop, marginRight, marginBottom, and marginLeft to set the margins in a certain direction. Defaults to [null]
     public var marginTop: Float? //👆
     public var marginRight: Float? //👉
     public var marginBottom: Float? //👇
@@ -110,8 +110,24 @@ public class AAChart: AAObject {
     }
     
     @discardableResult
-    public func margin(top: Float = 0, right: Float = 0, bottom: Float = 0, left: Float = 0) -> AAChart {
-        margin = [top,right,bottom,left]
+    public func margin(_ prop: [Any?]?) -> AAChart {
+        margin = prop
+        return self
+    }
+    
+    @discardableResult
+    public func margin(
+        top: Any? = nil,
+        right: Any? = nil,
+        bottom: Any? = nil,
+        left: Any? = nil
+    ) -> AAChart {
+        margin = [
+            top,
+            right,
+            bottom,
+            left
+        ]
         return self
     }
     
@@ -140,8 +156,18 @@ public class AAChart: AAObject {
     }
     
     @discardableResult
-    public func spacing(top: Float = 0, right: Float = 0, bottom: Float = 0, left: Float = 0) -> AAChart {
-        spacing = [top,right,bottom,left]
+    public func spacing(
+        top: Float = 10,
+        right: Float = 10,
+        bottom: Float = 15,
+        left: Float = 10
+    ) -> AAChart {
+        spacing = [
+            top,
+            right,
+            bottom,
+            left
+        ]
         return self
     }
     
@@ -184,6 +210,30 @@ public class AAChart: AAObject {
     public override init() {
         
     }
+}
+
+public func AAMargin(
+    left: Float,
+    right: Float
+) -> [Any?]? {
+    return [
+        nil,
+        right,
+        nil,
+        left
+    ]
+}
+
+public func AAMargin(
+    top: Float,
+    bottom: Float
+) -> [Any?]? {
+    return [
+        top,
+        nil,
+        bottom,
+        nil
+    ]
 }
 
 public class AAResetZoomButton: AAObject {
