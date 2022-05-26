@@ -202,6 +202,7 @@
 		84A5692E27FEC89E00883553 /* dumbbellData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = dumbbellData.json; sourceTree = "<group>"; };
 		84A5692F27FEC89F00883553 /* vectorData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = vectorData.json; sourceTree = "<group>"; };
 		84A5693027FEC89F00883553 /* arcdiagram3Data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = arcdiagram3Data.json; sourceTree = "<group>"; };
+		84B2386B283F6D4C00193B9A /* PackageBundlePathLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageBundlePathLoader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -293,6 +294,7 @@
 				44D27D39255A62F000D0C636 /* AATool */,
 				44D27DAB255A6C0700D0C636 /* AAJSFiles.bundle */,
 				27F872A925E797690068380F /* ProjectBundlePathLoader.swift */,
+				84B2386B283F6D4C00193B9A /* PackageBundlePathLoader.swift */,
 			);
 			path = "AAInfographics-Pro";
 			sourceTree = "<group>";
