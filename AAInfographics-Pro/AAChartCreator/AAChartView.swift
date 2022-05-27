@@ -240,7 +240,7 @@ public class AAChartView: WKWebView {
         })
     }
     
-    fileprivate func configurePlotOptionsSeriesPointEvents(_ aaOptions: AAOptions) {
+    private func configurePlotOptionsSeriesPointEvents(_ aaOptions: AAOptions) {
         if aaOptions.plotOptions == nil {
             aaOptions.plotOptions = AAPlotOptions().series(AASeries().point(AAPoint().events(AAPointEvents())))
         } else if aaOptions.plotOptions?.series == nil {
