@@ -64,18 +64,18 @@ class ChartProVC: AABaseChartVC {
             .title(AATitle()
                     .text("AAChartKit-Pro 桑基图"))
             .colors([
-                AAColor.rgbaColor(137, 78, 36),
-                AAColor.rgbaColor(220, 36, 30),
-                AAColor.rgbaColor(255, 206, 0),
-                AAColor.rgbaColor(1, 114, 41),
-                AAColor.rgbaColor(0, 175, 173),
-                AAColor.rgbaColor(215, 153, 175),
-                AAColor.rgbaColor(106, 114, 120),
-                AAColor.rgbaColor(114, 17, 84),
-                AAColor.rgbaColor(0, 0, 0),
-                AAColor.rgbaColor(0, 24, 168),
-                AAColor.rgbaColor(0, 160, 226),
-                AAColor.rgbaColor(106, 187, 170)
+                AARgba(137, 78, 36),
+                AARgba(220, 36, 30),
+                AARgba(255, 206, 0),
+                AARgba(1, 114, 41),
+                AARgba(0, 175, 173),
+                AARgba(215, 153, 175),
+                AARgba(106, 114, 120),
+                AARgba(114, 17, 84),
+                AARgba(0, 0, 0),
+                AARgba(0, 24, 168),
+                AARgba(0, 160, 226),
+                AARgba(106, 187, 170)
             ])
             .series([
                 AASeriesElement()
