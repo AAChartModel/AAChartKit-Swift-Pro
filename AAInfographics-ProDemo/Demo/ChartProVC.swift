@@ -49,6 +49,9 @@ class ChartProVC: AABaseChartVC {
         case 29: return arcdiagramChart3()
         case 30: return flameChart()
         case 31: return packedbubbleSpiralChart()
+        case 32: return itemChart2()
+        case 33: return itemChart3()
+
             
         default:
             return sankeyChart()
@@ -726,13 +729,58 @@ class ChartProVC: AABaseChartVC {
             .legend(AALegend()
                         .enabled(false))
             .series([
-                AASeriesElement()
+                AAItem()
                     .name("Representatives")
                     .keys(["name","y","color","label"])
                     .data(AAOptionsData.itemData)
                     .dataLabels(AADataLabels()
                                     .enabled(false))
-                    .size("170%")
+                    .startAngle(-100)
+                    .endAngle(+100)
+            ])
+    }
+    
+    private func itemChart2() -> AAOptions {
+        AAOptions()
+            .chart(AAChart()
+                    .type(.item))
+            .title(AATitle()
+                    .text("AAChartKit-Pro item chart"))
+            .subtitle(AASubtitle()
+                        .text("Parliament visualization"))
+            .legend(AALegend()
+                        .enabled(false))
+            .series([
+                AAItem()
+                    .name("Representatives")
+                    .keys(["name","y","color","label"])
+                    .data(AAOptionsData.itemData)
+                    .dataLabels(AADataLabels()
+                                    .enabled(false))
+                    .startAngle(nil)
+                    .endAngle(nil)
+            ])
+    }
+    
+    private func itemChart3() -> AAOptions {
+        AAOptions()
+            .chart(AAChart()
+                    .type(.item))
+            .title(AATitle()
+                    .text("AAChartKit-Pro item chart"))
+            .subtitle(AASubtitle()
+                        .text("Parliament visualization"))
+            .legend(AALegend()
+                        .enabled(false))
+            .series([
+                AAItem()
+                    .name("Representatives")
+                    .keys(["name","y","color","label"])
+                    .data(AAOptionsData.itemData)
+                    .dataLabels(AADataLabels()
+                                    .enabled(false))
+                    .startAngle(0)
+                    .endAngle(360)
             ])
     }
     
