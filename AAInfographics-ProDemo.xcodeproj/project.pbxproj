@@ -92,6 +92,7 @@
 		84A5694D27FEC89F00883553 /* vectorData.json in Resources */ = {isa = PBXBuildFile; fileRef = 84A5692F27FEC89F00883553 /* vectorData.json */; };
 		84A5694E27FEC89F00883553 /* arcdiagram3Data.json in Resources */ = {isa = PBXBuildFile; fileRef = 84A5693027FEC89F00883553 /* arcdiagram3Data.json */; };
 		84B13EE92897A953007356C6 /* AAItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B13EE82897A953007356C6 /* AAItem.swift */; };
+		84B13EEB28990388007356C6 /* CustomClickEventCallbackMessageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B13EEA28990388007356C6 /* CustomClickEventCallbackMessageVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -204,6 +205,7 @@
 		84A5692F27FEC89F00883553 /* vectorData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = vectorData.json; sourceTree = "<group>"; };
 		84A5693027FEC89F00883553 /* arcdiagram3Data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = arcdiagram3Data.json; sourceTree = "<group>"; };
 		84B13EE82897A953007356C6 /* AAItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AAItem.swift; sourceTree = "<group>"; };
+		84B13EEA28990388007356C6 /* CustomClickEventCallbackMessageVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomClickEventCallbackMessageVC.swift; sourceTree = "<group>"; };
 		84B2386B283F6D4C00193B9A /* PackageBundlePathLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageBundlePathLoader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -345,6 +347,7 @@
 			children = (
 				44D27DA3255A64A700D0C636 /* MainVC.swift */,
 				44D27E10255ADF1300D0C636 /* ChartProVC.swift */,
+				84B13EEA28990388007356C6 /* CustomClickEventCallbackMessageVC.swift */,
 				44D27D7E255A631500D0C636 /* AABaseChartVC.swift */,
 				44D27E06255A793200D0C636 /* AAOptionsData.swift */,
 				44D27E0B255ADE1E00D0C636 /* AAOptionsSeries.swift */,
@@ -609,6 +612,7 @@
 				84B13EE92897A953007356C6 /* AAItem.swift in Sources */,
 				844615B6283F580300E26DA4 /* AALang.swift in Sources */,
 				844615A6283F580300E26DA4 /* AAMarker.swift in Sources */,
+				84B13EEB28990388007356C6 /* CustomClickEventCallbackMessageVC.swift in Sources */,
 				8441A76126C2568F007EAAA7 /* AAExtension.swift in Sources */,
 				844615B8283F580300E26DA4 /* AASubtitle.swift in Sources */,
 				44D27C77255A3CAF00D0C636 /* ViewController.swift in Sources */,
