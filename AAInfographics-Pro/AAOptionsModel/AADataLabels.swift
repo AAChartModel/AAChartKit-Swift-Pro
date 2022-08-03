@@ -54,13 +54,20 @@ public class AADataLabels: AAObject {
     public var crop: Bool?
     public var inside: Bool?
     public var overflow: String?
+    public var softConnector: Bool?
+    public var connectorColor: String?
+    public var connectorPadding: Float?
+    public var connectorShape: String?
+    public var connectorWidth: Float?
+    public var crookDistance: String?
+    public var alignTo: String?
+    
     public var filter: AAFilter?
     public var textPath: AATextPath?
     public var linkTextPath: AATextPath?
     public var padding: Float? //When either the borderWidth or the backgroundColor is set, this is the padding within the box. Defaults to 5.
     public var nodeFormat: String? //The format string specifying what to show for nodes in the sankey diagram. By default the nodeFormatter returns {point.name}. Defaults to undefined.
 
-    
     @discardableResult
     public func enabled(_ prop: Bool?) -> AADataLabels {
         enabled = prop
@@ -188,35 +195,79 @@ public class AADataLabels: AAObject {
     }
     
     @discardableResult
-    public func filter(_ prop: AAFilter?) -> AADataLabels {
-        filter = prop
+    public func softConnector(_ prop: Bool?) -> AADataLabels {
+        softConnector = prop
         return self
     }
     
     @discardableResult
-    public func textPath(_ prop: AATextPath?) -> AADataLabels {
-        textPath = prop
+    public func connectorColor(_ prop: String?) -> AADataLabels {
+        connectorColor = prop
         return self
     }
     
     @discardableResult
-    public func linkTextPath(_ prop: AATextPath?) -> AADataLabels {
-        linkTextPath = prop
+    public func connectorPadding(_ prop: Float?) -> AADataLabels {
+        connectorPadding = prop
         return self
     }
     
     @discardableResult
-    public func padding(_ prop: Float?) -> AADataLabels {
-        padding = prop
+    public func connectorShape(_ prop: String?) -> AADataLabels {
+        connectorShape = prop
         return self
     }
     
     @discardableResult
-    public func nodeFormat(_ prop: String?) -> AADataLabels {
-        nodeFormat = prop
+    public func connectorWidth(_ prop: Float?) -> AADataLabels {
+        connectorWidth = prop
         return self
     }
     
+    @discardableResult
+    public func crookDistance(_ prop: String?) -> AADataLabels {
+        crookDistance = prop
+        return self
+    }
+    
+    @discardableResult
+    public func alignTo(_ prop: String?) -> AADataLabels {
+        alignTo = prop
+        return self
+    }
+    
+    
+    
+    @discardableResult
+     public func filter(_ prop: AAFilter?) -> AADataLabels {
+         filter = prop
+         return self
+     }
+    
+    @discardableResult
+     public func textPath(_ prop: AATextPath?) -> AADataLabels {
+         textPath = prop
+         return self
+     }
+     
+     @discardableResult
+     public func linkTextPath(_ prop: AATextPath?) -> AADataLabels {
+         linkTextPath = prop
+         return self
+     }
+     
+     @discardableResult
+     public func padding(_ prop: Float?) -> AADataLabels {
+         padding = prop
+         return self
+     }
+     
+     @discardableResult
+     public func nodeFormat(_ prop: String?) -> AADataLabels {
+         nodeFormat = prop
+         return self
+     }
+
     public override init() {
         enabled = true
     }
