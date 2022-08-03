@@ -10,6 +10,8 @@ import UIKit
 import WebKit
 
 let kUserContentMessageNameChartClicked = "click"
+let kUserContentMessageNameChartDefaultSelected = "defaultSelected"
+
 
 class CustomClickEventCallbackMessageVC: UIViewController {
     private var aaChartView: AAChartView!
@@ -46,6 +48,8 @@ class CustomClickEventCallbackMessageVC: UIViewController {
     
     private func configureChartViewCustomEventMessageHandler() {
         aaChartView!.configuration.userContentController.add(AALeakAvoider.init(delegate: self), name: kUserContentMessageNameChartClicked)
+        
+        aaChartView!.configuration.userContentController.add(AALeakAvoider.init(delegate: self), name: kUserContentMessageNameChartDefaultSelected)
     }
     
     private func topRoundedCornersStackingColumnChart() -> AAOptions {
@@ -107,6 +111,35 @@ class CustomClickEventCallbackMessageVC: UIViewController {
                 window.webkit.messageHandlers.\(kUserContentMessageNameChartClicked).postMessage(messageBody);
             }
 """)))
+        
+        //默认选中的位置索引
+        let defaultSelectedIndex = 5
+                
+        //https://api.highcharts.com/highcharts/chart.events.load
+        //https://www.highcharts.com/forum/viewtopic.php?t=36508
+        aaOptions.chart?.events(
+            AAChartEvents()
+                .load("""
+        function() {
+            let points = [],
+                chart = this,
+                series = chart.series,
+                length = series.length;
+                        
+            for (let i = 0; i < length; i++) {
+              let pointElement = series[i].data[\(defaultSelectedIndex)];
+              points.push(pointElement);
+            }
+            chart.xAxis[0].drawCrosshair(null, points[0]);
+            chart.tooltip.refresh(points);
+            let customEventMessage = {
+                    "name": "Ada 👧🏻",
+                    "gender": "female ♀",
+                    "nation": "Englishy 🇬🇧",
+                };
+            window.webkit.messageHandlers.\(kUserContentMessageNameChartDefaultSelected).postMessage(customEventMessage);
+          }
+"""))
 
         return aaOptions
     }
@@ -196,6 +229,14 @@ extension CustomClickEventCallbackMessageVC: WKScriptMessageHandler {
                 """
             )
 
+        } else if message.name == kUserContentMessageNameChartDefaultSelected {
+            let defaultSelectedEventMessage = message.body as! [String: Any]
+            print("""
+                  🎉🎉🎉 !!!Got the custom event message!!! 🎉🎉🎉
+                  ———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧
+                  \(defaultSelectedEventMessage)
+                  ———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧
+                  """)
         }
     }
 }
