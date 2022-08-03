@@ -35,6 +35,7 @@ import Foundation
 public class AAChart: AAObject {
     public var type: String?
     public var backgroundColor: Any?
+    public var plotBackgroundColor: Any?
     public var plotBackgroundImage: String?
     public var pinchType: String?
     public var panning: Bool?
@@ -54,6 +55,8 @@ public class AAChart: AAObject {
     public var spacingLeft: Float? //👈
     public var scrollablePlotArea: AAScrollablePlotArea?
     public var resetZoomButton: AAResetZoomButton?
+    public var zoomType: String?
+    public var events: AAChartEvents?
     
     @discardableResult
     public func type(_ prop: AAChartType?) -> AAChart {
@@ -64,6 +67,12 @@ public class AAChart: AAObject {
     @discardableResult
     public func backgroundColor(_ prop: Any?) -> AAChart {
         backgroundColor = prop
+        return self
+    }
+    
+    @discardableResult
+    public func plotBackgroundColor(_ prop: Any?) -> AAChart {
+        plotBackgroundColor = prop
         return self
     }
     
@@ -207,6 +216,18 @@ public class AAChart: AAObject {
         return self
     }
     
+    @discardableResult
+    public func zoomType(_ prop: AAChartZoomType?) -> AAChart {
+        zoomType = prop?.rawValue
+        return self
+    }
+    
+    @discardableResult
+    public func events(_ prop: AAChartEvents?) -> AAChart {
+        events = prop
+        return self
+    }
+    
     public override init() {
         
     }
@@ -256,6 +277,31 @@ public class AAResetZoomButton: AAObject {
     @discardableResult
     public func theme(_ prop: [String: Any]?) -> AAResetZoomButton {
         theme = prop
+        return self
+    }
+    
+    public override init() {
+        
+    }
+}
+
+public class AAChartEvents: AAObject {
+    public var load: String?
+    public var selection: String?
+    
+    @discardableResult
+    public func load(_ prop: String?) -> AAChartEvents {
+        if prop != nil {
+            load = prop!.aa_toPureJSString()
+        }
+        return self
+    }
+    
+    @discardableResult
+    public func selection(_ prop: String?) -> AAChartEvents {
+        if prop != nil {
+            selection = prop!.aa_toPureJSString()
+        }
         return self
     }
     
