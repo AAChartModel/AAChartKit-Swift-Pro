@@ -113,7 +113,7 @@ class CustomClickEventCallbackMessageVC: UIViewController {
 """)))
         
         //默认选中的位置索引
-        let defaultSelectedIndex = 5
+        let defaultSelectedIndex = 18
                 
         //https://api.highcharts.com/highcharts/chart.events.load
         //https://www.highcharts.com/forum/viewtopic.php?t=36508
@@ -125,19 +125,23 @@ class CustomClickEventCallbackMessageVC: UIViewController {
                 chart = this,
                 series = chart.series,
                 length = series.length;
-                        
+
+            let defaultSelectedIndex = \(defaultSelectedIndex);
+
             for (let i = 0; i < length; i++) {
-              let pointElement = series[i].data[\(defaultSelectedIndex)];
+              let pointElement = series[i].data[defaultSelectedIndex];
               points.push(pointElement);
             }
             chart.xAxis[0].drawCrosshair(null, points[0]);
             chart.tooltip.refresh(points);
-            let customEventMessage = {
-                    "name": "Ada 👧🏻",
-                    "gender": "female ♀",
-                    "nation": "Englishy 🇬🇧",
-                };
-            window.webkit.messageHandlers.\(kUserContentMessageNameChartDefaultSelected).postMessage(customEventMessage);
+
+            let svgElement = chart.series[0].data[defaultSelectedIndex].graphic.element;
+            let rect = svgElement.getBoundingClientRect();
+            let messageBody = {
+                "index": defaultSelectedIndex,
+                "DOMRect": JSON.stringify(rect),
+            };
+            window.webkit.messageHandlers.\(kUserContentMessageNameChartDefaultSelected).postMessage(messageBody);
           }
 """))
 
@@ -206,7 +210,8 @@ extension CustomClickEventCallbackMessageVC: WKScriptMessageHandler {
             let frameX = DOMRectModel.x! + (DOMRectModel.width! / 2)
             print("✋🏻✋🏻✋🏻✋🏻✋🏻点击图表后, 获取的 SVG 元素的水平中心点的坐标为:\(frameX)")
             self.lineView.frame = CGRect(x: CGFloat(frameX), y: 0, width: 2, height: self.view.frame.size.height)
-            
+            self.lineView.backgroundColor = .red
+
             print(
                 """
 
@@ -231,6 +236,14 @@ extension CustomClickEventCallbackMessageVC: WKScriptMessageHandler {
 
         } else if message.name == kUserContentMessageNameChartDefaultSelected {
             let defaultSelectedEventMessage = message.body as! [String: Any]
+            let DOMRectDic = stringValueDic(defaultSelectedEventMessage["DOMRect"] as! String)!
+            let DOMRectModel = getEventMessageModel(DOMRectDic: DOMRectDic )
+            
+            let frameX = DOMRectModel.x! + (DOMRectModel.width! / 2)
+            print("🖱🖱🖱🖱🖱默认选中图表后, 获取的 SVG 元素的水平中心点的坐标为:\(frameX)")
+            self.lineView.frame = CGRect(x: CGFloat(frameX), y: 0, width: 3, height: self.view.frame.size.height)
+            self.lineView.backgroundColor = .blue
+            
             print("""
                   🎉🎉🎉 !!!Got the custom event message!!! 🎉🎉🎉
                   ———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧
