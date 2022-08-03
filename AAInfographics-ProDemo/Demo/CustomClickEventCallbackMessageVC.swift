@@ -132,7 +132,6 @@ class CustomClickEventCallbackMessageVC: UIViewController {
               let pointElement = series[i].data[defaultSelectedIndex];
               points.push(pointElement);
             }
-            chart.xAxis[0].drawCrosshair(null, points[0]);
             chart.tooltip.refresh(points);
 
             let svgElement = chart.series[0].data[defaultSelectedIndex].graphic.element;
@@ -187,8 +186,6 @@ func stringValueDic(_ str: String) -> [String : Any]?{
     return nil
 }
 
-//    点击图表后, DOMRect 取值示例:
-//    DOMRect = "{\"x\":383.5,\"y\":608.5,\"width\":9,\"height\":32,\"top\":608.5,\"right\":392.5,\"bottom\":640.5,\"left\":383.5}";
 class DOMRectModel {
     public var x: Float?
     public var y: Float?
@@ -208,17 +205,14 @@ extension CustomClickEventCallbackMessageVC: WKScriptMessageHandler {
             let DOMRectModel = getEventMessageModel(DOMRectDic: DOMRectDic )
             
             let frameX = DOMRectModel.x! + (DOMRectModel.width! / 2)
-            print("✋🏻✋🏻✋🏻✋🏻✋🏻点击图表后, 获取的 SVG 元素的水平中心点的坐标为:\(frameX)")
+            print("点击图表后, 获取的 SVG 元素的水平中心点的坐标为:\(frameX)")
             self.lineView.frame = CGRect(x: CGFloat(frameX), y: 0, width: 2, height: self.view.frame.size.height)
             self.lineView.backgroundColor = .red
-
-            print(
-                """
-
+            
+            print("""
                 clicked point series element name: \(clickEventMessage["name"] ?? "")
                 🖱🖱🖱WARNING!!!!!!!!!!!!!!!!!!!! Click Event Message !!!!!!!!!!!!!!!!!!!! WARNING🖱🖱🖱
-                ==========================================================================================
-                ------------------------------------------------------------------------------------------
+                ——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧
                 user finger CLICKED!!!,get the custom click event message: {
                 category = \(String(describing: clickEventMessage["category"]))
                 index = \(String(describing: clickEventMessage["index"]))
@@ -226,21 +220,18 @@ extension CustomClickEventCallbackMessageVC: WKScriptMessageHandler {
                 x = \(String(describing: clickEventMessage["x"]))
                 y = \(String(describing: clickEventMessage["y"]))
                 DOMRect = \(String(describing: DOMRectDic))
-
                 }
-                +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-                
-                
+                ——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧
                 """
             )
-
+            
         } else if message.name == kUserContentMessageNameChartDefaultSelected {
             let defaultSelectedEventMessage = message.body as! [String: Any]
             let DOMRectDic = stringValueDic(defaultSelectedEventMessage["DOMRect"] as! String)!
             let DOMRectModel = getEventMessageModel(DOMRectDic: DOMRectDic )
             
             let frameX = DOMRectModel.x! + (DOMRectModel.width! / 2)
-            print("🖱🖱🖱🖱🖱默认选中图表后, 获取的 SVG 元素的水平中心点的坐标为:\(frameX)")
+            print("默认选中图表后, 获取的 SVG 元素的水平中心点的坐标为:\(frameX)")
             self.lineView.frame = CGRect(x: CGFloat(frameX), y: 0, width: 3, height: self.view.frame.size.height)
             self.lineView.backgroundColor = .blue
             
