@@ -186,6 +186,10 @@ func stringValueDic(_ str: String) -> [String : Any]?{
     return nil
 }
 
+func dicStringToPrettyString(dic: Any) -> String {
+    return String(data: try! JSONSerialization.data(withJSONObject: dic, options: .prettyPrinted), encoding: .utf8)!
+}
+
 class DOMRectModel {
     public var x: Float?
     public var y: Float?
@@ -213,14 +217,7 @@ extension CustomClickEventCallbackMessageVC: WKScriptMessageHandler {
                 clicked point series element name: \(clickEventMessage["name"] ?? "")
                 🖱🖱🖱WARNING!!!!!!!!!!!!!!!!!!!! Click Event Message !!!!!!!!!!!!!!!!!!!! WARNING🖱🖱🖱
                 ——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧
-                user finger CLICKED!!!,get the custom click event message: {
-                category = \(String(describing: clickEventMessage["category"]))
-                index = \(String(describing: clickEventMessage["index"]))
-                name = \(String(describing: clickEventMessage["name"]))
-                x = \(String(describing: clickEventMessage["x"]))
-                y = \(String(describing: clickEventMessage["y"]))
-                DOMRect = \(String(describing: DOMRectDic))
-                }
+                \(dicStringToPrettyString(dic: clickEventMessage))
                 ——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧
                 """
             )
@@ -238,7 +235,7 @@ extension CustomClickEventCallbackMessageVC: WKScriptMessageHandler {
             print("""
                   🎉🎉🎉 !!!Got the custom event message!!! 🎉🎉🎉
                   ———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧
-                  \(defaultSelectedEventMessage)
+                  \(dicStringToPrettyString(dic: defaultSelectedEventMessage))
                   ———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧
                   """)
         }
