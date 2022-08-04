@@ -53,6 +53,8 @@ class ChartProVC: AABaseChartVC {
         case 34: return icicleChart()
         case 35: return sunburstChart2()
         case 36: return generalDrawingChart()
+        case 37: return solidgaugeChart()
+
             
         default:
             return sankeyChart()
@@ -1336,6 +1338,190 @@ class ChartProVC: AABaseChartVC {
             .title(AATitle()
                 .text("Highcharts export server overview")
                 .style(AAStyle.init(color: AAColor.black)))
+    }
+    
+    private func solidgaugeChart() -> AAOptions {
+        let seriesArr = [
+            AASeriesElement()
+                .name("Move")
+                .data([
+                    AASolidgaugeDataElement()
+                        .color("#7cb5ec")
+                        .radius("112%")
+                        .innerRadius("88%")
+                        .y(80)
+                    ]),
+            AASeriesElement()
+                .name("Exercise")
+                .data([
+                    AASolidgaugeDataElement()
+                        .color("#434348")
+                        .radius("87%")
+                        .innerRadius("63%")
+                        .y(65)
+                    ]),
+            AASeriesElement()
+                .name("Stand")
+                .data([
+                    AASolidgaugeDataElement()
+                        .color("#90ed7d")
+                        .radius("62%")
+                        .innerRadius("39%")
+                        .y(50)
+                    ]),
+            AASeriesElement()
+                .name("Move")
+                .data([
+                    AASolidgaugeDataElement()
+                        .color("#f7a35c")
+                        .radius("38%")
+                        .innerRadius("28%")
+                        .y(80)
+                    ]),
+            AASeriesElement()
+                .name("Exercise")
+                .data([
+                    AASolidgaugeDataElement()
+                        .color("#8085e9")
+                        .radius("27%")
+                        .innerRadius("17%")
+                        .y(65)
+                    ]),
+            AASeriesElement()
+                .name("Stand")
+                .data([
+                    AASolidgaugeDataElement()
+                        .color("#f15c80")
+                        .radius("16%")
+                        .innerRadius("6%")
+                        .y(50)
+                    ])
+            ]
+        
+        return AAOptions()
+            .chart(AAChart()
+                .type(AAChartType.solidgauge)
+//                .height("110%")
+//                .events(AAChartEvents()
+//                    .render(#"""
+//                    function renderIcons() {
+//
+//                // Move icon
+//                if (!this.series[0].icon) {
+//                    this.series[0].icon = this.renderer.path(['M', -8, 0, 'L', 8, 0, 'M', 0, -8, 'L', 8, 0, 0, 8])
+//                        .attr({
+//                            stroke: '#303030',
+//                            'stroke-linecap': 'round',
+//                            'stroke-linejoin': 'round',
+//                            'stroke-width': 2,
+//                            zIndex: 10
+//                        })
+//                        .add(this.series[2].group);
+//                }
+//                this.series[0].icon.translate(
+//                    this.chartWidth / 2 - 10,
+//                    this.plotHeight / 2 - this.series[0].points[0].shapeArgs.innerR -
+//                    (this.series[0].points[0].shapeArgs.r - this.series[0].points[0].shapeArgs.innerR) / 2
+//                );
+//
+//                // Exercise icon
+//                if (!this.series[1].icon) {
+//                    this.series[1].icon = this.renderer.path(
+//                        ['M', -8, 0, 'L', 8, 0, 'M', 0, -8, 'L', 8, 0, 0, 8,
+//                            'M', 8, -8, 'L', 16, 0, 8, 8
+//                        ]
+//                    )
+//                        .attr({
+//                            stroke: '#ffffff',
+//                            'stroke-linecap': 'round',
+//                            'stroke-linejoin': 'round',
+//                            'stroke-width': 2,
+//                            zIndex: 10
+//                        })
+//                        .add(this.series[2].group);
+//                }
+//                this.series[1].icon.translate(
+//                    this.chartWidth / 2 - 10,
+//                    this.plotHeight / 2 - this.series[1].points[0].shapeArgs.innerR -
+//                    (this.series[1].points[0].shapeArgs.r - this.series[1].points[0].shapeArgs.innerR) / 2
+//                );
+//
+//                // Stand icon
+//                if (!this.series[2].icon) {
+//                    this.series[2].icon = this.renderer.path(['M', 0, 8, 'L', 0, -8, 'M', -8, 0, 'L', 0, -8, 8, 0])
+//                        .attr({
+//                            stroke: '#303030',
+//                            'stroke-linecap': 'round',
+//                            'stroke-linejoin': 'round',
+//                            'stroke-width': 2,
+//                            zIndex: 10
+//                        })
+//                        .add(this.series[2].group);
+//                }
+//
+//                this.series[2].icon.translate(
+//                    this.chartWidth / 2 - 10,
+//                    this.plotHeight / 2 - this.series[2].points[0].shapeArgs.innerR -
+//                    (this.series[2].points[0].shapeArgs.r - this.series[2].points[0].shapeArgs.innerR) / 2
+//                );
+//            }
+//                    """#))
+            )
+            .title(AATitle()
+                .text("Activity")
+                .style(AAStyle()
+                    .fontSize(24)))
+            .tooltip(AATooltip()
+                .borderWidth(0)
+                .backgroundColor("none")
+                .shadow(false)
+                .style(AAStyle()
+                    .fontSize(16)
+                    .textOutline("3px"))
+                .valueSuffix("%")
+//                .pointFormat("{series.name}
+//        {point.y}")
+                .positioner(#"""
+                function(labelWidth) {
+                        return {
+                            x: (this.chart.chartWidth - labelWidth) / 2 - 100,
+                            y: (this.chart.plotHeight / 2) + 15
+                        };
+                    }
+                """#))
+            .pane(AAPane()
+                .startAngle(0)
+                .endAngle(360)
+                .background([
+                    AABackgroundElement()
+                        .outerRadius("112%")
+                        .innerRadius("88%")
+                        .backgroundColor("rgba(124,181,236,0.3)")
+                        .borderWidth(0),
+                    AABackgroundElement()
+                        .outerRadius("87%")
+                        .innerRadius("63%")
+                        .backgroundColor("rgba(67,67,72,0.3)")
+                        .borderWidth(0),
+                    AABackgroundElement()
+                        .outerRadius("62%")
+                        .innerRadius("38%")
+                        .backgroundColor("rgba(144,237,125,0.3)")
+                        .borderWidth(0)
+                    ]))
+            .yAxis(AAYAxis()
+                .min(0)
+                .max(100)
+                .lineWidth(0)
+                .tickPositions([]))
+//            .plotOptions(AAPlotOptions()
+//                .solidgauge(AASolidgauge()
+//                    .dataLabels(AADataLabels()
+//                        .enabled(false))
+//                    .linecap("round")
+//                    .stickyTracking(false)
+//                    .rounded(true)))
+            .series(seriesArr)
     }
 
 }
