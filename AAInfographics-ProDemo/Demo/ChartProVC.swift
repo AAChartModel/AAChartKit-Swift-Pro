@@ -51,6 +51,8 @@ class ChartProVC: AABaseChartVC {
         case 31: return packedbubbleSpiralChart()
         case 32: return itemChart2()
         case 33: return itemChart3()
+        case 34: return icicleChart()
+        case 35: return sunburstChart2()
 
             
         default:
@@ -975,6 +977,8 @@ class ChartProVC: AABaseChartVC {
                 ])
     }
     
+//    The Highcharts flame chart implementation is based on inverted chart with columnrange series (for the flame and icicle layouts)
+//    and a sunburst series (for the sunburst layout).
     private func flameChart() -> AAOptions {
         AAOptions()
             .chart(AAChart()
@@ -1035,6 +1039,42 @@ class ChartProVC: AABaseChartVC {
             .tooltip(AATooltip()
                 .headerFormat("")
                 .pointFormat("selfSize of {point.name} is {point.value}"))
+    }
+    
+    private func icicleChart() -> AAOptions {
+        let aaOptions = flameChart()
+        
+        aaOptions.chart?.inverted(true)
+        
+        let aaXAxisElement = aaOptions.xAxisArray![1]
+        aaXAxisElement.reversed(false)
+        
+        aaOptions.title?.text("Flame chart (layout: icicle)")
+        
+        let element1: AASeriesElement = aaOptions.series?[0] as! AASeriesElement
+        let element2: AASeriesElement = aaOptions.series?[1] as! AASeriesElement
+        element1.visible(true)
+        element2.visible(false)
+        
+        return aaOptions
+    }
+    
+    private func sunburstChart2() -> AAOptions {
+        let aaOptions = flameChart()
+        
+        aaOptions.chart?.inverted(false)
+        
+        let aaXAxisElement = aaOptions.xAxisArray![1]
+        aaXAxisElement.reversed(true)
+        
+        aaOptions.title?.text("Flame chart (layout: sunburst)")
+        
+        let element1: AASeriesElement = aaOptions.series?[0] as! AASeriesElement
+        let element2: AASeriesElement = aaOptions.series?[1] as! AASeriesElement
+        element1.visible(false)
+        element2.visible(true)
+
+        return aaOptions
     }
     
     private func packedbubbleSpiralChart() -> AAOptions {
