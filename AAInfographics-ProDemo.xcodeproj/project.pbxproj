@@ -93,6 +93,7 @@
 		84A5694E27FEC89F00883553 /* arcdiagram3Data.json in Resources */ = {isa = PBXBuildFile; fileRef = 84A5693027FEC89F00883553 /* arcdiagram3Data.json */; };
 		84B13EE92897A953007356C6 /* AAItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B13EE82897A953007356C6 /* AAItem.swift */; };
 		84B13EEB28990388007356C6 /* CustomClickEventCallbackMessageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B13EEA28990388007356C6 /* CustomClickEventCallbackMessageVC.swift */; };
+		84B13F2F289BDB5F007356C6 /* AASolidgaugeDataElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B13F2E289BDB5F007356C6 /* AASolidgaugeDataElement.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -206,6 +207,7 @@
 		84A5693027FEC89F00883553 /* arcdiagram3Data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = arcdiagram3Data.json; sourceTree = "<group>"; };
 		84B13EE82897A953007356C6 /* AAItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AAItem.swift; sourceTree = "<group>"; };
 		84B13EEA28990388007356C6 /* CustomClickEventCallbackMessageVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomClickEventCallbackMessageVC.swift; sourceTree = "<group>"; };
+		84B13F2E289BDB5F007356C6 /* AASolidgaugeDataElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AASolidgaugeDataElement.swift; sourceTree = "<group>"; };
 		84B2386B283F6D4C00193B9A /* PackageBundlePathLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageBundlePathLoader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -412,6 +414,7 @@
 				44D27DFC255A733D00D0C636 /* AATreemap.swift */,
 				44D27E01255A735700D0C636 /* AALayoutAlgorithm.swift */,
 				84B13EE82897A953007356C6 /* AAItem.swift */,
+				84B13F2E289BDB5F007356C6 /* AASolidgaugeDataElement.swift */,
 			);
 			path = AAOptionsProModel;
 			sourceTree = "<group>";
@@ -625,6 +628,7 @@
 				44D27DFD255A733D00D0C636 /* AATreemap.swift in Sources */,
 				844615BD283F580300E26DA4 /* AAYAxis.swift in Sources */,
 				44D27E02255A735700D0C636 /* AALayoutAlgorithm.swift in Sources */,
+				84B13F2F289BDB5F007356C6 /* AASolidgaugeDataElement.swift in Sources */,
 				84461589283F57C600E26DA4 /* AAOptions.swift in Sources */,
 				844615B5283F580300E26DA4 /* AAPlotBandsElement.swift in Sources */,
 				844615BB283F580300E26DA4 /* AASeries.swift in Sources */,
