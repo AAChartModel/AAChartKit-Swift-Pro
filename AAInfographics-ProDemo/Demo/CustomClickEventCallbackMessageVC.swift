@@ -134,11 +134,15 @@ class CustomClickEventCallbackMessageVC: UIViewController {
             }
             chart.tooltip.refresh(points);
 
-            let svgElement = chart.series[0].data[defaultSelectedIndex].graphic.element;
+            let selectedPointDataElement = chart.series[0].data[defaultSelectedIndex];
+            let svgElement = selectedPointDataElement.graphic.element;
             let rect = svgElement.getBoundingClientRect();
             let messageBody = {
                 "index": defaultSelectedIndex,
                 "DOMRect": JSON.stringify(rect),
+                "x": selectedPointDataElement.x,
+                "x2": selectedPointDataElement.x2,
+                "y": selectedPointDataElement.y,
             };
             window.webkit.messageHandlers.\(kUserContentMessageNameChartDefaultSelected).postMessage(messageBody);
           }
