@@ -80,10 +80,12 @@ class MainVC: UIViewController {
                 "arcdiagramChart1---弧形图1",
                 "arcdiagramChart2---弧形图2",
                 "arcdiagramChart3---弧形图3",
-                "flameChart---火焰🔥图",
+                "flameChart---火焰图🔥",
                 "packedbubbleSpiralChart---渐进变化的气泡🎈图",
                 "itemChart2---议会项目图2",
                 "itemChart3---议会项目图3",
+                "icicleChart---冰柱图🧊",
+                "sunburstChart2---旭日图2🌞",
             ],
             [
                 "Custom Chart Click Event Message---自定义用户点击事件回调内容",
