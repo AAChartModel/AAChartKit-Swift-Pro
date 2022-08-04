@@ -86,7 +86,8 @@ class MainVC: UIViewController {
                 "itemChart3---议会项目图3🀙🀚🀜🀞🀠🀡",
                 "icicleChart---冰柱图🧊",
                 "sunburstChart2---旭日图2🌞",
-                "generalDrawingChart---自由绘图🎨"
+                "generalDrawingChart---自由绘图🎨",
+                "solidgaugeChart---活动图🏃🏻‍♀️",
             ],
             [
                 "Custom Chart Click Event Message---自定义用户点击事件回调内容",
