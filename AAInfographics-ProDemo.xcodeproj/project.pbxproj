@@ -94,6 +94,7 @@
 		84B13EE92897A953007356C6 /* AAItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B13EE82897A953007356C6 /* AAItem.swift */; };
 		84B13EEB28990388007356C6 /* CustomClickEventCallbackMessageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B13EEA28990388007356C6 /* CustomClickEventCallbackMessageVC.swift */; };
 		84B13F2F289BDB5F007356C6 /* AASolidgaugeDataElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B13F2E289BDB5F007356C6 /* AASolidgaugeDataElement.swift */; };
+		84B13F31289CAFB2007356C6 /* AASolidgauge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B13F30289CAFB2007356C6 /* AASolidgauge.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -208,6 +209,7 @@
 		84B13EE82897A953007356C6 /* AAItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AAItem.swift; sourceTree = "<group>"; };
 		84B13EEA28990388007356C6 /* CustomClickEventCallbackMessageVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomClickEventCallbackMessageVC.swift; sourceTree = "<group>"; };
 		84B13F2E289BDB5F007356C6 /* AASolidgaugeDataElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AASolidgaugeDataElement.swift; sourceTree = "<group>"; };
+		84B13F30289CAFB2007356C6 /* AASolidgauge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AASolidgauge.swift; sourceTree = "<group>"; };
 		84B2386B283F6D4C00193B9A /* PackageBundlePathLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageBundlePathLoader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -415,6 +417,7 @@
 				44D27E01255A735700D0C636 /* AALayoutAlgorithm.swift */,
 				84B13EE82897A953007356C6 /* AAItem.swift */,
 				84B13F2E289BDB5F007356C6 /* AASolidgaugeDataElement.swift */,
+				84B13F30289CAFB2007356C6 /* AASolidgauge.swift */,
 			);
 			path = AAOptionsProModel;
 			sourceTree = "<group>";
@@ -599,6 +602,7 @@
 				844615A9283F580300E26DA4 /* AAScrollablePlotArea.swift in Sources */,
 				44D27DA4255A64A700D0C636 /* MainVC.swift in Sources */,
 				844615AD283F580300E26DA4 /* AALabels.swift in Sources */,
+				84B13F31289CAFB2007356C6 /* AASolidgauge.swift in Sources */,
 				44D27DEB255A6DD100D0C636 /* AAColorAxis.swift in Sources */,
 				844615BA283F580300E26DA4 /* AATooltip.swift in Sources */,
 				44D27E11255ADF1300D0C636 /* ChartProVC.swift in Sources */,

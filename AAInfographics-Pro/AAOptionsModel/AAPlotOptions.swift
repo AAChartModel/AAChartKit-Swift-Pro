@@ -45,6 +45,7 @@ public class AAPlotOptions: AAObject {
     public var arearange: AAArearange?
     public var packedbubble: AAPackedbubble?
     public var treemap: AATreemap?
+    public var solidgauge: AASolidgauge?
     public var series: AASeries?
     
     @discardableResult
@@ -116,6 +117,12 @@ public class AAPlotOptions: AAObject {
     @discardableResult
     public func treemap(_ prop: AATreemap) -> AAPlotOptions {
         treemap = prop
+        return self
+    }
+    
+    @discardableResult
+    public func solidgauge(_ prop: AASolidgauge) -> AAPlotOptions {
+        solidgauge = prop
         return self
     }
     
