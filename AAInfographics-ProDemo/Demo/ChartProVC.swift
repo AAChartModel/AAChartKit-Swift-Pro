@@ -1101,10 +1101,10 @@ class ChartProVC: AABaseChartVC {
                             .property("y")
                             .operator(">")
                             .value(250))
-                        .style(AAStyle()
-                            .color(AAColor.black)
-                            .textOutline("none")
-                            .fontWeight(.regular)))))
+                            .style(AAStyle()
+                                .color(AAColor.black)
+                                .textOutline("none")
+                                .fontWeight(.regular)))))
             .series(AAOptionsSeries.packedbubbleSeries)
     }
     
@@ -1341,124 +1341,67 @@ class ChartProVC: AABaseChartVC {
     }
     
     private func solidgaugeChart() -> AAOptions {
-        let seriesArr = [
-            AASeriesElement()
-                .name("Move")
-                .data([
-                    AASolidgaugeDataElement()
-                        .color("#7cb5ec")
-                        .radius("112%")
-                        .innerRadius("88%")
-                        .y(80)
-                    ]),
-            AASeriesElement()
-                .name("Exercise")
-                .data([
-                    AASolidgaugeDataElement()
-                        .color("#434348")
-                        .radius("87%")
-                        .innerRadius("63%")
-                        .y(65)
-                    ]),
-            AASeriesElement()
-                .name("Stand")
-                .data([
-                    AASolidgaugeDataElement()
-                        .color("#90ed7d")
-                        .radius("62%")
-                        .innerRadius("39%")
-                        .y(50)
-                    ]),
-            AASeriesElement()
-                .name("Move")
-                .data([
-                    AASolidgaugeDataElement()
-                        .color("#f7a35c")
-                        .radius("38%")
-                        .innerRadius("28%")
-                        .y(80)
-                    ]),
-            AASeriesElement()
-                .name("Exercise")
-                .data([
-                    AASolidgaugeDataElement()
-                        .color("#8085e9")
-                        .radius("27%")
-                        .innerRadius("17%")
-                        .y(65)
-                    ]),
-            AASeriesElement()
-                .name("Stand")
-                .data([
-                    AASolidgaugeDataElement()
-                        .color("#f15c80")
-                        .radius("16%")
-                        .innerRadius("6%")
-                        .y(50)
-                    ])
-            ]
-        
-        return AAOptions()
+         AAOptions()
             .chart(AAChart()
                 .type(AAChartType.solidgauge)
 //                .height("110%")
                 .events(AAChartEvents()
                     .load("""
                     function () {
+                    
                     if (!this.series[0].icon) {
-                    this.series[0].icon = this.renderer.path(['M', -8, 0, 'L', 8, 0, 'M', 0, -8, 'L', 8, 0, 0, 8])
-                        .attr({
-                            stroke: '#303030',
-                            'stroke-linecap': 'round',
-                            'stroke-linejoin': 'round',
-                            'stroke-width': 2,
-                            zIndex: 10
-                        })
-                        .add(this.series[2].group);
+                        this.series[0].icon = this.renderer.path(['M', -8, 0, 'L', 8, 0, 'M', 0, -8, 'L', 8, 0, 0, 8])
+                            .attr({
+                                stroke: '#303030',
+                                'stroke-linecap': 'round',
+                                'stroke-linejoin': 'round',
+                                'stroke-width': 2,
+                                zIndex: 10
+                            })
+                            .add(this.series[2].group);
                     }
                     this.series[0].icon.translate(
-                    this.chartWidth / 2 - 10,
-                    this.plotHeight / 2 - this.series[0].points[0].shapeArgs.innerR -
-                    (this.series[0].points[0].shapeArgs.r - this.series[0].points[0].shapeArgs.innerR) / 2
+                        this.chartWidth / 2 - 10,
+                        this.plotHeight / 2 - this.series[0].points[0].shapeArgs.innerR -
+                            (this.series[0].points[0].shapeArgs.r - this.series[0].points[0].shapeArgs.innerR) / 2
                     );
-                    
-                            if (!this.series[1].icon) {
-                    this.series[1].icon = this.renderer.path(
-                        ['M', -8, 0, 'L', 8, 0, 'M', 0, -8, 'L', 8, 0, 0, 8,
-                            'M', 8, -8, 'L', 16, 0, 8, 8
-                        ]
-                    )
-                        .attr({
-                            stroke: '#ffffff',
-                            'stroke-linecap': 'round',
-                            'stroke-linejoin': 'round',
-                            'stroke-width': 2,
-                            zIndex: 10
-                        })
-                        .add(this.series[2].group);
+
+                    if (!this.series[1].icon) {
+                        this.series[1].icon = this.renderer.path(
+                            ['M', -8, 0, 'L', 8, 0, 'M', 0, -8, 'L', 8, 0, 0, 8,
+                                'M', 8, -8, 'L', 16, 0, 8, 8]
+                        )
+                            .attr({
+                                stroke: '#ffffff',
+                                'stroke-linecap': 'round',
+                                'stroke-linejoin': 'round',
+                                'stroke-width': 2,
+                                zIndex: 10
+                            })
+                            .add(this.series[2].group);
                     }
                     this.series[1].icon.translate(
-                    this.chartWidth / 2 - 10,
-                    this.plotHeight / 2 - this.series[1].points[0].shapeArgs.innerR -
-                    (this.series[1].points[0].shapeArgs.r - this.series[1].points[0].shapeArgs.innerR) / 2
+                        this.chartWidth / 2 - 10,
+                        this.plotHeight / 2 - this.series[1].points[0].shapeArgs.innerR -
+                            (this.series[1].points[0].shapeArgs.r - this.series[1].points[0].shapeArgs.innerR) / 2
                     );
-                    
-                            if (!this.series[2].icon) {
-                    this.series[2].icon = this.renderer.path(['M', 0, 8, 'L', 0, -8, 'M', -8, 0, 'L', 0, -8, 8, 0])
-                        .attr({
-                            stroke: '#303030',
-                            'stroke-linecap': 'round',
-                            'stroke-linejoin': 'round',
-                            'stroke-width': 2,
-                            zIndex: 10
-                        })
-                        .add(this.series[2].group);
+
+                    if (!this.series[2].icon) {
+                        this.series[2].icon = this.renderer.path(['M', 0, 8, 'L', 0, -8, 'M', -8, 0, 'L', 0, -8, 8, 0])
+                            .attr({
+                                stroke: '#303030',
+                                'stroke-linecap': 'round',
+                                'stroke-linejoin': 'round',
+                                'stroke-width': 2,
+                                zIndex: 10
+                            })
+                            .add(this.series[2].group);
                     }
-                    
+
                     this.series[2].icon.translate(
-                    this.chartWidth / 2 - 10,
-                    this.plotHeight / 2 - this.series[2].points[0].shapeArgs.innerR -
-                    (this.series[2].points[0].shapeArgs.r - this.series[2].points[0].shapeArgs.innerR) / 2
+                        this.chartWidth / 2 - 10,
+                        this.plotHeight / 2 - this.series[2].points[0].shapeArgs.innerR -
+                            (this.series[2].points[0].shapeArgs.r - this.series[2].points[0].shapeArgs.innerR) / 2
                     );
                     }
                     """))
@@ -1475,15 +1418,14 @@ class ChartProVC: AABaseChartVC {
                     .fontSize(16)
                     .textOutline("3px"))
                 .valueSuffix("%")
-//                .pointFormat("{series.name}
-//        {point.y}")
+                .pointFormat(#"{series.name}<br><span style="font-size:2em; color: {point.color}; font-weight: bold">{point.y}</span>"#.aa_toPureJSString())
                 .positioner("""
                 function(labelWidth) {
-                        return {
-                            x: (this.chart.chartWidth - labelWidth) / 2 - 100,
-                            y: (this.chart.plotHeight / 2) + 15
-                        };
-                    }
+                    return {
+                        x: (this.chart.chartWidth - labelWidth) / 2 - 100,
+                        y: (this.chart.plotHeight / 2) + 15
+                    };
+                }
                 """))
             .pane(AAPane()
                 .startAngle(0)
@@ -1492,17 +1434,17 @@ class ChartProVC: AABaseChartVC {
                     AABackgroundElement()
                         .outerRadius("112%")
                         .innerRadius("88%")
-                        .backgroundColor("rgba(124,181,236,0.3)")
+                        .backgroundColor(AARgba(124,181,236,0.3))
                         .borderWidth(0),
                     AABackgroundElement()
                         .outerRadius("87%")
                         .innerRadius("63%")
-                        .backgroundColor("rgba(67,67,72,0.3)")
+                        .backgroundColor(AARgba(67,67,72,0.3))
                         .borderWidth(0),
                     AABackgroundElement()
                         .outerRadius("62%")
                         .innerRadius("38%")
-                        .backgroundColor("rgba(144,237,125,0.3)")
+                        .backgroundColor(AARgba(144,237,125,0.3))
                         .borderWidth(0)
                     ]))
             .yAxis(AAYAxis()
@@ -1517,7 +1459,62 @@ class ChartProVC: AABaseChartVC {
                     .linecap("round")
                     .stickyTracking(false)
                     .rounded(true)))
-            .series(seriesArr)
+            .series([
+                AASeriesElement()
+                    .name("Move")
+                    .data([
+                        AASolidgaugeDataElement()
+                            .color("#7cb5ec")
+                            .radius("112%")
+                            .innerRadius("88%")
+                            .y(80)
+                        ]),
+                AASeriesElement()
+                    .name("Exercise")
+                    .data([
+                        AASolidgaugeDataElement()
+                            .color("#434348")
+                            .radius("87%")
+                            .innerRadius("63%")
+                            .y(65)
+                        ]),
+                AASeriesElement()
+                    .name("Stand")
+                    .data([
+                        AASolidgaugeDataElement()
+                            .color("#90ed7d")
+                            .radius("62%")
+                            .innerRadius("39%")
+                            .y(50)
+                        ]),
+                AASeriesElement()
+                    .name("Move")
+                    .data([
+                        AASolidgaugeDataElement()
+                            .color("#f7a35c")
+                            .radius("38%")
+                            .innerRadius("28%")
+                            .y(80)
+                        ]),
+                AASeriesElement()
+                    .name("Exercise")
+                    .data([
+                        AASolidgaugeDataElement()
+                            .color("#8085e9")
+                            .radius("27%")
+                            .innerRadius("17%")
+                            .y(65)
+                        ]),
+                AASeriesElement()
+                    .name("Stand")
+                    .data([
+                        AASolidgaugeDataElement()
+                            .color("#f15c80")
+                            .radius("16%")
+                            .innerRadius("6%")
+                            .y(50)
+                        ])
+                ])
     }
 
 }
