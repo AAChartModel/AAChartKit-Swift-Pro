@@ -1423,7 +1423,7 @@ class ChartProVC: AABaseChartVC {
                 function(labelWidth) {
                     return {
                         x: (this.chart.chartWidth - labelWidth) / 2 - 100,
-                        y: (this.chart.plotHeight / 2) + 15
+                        y: (this.chart.plotHeight / 2) - 100
                     };
                 }
                 """))
