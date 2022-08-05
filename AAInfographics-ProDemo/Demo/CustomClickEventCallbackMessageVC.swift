@@ -30,7 +30,7 @@ class CustomClickEventCallbackMessageVC: UIViewController {
         configureChartView()
         configureChartViewCustomEventMessageHandler()
         
-        let aaOptions = topRoundedCornersStackingColumnChart()
+        let aaOptions = xrangeChartWithCustomJSFunction()
         aaChartView.aa_drawChartWithChartOptions(aaOptions)
     }
     
@@ -52,7 +52,7 @@ class CustomClickEventCallbackMessageVC: UIViewController {
         aaChartView!.configuration.userContentController.add(AALeakAvoider.init(delegate: self), name: kUserContentMessageNameChartDefaultSelected)
     }
     
-    private func topRoundedCornersStackingColumnChart() -> AAOptions {
+    private func xrangeChartWithCustomJSFunction() -> AAOptions {
          func xrangeChart() -> AAOptions {
             AAOptions()
                 .chart(AAChart()
