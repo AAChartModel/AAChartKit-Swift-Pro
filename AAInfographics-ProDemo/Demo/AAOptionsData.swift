@@ -126,6 +126,10 @@ class AAOptionsData {
         getJsonDataWithJsonFileName("sunburst2Data")
     }
     
+    public class var marathonData : [Any] {
+        getJsonDataWithJsonFileName("marathonData")
+    }
+    
     public class var xrangeData: [Any] {
         func getSingleGroupCategoryDataElementArrayWithY(_ y: Int) -> [Any] {
             var dataArr = [Any]()

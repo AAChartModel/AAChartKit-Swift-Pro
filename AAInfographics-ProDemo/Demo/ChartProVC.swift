@@ -56,7 +56,8 @@ class ChartProVC: AABaseChartVC {
         case 36: return generalDrawingChart()
         case 37: return solidgaugeChart()
         case 38: return largeDataHeatmapChart()
-
+        case 39: return parallelCoordinatesSplineChart()
+        case 40: return parallelCoordinatesLineChart()
             
         default:
             return sankeyChart()
@@ -1616,6 +1617,90 @@ function () {
                         .pointFormat("{point.x:%e %b, %Y} {point.y}:00: {point.value} ℃"))
                     .turboThreshold(10000)
                 ])
+    }
+    
+    private func parallelCoordinatesSplineChart() -> AAOptions {
+        AAOptions()
+            .chart(AAChart()
+                .type(.spline)
+                .parallelCoordinates(true)
+                .parallelAxes(AAParallelAxes()
+                    .lineWidth(2)))
+            .title(AATitle()
+                .text("Marathon set"))
+            .plotOptions(AAPlotOptions()
+                .series(AASeries()
+//                    .animation(false)
+                    .marker(AAMarker()
+                        .enabled(false)
+                        .states(AAMarkerStates()
+                            .hover(AAMarkerHover()
+                                .enabled(false))))
+                    .states(AAStates()
+                        .hover(AAHover()
+                            .halo(AAHalo()
+                                .size(0))))
+                    .events(AAEvents()
+                        .mouseOver(#"""
+                        function () {
+                                this.group.toFront();
+                            }
+                        """#))))
+            .tooltip(AATooltip()
+                .pointFormat((#"<span style="color:{point.color}">\u25CF</span>"# +
+                              "{series.name}: <b>{point.formattedValue}</b><br/>").aa_toPureJSString()))
+            .xAxis(AAXAxis()
+                .categories(["Training date", "Miles for training run", "Training time", "Shoe brand", "Running pace per mile", "Short or long", "After 2004", ])
+                .offset(10))
+            .yAxisArray([
+                AAYAxis()
+                    .type(.datetime)
+                    .tooltipValueFormat("{value:%Y-%m-%d}")
+                ,
+                AAYAxis()
+                    .min(0)
+                    .tooltipValueFormat("{value} mile(s)")
+                ,
+                AAYAxis()
+                    .type(.datetime)
+                    .min(0)
+                    .labels(AALabels()
+                        .format("{value:%H:%M}")),
+                AAYAxis()
+                    .categories(["Other", "Adidas", "Mizuno", "Asics", "Brooks", "New Balance", "Izumi", ]),
+                AAYAxis()
+                    .type(.datetime),
+                AAYAxis()
+                    .categories(["> 5miles", "< 5miles", ]),
+                AAYAxis()
+                    .categories(["Before", "After", ])
+                ])
+        
+//            .colors(["rgba(11, 200, 200, 0.1)", ])
+            .colors([AARgba(255, 0, 0, 0.1),])
+            .series(AAOptionsData.marathonData.map({ dataSet in
+                return AASeriesElement()
+                    .name("Runner")
+                    .data(dataSet as! [Any])
+                    .shadow(AAShadow()
+                        .width(0))
+            }))
+    }
+    
+    private func parallelCoordinatesLineChart() -> AAOptions {
+        let aaOptions = parallelCoordinatesSplineChart()
+        aaOptions.chart?.type(.line)
+        aaOptions.colors([AAGradientColor.linearGradient(
+            direction: .toRight,
+            stops: [
+                [0.00, "#febc0f0F"],//颜色字符串设置支持十六进制类型和 rgba 类型
+                [0.25, "#FF14d4E6"],
+                [0.50, "#0bf8f5E6"],
+                [0.75, "#F33c52E6"],
+                [1.00, "#1904ddE6"],
+            ]
+        )])
+        return aaOptions
     }
 
 }
