@@ -98,6 +98,8 @@
 		84B13F33289D09EA007356C6 /* AAHeatmap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B13F32289D09EA007356C6 /* AAHeatmap.swift */; };
 		84B13F35289D12DF007356C6 /* AAData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B13F34289D12DF007356C6 /* AAData.swift */; };
 		84B13F37289E1248007356C6 /* AAOptionsCSV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B13F36289E1248007356C6 /* AAOptionsCSV.swift */; };
+		84B13F39289E15DB007356C6 /* marathonData.json in Resources */ = {isa = PBXBuildFile; fileRef = 84B13F38289E15DB007356C6 /* marathonData.json */; };
+		84B13F3B289E2CA0007356C6 /* AAParallelAxes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B13F3A289E2CA0007356C6 /* AAParallelAxes.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -216,6 +218,8 @@
 		84B13F32289D09EA007356C6 /* AAHeatmap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AAHeatmap.swift; sourceTree = "<group>"; };
 		84B13F34289D12DF007356C6 /* AAData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AAData.swift; sourceTree = "<group>"; };
 		84B13F36289E1248007356C6 /* AAOptionsCSV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AAOptionsCSV.swift; sourceTree = "<group>"; };
+		84B13F38289E15DB007356C6 /* marathonData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = marathonData.json; sourceTree = "<group>"; };
+		84B13F3A289E2CA0007356C6 /* AAParallelAxes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AAParallelAxes.swift; sourceTree = "<group>"; };
 		84B2386B283F6D4C00193B9A /* PackageBundlePathLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageBundlePathLoader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -394,6 +398,7 @@
 				84A5691C27FEC89C00883553 /* heatmapData.json */,
 				84A5692227FEC89D00883553 /* itemData.json */,
 				84A5691527FEC89B00883553 /* lollipopData.json */,
+				84B13F38289E15DB007356C6 /* marathonData.json */,
 				84A5691627FEC89B00883553 /* networkgraphData.json */,
 				84A5691F27FEC89D00883553 /* organizationData.json */,
 				84A5691427FEC89B00883553 /* organizationNodesData.json */,
@@ -427,6 +432,7 @@
 				84B13F30289CAFB2007356C6 /* AASolidgauge.swift */,
 				84B13F32289D09EA007356C6 /* AAHeatmap.swift */,
 				84B13F34289D12DF007356C6 /* AAData.swift */,
+				84B13F3A289E2CA0007356C6 /* AAParallelAxes.swift */,
 			);
 			path = AAOptionsProModel;
 			sourceTree = "<group>";
@@ -578,6 +584,7 @@
 				44D27DAC255A6C0700D0C636 /* AAJSFiles.bundle in Resources */,
 				84A5691227FEC88700883553 /* packedbubbleSeries.json in Resources */,
 				84A5693B27FEC89F00883553 /* flameData.json in Resources */,
+				84B13F39289E15DB007356C6 /* marathonData.json in Resources */,
 				84A5693527FEC89F00883553 /* eulerData.json in Resources */,
 				84A5694D27FEC89F00883553 /* vectorData.json in Resources */,
 				84A5694627FEC89F00883553 /* dependencywheelData.json in Resources */,
@@ -659,6 +666,7 @@
 				44D27E07255A793200D0C636 /* AAOptionsData.swift in Sources */,
 				8446158D283F57C600E26DA4 /* AAChartModel.swift in Sources */,
 				44D27DF3255A706C00D0C636 /* AALevelsElement.swift in Sources */,
+				84B13F3B289E2CA0007356C6 /* AAParallelAxes.swift in Sources */,
 				844615AA283F580300E26DA4 /* AAAxis.swift in Sources */,
 				844615A8283F580300E26DA4 /* AAStyle.swift in Sources */,
 			);
