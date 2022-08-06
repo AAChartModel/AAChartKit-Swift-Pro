@@ -95,6 +95,8 @@
 		84B13EEB28990388007356C6 /* CustomClickEventCallbackMessageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B13EEA28990388007356C6 /* CustomClickEventCallbackMessageVC.swift */; };
 		84B13F2F289BDB5F007356C6 /* AASolidgaugeDataElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B13F2E289BDB5F007356C6 /* AASolidgaugeDataElement.swift */; };
 		84B13F31289CAFB2007356C6 /* AASolidgauge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B13F30289CAFB2007356C6 /* AASolidgauge.swift */; };
+		84B13F33289D09EA007356C6 /* AAHeatmap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B13F32289D09EA007356C6 /* AAHeatmap.swift */; };
+		84B13F35289D12DF007356C6 /* AAData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B13F34289D12DF007356C6 /* AAData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -210,6 +212,8 @@
 		84B13EEA28990388007356C6 /* CustomClickEventCallbackMessageVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomClickEventCallbackMessageVC.swift; sourceTree = "<group>"; };
 		84B13F2E289BDB5F007356C6 /* AASolidgaugeDataElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AASolidgaugeDataElement.swift; sourceTree = "<group>"; };
 		84B13F30289CAFB2007356C6 /* AASolidgauge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AASolidgauge.swift; sourceTree = "<group>"; };
+		84B13F32289D09EA007356C6 /* AAHeatmap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AAHeatmap.swift; sourceTree = "<group>"; };
+		84B13F34289D12DF007356C6 /* AAData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AAData.swift; sourceTree = "<group>"; };
 		84B2386B283F6D4C00193B9A /* PackageBundlePathLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageBundlePathLoader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -418,6 +422,8 @@
 				84B13EE82897A953007356C6 /* AAItem.swift */,
 				84B13F2E289BDB5F007356C6 /* AASolidgaugeDataElement.swift */,
 				84B13F30289CAFB2007356C6 /* AASolidgauge.swift */,
+				84B13F32289D09EA007356C6 /* AAHeatmap.swift */,
+				84B13F34289D12DF007356C6 /* AAData.swift */,
 			);
 			path = AAOptionsProModel;
 			sourceTree = "<group>";
@@ -599,6 +605,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84B13F33289D09EA007356C6 /* AAHeatmap.swift in Sources */,
 				844615A9283F580300E26DA4 /* AAScrollablePlotArea.swift in Sources */,
 				44D27DA4255A64A700D0C636 /* MainVC.swift in Sources */,
 				844615AD283F580300E26DA4 /* AALabels.swift in Sources */,
@@ -637,6 +644,7 @@
 				844615B5283F580300E26DA4 /* AAPlotBandsElement.swift in Sources */,
 				844615BB283F580300E26DA4 /* AASeries.swift in Sources */,
 				44D27D91255A631500D0C636 /* AABaseChartVC.swift in Sources */,
+				84B13F35289D12DF007356C6 /* AAData.swift in Sources */,
 				844615AB283F580300E26DA4 /* AALegend.swift in Sources */,
 				44D27E0C255ADE1E00D0C636 /* AAOptionsSeries.swift in Sources */,
 				8441A76226C2568F007EAAA7 /* AAColor.swift in Sources */,
