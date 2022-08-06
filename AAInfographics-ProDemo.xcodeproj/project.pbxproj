@@ -97,6 +97,7 @@
 		84B13F31289CAFB2007356C6 /* AASolidgauge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B13F30289CAFB2007356C6 /* AASolidgauge.swift */; };
 		84B13F33289D09EA007356C6 /* AAHeatmap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B13F32289D09EA007356C6 /* AAHeatmap.swift */; };
 		84B13F35289D12DF007356C6 /* AAData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B13F34289D12DF007356C6 /* AAData.swift */; };
+		84B13F37289E1248007356C6 /* AAOptionsCSV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B13F36289E1248007356C6 /* AAOptionsCSV.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -214,6 +215,7 @@
 		84B13F30289CAFB2007356C6 /* AASolidgauge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AASolidgauge.swift; sourceTree = "<group>"; };
 		84B13F32289D09EA007356C6 /* AAHeatmap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AAHeatmap.swift; sourceTree = "<group>"; };
 		84B13F34289D12DF007356C6 /* AAData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AAData.swift; sourceTree = "<group>"; };
+		84B13F36289E1248007356C6 /* AAOptionsCSV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AAOptionsCSV.swift; sourceTree = "<group>"; };
 		84B2386B283F6D4C00193B9A /* PackageBundlePathLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageBundlePathLoader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -359,6 +361,7 @@
 				44D27D7E255A631500D0C636 /* AABaseChartVC.swift */,
 				44D27E06255A793200D0C636 /* AAOptionsData.swift */,
 				44D27E0B255ADE1E00D0C636 /* AAOptionsSeries.swift */,
+				84B13F36289E1248007356C6 /* AAOptionsCSV.swift */,
 				44D27DB4255A6CE300D0C636 /* DataJsonFiles */,
 				44D27DB1255A6CE300D0C636 /* SeriesJsonFiles */,
 			);
@@ -611,6 +614,7 @@
 				844615AD283F580300E26DA4 /* AALabels.swift in Sources */,
 				84B13F31289CAFB2007356C6 /* AASolidgauge.swift in Sources */,
 				44D27DEB255A6DD100D0C636 /* AAColorAxis.swift in Sources */,
+				84B13F37289E1248007356C6 /* AAOptionsCSV.swift in Sources */,
 				844615BA283F580300E26DA4 /* AATooltip.swift in Sources */,
 				44D27E11255ADF1300D0C636 /* ChartProVC.swift in Sources */,
 				844615AC283F580300E26DA4 /* AADataLabels.swift in Sources */,
