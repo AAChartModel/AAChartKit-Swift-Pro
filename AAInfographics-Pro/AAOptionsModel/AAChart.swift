@@ -59,7 +59,7 @@ public class AAChart: AAObject {
     public var events: AAChartEvents?
     public var parallelCoordinates: Bool?
     public var parallelAxes: AAParallelAxes?
-
+    public var height: Any?
     
     @discardableResult
     public func type(_ prop: AAChartType?) -> AAChart {
@@ -240,6 +240,12 @@ public class AAChart: AAObject {
     @discardableResult
     public func parallelAxes(_ prop: AAParallelAxes?) -> AAChart {
         parallelAxes = prop
+        return self
+    }
+    
+    @discardableResult
+    public func height(_ prop: Any?) -> AAChart {
+        height = prop
         return self
     }
     
