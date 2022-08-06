@@ -58,6 +58,8 @@ class ChartProVC: AABaseChartVC {
         case 38: return largeDataHeatmapChart()
         case 39: return parallelCoordinatesSplineChart()
         case 40: return parallelCoordinatesLineChart()
+        case 41: return bulletChart()
+
             
         default:
             return sankeyChart()
@@ -1701,6 +1703,58 @@ function () {
             ]
         )])
         return aaOptions
+    }
+    
+    private func bulletChart() -> AAOptions {
+        AAOptions()
+            .chart(AAChart()
+                .marginTop(100)
+                .inverted(true)
+//                .marginLeft(135)
+                .height(200)
+                .type(.bullet))
+            .title(AATitle()
+                .text("2017 年公司运营情况"))
+            .xAxis(AAXAxis()
+                .categories(["<span style=color:#ff0000;font-weight:bold;font-size:13px>营收</span><br/>千美元"]))
+            .yAxis(AAYAxis()
+                .gridLineWidth(0)
+                .plotBands([
+                    AAPlotBandsElement()
+                        .from(0)
+                        .to(150)
+                        .color("#666"),
+                    AAPlotBandsElement()
+                        .from(150)
+                        .to(225)
+                        .color("#999"),
+                    AAPlotBandsElement()
+                        .from(225)
+                        .to(9000000000)
+                        .color("#bbb")
+                    ])
+                    .title(AATitle().text("")))
+            .plotOptions(AAPlotOptions()
+                .series(AASeries()
+                    .pointPadding(0.25)
+                    .borderWidth(0)
+//                    .color("#000")
+//                    .targetOptions(AATargetOptions()
+//                        .width("200%"))
+                ))
+            .legend(AALegend()
+                .enabled(false))
+            .series([
+                AASeriesElement()
+                    .color("#000")
+                    .data([
+                        AABulletDataElement()
+                            .y(275)
+                            .target(250)
+                        ])
+                ])
+            .tooltip(AATooltip()
+                .pointFormat("{point.y} （目标值 {point.target}）"))
     }
 
 }
