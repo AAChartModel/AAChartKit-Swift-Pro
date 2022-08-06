@@ -49,6 +49,7 @@ public class AAOptions: AAObject {
     public var credits: AACredits?
     public var defaultOptions: AALang?
     public var colorAxis: AAColorAxis?
+    public var data: AAData?
     
     public var clickEventEnabled: Bool?//Please DO NOT use this property
     public var touchEventEnabled: Bool?//Please DO NOT use this property
@@ -147,6 +148,12 @@ public class AAOptions: AAObject {
     @discardableResult
      public func colorAxis(_ prop: AAColorAxis?) -> AAOptions {
          colorAxis = prop
+         return self
+     }
+    
+    @discardableResult
+     public func data(_ prop: AAData?) -> AAOptions {
+         data = prop
          return self
      }
      
