@@ -38,12 +38,3 @@ public class AASolidgauge: AAObject {
     }
     
 }
-
-
-//            .plotOptions(AAPlotOptions()
-//                .solidgauge(AASolidgauge()
-//                    .dataLabels(AADataLabels()
-//                        .enabled(false))
-//                    .linecap("round")
-//                    .stickyTracking(false)
-//                    .rounded(true)))
