@@ -57,6 +57,9 @@ public class AAChart: AAObject {
     public var resetZoomButton: AAResetZoomButton?
     public var zoomType: String?
     public var events: AAChartEvents?
+    public var parallelCoordinates: Bool?
+    public var parallelAxes: AAParallelAxes?
+
     
     @discardableResult
     public func type(_ prop: AAChartType?) -> AAChart {
@@ -225,6 +228,18 @@ public class AAChart: AAObject {
     @discardableResult
     public func events(_ prop: AAChartEvents?) -> AAChart {
         events = prop
+        return self
+    }
+    
+    @discardableResult
+    public func parallelCoordinates(_ prop: Bool?) -> AAChart {
+        parallelCoordinates = prop
+        return self
+    }
+    
+    @discardableResult
+    public func parallelAxes(_ prop: AAParallelAxes?) -> AAChart {
+        parallelAxes = prop
         return self
     }
     
