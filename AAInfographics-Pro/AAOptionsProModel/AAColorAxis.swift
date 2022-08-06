@@ -10,6 +10,12 @@ public class AAColorAxis: AAObject {
     public var minColor: String?
     public var maxColor: String?
     public var dataClasses: [AADataClassesElement]?
+    public var stops: [Any]?
+    public var max: Double? // x-axis maximum
+//    public var min: Double? // x-axis minimum  (set to 0, there will be no negative numbers)
+    public var startOnTick: Bool? // Whether to force the axis to start on a tick. Use this option with the minPadding option to control the axis start. The default is false.
+    public var endOnTick: Bool?// Whether to force the axis to end on a tick. Use this option with the minPadding option to control the axis end. The default is false.
+    public var labels: AALabels?
     
     @discardableResult
     public func min(_ prop: Any?) -> AAColorAxis {
@@ -32,6 +38,42 @@ public class AAColorAxis: AAObject {
     @discardableResult
     public func dataClasses(_ prop: [AADataClassesElement]?) -> AAColorAxis {
         dataClasses = prop
+        return self
+    }
+    
+    @discardableResult
+    public func stops(_ prop: [Any]?) -> AAColorAxis {
+        stops = prop
+        return self
+    }
+    
+    @discardableResult
+    public func max(_ prop: Double?) -> AAColorAxis {
+        max = prop
+        return self
+    }
+    
+//    @discardableResult
+//    public func min(_ prop: Double?) -> AAColorAxis {
+//        min = prop
+//        return self
+//    }
+    
+    @discardableResult
+    public func startOnTick(_ prop: Bool?) -> AAColorAxis {
+        startOnTick = prop
+        return self
+    }
+    
+    @discardableResult
+    public func endOnTick(_ prop: Bool?) -> AAColorAxis {
+        endOnTick = prop
+        return self
+    }
+    
+    @discardableResult
+    public func labels(_ prop: AALabels?) -> AAColorAxis {
+        labels = prop
         return self
     }
     
