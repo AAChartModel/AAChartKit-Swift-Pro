@@ -35,10 +35,17 @@ import Foundation
 
 public class AAYAxis: AAAxis {
     public var stackLabels: [String: Any]?
-    
+    public var tooltipValueFormat: String? //Parallel coordinates only. https://api.highcharts.com.cn/highcharts/yAxis.tooltipValueFormat.html
+        
     @discardableResult
     public func stackLabels(_ prop: [String: Any]?) -> AAYAxis {
         stackLabels = prop
+        return self
+    }
+    
+    @discardableResult
+    public func tooltipValueFormat(_ prop: String?) -> AAYAxis {
+        tooltipValueFormat = prop
         return self
     }
     ///----------------------------------------------------------
