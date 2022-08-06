@@ -17,6 +17,7 @@ class ChartProVC: AABaseChartVC {
     
     override func chartConfigurationWithSelectedIndex(_ selectedIndex: Int) -> Any? {
         switch selectedIndex {
+        case  0: return sankeyChart()
         case  1: return variablepieChart()
         case  2: return treemapWithLevelsData()
         case  3: return variwideChart()
@@ -54,6 +55,7 @@ class ChartProVC: AABaseChartVC {
         case 35: return sunburstChart2()
         case 36: return generalDrawingChart()
         case 37: return solidgaugeChart()
+        case 38: return largeDataHeatmapChart()
 
             
         default:
@@ -201,7 +203,7 @@ class ChartProVC: AABaseChartVC {
         
         let aaLegend = AALegend()
             .enabled(false)
-        
+                
         let seriesElementArr = [
             AASeriesElement()
                 .allowDrillToNode(true)
@@ -1340,6 +1342,34 @@ class ChartProVC: AABaseChartVC {
                 .style(AAStyle.init(color: AAColor.black)))
     }
     
+    func dicStringToPrettyString(dic: Any) -> String {
+        return String(data: try! JSONSerialization.data(withJSONObject: dic, options: .prettyPrinted), encoding: .utf8)!
+    }
+    
+    private func configureVirturalTemperatureDataArr() -> [Any] {
+        var dataArr = [Any]()
+        for month in 1...12 {
+            var daysNum = 30
+            if month == 1 || month == 3 || month == 5 || month == 7 || month == 10 || month == 12 {
+                daysNum = 31
+            } else if month == 2 {
+                daysNum = 28
+            }
+            for day in 1...daysNum {
+                for hour in 1...24 {
+                    let dayStr = "2013-\(month)-\(day)"
+                    let hourNum = hour - 1
+                    let temperature = (arc4random() % 10)
+//                    "Date,Time,Temperature
+                    let dataElement = ["Date":dayStr, "Time": hourNum, "Temperature": temperature] as [String: Any]
+                    dataArr.append(dataElement)
+                }
+            }
+        }
+//        print("\(dicStringToPrettyString(dic: dataArr))")
+        return dataArr
+    }
+    
     private func solidgaugeChart() -> AAOptions {
          AAOptions()
             .chart(AAChart()
@@ -1516,5 +1546,96 @@ class ChartProVC: AABaseChartVC {
                         ])
                 ])
     }
+    
+    private func largeDataHeatmapChart() -> AAOptions {
+        let csvStr: String = AAOptionsCSV.csvData["csv"] as! String
+        return AAOptions()
+            .data(AAData()
+                .csv(csvStr.aa_toPureJSString2())
+                .parsed("""
+function () {
+            start = +new Date();
+        }
+"""))
+            .chart(AAChart()
+                .type(.heatmap)
+                .margin([60, 10, 80, 50]))
+            .title(AATitle()
+                .text("大型热力图")
+                .align(.left)
+                .x(40))
+            .subtitle(AASubtitle()
+                .text("2013每天每小时的热力变化")
+                .align(.left)
+                .x(40))
+            .xAxis(AAXAxis()
+                .type(AAChartAxisType.datetime)
+                .min(1356998400000)
+                .max(1388534400000)
+                .labels(AALabels()
+                    .align(.left)
+                    .x(5)
+                    .y(14)
+                    .format("{value:%B}"))
+//                .showLastLabel(false)
+                .tickLength(16))
+            .yAxis(AAYAxis()
+                .title(AATitle()
+                    .text(""))
+                .labels(AALabels()
+                    .format("{value}:00"))
+                .minPadding(0)
+                .maxPadding(0)
+                .startOnTick(false)
+                .endOnTick(false)
+                .tickPositions([0, 6, 12, 18, 24])
+                .tickWidth(1)
+                .min(0)
+                .max(23)
+                .reversed(true))
+            .colorAxis(AAColorAxis()
+                .stops([
+                    [0, "#3060cf", ],
+                    [0.5, "#fffbbc", ],
+                    [0.9, "#c4463a", ],
+                    [1, "#c4463a", ]
+                    ])
+                .min(-15)
+                .max(25)
+                .startOnTick(false)
+                .endOnTick(false)
+                .labels(AALabels()
+                    .format("{value}℃")))
+            .series([
+                AAHeatmap()
+                    .borderWidth(0)
+                    .colsize(86400000)
+//                    .data(configureVirturalTemperatureDataArr())
+                    .tooltip(AATooltip()
+                        .headerFormat("Temperature")
+                        .pointFormat("{point.x:%e %b, %Y} {point.y}:00: {point.value} ℃"))
+                    .turboThreshold(10000)
+                ])
+    }
 
+}
+
+
+public extension String {
+    func aa_toPureJSString2() -> String {
+        //https://stackoverflow.com/questions/34334232/why-does-function-not-work-but-function-does-chrome-devtools-node
+        var pureJSStr = "\(self)"
+        pureJSStr = pureJSStr.replacingOccurrences(of: "'", with: "\"")
+        pureJSStr = pureJSStr.replacingOccurrences(of: "\0", with: "")
+//        pureJSStr = pureJSStr.replacingOccurrences(of: "\n", with: "")
+        pureJSStr = pureJSStr.replacingOccurrences(of: "\\", with: "\\\\")
+        pureJSStr = pureJSStr.replacingOccurrences(of: "\"", with: "\\\"")
+        pureJSStr = pureJSStr.replacingOccurrences(of: "\n", with: "\\n")
+        pureJSStr = pureJSStr.replacingOccurrences(of: "\r", with: "\\r")
+//        pureJSStr = pureJSStr.replacingOccurrences(of: "\u{000C}", with: "\\f")
+//        pureJSStr = pureJSStr.replacingOccurrences(of: "\u{2028}", with: "\\u2028")
+//        pureJSStr = pureJSStr.replacingOccurrences(of: "\u{2029}", with: "\\u2029")
+        return pureJSStr
+    }
+    
 }
