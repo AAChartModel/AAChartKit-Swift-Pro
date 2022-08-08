@@ -1,2 +1,2 @@
-# AAChartKit-Swift-Pro (Beta Version, Coming Soon...)
+# AAChartKit-Swift-Pro 
 A professional version of AAChartKit-Swift 
