@@ -8,11 +8,11 @@
 import Foundation
 
 public class AAData: AAObject {
-    public var csv: Any?
+    public var csv: String?
     public var parsed: String?
     
     @discardableResult
-    public func csv(_ prop: Any?) -> AAData {
+    public func csv(_ prop: String?) -> AAData {
         csv = prop
         return self
     }
