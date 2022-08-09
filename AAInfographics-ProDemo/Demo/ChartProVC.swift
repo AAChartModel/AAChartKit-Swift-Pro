@@ -1419,7 +1419,15 @@ function () {
                 .pointFormat((#"<span style="color:{point.color}">\u25CF</span>"# +
                               "{series.name}: <b>{point.formattedValue}</b><br/>").aa_toPureJSString()))
             .xAxis(AAXAxis()
-                .categories(["Training date", "Miles for training run", "Training time", "Shoe brand", "Running pace per mile", "Short or long", "After 2004", ])
+                .categories([
+                    "Training date",
+                    "Miles for training run",
+                    "Training time",
+                    "Shoe brand",
+                    "Running pace per mile",
+                    "Short or long",
+                    "After 2004",
+                ])
                 .offset(10))
             .yAxisArray([
                 AAYAxis()
@@ -1436,15 +1444,28 @@ function () {
                     .labels(AALabels()
                         .format("{value:%H:%M}")),
                 AAYAxis()
-                    .categories(["Other", "Adidas", "Mizuno", "Asics", "Brooks", "New Balance", "Izumi", ]),
+                    .categories([
+                        "Other",
+                        "Adidas",
+                        "Mizuno",
+                        "Asics",
+                        "Brooks",
+                        "New Balance",
+                        "Izumi",
+                    ]),
                 AAYAxis()
                     .type(.datetime),
                 AAYAxis()
-                    .categories(["> 5miles", "< 5miles", ]),
+                    .categories([
+                        "> 5miles",
+                        "< 5miles",
+                    ]),
                 AAYAxis()
-                    .categories(["Before", "After", ])
+                    .categories([
+                        "Before",
+                        "After",
+                    ])
                 ])
-        
 //            .colors(["rgba(11, 200, 200, 0.1)", ])
             .colors([AARgba(255, 0, 0, 0.1),])
             .series(AAOptionsData.marathonData.map({ dataSet in
