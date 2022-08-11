@@ -419,37 +419,37 @@ public class AADataElement: AAObject {
     public var marker: AAMarker?
     
     @discardableResult
-    public func name(_ prop: String) -> AADataElement {
+    public func name(_ prop: String) -> Self {
         name = prop
         return self
     }
     
     @discardableResult
-    public func x(_ prop: Float) -> AADataElement {
+    public func x(_ prop: Float) -> Self {
         x = prop
         return self
     }
     
     @discardableResult
-    public func y(_ prop: Float) -> AADataElement {
+    public func y(_ prop: Float) -> Self {
         y = prop
         return self
     }
     
     @discardableResult
-    public func color(_ prop: Any) -> AADataElement {
+    public func color(_ prop: Any) -> Self {
         color = prop
         return self
     }
     
     @discardableResult
-    public func dataLabels(_ prop: AADataLabels) -> AADataElement {
+    public func dataLabels(_ prop: AADataLabels) -> Self {
         dataLabels = prop
         return self
     }
     
     @discardableResult
-    public func marker(_ prop: AAMarker) -> AADataElement {
+    public func marker(_ prop: AAMarker) -> Self {
         marker = prop
         return self
     }
