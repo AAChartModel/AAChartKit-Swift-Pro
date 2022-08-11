@@ -117,6 +117,7 @@ public enum AAChartType: String {
     case arcdiagram
     case flame
     case solidgauge
+    case histogram
     case bullet
 }
 

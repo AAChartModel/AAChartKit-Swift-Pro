@@ -58,6 +58,7 @@ class ChartProVC: AABaseChartVC {
         case 38: return largeDataHeatmapChart()
         case 39: return parallelCoordinatesSplineChart()
         case 40: return parallelCoordinatesLineChart()
+        case 41: return histogramChart()
 
             
         default:
@@ -1544,6 +1545,49 @@ function () {
             .tooltip(AATooltip()
                 .pointFormat("{point.y} （目标值 {point.target}）"))
     }
+    
+    private func histogramChart() -> AAOptions {
+        AAOptions()
+            .title(AATitle()
+                .text("Highcharts Histogram"))
+            .xAxisArray([
+                AAXAxis()
+                    .title(AATitle()
+                        .text("Data")),
+                AAXAxis()
+                    .title(AATitle()
+                        .text("Histogram"))
+                    .opposite(true)
+                ])
+            .yAxisArray([
+                AAYAxis()
+                    .title(AATitle()
+                        .text("Data")),
+                AAYAxis()
+                    .title(AATitle()
+                        .text("Histogram"))
+                    .opposite(true)
+                ])
+            .series([
+                AASeriesElement()
+                    .name("Histogram")
+                    .type(.histogram)
+                    .xAxis(1)
+                    .yAxis(1)
+                    .baseSeries("s1")
+                    .zIndex(-1),
+                AASeriesElement()
+                    .name("Data")
+                    .type(.scatter)
+                    .data((AAOptionsData.bellcurveData))
+                    .id("s1")
+                    .marker(AAMarker()
+                                .fillColor(AAColor.white)//点的填充色(用来设置折线连接点的填充色)
+                                .lineWidth(2)//外沿线的宽度(用来设置折线连接点的轮廓描边的宽度)
+                                .lineColor(""))//外沿线的颜色(用来设置折线连接点的轮廓描边颜色，当值为空字符串时，默认取数据点或数据列的颜色))
+                ])
+    }
+    
 
 }
 

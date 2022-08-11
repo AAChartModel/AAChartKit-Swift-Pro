@@ -91,6 +91,7 @@ class MainVC: UIViewController {
                 "largeDataHeatmapChart---大型热力图🌡",
                 "parallelCoordinatesSplineChart---平行坐标曲线图",
                 "parallelCoordinatesLineChart---平行坐标折线图📈",
+                "histogramChart---直方混合散点图"
             ],
             [
                 "Custom Chart Click Event Message---自定义用户点击事件回调内容",
