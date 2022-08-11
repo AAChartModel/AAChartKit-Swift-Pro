@@ -7,7 +7,7 @@
 
 import Foundation
 
-public class AAParallelAxes {
+public class AAParallelAxes: AAObject {
     public var lineWidth: Float?
     
     @discardableResult
