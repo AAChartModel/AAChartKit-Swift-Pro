@@ -37,11 +37,12 @@ class CustomClickEventCallbackMessageVC: UIViewController {
     private func configureChartView() {
         aaChartView = AAChartView()
         let chartViewWidth = view.frame.size.width
-        let chartViewHeight = view.frame.size.height - 220
+        let chartViewHeight = view.frame.size.height
         aaChartView!.frame = CGRect(x: 0,
                                     y: 60,
                                     width: chartViewWidth,
                                     height: chartViewHeight)
+        aaChartView!.delegate = self as AAChartViewDelegate
         view.addSubview(aaChartView!)
         aaChartView!.isScrollEnabled = false//Disable chart content scrolling
     }
@@ -53,39 +54,44 @@ class CustomClickEventCallbackMessageVC: UIViewController {
     }
     
     private func xrangeChartWithCustomJSFunction() -> AAOptions {
-         func xrangeChart() -> AAOptions {
-            AAOptions()
-                .chart(AAChart()
-                        .type(.xrange))
-                .colors([
-                    "#7cb5ec","#434348","#90ed7d","#f7a35c","#8085e9",
-                    "rgb(255,143,179)","rgb(255,117,153)",
-                    "#f15c80","#e4d354","#2b908f","#f45b5b","#91e8e1","#7cb5ec","#434348","#f7a35c",
-                    "rgb(119,212,100)","rgb(93,186,74)","rgb(68,161,49)"
-                ])
-                .title(AATitle()
-                        .text(""))
-                .yAxis(AAYAxis()
-                        .visible(true)
-                        .title(AATitle()
-                                .text(""))
-                        .reversed(true)
-                        .categories(["原型","开发","测试","上线"])
-                        .gridLineWidth(0))
-                .legend(AALegend()
-                            .enabled(false))
-                .plotOptions(AAPlotOptions()
-                                .series(AASeries()
-                                            .pointPadding(0)
-                                            .groupPadding(0)))
-                .series([
+         func areasplineChart() -> AAOptions {
+             let aaChartModel = AAChartModel()
+                 .chartType(.areaspline)
+                 .colorsTheme([
+                     AAGradientColor.linearGradient(startColor: AARgb(128, 255, 165), endColor: AARgb(1  , 191, 236)),
+                     AAGradientColor.linearGradient(startColor: AARgb(0  , 221, 255), endColor: AARgb(77 , 119, 255)),
+                     AAGradientColor.linearGradient(startColor: AARgb(55 , 162, 255), endColor: AARgb(116, 21 , 219)),
+                     AAGradientColor.linearGradient(startColor: AARgb(255, 0  , 135), endColor: AARgb(135, 0  , 157)),
+                     AAGradientColor.linearGradient(startColor: AARgb(255, 191, 0  ), endColor: AARgb(224, 62 , 76 )),
+                 ])
+                 .xAxisLabelsStyle(AAStyle(color: AAColor.white))
+                 .dataLabelsEnabled(false)
+                 .stacking(.normal)
+                 .tooltipValueSuffix("℃")
+                 .markerSymbol(.circle)
+                 .series([
                     AASeriesElement()
-                        .borderRadius(2)
-                        .data(AAOptionsData.xrangeData)
-                ])
+                        .name("Tokyo Hot")
+                        .data([0.45, 0.43, 0.50, 0.55, 0.58, 0.62, 0.83, 0.39, 0.56, 0.67, 0.50, 0.34, 0.50, 0.67, 0.58, 0.29, 0.46, 0.23, 0.47, 0.46, 0.38, 0.56, 0.48, 0.36])
+                    ,
+                    AASeriesElement()
+                        .name("Berlin Hot")
+                        .data([0.38, 0.31, 0.32, 0.32, 0.64, 0.66, 0.86, 0.47, 0.52, 0.75, 0.52, 0.56, 0.54, 0.60, 0.46, 0.63, 0.54, 0.51, 0.58, 0.64, 0.60, 0.45, 0.36, 0.67])
+                    ,
+                    AASeriesElement()
+                        .name("New York Hot")
+                        .data([0.46, 0.32, 0.53, 0.58, 0.86, 0.68, 0.85, 0.73, 0.69, 0.71, 0.91, 0.74, 0.60, 0.50, 0.39, 0.67, 0.55, 0.49, 0.65, 0.45, 0.64, 0.47, 0.63, 0.64])
+                    ,
+                    AASeriesElement()
+                        .name("London Hot")
+                        .data([0.60, 0.51, 0.52, 0.53, 0.64, 0.84, 0.65, 0.68, 0.63, 0.47, 0.72, 0.60, 0.65, 0.74, 0.66, 0.65, 0.71, 0.59, 0.65, 0.77, 0.52, 0.53, 0.58, 0.53])
+                    ,
+                    ])
+             
+             return aaChartModel.aa_toAAOptions()
         }
         
-        let aaOptions = xrangeChart()
+        let aaOptions = areasplineChart()
         
 //        获取用户点击位置的代码逻辑, 参考:
 //        * https://www.highcharts.com/forum/viewtopic.php?t=11983
@@ -113,7 +119,7 @@ class CustomClickEventCallbackMessageVC: UIViewController {
 """)))
         
         //默认选中的位置索引
-        let defaultSelectedIndex = 18
+        let defaultSelectedIndex = 5
                 
         //https://api.highcharts.com/highcharts/chart.events.load
         //https://www.highcharts.com/forum/viewtopic.php?t=36508
@@ -243,6 +249,31 @@ extension CustomClickEventCallbackMessageVC: WKScriptMessageHandler {
                   ———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧———‧
                   """)
         }
+    }
+}
+
+extension CustomClickEventCallbackMessageVC: AAChartViewDelegate {
+    func aaChartView(_ aaChartView: AAChartView, moveOverEventMessage: AAMoveOverEventMessageModel) {
+        print(
+            """
+
+            moved over point series element name: \(moveOverEventMessage.name ?? "")
+            ✋🏻✋🏻✋🏻✋🏻✋🏻WARNING!!!!!!!!!!!!!! Move Over Event Message !!!!!!!!!!!!!! WARNING✋🏻✋🏻✋🏻✋🏻✋🏻
+            ==========================================================================================
+            ------------------------------------------------------------------------------------------
+            user finger MOVED OVER!!!,get the move over event message: {
+            category = \(String(describing: moveOverEventMessage.category))
+            index = \(String(describing: moveOverEventMessage.index))
+            name = \(String(describing: moveOverEventMessage.name))
+            offset = \(String(describing: moveOverEventMessage.offset))
+            x = \(String(describing: moveOverEventMessage.x))
+            y = \(String(describing: moveOverEventMessage.y))
+            }
+            +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+            
+            
+            """
+        )
     }
 }
 
