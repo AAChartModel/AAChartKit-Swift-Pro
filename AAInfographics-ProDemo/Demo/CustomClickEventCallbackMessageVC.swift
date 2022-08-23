@@ -10,6 +10,7 @@ import UIKit
 import WebKit
 
 let kUserContentMessageNameChartClicked = "click"
+let kUserContentMessageNameChartMoveOver = "moveOver"
 let kUserContentMessageNameChartDefaultSelected = "defaultSelected"
 
 
@@ -42,15 +43,17 @@ class CustomClickEventCallbackMessageVC: UIViewController {
                                     y: 60,
                                     width: chartViewWidth,
                                     height: chartViewHeight)
-        aaChartView!.delegate = self as AAChartViewDelegate
         view.addSubview(aaChartView!)
         aaChartView!.isScrollEnabled = false//Disable chart content scrolling
     }
     
     private func configureChartViewCustomEventMessageHandler() {
-        aaChartView!.configuration.userContentController.add(AALeakAvoider.init(delegate: self), name: kUserContentMessageNameChartClicked)
+        let scriptMessageHandler = AALeakAvoider.init(delegate: self)
+        let chartConfiguration = aaChartView!.configuration
         
-        aaChartView!.configuration.userContentController.add(AALeakAvoider.init(delegate: self), name: kUserContentMessageNameChartDefaultSelected)
+        chartConfiguration.userContentController.add(scriptMessageHandler, name: kUserContentMessageNameChartClicked)
+        chartConfiguration.userContentController.add(scriptMessageHandler, name: kUserContentMessageNameChartMoveOver)
+        chartConfiguration.userContentController.add(scriptMessageHandler, name: kUserContentMessageNameChartDefaultSelected)
     }
     
     private func xrangeChartWithCustomJSFunction() -> AAOptions {
@@ -91,6 +94,24 @@ class CustomClickEventCallbackMessageVC: UIViewController {
              return aaChartModel.aa_toAAOptions()
         }
         
+        func configureClickOrMoveOverEventJSEvent(userContentMessageName: String) -> String {
+            return """
+     function() {
+        let svgElement = aaGlobalChart.series[0].data[this.index].graphic.element;
+        let rect = svgElement.getBoundingClientRect();
+        let messageBody = {
+            "name": this.series.name,
+            "y": this.y,
+            "x": this.x,
+            "category": this.category,
+            "index": this.index,
+            "DOMRect": JSON.stringify(rect),
+        };
+        window.webkit.messageHandlers.\(userContentMessageName).postMessage(messageBody);
+    }
+"""
+        }
+        
         let aaOptions = areasplineChart()
         
 //        获取用户点击位置的代码逻辑, 参考:
@@ -102,21 +123,9 @@ class CustomClickEventCallbackMessageVC: UIViewController {
         aaOptions.plotOptions?.series?
             .point(AAPoint()
                 .events(AAPointEvents()
-                    .click("""
-             function() {
-                let svgElement = aaGlobalChart.series[0].data[this.index].graphic.element;
-                let rect = svgElement.getBoundingClientRect();
-                let messageBody = {
-                    "name": this.series.name,
-                    "y": this.y,
-                    "x": this.x,
-                    "category": this.category,
-                    "index": this.index,
-                    "DOMRect": JSON.stringify(rect),
-                };
-                window.webkit.messageHandlers.\(kUserContentMessageNameChartClicked).postMessage(messageBody);
-            }
-""")))
+                    .click(configureClickOrMoveOverEventJSEvent(userContentMessageName: kUserContentMessageNameClick))
+                    .mouseOver(configureClickOrMoveOverEventJSEvent(userContentMessageName: kUserContentMessageNameChartMoveOver))
+                ))
         
         //默认选中的位置索引
         let defaultSelectedIndex = 5
@@ -186,7 +195,7 @@ class CustomClickEventCallbackMessageVC: UIViewController {
 }
 
 // MARK: 字符串转字典
-func stringValueDic(_ str: String) -> [String : Any]?{
+func stringValueDic(_ str: String) -> [String : Any]? {
     let data = str.data(using: String.Encoding.utf8)
     if let dict = try? JSONSerialization.jsonObject(with: data!,
                     options: .mutableContainers) as? [String : Any] {
@@ -232,6 +241,25 @@ extension CustomClickEventCallbackMessageVC: WKScriptMessageHandler {
                 """
             )
             
+        } else if message.name == kUserContentMessageNameChartMoveOver {
+            let clickEventMessage = message.body as! [String: Any]
+            let DOMRectDic = stringValueDic(clickEventMessage["DOMRect"] as! String)!
+            let DOMRectModel = getEventMessageModel(DOMRectDic: DOMRectDic )
+            
+            let frameX = DOMRectModel.x! + (DOMRectModel.width! / 2)
+            print("手指掠过图表后, 获取的 SVG 元素的水平中心点的坐标为:\(frameX)")
+            self.lineView.frame = CGRect(x: CGFloat(frameX), y: 0, width: 2, height: self.view.frame.size.height)
+            self.lineView.backgroundColor = .green
+            
+            print("""
+                Move Over  point series element name: \(clickEventMessage["name"] ?? "")
+                ✈️✈️✈️WARNING!!!!!!!!!!!!!!!!!!!! Move Over Event Message !!!!!!!!!!!!!!!!!!!! WARNING✈️✈️✈️
+                ——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧
+                \(dicStringToPrettyString(dic: clickEventMessage))
+                ——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧——‧
+                """
+            )
+            
         } else if message.name == kUserContentMessageNameChartDefaultSelected {
             let defaultSelectedEventMessage = message.body as! [String: Any]
             let DOMRectDic = stringValueDic(defaultSelectedEventMessage["DOMRect"] as! String)!
@@ -252,30 +280,6 @@ extension CustomClickEventCallbackMessageVC: WKScriptMessageHandler {
     }
 }
 
-extension CustomClickEventCallbackMessageVC: AAChartViewDelegate {
-    func aaChartView(_ aaChartView: AAChartView, moveOverEventMessage: AAMoveOverEventMessageModel) {
-        print(
-            """
-
-            moved over point series element name: \(moveOverEventMessage.name ?? "")
-            ✋🏻✋🏻✋🏻✋🏻✋🏻WARNING!!!!!!!!!!!!!! Move Over Event Message !!!!!!!!!!!!!! WARNING✋🏻✋🏻✋🏻✋🏻✋🏻
-            ==========================================================================================
-            ------------------------------------------------------------------------------------------
-            user finger MOVED OVER!!!,get the move over event message: {
-            category = \(String(describing: moveOverEventMessage.category))
-            index = \(String(describing: moveOverEventMessage.index))
-            name = \(String(describing: moveOverEventMessage.name))
-            offset = \(String(describing: moveOverEventMessage.offset))
-            x = \(String(describing: moveOverEventMessage.x))
-            y = \(String(describing: moveOverEventMessage.y))
-            }
-            +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-            
-            
-            """
-        )
-    }
-}
 
 
 
