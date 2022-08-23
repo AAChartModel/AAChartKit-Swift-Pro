@@ -47,6 +47,7 @@ public class AATooltip: AAObject {
     public var valueDecimals: Int?
     public var shared: Bool?
     public var valueSuffix: String?
+    public var followPointer: Bool?
     public var followTouchMove: Bool?//https://api.highcharts.com.cn/highcharts#chart.panning
     public var shadow: Bool?
     public var padding: Float?
@@ -136,6 +137,12 @@ public class AATooltip: AAObject {
     @discardableResult
     public func valueSuffix(_ prop: String?) -> AATooltip {
         valueSuffix = prop
+        return self
+    }
+    
+    @discardableResult
+    public func followPointer(_ prop: Bool?) -> AATooltip {
+        followPointer = prop
         return self
     }
     
