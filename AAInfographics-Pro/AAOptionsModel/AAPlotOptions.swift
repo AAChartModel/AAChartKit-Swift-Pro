@@ -44,10 +44,14 @@ public class AAPlotOptions: AAObject {
     public var columnrange: AAColumnrange?
     public var arearange: AAArearange?
     public var boxplot: AABoxplot?
+    public var series: AASeries?
+    
+    /*---------------------AAInfogrphics-Pro---------------------*/
     public var packedbubble: AAPackedbubble?
     public var treemap: AATreemap?
     public var solidgauge: AASolidgauge?
-    public var series: AASeries?
+    /*---------------------AAInfogrphics-Pro---------------------*/
+
     
     @discardableResult
     public func column(_ prop: AAColumn) -> AAPlotOptions {
@@ -116,6 +120,14 @@ public class AAPlotOptions: AAObject {
     }
     
     @discardableResult
+    public func series(_ prop: AASeries) -> AAPlotOptions {
+        series = prop
+        return self
+    }
+    
+    
+    /*---------------------AAInfogrphics-Pro---------------------*/
+    @discardableResult
     public func packedbubble(_ prop: AAPackedbubble) -> AAPlotOptions {
         packedbubble = prop
         return self
@@ -132,12 +144,8 @@ public class AAPlotOptions: AAObject {
         solidgauge = prop
         return self
     }
-    
-    @discardableResult
-    public func series(_ prop: AASeries) -> AAPlotOptions {
-        series = prop
-        return self
-    }
+    /*---------------------AAInfogrphics-Pro---------------------*/
+
     
     public override init() {
         
