@@ -48,8 +48,12 @@ public class AAOptions: AAObject {
     public var colors: [Any]?
     public var credits: AACredits?
     public var defaultOptions: AALang?
+    
+    /*---------------------AAInfogrphics-Pro---------------------*/
     public var colorAxis: AAColorAxis?
     public var data: AAData?
+    /*---------------------AAInfogrphics-Pro---------------------*/
+
     
     public var clickEventEnabled: Bool?//Please DO NOT use this property
     public var touchEventEnabled: Bool?//Please DO NOT use this property
@@ -144,7 +148,8 @@ public class AAOptions: AAObject {
         return self
     }
     
-    //Only for AAInfographics-Pro
+    
+    /*---------------------AAInfogrphics-Pro---------------------*/
     @discardableResult
      public func colorAxis(_ prop: AAColorAxis?) -> AAOptions {
          colorAxis = prop
@@ -156,7 +161,8 @@ public class AAOptions: AAObject {
          data = prop
          return self
      }
-     
+    /*---------------------AAInfogrphics-Pro---------------------*/
+
     
     public override init() {
         let aaCredits = AACredits()
