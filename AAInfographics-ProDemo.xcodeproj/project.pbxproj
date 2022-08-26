@@ -27,6 +27,7 @@
 		44D27E07255A793200D0C636 /* AAOptionsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D27E06255A793200D0C636 /* AAOptionsData.swift */; };
 		44D27E0C255ADE1E00D0C636 /* AAOptionsSeries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D27E0B255ADE1E00D0C636 /* AAOptionsSeries.swift */; };
 		44D27E11255ADF1300D0C636 /* ChartProVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D27E10255ADF1300D0C636 /* ChartProVC.swift */; };
+		8418479728B861D200094106 /* AABoxplot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8418479628B861D200094106 /* AABoxplot.swift */; };
 		8441A76126C2568F007EAAA7 /* AAExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8441A75E26C2568E007EAAA7 /* AAExtension.swift */; };
 		8441A76226C2568F007EAAA7 /* AAColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8441A75F26C2568F007EAAA7 /* AAColor.swift */; };
 		8441A76326C2568F007EAAA7 /* AAGradientColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8441A76026C2568F007EAAA7 /* AAGradientColor.swift */; };
@@ -148,6 +149,7 @@
 		44D27E06255A793200D0C636 /* AAOptionsData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AAOptionsData.swift; sourceTree = "<group>"; };
 		44D27E0B255ADE1E00D0C636 /* AAOptionsSeries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AAOptionsSeries.swift; sourceTree = "<group>"; };
 		44D27E10255ADF1300D0C636 /* ChartProVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartProVC.swift; sourceTree = "<group>"; };
+		8418479628B861D200094106 /* AABoxplot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AABoxplot.swift; sourceTree = "<group>"; };
 		8441A75E26C2568E007EAAA7 /* AAExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AAExtension.swift; sourceTree = "<group>"; };
 		8441A75F26C2568F007EAAA7 /* AAColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AAColor.swift; sourceTree = "<group>"; };
 		8441A76026C2568F007EAAA7 /* AAGradientColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AAGradientColor.swift; sourceTree = "<group>"; };
@@ -332,6 +334,7 @@
 			children = (
 				8446159C283F580200E26DA4 /* AAAnimation.swift */,
 				84461592283F580100E26DA4 /* AAAxis.swift */,
+				8418479628B861D200094106 /* AABoxplot.swift */,
 				8446158F283F580100E26DA4 /* AAChart.swift */,
 				84461597283F580200E26DA4 /* AACredits.swift */,
 				84461599283F580200E26DA4 /* AACrosshair.swift */,
@@ -638,6 +641,7 @@
 				27F872AB25E797690068380F /* ProjectBundlePathLoader.swift in Sources */,
 				844615A7283F580300E26DA4 /* AAChart.swift in Sources */,
 				8446158A283F57C600E26DA4 /* AAChartView.swift in Sources */,
+				8418479728B861D200094106 /* AABoxplot.swift in Sources */,
 				84B13EE92897A953007356C6 /* AAItem.swift in Sources */,
 				844615B6283F580300E26DA4 /* AALang.swift in Sources */,
 				844615A6283F580300E26DA4 /* AAMarker.swift in Sources */,
