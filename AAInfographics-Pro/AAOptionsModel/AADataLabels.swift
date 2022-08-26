@@ -64,9 +64,12 @@ public class AADataLabels: AAObject {
     public var crookDistance: String?
     public var alignTo: String?
 
+    /*---------------------AAInfogrphics-Pro---------------------*/
     public var linkTextPath: AATextPath?
     public var padding: Float? //When either the borderWidth or the backgroundColor is set, this is the padding within the box. Defaults to 5.
     public var nodeFormat: String? //The format string specifying what to show for nodes in the sankey diagram. By default the nodeFormatter returns {point.name}. Defaults to undefined.
+    /*---------------------AAInfogrphics-Pro---------------------*/
+
     
     @discardableResult
     public func enabled(_ prop: Bool?) -> AADataLabels {
@@ -249,6 +252,7 @@ public class AADataLabels: AAObject {
     }
     
     
+    /*---------------------AAInfogrphics-Pro---------------------*/
     @discardableResult
     public func linkTextPath(_ prop: AATextPath?) -> AADataLabels {
         linkTextPath = prop
@@ -266,6 +270,8 @@ public class AADataLabels: AAObject {
         nodeFormat = prop
         return self
     }
+    /*---------------------AAInfogrphics-Pro---------------------*/
+
     
     public override init() {
         enabled = true
