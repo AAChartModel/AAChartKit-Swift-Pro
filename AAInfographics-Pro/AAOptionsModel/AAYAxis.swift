@@ -48,7 +48,6 @@ public class AAYAxis: AAAxis {
         tooltipValueFormat = prop
         return self
     }
-    ///----------------------------------------------------------
 
     
     public override init() {
