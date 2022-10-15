@@ -161,9 +161,19 @@ class AAOptionsData {
     public class var vectorData : [Any] {
         getJsonDataWithJsonFileName("vectorData")
     }
-    
-    
-    
+
+
+    public class var volinPlotElement1Data : [Any] {
+        getJsonDataWithJsonFileName("volinPlotElement1Data")
+    }
+
+    public class var volinPlotElement2Data : [Any] {
+        getJsonDataWithJsonFileName("volinPlotElement2Data")
+    }
+
+    public class var simpleDependencyWheelData : [Any] {
+        getJsonDataWithJsonFileName("simpleDependencyWheelData")
+    }
     
     
     //https://www.jianshu.com/p/a4b2bd5deca6
