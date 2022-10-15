@@ -34,7 +34,7 @@ class ChartProVC: AABaseChartVC {
         case 14: return parallelCoordinatesSplineChart()
         case 15: return parallelCoordinatesLineChart()
         case 16: return volinPlotChart()
-//        case 17: return simpleDependencyWheelChart()
+        case 17: return variablepieChart()
         default: return nil
         }
     }
@@ -746,7 +746,36 @@ class ChartProVC: AABaseChartVC {
                 ])
     }
 
-
+    private func variablepieChart() -> AAOptions {
+            let aaChart = AAChart()
+                .type(.variablepie)
+            
+            let aaTitle = AATitle()
+                .text("不同国家人口密度及面积对比")
+            
+            let aaSubtitle = AASubtitle()
+                .text("扇区长度（圆周方法）表示面积，宽度（纵向）表示人口密度")
+            
+            let aaTooltip = AATooltip()
+                .enabled(true)
+                .headerFormat("")
+                .pointFormat(#"<span style="color:{point.color}\">○</span> <b> {point.name}</b><br/>"面积 (平方千米): <b>{point.y}</b><br/>"人口密度 (每平方千米人数): <b>{point.z}</b><br/>""#.aa_toPureJSString())
+            
+            return AAOptions()
+                .chart(aaChart)
+                .title(aaTitle)
+                .subtitle(aaSubtitle)
+                .tooltip(aaTooltip)
+                .series([
+                    AASeriesElement()
+                        .name("countries")
+                        .innerSize("20%")
+                        .dataLabels(AADataLabels()
+                                        .enabled(false))
+                        .data(AAOptionsData.variablepieData)
+                ])
+        }
+        
 
 }
 
