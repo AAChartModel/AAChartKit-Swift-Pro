@@ -147,6 +147,32 @@ class AAHeatOrTreeMapChartComposer {
                     .data(AAOptionsData.treemapWithLevelsData)
             ])
     }
+    
+    static func drilldownLargeDataTreemapChart() -> AAOptions {
+            AAOptions()
+                .chart(AAChart()
+                        .type(.treemap))
+                .title(AATitle()
+                        .text("2012年，全球每10w人口死亡率"))
+                .subtitle(AASubtitle()
+                            .text("点击下钻"))
+                .plotOptions(AAPlotOptions()
+                                .treemap(AATreemap()
+                                            .allowTraversingTree(true)
+                                            .layoutAlgorithm("squarified")))
+                .series([
+                    AASeriesElement()
+                        .type(.treemap)
+                        .levels([
+                            AALevelsElement()
+                                .level(1)
+                                .dataLabels(AADataLabels()
+                                                .enabled(true))
+                                .borderWidth(3)
+                        ])
+                        .data(AAOptionsData.drilldownTreemapData)
+                ])
+        }
 
     static func largeDataHeatmapChart() -> AAOptions {
         let csvStr: String = AAOptionsCSV.csvData["csv"] as! String
