@@ -33,8 +33,8 @@ class ChartProVC: AABaseChartVC {
         case 13: return solidgaugeChart()
         case 14: return parallelCoordinatesSplineChart()
         case 15: return parallelCoordinatesLineChart()
-//        case 16: return volinPlotChart()
-//        case 17: return simpleDependencyWheelChart()
+        case 16: return volinPlotChart()
+        case 17: return simpleDependencyWheelChart()
         default: return nil
         }
     }
@@ -700,6 +700,94 @@ class ChartProVC: AABaseChartVC {
             ]
         )])
         return aaOptions
+    }
+
+    private func volinPlotChart() -> AAOptions {
+         AAOptions()
+                .chart(AAChart()
+                        .type(.streamgraph)
+                        .inverted(true))
+                .title(AATitle()
+                        .text("The 2012 Olympic rowing athletes weight"))
+                .xAxis(AAXAxis()
+                        .reversed(false)
+                        .labels(AALabels()
+                                .format("{value} kg"))
+                        .gridLineWidth(1)
+                        .crosshair(AACrosshair()
+                                .color(AAColor.lightGray)
+                                .dashStyle(.longDashDotDot)))
+                .yAxisArray([
+                    AAYAxis()
+                            //                    .width("45%")
+                            .offset(0)
+                            .visible(false),
+                    AAYAxis()
+                            //                    .width("45%")
+                            //                    .left("55%")
+                            .offset(0)
+                            .visible(false)
+                ])
+                .tooltip(AATooltip()
+                        //                .split(true)
+                        .headerFormat("")
+                        .pointFormat("{series.name}: {point.x} kg"))
+                .series([
+                    AASeriesElement()
+                            .name("Male")
+                            .data(AAOptionsData.volinPlotElement1Data)
+                            .color("#a8d4ff")
+                            .yAxis(0),
+                    AASeriesElement()
+                            .name("Female")
+                            .color("#ffa8d4")
+                            .data(AAOptionsData.volinPlotElement2Data)
+                            .yAxis(1)
+                ])
+    }
+
+    //- (AAOptions *)simpleDependencyWheelChart {
+    //    return AAOptions.new
+    //        .titleSet(AATitle.new
+    //            .textSet(@"2016 BRICS export in million USD"))
+    //        .colorsSet(@[@"#058DC7", @"#8dc705", @"#c73f05", @"#ffc080", @"#dd69ba", ])
+    //        .seriesSet(@[
+    //            AASeriesElement.new
+    //                .keysSet(@[@"from", @"to", @"weight", ])
+    //                .dataSet(AAOptionsData.simpleDependencyWheelData)
+    //                .typeSet(AAChartTypeDependencywheel)
+    //                .nameSet(@"Dependency wheel series")
+    //                .dataLabelsSet(AADataLabels.new
+    //                    .colorSet(@"#333")
+    //                    .textPathSet(AATextPath.new
+    //                        .enabledSet(true)
+    ////                        .attributesSet(AAAttributes.new
+    ////                            .dySet(@5))
+    //            )
+    ////                    .distanceSet(@10)
+    //            )
+    ////                .sizeSet(@"95%")
+    //            ]);
+    //}
+
+    private func simpleDependencyWheelChart() -> AAOptions {
+        AAOptions()
+                .title(AATitle()
+                        .text("2016 BRICS export in million USD"))
+                .colors(["#058DC7", "#8dc705", "#c73f05", "#ffc080", "#dd69ba", ])
+                .series([
+                    AASeriesElement()
+                            .keys(["from", "to", "weight", ])
+                            .data(AAOptionsData.simpleDependencyWheelData)
+                            .type(.dependencywheel)
+                            .name("Dependency wheel series")
+                            .dataLabels(AADataLabels()
+                                    .color("#333")
+                                    .textPath(AATextPath()
+                                            .enabled(true)
+                                    )
+                            )
+                ])
     }
 
 }
