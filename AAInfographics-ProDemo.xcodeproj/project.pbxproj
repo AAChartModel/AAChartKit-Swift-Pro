@@ -110,6 +110,9 @@
 		84DEB8C028FAE57B00BF9423 /* AAHeatOrTreeMapChartComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84DEB8BF28FAE57B00BF9423 /* AAHeatOrTreeMapChartComposer.swift */; };
 		84DEB8C228FAE58C00BF9423 /* AABubbleChartComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84DEB8C128FAE58C00BF9423 /* AABubbleChartComposer.swift */; };
 		84DEB8C428FAE59F00BF9423 /* AAColumnVariantChartComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84DEB8C328FAE59F00BF9423 /* AAColumnVariantChartComposer.swift */; };
+		84DEB8C828FAF3C800BF9423 /* simpleDependencyWheelData.json in Resources */ = {isa = PBXBuildFile; fileRef = 84DEB8C528FAF3C700BF9423 /* simpleDependencyWheelData.json */; };
+		84DEB8C928FAF3C800BF9423 /* volinPlotElement1Data.json in Resources */ = {isa = PBXBuildFile; fileRef = 84DEB8C628FAF3C700BF9423 /* volinPlotElement1Data.json */; };
+		84DEB8CA28FAF3C800BF9423 /* volinPlotElement2Data.json in Resources */ = {isa = PBXBuildFile; fileRef = 84DEB8C728FAF3C700BF9423 /* volinPlotElement2Data.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -241,6 +244,9 @@
 		84DEB8BF28FAE57B00BF9423 /* AAHeatOrTreeMapChartComposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AAHeatOrTreeMapChartComposer.swift; sourceTree = "<group>"; };
 		84DEB8C128FAE58C00BF9423 /* AABubbleChartComposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AABubbleChartComposer.swift; sourceTree = "<group>"; };
 		84DEB8C328FAE59F00BF9423 /* AAColumnVariantChartComposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AAColumnVariantChartComposer.swift; sourceTree = "<group>"; };
+		84DEB8C528FAF3C700BF9423 /* simpleDependencyWheelData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = simpleDependencyWheelData.json; sourceTree = "<group>"; };
+		84DEB8C628FAF3C700BF9423 /* volinPlotElement1Data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = volinPlotElement1Data.json; sourceTree = "<group>"; };
+		84DEB8C728FAF3C700BF9423 /* volinPlotElement2Data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = volinPlotElement2Data.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -431,6 +437,9 @@
 				84A5691E27FEC89C00883553 /* vennData.json */,
 				84A5692727FEC89D00883553 /* windbarbData.json */,
 				84A5691827FEC89C00883553 /* wordcloudData.json */,
+				84DEB8C528FAF3C700BF9423 /* simpleDependencyWheelData.json */,
+				84DEB8C628FAF3C700BF9423 /* volinPlotElement1Data.json */,
+				84DEB8C728FAF3C700BF9423 /* volinPlotElement2Data.json */,
 			);
 			path = DataJsonFiles;
 			sourceTree = "<group>";
@@ -615,6 +624,7 @@
 				84A5693A27FEC89F00883553 /* heatmapData.json in Resources */,
 				84A5693127FEC89F00883553 /* sankeyData.json in Resources */,
 				84A5694327FEC89F00883553 /* sunburst2Data.json in Resources */,
+				84DEB8CA28FAF3C800BF9423 /* volinPlotElement2Data.json in Resources */,
 				84A5693727FEC89F00883553 /* bigHeatmapData.json in Resources */,
 				84A5694E27FEC89F00883553 /* arcdiagram3Data.json in Resources */,
 				84A5694927FEC89F00883553 /* columnpyramidData.json in Resources */,
@@ -642,7 +652,9 @@
 				84A5693527FEC89F00883553 /* eulerData.json in Resources */,
 				84A5694D27FEC89F00883553 /* vectorData.json in Resources */,
 				84A5694627FEC89F00883553 /* dependencywheelData.json in Resources */,
+				84DEB8C828FAF3C800BF9423 /* simpleDependencyWheelData.json in Resources */,
 				44D27C7A255A3CAF00D0C636 /* Main.storyboard in Resources */,
+				84DEB8C928FAF3C800BF9423 /* volinPlotElement1Data.json in Resources */,
 				84A5694C27FEC89F00883553 /* dumbbellData.json in Resources */,
 				84A5694B27FEC89F00883553 /* timelineData.json in Resources */,
 			);

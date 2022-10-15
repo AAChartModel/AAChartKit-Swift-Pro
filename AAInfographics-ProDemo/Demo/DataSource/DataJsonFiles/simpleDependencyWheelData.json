@@ -1,0 +1,22 @@
+[
+    ["Brazil", "Russia", 2524],
+    ["Brazil", "India", 4115],
+    ["Brazil", "China", 45738],
+    ["Brazil", "South Africa", 1401],
+    ["Russia", "Brazil", 2021],
+    ["Russia", "India", 5564],
+    ["Russia", "China", 32229],
+    ["Russia", "South Africa", 196],
+    ["India", "Brazil", 2484],
+    ["India", "Russia", 2398],
+    ["India", "China", 11757],
+    ["India", "South Africa", 3554],
+    ["China", "Brazil", 23364],
+    ["China", "India", 61311],
+    ["China", "South Africa", 12848],
+    ["China", "Russia", 38105],
+    ["South Africa", "Russia", 255],
+    ["South Africa", "Brazil", 336],
+    ["South Africa", "India", 5814],
+    ["South Africa", "China", 22491]
+]
