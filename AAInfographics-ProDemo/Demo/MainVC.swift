@@ -35,7 +35,7 @@ import UIKit
 
 class MainVC: UIViewController {
     private var sectionTitleArr = [String]()
-    private var chartTypeTitleArr = [[String]]()
+    private var chartTypeNameArr = [[String]]()
     private var chartTypeArr = [[Any]]()
     
     override func viewDidLoad() {
@@ -44,64 +44,86 @@ class MainVC: UIViewController {
         title = "AAInfographics"
         
         sectionTitleArr = [
-            "Pro Type Chart---高级类型图表",
+            "RelationshipChart | 关系类型图表",
+            "HeatOrTreeMapChart | 热力或树形类型图表",
+            "BubbleChart | 气泡类型图表",
+            "ColumnVariantChart | 柱形图(变体)类型图表",
+            "MoreProType | 更多高级类型图表",
             "Custom Event---自定义交互事件",
         ]
         
-        chartTypeTitleArr = [
+        chartTypeNameArr =   [
+            // "RelationshipChart | 关系类型图表",
             [
                 "sankeyChart---桑基图",
-                "variablepieChart---可变宽度的饼图🍪",
-                "treemapChart---树形图🌲",
-                "variwideChart---可变宽度的柱形图📊",
-                "sunburstChart---旭日图🌞",
                 "dependencywheelChart---和弦图🎸",
-                "heatmapChart---热力图🔥",
-                "packedbubbleChart---气泡填充图🎈",
-                "packedbubbleSplitChart---圆堆积图🎈",
-                "vennChart---韦恩图",
-                "dumbbellChart---哑铃图🏋",
-                "lollipopChart---棒棒糖图🍭",
-                "streamgraphChart---流图🌊",
-                "columnpyramidChart---角锥柱形图△",
-                "tilemapChart---砖块图🧱||蜂巢图🐝",
-                "simpleTreemapChart---简单矩形树图🌲",
-                "drilldownTreemapChart---可下钻的矩形树图🌲",
-                "xrangeChart---X轴范围图||甘特图||条码图☰☲☱☴☵☶☳☷",
-                "vectorChart---向量图🏹",
-                "bellcurveChart---贝尔曲线图",
-                "timelineChart---时序图⌚️",
-                "itemChart1---议会项目图1🀙🀚🀜🀞🀠🀡",
-                "windbarbChart---风羽图🌪️",
-                "networkgraphChart---力导关系图✢✣✤✥",
-                "wordcloudChart---词云️图☁️",
-                "eulerChart---欧拉图",
-                "organizationChart---组织结构图",
                 "arcdiagramChart1---弧形图1🌈",
                 "arcdiagramChart2---弧形图2🌈",
                 "arcdiagramChart3---弧形图3🌈",
-                "flameChart---火焰图🔥",
+                "organizationChart---组织结构图",
+                "networkgraphChart---力导关系图✢✣✤✥",
+            ],
+            // "HeatOrTreeMapChart | 热力或树形类型图表",
+            [
+                "heatmapChart---热力图🌡",
+                "tilemapOrHoneycombChart---砖块图🧱||蜂巢图🐝🌡",
+                "treemapWithColorAxisData---包好色彩轴的矩形树图🌲",
+                "treemapWithLevelsData---包含等级的矩形树图🌲",
+                "drilldownLargeDataTreemapChart---可下钻的大数据量矩形树图🌲",
+                "largeDataHeatmapChart---大数据量热力图🌡",
+            ],
+            // "BubbleChart | 气泡类型图表",
+            [
+                "packedbubbleChart---气泡填充图🎈",
+                "packedbubbleSplitChart---圆堆积图🎈",
                 "packedbubbleSpiralChart---渐进变化的气泡图🎈",
+                "eulerChart---欧拉图",
+                "vennChart---韦恩图",
+            ],
+            // "ColumnVariantChart | 柱形图(变体)类型图表",
+            [
+                "variwideChart---可变宽度的柱形图",
+                "columnpyramidChart---角锥柱形图",
+                "dumbbellChart---哑铃图",
+                "lollipopChart---棒棒糖🍭图",
+                "xrangeChart---X轴范围图||甘特图||条码图",
+                "histogramChart---直方混合散点图📊",
+                "bellcurveChart---钟形曲线混合散点图🔔",
+                "bulletChart---子弹图"
+            ],
+            // "MoreProType | 更多高级类型图表",
+            [
+                "sunburstChart---旭日图🌞",
+                "streamgraphChart---流图🌊",
+                "vectorChart---向量图🏹",
+                "bellcurveChart---贝尔曲线图",
+                "timelineChart---时序图⌚️",
+                "itemChart---议会项目图🀙🀚🀜🀞🀠🀡",
+                "windbarbChart---风羽图🌪️",
+                "wordcloudChart---词云图☁️",
+                "flameChart---火焰图🔥",
                 "itemChart2---议会项目图2🀙🀚🀜🀞🀠🀡",
                 "itemChart3---议会项目图3🀙🀚🀜🀞🀠🀡",
                 "icicleChart---冰柱图🧊",
-                "sunburstChart2---旭日图2🌞",
-                "bulletChart---子弹图",
+                "sunburstChart2---旭日图☀️",
                 "solidgaugeChart---活动图🏃🏻‍♀️",
-                "largeDataHeatmapChart---大型热力图🌡",
                 "parallelCoordinatesSplineChart---平行坐标曲线图",
                 "parallelCoordinatesLineChart---平行坐标折线图📈",
-                "histogramChart---直方混合散点图"
+                "volinPlotChart---小提琴图🎻",
+                "simpleDependencyWheelChart---简单的和弦图🎵",
             ],
+            
+            // "Custom Event---自定义交互事件",
             [
-                "Custom Chart Click Event Message---自定义用户点击事件回调内容",
+                "Custom Event---自定义交互事件",
             ]
+            
         ]
         
         chartTypeArr = [
             [//Empty Array,just for holding place
             ],
-           
+            
         ]
         
         view.backgroundColor = .white
@@ -131,11 +153,11 @@ class MainVC: UIViewController {
 
 extension MainVC: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return chartTypeTitleArr.count
+        return chartTypeNameArr.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return chartTypeTitleArr[section].count
+        return chartTypeNameArr[section].count
     }
     
     func sectionIndexTitles(for tableView: UITableView) -> [String]? {
@@ -170,7 +192,7 @@ extension MainVC: UITableViewDelegate, UITableViewDataSource {
             cell = UITableViewCell.init(style: .default, reuseIdentifier: identifier)
         }
         
-        let cellTitle = chartTypeTitleArr[indexPath.section][indexPath.row]
+        let cellTitle = chartTypeNameArr[indexPath.section][indexPath.row]
         cell?.textLabel?.numberOfLines = 0
         cell?.textLabel?.text = cellTitle
         cell?.textLabel?.font = .systemFont(ofSize: 16)
@@ -178,14 +200,35 @@ extension MainVC: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.section {
         case 0:
-            let vc = ChartProVC()
+            let vc = AARelationshipChartVC()
             vc.selectedIndex = indexPath.row
-            vc.navigationItemTitleArr = self.chartTypeTitleArr[0]
+            vc.navigationItemTitleArr = chartTypeNameArr[indexPath.section]
             navigationController?.pushViewController(vc, animated: true)
         case 1:
+            let vc = AAHeatOrTreeMapChartVC()
+            vc.selectedIndex = indexPath.row
+            vc.navigationItemTitleArr = chartTypeNameArr[indexPath.section]
+            navigationController?.pushViewController(vc, animated: true)
+        case 2:
+            let vc = AABubbleChartVC()
+            vc.selectedIndex = indexPath.row
+            vc.navigationItemTitleArr = chartTypeNameArr[indexPath.section]
+            navigationController?.pushViewController(vc, animated: true)
+        case 3:
+            let vc = AAColumnVariantChartVC()
+            vc.selectedIndex = indexPath.row
+            vc.navigationItemTitleArr = chartTypeNameArr[indexPath.section]
+            navigationController?.pushViewController(vc, animated: true)
+        case 4:
+            let vc = ChartProVC()
+            vc.selectedIndex = indexPath.row
+            vc.navigationItemTitleArr = chartTypeNameArr[indexPath.section]
+            navigationController?.pushViewController(vc, animated: true)
+        case 5:
             let vc = CustomClickEventCallbackMessageVC()
             navigationController?.pushViewController(vc, animated: true)
             
@@ -193,5 +236,7 @@ extension MainVC: UITableViewDelegate, UITableViewDataSource {
             break
         }
     }
+    
+    
     
 }
