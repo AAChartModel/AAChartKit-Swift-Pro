@@ -23,6 +23,7 @@ class AARelationshipChartVC: AABaseChartVC {
         case 4: return AARelationshipChartComposer.arcdiagramChart3()
         case 5: return AARelationshipChartComposer.organizationChart()
         case 6: return AARelationshipChartComposer.networkgraphChart()
+        case 7: return AARelationshipChartComposer.simpleDependencyWheelChart()
         default: return nil
         }
     }

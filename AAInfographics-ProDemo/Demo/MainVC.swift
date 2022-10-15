@@ -52,6 +52,7 @@ class MainVC: UIViewController {
             "arcdiagramChart3---弧形图3🌈",
             "organizationChart---组织结构图",
             "networkgraphChart---力导关系图✢✣✤✥",
+            "simpleDependencyWheelChart---简单的和弦图🎵",
         ],
         // "HeatOrTreeMapChart | 热力或树形类型图表",
         [
@@ -100,7 +101,6 @@ class MainVC: UIViewController {
             "parallelCoordinatesSplineChart---平行坐标曲线图",
             "parallelCoordinatesLineChart---平行坐标折线图📈",
             "volinPlotChart---小提琴图🎻",
-            "simpleDependencyWheelChart---简单的和弦图🎵",
         ],
         // "Custom Event---自定义交互事件",
         [

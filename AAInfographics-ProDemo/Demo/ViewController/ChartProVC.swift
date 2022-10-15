@@ -34,7 +34,7 @@ class ChartProVC: AABaseChartVC {
         case 14: return parallelCoordinatesSplineChart()
         case 15: return parallelCoordinatesLineChart()
         case 16: return volinPlotChart()
-        case 17: return simpleDependencyWheelChart()
+//        case 17: return simpleDependencyWheelChart()
         default: return nil
         }
     }
@@ -746,49 +746,7 @@ class ChartProVC: AABaseChartVC {
                 ])
     }
 
-    //- (AAOptions *)simpleDependencyWheelChart {
-    //    return AAOptions.new
-    //        .titleSet(AATitle.new
-    //            .textSet(@"2016 BRICS export in million USD"))
-    //        .colorsSet(@[@"#058DC7", @"#8dc705", @"#c73f05", @"#ffc080", @"#dd69ba", ])
-    //        .seriesSet(@[
-    //            AASeriesElement.new
-    //                .keysSet(@[@"from", @"to", @"weight", ])
-    //                .dataSet(AAOptionsData.simpleDependencyWheelData)
-    //                .typeSet(AAChartTypeDependencywheel)
-    //                .nameSet(@"Dependency wheel series")
-    //                .dataLabelsSet(AADataLabels.new
-    //                    .colorSet(@"#333")
-    //                    .textPathSet(AATextPath.new
-    //                        .enabledSet(true)
-    ////                        .attributesSet(AAAttributes.new
-    ////                            .dySet(@5))
-    //            )
-    ////                    .distanceSet(@10)
-    //            )
-    ////                .sizeSet(@"95%")
-    //            ]);
-    //}
 
-    private func simpleDependencyWheelChart() -> AAOptions {
-        AAOptions()
-                .title(AATitle()
-                        .text("2016 BRICS export in million USD"))
-                .colors(["#058DC7", "#8dc705", "#c73f05", "#ffc080", "#dd69ba", ])
-                .series([
-                    AASeriesElement()
-                            .keys(["from", "to", "weight", ])
-                            .data(AAOptionsData.simpleDependencyWheelData)
-                            .type(.dependencywheel)
-                            .name("Dependency wheel series")
-                            .dataLabels(AADataLabels()
-                                    .color("#333")
-                                    .textPath(AATextPath()
-                                            .enabled(true)
-                                    )
-                            )
-                ])
-    }
 
 }
 
