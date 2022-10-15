@@ -471,13 +471,13 @@
 		84DEB8B228FAE3E800BF9423 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				44D27E10255ADF1300D0C636 /* ChartProVC.swift */,
-				84B13EEA28990388007356C6 /* CustomClickEventCallbackMessageVC.swift */,
 				44D27D7E255A631500D0C636 /* AABaseChartVC.swift */,
 				84DEB8B528FAE48300BF9423 /* AARelationshipChartVC.swift */,
 				84DEB8B728FAE4DF00BF9423 /* AAHeatOrTreeMapChartVC.swift */,
 				84DEB8B928FAE4F300BF9423 /* AABubbleChartVC.swift */,
 				84DEB8BB28FAE50500BF9423 /* AAColumnVariantChartVC.swift */,
+				44D27E10255ADF1300D0C636 /* ChartProVC.swift */,
+				84B13EEA28990388007356C6 /* CustomClickEventCallbackMessageVC.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
