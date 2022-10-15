@@ -34,100 +34,85 @@ import UIKit
 
 
 class MainVC: UIViewController {
-    private var sectionTitleArr = [String]()
-    private var chartTypeNameArr = [[String]]()
-    private var chartTypeArr = [[Any]]()
+    private var sectionTitleArr = [
+        "RelationshipChart | 关系类型图表",
+        "HeatOrTreeMapChart | 热力或树形类型图表",
+        "BubbleChart | 气泡类型图表",
+        "ColumnVariantChart | 柱形图(变体)类型图表",
+        "MoreProType | 更多高级类型图表",
+        "Custom Event---自定义交互事件",
+    ]
+    private var chartTypeNameArr = [
+        // "RelationshipChart | 关系类型图表",
+        [
+            "sankeyChart---桑基图",
+            "dependencywheelChart---和弦图🎸",
+            "arcdiagramChart1---弧形图1🌈",
+            "arcdiagramChart2---弧形图2🌈",
+            "arcdiagramChart3---弧形图3🌈",
+            "organizationChart---组织结构图",
+            "networkgraphChart---力导关系图✢✣✤✥",
+        ],
+        // "HeatOrTreeMapChart | 热力或树形类型图表",
+        [
+            "heatmapChart---热力图🌡",
+            "tilemapOrHoneycombChart---砖块图🧱||蜂巢图🐝🌡",
+            "treemapWithColorAxisData---包好色彩轴的矩形树图🌲",
+            "treemapWithLevelsData---包含等级的矩形树图🌲",
+            "drilldownLargeDataTreemapChart---可下钻的大数据量矩形树图🌲",
+            "largeDataHeatmapChart---大数据量热力图🌡",
+        ],
+        // "BubbleChart | 气泡类型图表",
+        [
+            "packedbubbleChart---气泡填充图🎈",
+            "packedbubbleSplitChart---圆堆积图🎈",
+            "packedbubbleSpiralChart---渐进变化的气泡图🎈",
+            "eulerChart---欧拉图",
+            "vennChart---韦恩图",
+        ],
+        // "ColumnVariantChart | 柱形图(变体)类型图表",
+        [
+            "variwideChart---可变宽度的柱形图",
+            "columnpyramidChart---角锥柱形图",
+            "dumbbellChart---哑铃图",
+            "lollipopChart---棒棒糖🍭图",
+            "xrangeChart---X轴范围图||甘特图||条码图",
+            "histogramChart---直方混合散点图📊",
+            "bellcurveChart---钟形曲线混合散点图🔔",
+            "bulletChart---子弹图"
+        ],
+        // "MoreProType | 更多高级类型图表",
+        [
+            "sunburstChart---旭日图🌞",
+            "streamgraphChart---流图🌊",
+            "vectorChart---向量图🏹",
+            "bellcurveChart---贝尔曲线图",
+            "timelineChart---时序图⌚️",
+            "itemChart---议会项目图🀙🀚🀜🀞🀠🀡",
+            "windbarbChart---风羽图🌪️",
+            "wordcloudChart---词云图☁️",
+            "flameChart---火焰图🔥",
+            "itemChart2---议会项目图2🀙🀚🀜🀞🀠🀡",
+            "itemChart3---议会项目图3🀙🀚🀜🀞🀠🀡",
+            "icicleChart---冰柱图🧊",
+            "sunburstChart2---旭日图☀️",
+            "solidgaugeChart---活动图🏃🏻‍♀️",
+            "parallelCoordinatesSplineChart---平行坐标曲线图",
+            "parallelCoordinatesLineChart---平行坐标折线图📈",
+            "volinPlotChart---小提琴图🎻",
+            "simpleDependencyWheelChart---简单的和弦图🎵",
+        ],
+        // "Custom Event---自定义交互事件",
+        [
+            "Custom Event---自定义交互事件",
+        ]
+    ]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         title = "AAInfographics"
-        
-        sectionTitleArr = [
-            "RelationshipChart | 关系类型图表",
-            "HeatOrTreeMapChart | 热力或树形类型图表",
-            "BubbleChart | 气泡类型图表",
-            "ColumnVariantChart | 柱形图(变体)类型图表",
-            "MoreProType | 更多高级类型图表",
-            "Custom Event---自定义交互事件",
-        ]
-        
-        chartTypeNameArr =   [
-            // "RelationshipChart | 关系类型图表",
-            [
-                "sankeyChart---桑基图",
-                "dependencywheelChart---和弦图🎸",
-                "arcdiagramChart1---弧形图1🌈",
-                "arcdiagramChart2---弧形图2🌈",
-                "arcdiagramChart3---弧形图3🌈",
-                "organizationChart---组织结构图",
-                "networkgraphChart---力导关系图✢✣✤✥",
-            ],
-            // "HeatOrTreeMapChart | 热力或树形类型图表",
-            [
-                "heatmapChart---热力图🌡",
-                "tilemapOrHoneycombChart---砖块图🧱||蜂巢图🐝🌡",
-                "treemapWithColorAxisData---包好色彩轴的矩形树图🌲",
-                "treemapWithLevelsData---包含等级的矩形树图🌲",
-                "drilldownLargeDataTreemapChart---可下钻的大数据量矩形树图🌲",
-                "largeDataHeatmapChart---大数据量热力图🌡",
-            ],
-            // "BubbleChart | 气泡类型图表",
-            [
-                "packedbubbleChart---气泡填充图🎈",
-                "packedbubbleSplitChart---圆堆积图🎈",
-                "packedbubbleSpiralChart---渐进变化的气泡图🎈",
-                "eulerChart---欧拉图",
-                "vennChart---韦恩图",
-            ],
-            // "ColumnVariantChart | 柱形图(变体)类型图表",
-            [
-                "variwideChart---可变宽度的柱形图",
-                "columnpyramidChart---角锥柱形图",
-                "dumbbellChart---哑铃图",
-                "lollipopChart---棒棒糖🍭图",
-                "xrangeChart---X轴范围图||甘特图||条码图",
-                "histogramChart---直方混合散点图📊",
-                "bellcurveChart---钟形曲线混合散点图🔔",
-                "bulletChart---子弹图"
-            ],
-            // "MoreProType | 更多高级类型图表",
-            [
-                "sunburstChart---旭日图🌞",
-                "streamgraphChart---流图🌊",
-                "vectorChart---向量图🏹",
-                "bellcurveChart---贝尔曲线图",
-                "timelineChart---时序图⌚️",
-                "itemChart---议会项目图🀙🀚🀜🀞🀠🀡",
-                "windbarbChart---风羽图🌪️",
-                "wordcloudChart---词云图☁️",
-                "flameChart---火焰图🔥",
-                "itemChart2---议会项目图2🀙🀚🀜🀞🀠🀡",
-                "itemChart3---议会项目图3🀙🀚🀜🀞🀠🀡",
-                "icicleChart---冰柱图🧊",
-                "sunburstChart2---旭日图☀️",
-                "solidgaugeChart---活动图🏃🏻‍♀️",
-                "parallelCoordinatesSplineChart---平行坐标曲线图",
-                "parallelCoordinatesLineChart---平行坐标折线图📈",
-                "volinPlotChart---小提琴图🎻",
-                "simpleDependencyWheelChart---简单的和弦图🎵",
-            ],
-            
-            // "Custom Event---自定义交互事件",
-            [
-                "Custom Event---自定义交互事件",
-            ]
-            
-        ]
-        
-        chartTypeArr = [
-            [//Empty Array,just for holding place
-            ],
-            
-        ]
-        
         view.backgroundColor = .white
-        
         setUpMainTableView()
     }
     
@@ -144,10 +129,12 @@ class MainVC: UIViewController {
     }
     
     private func kRGBColorFromHex(rgbValue: Int) -> (UIColor) {
-        return UIColor(red: ((CGFloat)((rgbValue & 0xFF0000) >> 16)) / 255.0,
-                       green: ((CGFloat)((rgbValue & 0xFF00) >> 8)) / 255.0,
-                       blue: ((CGFloat)(rgbValue & 0xFF)) / 255.0,
-                       alpha: 1.0)
+        return UIColor(
+            red: ((CGFloat)((rgbValue & 0xFF0000) >> 16)) / 255.0,
+            green: ((CGFloat)((rgbValue & 0xFF00) >> 8)) / 255.0,
+            blue: ((CGFloat)(rgbValue & 0xFF)) / 255.0,
+            alpha: 1.0
+        )
     }
 }
 
