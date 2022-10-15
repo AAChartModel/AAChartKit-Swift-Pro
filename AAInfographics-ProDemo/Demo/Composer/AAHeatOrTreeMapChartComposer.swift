@@ -40,11 +40,11 @@ class AAHeatOrTreeMapChartComposer {
             .tooltip(AATooltip()
                 .enabled(true)
                 .formatter("""
-                                   function () {
-                                   return '<b>' + this.series.xAxis.categories[this.point.x] + '</b> sold <br><b>' +
-                                       this.point.value + '</b> items on <br><b>' + this.series.yAxis.categories[this.point.y] + '</b>'
-                                   }
-                                   """))
+                    function () {
+                        return '<b>' + this.series.xAxis.categories[this.point.x] + '</b> sold <br><b>' +
+                            this.point.value + '</b> items on <br><b>' + this.series.yAxis.categories[this.point.y] + '</b>'
+                    }
+                    """))
             .series([
                 AASeriesElement()
                     .name("Sales")
@@ -180,10 +180,10 @@ class AAHeatOrTreeMapChartComposer {
             .data(AAData()
                 .csv(csvStr.aa_toPureJSString2())
                 .parsed("""
-                                function () {
-                                            start = +new Date();
-                                        }
-                                """))
+                    function () {
+                        start = +new Date();
+                    }
+                    """))
             .chart(AAChart()
                 .type(.heatmap)
                 .margin([60, 10, 80, 50]))
