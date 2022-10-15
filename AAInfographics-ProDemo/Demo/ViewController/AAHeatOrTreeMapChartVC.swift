@@ -7,23 +7,24 @@
 
 import UIKit
 
-class AAHeatOrTreeMapChartVC: UIViewController {
+class AAHeatOrTreeMapChartVC: AABaseChartVC {
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
     }
-    
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    override func chartConfigurationWithSelectedIndex(_ selectedIndex: Int) -> Any? {
+        switch (selectedIndex) {
+        case 0: return AAHeatOrTreeMapChartComposer.heatmapChart()
+        case 1: return AAHeatOrTreeMapChartComposer.tilemapChart()
+        case 2: return AAHeatOrTreeMapChartComposer.treemapWithColorAxisData()
+        case 3: return AAHeatOrTreeMapChartComposer.treemapWithLevelsData()
+//        case 4: return AAHeatOrTreeMapChartComposer.drilldownLargeDataTreemapChart()
+        case 5: return AAHeatOrTreeMapChartComposer.largeDataHeatmapChart()
+        default: return nil
+        }
     }
-    */
+
 
 }

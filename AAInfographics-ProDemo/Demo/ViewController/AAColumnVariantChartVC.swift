@@ -7,23 +7,26 @@
 
 import UIKit
 
-class AAColumnVariantChartVC: UIViewController {
+class AAColumnVariantChartVC: AABaseChartVC {
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
     }
-    
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    override func chartConfigurationWithSelectedIndex(_ selectedIndex: Int) -> Any? {
+        switch (selectedIndex) {
+        case 0: return AAColumnVariantChartComposer.variwideChart()
+        case 1: return AAColumnVariantChartComposer.columnpyramidChart()
+        case 2: return AAColumnVariantChartComposer.dumbbellChart()
+        case 3: return AAColumnVariantChartComposer.lollipopChart()
+        case 4: return AAColumnVariantChartComposer.xrangeChart()
+        case 5: return AAColumnVariantChartComposer.histogramChart()
+        case 6: return AAColumnVariantChartComposer.bellcurveChart()
+        case 7: return AAColumnVariantChartComposer.bulletChart()
+        default: return nil
+        }
     }
-    */
+
 
 }
