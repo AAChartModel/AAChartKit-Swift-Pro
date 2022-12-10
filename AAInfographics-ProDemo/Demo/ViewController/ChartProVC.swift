@@ -35,6 +35,8 @@ class ChartProVC: AABaseChartVC {
         case 15: return parallelCoordinatesLineChart()
         case 16: return volinPlotChart()
         case 17: return variablepieChart()
+        case 18: return semicircleSolidGaugeChart()
+
         default: return nil
         }
     }
@@ -775,7 +777,60 @@ class ChartProVC: AABaseChartVC {
                         .data(AAOptionsData.variablepieData)
                 ])
         }
-        
+
+    //https://www.highcharts.com/forum/viewtopic.php?f=9&t=49662&p=181012#p181048
+    private func semicircleSolidGaugeChart() -> AAOptions {
+        AAOptions()
+            .chart(AAChart()
+                    .type(.solidgauge))
+            .title(AATitle()
+                    .text("Big Fella")
+                    .style(AAStyle()
+                            .fontSize(36)))
+            .tooltip(AATooltip()
+                    .enabled(false))
+            .pane(AAPane()
+                    .center(["50%", "70%"])
+                    .size("100%")
+                    .startAngle(-90)
+                    .endAngle(90)
+                    .background([
+                        AABackgroundElement()
+                            .backgroundColor("#EEE")
+                            .innerRadius("60%")
+                            .outerRadius("100%")
+                            .shape("arc")
+                    ]))
+            .plotOptions(AAPlotOptions()
+                            .solidgauge(AASolidgauge()
+                                            .dataLabels(AADataLabels()
+                                                            .y(-64)
+                                                            .borderWidth(0)
+                                                            .useHTML(true)
+                                                            .format(#"""
+                                                                    <div style="text-align:center">
+                                                                        <span style="font-size:48px">{y}</span><br/>
+                                                                        <span style="font-size:20px;opacity:0.4">pounds</span>
+                                                                    </div>
+                                                                    """#.aa_toPureJSString2()))))
+            .yAxis(AAYAxis()
+                    .min(0)
+                    .max(100)
+                    .tickWidth(0)
+                    .minorTickInterval(0)
+                    .tickAmount(2)
+                    .labels(AALabels()
+                                .distance(-45)
+                                .y(32)
+                                .style(AAStyle()
+                                        .fontSize(20))))
+            .series([
+                AASeriesElement()
+                    .type(.solidgauge)
+                    .data([72])
+            ])
+    }
+
 
 }
 
