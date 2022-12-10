@@ -101,7 +101,8 @@ class MainVC: UIViewController {
             "parallelCoordinatesSplineChart---平行坐标曲线图",
             "parallelCoordinatesLineChart---平行坐标折线图📈",
             "volinPlotChart---小提琴图🎻",
-            "variablepieChart---可变宽度的饼图🍪"
+            "variablepieChart---可变宽度的饼图🍪",
+            "semicircleSolidGaugeChart---半圆形活动图🏃🏻‍♀️",
         ],
         // "Custom Event---自定义交互事件",
         [
