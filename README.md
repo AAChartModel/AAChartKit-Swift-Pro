@@ -12,3 +12,8 @@ AAInfographics-Pro is a professional version of [AAInfographics](https://github.
 ![](https://www.highcharts.com/demo/images/samples/highcharts/demo/honeycomb-usa/thumbnail.svg)
 ![](https://www.highcharts.com/demo/treemap-coloraxis)
 ![](https://www.highcharts.com/demo/treemap-with-levels)
+
+
+## Bubble Charts
+![](https://www.highcharts.com/demo/images/samples/highcharts/demo/packed-bubble/thumbnail.svg)
+![](https://www.highcharts.com/demo/images/samples/highcharts/demo/packed-bubble-split/thumbnail.svg)
