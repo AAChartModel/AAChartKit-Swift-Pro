@@ -34,6 +34,13 @@ AAInfographics-Pro is a professional version of [AAInfographics](https://github.
 ![](https://www.highcharts.com/demo/images/samples/highcharts/demo/network-graph/thumbnail.svg)
 ![](https://www.highcharts.com/demo/images/samples/highcharts/demo/organization-chart/thumbnail.svg)
 
+## Pie or Gauges
+![](https://www.highcharts.com/demo/images/samples/highcharts/demo/sunburst/thumbnail.svg)
+![](https://www.highcharts.com/demo/images/samples/highcharts/demo/parliament-chart/thumbnail.svg)
+![](https://www.highcharts.com/demo/images/samples/highcharts/demo/gauge-activity/thumbnail.svg)
+![](https://www.highcharts.com/demo/images/samples/highcharts/demo/gauge-speedometer/thumbnail.svg)
+![](https://www.highcharts.com/demo/images/samples/highcharts/demo/gauge-solid/thumbnail.png)
+
 ##  Created By
 
 ![](https://avatars1.githubusercontent.com/u/16357599?s=40&v=4)  **[An An](https://github.com/AAChartModel)**
