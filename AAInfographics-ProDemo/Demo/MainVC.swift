@@ -57,20 +57,26 @@ class MainVC: UIViewController {
         // "HeatOrTreeMapChart | 热力或树形类型图表",
         [
             "heatmapChart---热力图🌡",
-            "tilemapOrHoneycombChart---砖块图🧱||蜂巢图🐝🌡",
             "treemapWithColorAxisData---包好色彩轴的矩形树图🌲",
             "treemapWithLevelsData---包含等级的矩形树图🌲",
             "drilldownLargeDataTreemapChart---可下钻的大数据量矩形树图🌲",
             "largeDataHeatmapChart---大数据量热力图🌡",
 
-            "simpleTilemapWithHexagonTileShape---简单的砖块图🧱(六边形)",
+            "simpleTilemapWithHexagonTileShape---简单的砖块图🧱(六边形蜂巢图🐝)",
             "simpleTilemapWithCircleTileShape---简单的砖块图🧱(圆形)",
             "simpleTilemapWithDiamondTileShape---简单的砖块图🧱(菱形)",
             "simpleTilemapWithSquareTileShape---简单的砖块图🧱(正方形)",
-            "tilemapForAfricaWithHexagonTileShape---非洲砖块图🧱(六边形)",
+
+            "tilemapForAfricaWithHexagonTileShape---非洲砖块图🧱(六边形蜂巢图🐝)",
             "tilemapForAfricaWithCircleTileShape---非洲砖块图🧱(圆形)",
             "tilemapForAfricaWithDiamondTileShape---非洲砖块图🧱(菱形)",
             "tilemapForAfricaWithSquareTileShape---非洲砖块图🧱(正方形)",
+
+            "tilemapForAmericaWithHexagonTileShape---美洲砖块图🧱(六边形蜂巢图🐝)",
+            "tilemapForAmericaWithCircleTileShape---美洲砖块图🧱(圆形)",
+            "tilemapForAmericaWithDiamondTileShape---美洲砖块图🧱(菱形)",
+            "tilemapForAmericaWithSquareTileShape---美洲砖块图🧱(正方形)",
+
         ],
         // "BubbleChart | 气泡类型图表",
         [

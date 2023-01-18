@@ -56,58 +56,6 @@ class AAHeatOrTreeMapChartComposer {
             ])
     }
 
-    static func tilemapChart() -> AAOptions {
-        AAOptions()
-            .chart(AAChart()
-                .type(.tilemap))
-            .title(AATitle()
-                .text("U.S. states by population in 2016"))
-            .xAxis(AAXAxis()
-                .visible(false))
-            .yAxis(AAYAxis()
-                .visible(false))
-            .colorAxis(AAColorAxis()
-                .dataClasses([
-                    AADataClassesElement()
-                        .from(0)
-                        .to(1000000)
-                        .color("#F9EDB3")
-                        .name("< 1M"),
-                    AADataClassesElement()
-                        .from(1000000)
-                        .to(5000000)
-                        .color("#FFC428")
-                        .name("1M - 5M"),
-                    AADataClassesElement()
-                        .from(5000000)
-                        .to(20000000)
-                        .color("#F9EDB3")
-                        .name("5M - 20M"),
-                    AADataClassesElement()
-                        .from(20000000)
-                        .color("#FF2371")
-                        .name("> 20M"),
-                ]))
-            .tooltip(AATooltip()
-                .enabled(true)
-                .headerFormat("")
-                .valueSuffix("The population of <b> {point.name}</b> is <b>{point.value}</b>"))
-            .plotOptions(AAPlotOptions()
-                .series(AASeries()
-                    .dataLabels(AADataLabels()
-                        .enabled(true)
-                        .format("{point.hc-a2}")
-                        .color(AAColor.white)
-                        .style(AAStyle()
-                            .textOutline("none")))))
-            .series([
-                AASeriesElement()
-                    .name("Height")
-                    .colorByPoint(true)
-                    .data(AAOptionsData.tilemapData)
-            ])
-    }
-
     static func treemapWithColorAxisData() -> AAOptions {
         AAOptions()
             .chart(AAChart()
@@ -333,7 +281,7 @@ class AAHeatOrTreeMapChartComposer {
             .chart(AAChart()
                 .type(.tilemap)
                 .marginTop(15)
-                .height("65%")
+//                .height("65%")
             )
             .title(AATitle()
                 .text("Idea map"))
@@ -564,6 +512,80 @@ class AAHeatOrTreeMapChartComposer {
 
     static func tilemapForAfricaWithSquareTileShape() -> AAOptions {
         let aaOptions = tilemapForAfricaWithHexagonTileShape()
+        aaOptions.plotOptions?.series?
+                .tileShape(.square)
+        return aaOptions
+    }
+    
+    static func tilemapChartForAmericaWithHexagonTileShape() -> AAOptions {
+        AAOptions()
+            .chart(AAChart()
+                .type(.tilemap))
+            .title(AATitle()
+                .text("U.S. states by population in 2016"))
+            .xAxis(AAXAxis()
+                .visible(false))
+            .yAxis(AAYAxis()
+                .visible(false))
+            .colorAxis(AAColorAxis()
+                .dataClasses([
+                    AADataClassesElement()
+                        .from(0)
+                        .to(1000000)
+                        .color("#F9EDB3")
+                        .name("< 1M"),
+                    AADataClassesElement()
+                        .from(1000000)
+                        .to(5000000)
+                        .color("#FFC428")
+                        .name("1M - 5M"),
+                    AADataClassesElement()
+                        .from(5000000)
+                        .to(20000000)
+                        .color("#F9EDB3")
+                        .name("5M - 20M"),
+                    AADataClassesElement()
+                        .from(20000000)
+                        .color("#FF2371")
+                        .name("> 20M"),
+                ]))
+            .tooltip(AATooltip()
+                .enabled(true)
+                .headerFormat("")
+                .valueSuffix("The population of <b> {point.name}</b> is <b>{point.value}</b>"))
+            .plotOptions(AAPlotOptions()
+                .series(AASeries()
+                    .tileShape(.hexagon)
+                    .dataLabels(AADataLabels()
+                        .enabled(true)
+                        .format("{point.hc-a2}")
+                        .color(AAColor.white)
+                        .style(AAStyle()
+                            .textOutline("none")))))
+            .series([
+                AASeriesElement()
+                    .name("Height")
+                    .colorByPoint(true)
+                    .data(AAOptionsData.tilemapData)
+            ])
+    }
+
+    static func tilemapChartForAmericaWithCircleTileShape() -> AAOptions {
+        let aaOptions = tilemapChartForAmericaWithHexagonTileShape()
+        aaOptions.plotOptions?.series?
+                .tileShape(.circle)
+        return aaOptions
+    }
+
+    static func tilemapChartForAmericaWithDiamondTileShape() -> AAOptions {
+        let aaOptions = tilemapChartForAmericaWithHexagonTileShape()
+        aaOptions.plotOptions?.series?
+                .tileShape(.diamond)
+        return aaOptions
+    }
+
+    static func tilemapChartForAmericaWithSquareTileShape() -> AAOptions {
+        let aaOptions = tilemapChartForAmericaWithHexagonTileShape()
         aaOptions.plotOptions?.series?
                 .tileShape(.square)
         return aaOptions
