@@ -178,7 +178,10 @@ class AAOptionsData {
     public class var simpleTilemapData : [Any] {
         getJsonDataWithJsonFileName("simpleTilemapData")
     }
-    
+
+    public class var tilemapForAfricaData : [Any] {
+        getJsonDataWithJsonFileName("tilemapForAfricaData")
+    }
     
     //https://www.jianshu.com/p/a4b2bd5deca6
     private static func getJsonDataWithJsonFileName(_ jsonFileName: String) -> [Any] {

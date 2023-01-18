@@ -63,6 +63,7 @@ class MainVC: UIViewController {
             "drilldownLargeDataTreemapChart---可下钻的大数据量矩形树图🌲",
             "largeDataHeatmapChart---大数据量热力图🌡",
             "simpleTilemapChart---简单的砖块图🧱",
+            "tilemapForAfrica---非洲地区砖块图🧱",
         ],
         // "BubbleChart | 气泡类型图表",
         [

@@ -393,7 +393,139 @@ class AAHeatOrTreeMapChartComposer {
                     ])
     }
 
+//Highcharts.chart('container', {
+//    chart: {
+//        type: 'tilemap',
+//        height: '125%'
+//    },
+//
+//    title: {
+//        text: 'Africa Real GDP Growth Forecasts for 2017',
+//        align: 'left'
+//    },
+//
+//    xAxis: {
+//        visible: false
+//    },
+//
+//    yAxis: {
+//        visible: false
+//    },
+//
+//    legend: {
+//        enabled: true,
+//        layout: 'vertical',
+//        align: 'left',
+//        y: -20,
+//        floating: true
+//    },
+//
+//    colorAxis: {
+//        dataClasses: [{
+//            to: 2,
+//            color: '#e8f5e9',
+//            name: 'Weak'
+//        }, {
+//            from: 2,
+//            to: 5,
+//            color: '#81c784',
+//            name: 'Average'
+//        }, {
+//            from: 5,
+//            to: 6,
+//            color: '#43a047',
+//            name: 'Strong'
+//        }, {
+//            from: 6,
+//            color: '#1b5e20',
+//            name: 'Stellar'
+//        }]
+//    },
+//
+//    tooltip: {
+//        headerFormat: '',
+//        pointFormat: 'The real GDP growth of <b>{point.name}</b> is <b>{point.value}</b> %'
+//    },
+//
+//    plotOptions: {
+//        series: {
+//            tileShape: 'circle',
+//            dataLabels: {
+//                enabled: true,
+//                format: '{point.iso-a3}',
+//                color: '#000000',
+//                style: {
+//                    textOutline: false
+//                }
+//            }
+//        }
+//    },
+//
+//    series: [{
+//        data:
 
+//        ]
+
+//    }]
+
+ static func tilemapForAfrica() -> AAOptions {
+        AAOptions()
+            .chart(AAChart()
+                .type(.tilemap)
+//                .height("125%")
+            )
+            .title(AATitle()
+                .text("Africa Real GDP Growth Forecasts for 2017")
+                .align(.left))
+            .xAxis(AAXAxis()
+                .visible(false))
+            .yAxis(AAYAxis()
+                .visible(false))
+            .legend(AALegend()
+                .enabled(true)
+                .layout(.vertical)
+                .align(.left)
+                .y(-20)
+                .floating(true))
+            .colorAxis(AAColorAxis()
+                .dataClasses([
+                    AADataClassesElement()
+                        .to(2)
+                        .color("#e8f5e9")
+                        .name("Weak"),
+                    AADataClassesElement()
+                        .from(2)
+                        .to(5)
+                        .color("#81c784")
+                        .name("Average"),
+                    AADataClassesElement()
+                        .from(5)
+                        .to(6)
+                        .color("#43a047")
+                        .name("Strong"),
+                    AADataClassesElement()
+                        .from(6)
+                        .color("#1b5e20")
+                        .name("Stellar")
+                ]))
+            .tooltip(AATooltip()
+                .headerFormat("")
+                .pointFormat("The real GDP growth of <b>{point.name}</b> is <b>{point.value}</b> %"))
+            .plotOptions(AAPlotOptions()
+                .series(AASeries()
+//                    .tileShape(.circle)
+                    .dataLabels(AADataLabels()
+                        .enabled(true)
+                        .format("{point.iso-a3}")
+                        .color("#000000")
+                        .style(AAStyle()
+//                            .textOutline(false)
+                        ))))
+            .series([
+                AASeriesElement()
+                    .data(AAOptionsData.tilemapForAfricaData)
+            ])
+ }
     
 }
 

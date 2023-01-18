@@ -23,6 +23,7 @@ class AAHeatOrTreeMapChartVC: AABaseChartVC {
         case 4: return AAHeatOrTreeMapChartComposer.drilldownLargeDataTreemapChart()
         case 5: return AAHeatOrTreeMapChartComposer.largeDataHeatmapChart()
         case 6: return AAHeatOrTreeMapChartComposer.simpleTilemapChart()
+        case 7: return AAHeatOrTreeMapChartComposer.tilemapForAfrica()
         default: return nil
         }
     }
