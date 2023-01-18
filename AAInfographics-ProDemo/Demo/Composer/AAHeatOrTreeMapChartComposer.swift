@@ -513,7 +513,7 @@ class AAHeatOrTreeMapChartComposer {
                 .pointFormat("The real GDP growth of <b>{point.name}</b> is <b>{point.value}</b> %"))
             .plotOptions(AAPlotOptions()
                 .series(AASeries()
-//                    .tileShape(.circle)
+                    .tileShape(.circle)
                     .dataLabels(AADataLabels()
                         .enabled(true)
                         .format("{point.iso-a3}")
