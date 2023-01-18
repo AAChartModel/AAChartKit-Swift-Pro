@@ -174,6 +174,10 @@ class AAOptionsData {
     public class var simpleDependencyWheelData : [Any] {
         getJsonDataWithJsonFileName("simpleDependencyWheelData")
     }
+
+    public class var simpleTilemapData : [Any] {
+        getJsonDataWithJsonFileName("simpleTilemapData")
+    }
     
     
     //https://www.jianshu.com/p/a4b2bd5deca6

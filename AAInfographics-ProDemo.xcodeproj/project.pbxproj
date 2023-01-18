@@ -27,6 +27,7 @@
 		44D27E07255A793200D0C636 /* AAOptionsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D27E06255A793200D0C636 /* AAOptionsData.swift */; };
 		44D27E0C255ADE1E00D0C636 /* AAOptionsSeries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D27E0B255ADE1E00D0C636 /* AAOptionsSeries.swift */; };
 		44D27E11255ADF1300D0C636 /* ChartProVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D27E10255ADF1300D0C636 /* ChartProVC.swift */; };
+		58603DF10ACD2DFCE19E231F /* simpleTilemapData.json in Resources */ = {isa = PBXBuildFile; fileRef = 5860351659A57677CB0A6D84 /* simpleTilemapData.json */; };
 		8418479728B861D200094106 /* AABoxplot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8418479628B861D200094106 /* AABoxplot.swift */; };
 		8441A76126C2568F007EAAA7 /* AAExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8441A75E26C2568E007EAAA7 /* AAExtension.swift */; };
 		8441A76226C2568F007EAAA7 /* AAColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8441A75F26C2568F007EAAA7 /* AAColor.swift */; };
@@ -160,6 +161,7 @@
 		44D27E06255A793200D0C636 /* AAOptionsData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AAOptionsData.swift; sourceTree = "<group>"; };
 		44D27E0B255ADE1E00D0C636 /* AAOptionsSeries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AAOptionsSeries.swift; sourceTree = "<group>"; };
 		44D27E10255ADF1300D0C636 /* ChartProVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartProVC.swift; sourceTree = "<group>"; };
+		5860351659A57677CB0A6D84 /* simpleTilemapData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = simpleTilemapData.json; sourceTree = "<group>"; };
 		8418479628B861D200094106 /* AABoxplot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AABoxplot.swift; sourceTree = "<group>"; };
 		8441A75E26C2568E007EAAA7 /* AAExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AAExtension.swift; sourceTree = "<group>"; };
 		8441A75F26C2568F007EAAA7 /* AAColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AAColor.swift; sourceTree = "<group>"; };
@@ -440,6 +442,7 @@
 				84DEB8C528FAF3C700BF9423 /* simpleDependencyWheelData.json */,
 				84DEB8C628FAF3C700BF9423 /* volinPlotElement1Data.json */,
 				84DEB8C728FAF3C700BF9423 /* volinPlotElement2Data.json */,
+				5860351659A57677CB0A6D84 /* simpleTilemapData.json */,
 			);
 			path = DataJsonFiles;
 			sourceTree = "<group>";
@@ -657,6 +660,7 @@
 				84DEB8C928FAF3C800BF9423 /* volinPlotElement1Data.json in Resources */,
 				84A5694C27FEC89F00883553 /* dumbbellData.json in Resources */,
 				84A5694B27FEC89F00883553 /* timelineData.json in Resources */,
+				58603DF10ACD2DFCE19E231F /* simpleTilemapData.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

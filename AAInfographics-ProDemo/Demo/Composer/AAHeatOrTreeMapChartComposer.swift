@@ -244,6 +244,156 @@ class AAHeatOrTreeMapChartComposer {
                     .turboThreshold(10000)
             ])
     }
+
+    //Highcharts.chart('container', {
+    //    chart: {
+    //        type: 'tilemap',
+    //        marginTop: 15,
+    //        height: '65%'
+    //    },
+    //
+    //    title: {
+    //        text: 'Idea map'
+    //    },
+    //
+    //    subtitle: {
+    //        text: 'Hover over tiles for details'
+    //    },
+    //
+    //    colors: [
+    //        '#fed',
+    //        '#ffddc0',
+    //        '#ecb',
+    //        '#dba',
+    //        '#c99',
+    //        '#b88',
+    //        '#aa7577',
+    //        '#9f6a66'
+    //    ],
+    //
+    //    xAxis: {
+    //        visible: false
+    //    },
+    //
+    //    yAxis: {
+    //        visible: false
+    //    },
+    //
+    //    legend: {
+    //        enabled: false
+    //    },
+    //
+    //    tooltip: {
+    //        headerFormat: '',
+    //        backgroundColor: 'rgba(247,247,247,0.95)',
+    //        pointFormat: '<span style="color: {point.color}">●</span>' +
+    //            '<span style="font-size: 13px; font-weight: bold"> {point.name}' +
+    //            '</span><br>{point.desc}',
+    //        style: {
+    //            width: 170
+    //        },
+    //        padding: 10,
+    //        hideDelay: 1000000
+    //    },
+    //
+    //    plotOptions: {
+    //        series: {
+    //            keys: ['x', 'y', 'name', 'desc'],
+    //            tileShape: 'diamond',
+    //            dataLabels: {
+    //                enabled: true,
+    //                format: '{point.name}',
+    //                color: '#000000',
+    //                style: {
+    //                    textOutline: false
+    //                }
+    //            }
+    //        }
+    //    },
+    //
+    //    series: [{
+    //        name: 'Main idea',
+    //        pointPadding: 10,
+    //        data: [
+    //            [5, 3, 'Main idea',
+    //                'The main idea tile outlines the overall theme of the idea map.']
+    //        ],
+    //        color: '#7eb'
+    //    }, {
+    //        name: 'Steps',
+    //        colorByPoint: true, // Pick new color for each point from colors array
+    //
+    //    }]
+    //}, function (chart) {
+    //    chart.tooltip.refresh(chart.series[0].points[0]); // Show tooltip of the first point on load
+    //});
+
+    static func simpleTilemapChart() -> AAOptions {
+        AAOptions()
+            .chart(AAChart()
+                .type(.tilemap)
+                .marginTop(15)
+                .height("65%")
+            )
+            .title(AATitle()
+                .text("Idea map"))
+            .subtitle(AASubtitle()
+                .text("Hover over tiles for details"))
+            .colors([
+                "#fed",
+                "#ffddc0",
+                "#ecb",
+                "#dba",
+                "#c99",
+                "#b88",
+                "#aa7577",
+                "#9f6a66"
+            ])
+                    .xAxis(AAXAxis()
+                        .visible(false))
+                    .yAxis(AAYAxis()
+                        .visible(false))
+                    .legend(AALegend()
+                        .enabled(false))
+                    .tooltip(AATooltip()
+                        .headerFormat("")
+                        .backgroundColor("rgba(247,247,247,0.95)")
+//                        .pointFormat("<span style=\"color: {point.color}\">●</span>" +
+//                                     "<span style=\"font-size: 13px; font-weight: bold\"> {point.name}" +
+//                                     "</span><br>{point.desc}")
+                            .style(AAStyle()
+                                .width(170))
+                                .padding(10)
+        //                        .hideDelay(1000000)
+                    )
+                    .plotOptions(AAPlotOptions()
+                        .series(AASeries()
+                            .keys(["x", "y", "name", "desc"])
+        //                    .tileShape(.diamond)
+                            .dataLabels(AADataLabels()
+                                .enabled(true)
+                                .format("{point.name}")
+                                .color("#000000")
+                                .style(AAStyle()
+//                                    .textOutline(false)
+                                ))))
+                    .series([
+                        AASeriesElement()
+                            .name("Main idea")
+//                            .pointPadding(10)
+                            .data([
+                                [5, 3, "Main idea",
+                                 "The main idea tile outlines the overall theme of the idea map."]
+                            ])
+                            .color("#7eb"),
+                        AASeriesElement()
+                            .name("Steps")
+                            .colorByPoint(true)
+                            .data(AAOptionsData.simpleTilemapData)
+                    ])
+    }
+
+
     
 }
 
