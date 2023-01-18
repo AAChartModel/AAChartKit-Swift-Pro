@@ -22,8 +22,15 @@ class AAHeatOrTreeMapChartVC: AABaseChartVC {
         case 3: return AAHeatOrTreeMapChartComposer.treemapWithLevelsData()
         case 4: return AAHeatOrTreeMapChartComposer.drilldownLargeDataTreemapChart()
         case 5: return AAHeatOrTreeMapChartComposer.largeDataHeatmapChart()
-        case 6: return AAHeatOrTreeMapChartComposer.simpleTilemapChart()
-        case 7: return AAHeatOrTreeMapChartComposer.tilemapForAfrica()
+        case 6: return AAHeatOrTreeMapChartComposer.simpleTilemapWithHexagonTileShape()
+        case 7: return AAHeatOrTreeMapChartComposer.simpleTilemapWithCircleTileShape()
+        case 8: return AAHeatOrTreeMapChartComposer.simpleTilemapWithDiamondTileShape()
+        case 9: return AAHeatOrTreeMapChartComposer.simpleTilemapWithSquareTileShape()
+        case 10: return AAHeatOrTreeMapChartComposer.tilemapForAfricaWithHexagonTileShape()
+        case 11: return AAHeatOrTreeMapChartComposer.tilemapForAfricaWithCircleTileShape()
+        case 12: return AAHeatOrTreeMapChartComposer.tilemapForAfricaWithDiamondTileShape()
+        case 13: return AAHeatOrTreeMapChartComposer.tilemapForAfricaWithSquareTileShape()
+
         default: return nil
         }
     }

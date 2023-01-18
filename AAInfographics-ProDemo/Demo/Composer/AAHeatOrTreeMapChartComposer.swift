@@ -328,7 +328,7 @@ class AAHeatOrTreeMapChartComposer {
     //    chart.tooltip.refresh(chart.series[0].points[0]); // Show tooltip of the first point on load
     //});
 
-    static func simpleTilemapChart() -> AAOptions {
+    static func simpleTilemapWithHexagonTileShape() -> AAOptions {
         AAOptions()
             .chart(AAChart()
                 .type(.tilemap)
@@ -369,7 +369,7 @@ class AAHeatOrTreeMapChartComposer {
                     .plotOptions(AAPlotOptions()
                         .series(AASeries()
                             .keys(["x", "y", "name", "desc"])
-        //                    .tileShape(.diamond)
+                            .tileShape(.hexagon)
                             .dataLabels(AADataLabels()
                                 .enabled(true)
                                 .format("{point.name}")
@@ -391,6 +391,27 @@ class AAHeatOrTreeMapChartComposer {
                             .colorByPoint(true)
                             .data(AAOptionsData.simpleTilemapData)
                     ])
+    }
+
+    static func simpleTilemapWithCircleTileShape() -> AAOptions {
+        let aaOptions = simpleTilemapWithHexagonTileShape()
+        aaOptions.plotOptions?.series?
+                .tileShape(.circle)
+        return aaOptions
+    }
+
+    static func simpleTilemapWithDiamondTileShape() -> AAOptions {
+        let aaOptions = simpleTilemapWithHexagonTileShape()
+        aaOptions.plotOptions?.series?
+                .tileShape(.diamond)
+        return aaOptions
+    }
+
+    static func simpleTilemapWithSquareTileShape() -> AAOptions {
+        let aaOptions = simpleTilemapWithHexagonTileShape()
+        aaOptions.plotOptions?.series?
+                .tileShape(.square)
+        return aaOptions
     }
 
 //Highcharts.chart('container', {
@@ -468,7 +489,7 @@ class AAHeatOrTreeMapChartComposer {
 
 //    }]
 
- static func tilemapForAfrica() -> AAOptions {
+ static func tilemapForAfricaWithHexagonTileShape() -> AAOptions {
         AAOptions()
             .chart(AAChart()
                 .type(.tilemap)
@@ -513,7 +534,7 @@ class AAHeatOrTreeMapChartComposer {
                 .pointFormat("The real GDP growth of <b>{point.name}</b> is <b>{point.value}</b> %"))
             .plotOptions(AAPlotOptions()
                 .series(AASeries()
-                    .tileShape(.circle)
+                    .tileShape(.hexagon)
                     .dataLabels(AADataLabels()
                         .enabled(true)
                         .format("{point.iso-a3}")
@@ -526,6 +547,26 @@ class AAHeatOrTreeMapChartComposer {
                     .data(AAOptionsData.tilemapForAfricaData)
             ])
  }
-    
+
+    static func tilemapForAfricaWithCircleTileShape() -> AAOptions {
+        let aaOptions = tilemapForAfricaWithHexagonTileShape()
+        aaOptions.plotOptions?.series?
+                .tileShape(.circle)
+        return aaOptions
+    }
+
+    static func tilemapForAfricaWithDiamondTileShape() -> AAOptions {
+        let aaOptions = tilemapForAfricaWithHexagonTileShape()
+        aaOptions.plotOptions?.series?
+                .tileShape(.diamond)
+        return aaOptions
+    }
+
+    static func tilemapForAfricaWithSquareTileShape() -> AAOptions {
+        let aaOptions = tilemapForAfricaWithHexagonTileShape()
+        aaOptions.plotOptions?.series?
+                .tileShape(.square)
+        return aaOptions
+    }
 }
 

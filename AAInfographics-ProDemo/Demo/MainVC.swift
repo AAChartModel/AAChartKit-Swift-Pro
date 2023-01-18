@@ -62,8 +62,15 @@ class MainVC: UIViewController {
             "treemapWithLevelsData---包含等级的矩形树图🌲",
             "drilldownLargeDataTreemapChart---可下钻的大数据量矩形树图🌲",
             "largeDataHeatmapChart---大数据量热力图🌡",
-            "simpleTilemapChart---简单的砖块图🧱",
-            "tilemapForAfrica---非洲地区砖块图🧱",
+
+            "simpleTilemapWithHexagonTileShape---简单的砖块图🧱(六边形)",
+            "simpleTilemapWithCircleTileShape---简单的砖块图🧱(圆形)",
+            "simpleTilemapWithDiamondTileShape---简单的砖块图🧱(菱形)",
+            "simpleTilemapWithSquareTileShape---简单的砖块图🧱(正方形)",
+            "tilemapForAfricaWithHexagonTileShape---非洲砖块图🧱(六边形)",
+            "tilemapForAfricaWithCircleTileShape---非洲砖块图🧱(圆形)",
+            "tilemapForAfricaWithDiamondTileShape---非洲砖块图🧱(菱形)",
+            "tilemapForAfricaWithSquareTileShape---非洲砖块图🧱(正方形)",
         ],
         // "BubbleChart | 气泡类型图表",
         [
