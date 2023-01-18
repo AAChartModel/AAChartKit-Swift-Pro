@@ -32,6 +32,14 @@
 
 import Foundation
 
+//The shape of the tiles in the tilemap. Possible values are hexagon, circle, diamond, and square. Defaults to hexagon.
+public enum AAChartTileShapeType: String {
+    case hexagon = "hexagon"
+    case circle = "circle"
+    case diamond = "diamond"
+    case square = "square"
+}
+
 public class AASeries: AAObject {
     public var borderColor: String?        //The border color, It is only valid for column, bar, pie, columnrange, pyramid and funnel chart types
     public var borderWidth: Float?         //The border width, It is only valid for column, bar, pie, columnrange, pyramid and funnel chart types
@@ -58,7 +66,7 @@ public class AASeries: AAObject {
     public var pointStart: Float?
     public var pointPadding: Float?
     public var groupPadding: Float?
-
+    public var tileShape: String?
     
     @discardableResult
     public func borderColor(_ prop: String) -> AASeries {
@@ -201,6 +209,12 @@ public class AASeries: AAObject {
     @discardableResult
     public func groupPadding(_ prop: Float?) -> AASeries {
         groupPadding = prop
+        return self
+    }
+
+    @discardableResult
+    public func tileShape(_ prop: AAChartTileShapeType?) -> AASeries {
+        tileShape = prop?.rawValue
         return self
     }
     
