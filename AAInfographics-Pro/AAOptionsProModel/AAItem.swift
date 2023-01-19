@@ -18,6 +18,7 @@ public class AAItem: AAObject {
     public var startAngle: Float?
     public var endAngle: Float?
     public var center: [Int]?
+    public var marker: AAMarker?
     
     @discardableResult
     public func name(_ prop: String?) -> AAItem {
@@ -82,6 +83,12 @@ public class AAItem: AAObject {
     @discardableResult
     public func center(_ prop: [Int]?) -> AAItem {
         center = prop
+        return self
+    }
+
+    @discardableResult
+    public func marker(_ prop: AAMarker?) -> AAItem {
+        marker = prop
         return self
     }
     
