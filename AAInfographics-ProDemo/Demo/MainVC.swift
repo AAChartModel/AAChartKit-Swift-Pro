@@ -128,7 +128,7 @@ class MainVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "AAInfographics"
+        title = "AAInfographics-Pro"
         view.backgroundColor = .white
         setUpMainTableView()
     }
