@@ -34,10 +34,10 @@ import Foundation
 
 //The shape of the tiles in the tilemap. Possible values are hexagon, circle, diamond, and square. Defaults to hexagon.
 public enum AAChartTileShapeType: String {
-    case hexagon = "hexagon"
-    case circle = "circle"
-    case diamond = "diamond"
-    case square = "square"
+    case hexagon
+    case circle
+    case diamond
+    case square
 }
 
 public class AASeries: AAObject {
