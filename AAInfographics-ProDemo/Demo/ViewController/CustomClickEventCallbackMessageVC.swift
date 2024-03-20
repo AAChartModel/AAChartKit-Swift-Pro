@@ -123,7 +123,7 @@ class CustomClickEventCallbackMessageVC: UIViewController {
         aaOptions.plotOptions?.series?
             .point(AAPoint()
                 .events(AAPointEvents()
-                    .click(configureClickOrMoveOverEventJSEvent(userContentMessageName: kUserContentMessageNameClick))
+                    .click(configureClickOrMoveOverEventJSEvent(userContentMessageName: kUserContentMessageNameChartClicked))
                     .mouseOver(configureClickOrMoveOverEventJSEvent(userContentMessageName: kUserContentMessageNameChartMoveOver))
                 ))
         
