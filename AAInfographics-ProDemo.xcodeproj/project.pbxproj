@@ -203,9 +203,9 @@
 		844615A4283F580300E26DA4 /* AAXAxis.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AAXAxis.swift; sourceTree = "<group>"; };
 		844615A5283F580300E26DA4 /* AAYAxis.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AAYAxis.swift; sourceTree = "<group>"; };
 		84526DF62CEB305800EB2563 /* AAOptions+Drilldown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AAOptions+Drilldown.swift"; sourceTree = "<group>"; };
-		84526DF82CEB310200EB2563 /* AADrilldown.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AADrilldown.swift; path = "AAInfographics-Pro/AAOptionsProModel/AADrilldown.swift"; sourceTree = SOURCE_ROOT; };
-		84526DFA2CEB332600EB2563 /* AADrilldownChartComposer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AADrilldownChartComposer.swift; path = "AAInfographics-Pro/AAOptionsProModel/AADrilldownChartComposer.swift"; sourceTree = SOURCE_ROOT; };
-		84526DFC2CEB35D700EB2563 /* AADrilldownChartVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AADrilldownChartVC.swift; path = "AAInfographics-ProDemo/Demo/ViewController/AADrilldownChartVC.swift"; sourceTree = SOURCE_ROOT; };
+		84526DF82CEB310200EB2563 /* AADrilldown.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AADrilldown.swift; path = "AAInfographics-ProDemo/Demo/AAPlugins/AADrilldown/AADrilldown.swift"; sourceTree = SOURCE_ROOT; };
+		84526DFA2CEB332600EB2563 /* AADrilldownChartComposer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AADrilldownChartComposer.swift; path = "AAInfographics-ProDemo/Demo/AAPlugins/AADrilldown/AADrilldownChartComposer.swift"; sourceTree = SOURCE_ROOT; };
+		84526DFC2CEB35D700EB2563 /* AADrilldownChartVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AADrilldownChartVC.swift; path = "AAInfographics-ProDemo/Demo/AAPlugins/AADrilldown/AADrilldownChartVC.swift"; sourceTree = SOURCE_ROOT; };
 		84526DFE2CEB374800EB2563 /* AADrilldown.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = AADrilldown.js; sourceTree = "<group>"; };
 		84A5690F27FEC88700883553 /* streamgraphSeries.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = streamgraphSeries.json; sourceTree = "<group>"; };
 		84A5691027FEC88700883553 /* packedbubbleSeries.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = packedbubbleSeries.json; sourceTree = "<group>"; };
@@ -483,13 +483,21 @@
 		84526DF52CEB302F00EB2563 /* AAPlugins */ = {
 			isa = PBXGroup;
 			children = (
+				84526E002CEB3B4E00EB2563 /* AADrilldown */,
+			);
+			path = AAPlugins;
+			sourceTree = "<group>";
+		};
+		84526E002CEB3B4E00EB2563 /* AADrilldown */ = {
+			isa = PBXGroup;
+			children = (
 				84526DFE2CEB374800EB2563 /* AADrilldown.js */,
 				84526DFC2CEB35D700EB2563 /* AADrilldownChartVC.swift */,
 				84526DFA2CEB332600EB2563 /* AADrilldownChartComposer.swift */,
 				84526DF82CEB310200EB2563 /* AADrilldown.swift */,
 				84526DF62CEB305800EB2563 /* AAOptions+Drilldown.swift */,
 			);
-			path = AAPlugins;
+			path = AADrilldown;
 			sourceTree = "<group>";
 		};
 		84B238C1283F707400193B9A /* AAInfographics-Pro */ = {
