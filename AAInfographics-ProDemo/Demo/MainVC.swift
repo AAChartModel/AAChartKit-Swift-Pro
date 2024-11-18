@@ -40,7 +40,8 @@ class MainVC: UIViewController {
         "BubbleChart | 气泡类型图表",
         "ColumnVariantChart | 柱形图(变体)类型图表",
         "MoreProType | 更多高级类型图表",
-        "Custom Event---自定义交互事件",
+        "Custom Event | 自定义交互事件",
+        "DrilldownChart | 可钻取图表",
     ]
     private var chartTypeNameArr = [
         // "RelationshipChart | 关系类型图表",
@@ -122,7 +123,11 @@ class MainVC: UIViewController {
         // "Custom Event---自定义交互事件",
         [
             "Custom Event---自定义交互事件",
-        ]
+        ],
+        // "DrilldownChart---可钻取图表",
+        [
+            "columnChart---柱形图",
+        ],
     ]
     
     override func viewDidLoad() {
@@ -234,6 +239,10 @@ extension MainVC: UITableViewDelegate, UITableViewDataSource {
             navigationController?.pushViewController(vc, animated: true)
         case 5:
             let vc = CustomClickEventCallbackMessageVC()
+            navigationController?.pushViewController(vc, animated: true)
+            
+        case 6:
+            let vc = AADrilldownChartVC()
             navigationController?.pushViewController(vc, animated: true)
             
         default:

@@ -166,6 +166,8 @@ public class AAChartView: WKWebView {
         }
     }
     
+    public var pluginsArray: [String] = []
+    
     private var optionsJson: String?
     
     // MARK: - Initialization
@@ -184,6 +186,47 @@ public class AAChartView: WKWebView {
         let configuration = WKWebViewConfiguration()
         self.init(frame: .zero, configuration: configuration)
         translatesAutoresizingMaskIntoConstraints = false
+    }
+    
+    func loadScripts(from scriptsArray: [String], index: Int, completion: @escaping (Bool) -> Void) {
+        if index >= scriptsArray.count {
+            // 所有脚本已加载完成
+            print("✅✅✅ All plugin scripts loaded successfully")
+            completion(true)
+            return
+        }
+
+        let path = scriptsArray[index]
+        do {
+            let jsString = try String(contentsOfFile: path, encoding: .utf8)
+            evaluateJavaScript(jsString) { result, error in
+                if let error = error {
+                    print("❌❌❌ Error loading plugin script at index \(index): \(error)")
+                    completion(false) // 或者可以选择忽略错误并继续加载下一个脚本
+                } else {
+                    print("✅✅✅ Plugin script at index \(index) loaded successfully")
+                    self.loadScripts(from: scriptsArray, index: index + 1, completion: completion)
+                }
+            }
+        } catch {
+            print("❌❌❌ Failed to load plugin script at index \(index): \(error)")
+            completion(false) // 或者可以选择忽略错误并继续加载下一个脚本
+        }
+    }
+
+    func loadAllPluginsAndDrawChart() {
+        if pluginsArray.isEmpty {
+            drawChart()
+            return
+        }
+        
+        loadScripts(from: pluginsArray, index: 0) { success in
+            if success {
+                self.drawChart()
+            } else {
+                print("❌❌❌ Failed to load one or more plugin scripts.")
+            }
+        }
     }
    
     
@@ -648,7 +691,7 @@ extension AAChartView: WKUIDelegate {
 @available(iOS 10.0, macCatalyst 13.1, macOS 10.13, *)
 extension AAChartView:  WKNavigationDelegate {
     open func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        drawChart()
+        loadAllPluginsAndDrawChart()
         delegate?.aaChartViewDidFinishLoad?(self)
     }
 }
