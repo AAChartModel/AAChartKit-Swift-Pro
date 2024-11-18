@@ -44,6 +44,7 @@ class ChartProVC: AABaseChartVC {
     private func sunburstChart() -> AAOptions {
         let aaChart = AAChart()
             .type(.sunburst)
+            .nickname(prop: "🫁哈哈哈, 我就是做个测试, 看看效果如何")
 
         let aaTitle = AATitle()
             .text("2017 世界人口分布")

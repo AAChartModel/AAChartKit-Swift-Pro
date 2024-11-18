@@ -43,31 +43,37 @@ public extension AAObject {
     }
 }
 
+import Foundation
+
+@available(iOS 10.0, macCatalyst 13.1, macOS 10.13, *)
+public protocol SerializableWithComputedProperties {
+    /// 返回计算属性的键值对
+    func computedProperties() -> [String: Any]
+}
+
 @available(iOS 10.0, macCatalyst 13.1, macOS 10.13, *)
 public extension AAObject {
-    fileprivate func loopForMirrorChildren(_ mirrorChildren: Mirror.Children, _ representation: inout [String : Any]) {
+    
+    fileprivate func loopForMirrorChildren(_ mirrorChildren: Mirror.Children, _ representation: inout [String: Any]) {
         for case let (label?, value) in mirrorChildren {
             switch value {
-            case let value as AAObject: do {
+            case let value as AAObject:
                 representation[label] = value.toDic()
-            }
                 
-            case let value as [AAObject]: do {
+            case let value as [AAObject]:
                 var aaObjectArr = [Any]()
                 
                 let valueCount = value.count
-                for i in 0 ..< valueCount {
+                for i in 0..<valueCount {
                     let aaObject = value[i]
                     let aaObjectDic = aaObject.toDic()
                     aaObjectArr.append(aaObjectDic as Any)
                 }
                 
                 representation[label] = aaObjectArr
-            }
                 
-            case let value as NSObject: do {
+            case let value as NSObject:
                 representation[label] = value
-            }
                 
             default:
                 // Ignore any unserializable properties
@@ -79,17 +85,26 @@ public extension AAObject {
     func toDic() -> [String: Any]? {
         var representation = [String: Any]()
         
+        // 遍历当前类的反射子属性
         let mirrorChildren = Mirror(reflecting: self).children
         loopForMirrorChildren(mirrorChildren, &representation)
         
+        // 遍历父类的反射子属性
         let superMirrorChildren = Mirror(reflecting: self).superclassMirror?.children
         if superMirrorChildren?.count ?? 0 > 0 {
             loopForMirrorChildren(superMirrorChildren!, &representation)
         }
         
-        return representation as [String: Any]?
+        // 如果实现了 SerializableWithComputedProperties 协议，获取计算属性
+        if let selfWithComputed = self as? SerializableWithComputedProperties {
+            let computedProps = selfWithComputed.computedProperties()
+            for (key, value) in computedProps {
+                representation[key] = value
+            }
+        }
+        
+        return representation
     }
-    
     
     func toJSON() -> String? {
         do {
@@ -100,6 +115,5 @@ public extension AAObject {
             return nil
         }
     }
-    
 }
 
