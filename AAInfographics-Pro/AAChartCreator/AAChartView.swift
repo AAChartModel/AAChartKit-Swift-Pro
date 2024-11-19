@@ -188,33 +188,35 @@ public class AAChartView: WKWebView {
         translatesAutoresizingMaskIntoConstraints = false
     }
     
-    private func loadScripts(from scriptsArray: [String], index: Int, completion: @escaping (Bool) -> Void) {
-        if index >= scriptsArray.count {
-            // 所有脚本已加载完成
-            print("✅✅✅ All plugin scripts loaded successfully")
-            completion(true)
-            return
-        }
-
-        let path = scriptsArray[index]
-        do {
-            let jsString = try String(contentsOfFile: path, encoding: .utf8)
-            evaluateJavaScript(jsString) { result, error in
-                if let error = error {
-                    print("❌❌❌ Error loading plugin script at index \(index): \(error)")
-                    completion(false) // 或者可以选择忽略错误并继续加载下一个脚本
-                } else {
-                    print("✅✅✅ Plugin script at index \(index) loaded successfully")
-                    self.loadScripts(from: scriptsArray, index: index + 1, completion: completion)
-                }
-            }
-        } catch {
-            print("❌❌❌ Failed to load plugin script at index \(index): \(error)")
-            completion(false) // 或者可以选择忽略错误并继续加载下一个脚本
-        }
-    }
 
     private func loadAllPluginsAndDrawChart() {
+        func loadScripts(from scriptsArray: [String], index: Int, completion: @escaping (Bool) -> Void) {
+            if index >= scriptsArray.count {
+                // 所有脚本已加载完成
+                print("✅✅✅ All plugin scripts loaded successfully")
+                completion(true)
+                return
+            }
+            
+            let path = scriptsArray[index]
+            do {
+                let jsString = try String(contentsOfFile: path, encoding: .utf8)
+                evaluateJavaScript(jsString) { result, error in
+                    if let error = error {
+                        print("❌❌❌ Error loading plugin script at index \(index): \(error)")
+                        completion(false) // 或者可以选择忽略错误并继续加载下一个脚本
+                    } else {
+                        print("✅✅✅ Plugin script at index \(index) loaded successfully")
+                        loadScripts(from: scriptsArray, index: index + 1, completion: completion)
+                    }
+                }
+            } catch {
+                print("❌❌❌ Failed to load plugin script at index \(index): \(error)")
+                completion(false) // 或者可以选择忽略错误并继续加载下一个脚本
+            }
+        }
+        
+        
         if pluginsArray.isEmpty {
             drawChart()
             return
@@ -306,19 +308,35 @@ public class AAChartView: WKWebView {
             }
         }
         
+        optionsJson = aaOptions.toJSON()!
+        
+        
         #if DEBUG
+        //如果 series 数组中的 AASeriesElement 对象的 data 数组元素个数超过 1000 个,
+        //则只打印前 1000 个元素,避免控制台输出太多导致卡顿
+        //同时添加警告提醒开发者注意数组元素个数超出 1000 个的问题
+        if aaOptions.series != nil && aaOptions.series!.count > 0 && aaOptions.series is [AASeriesElement] {
+            for  seriesElement in aaOptions.series as! [AASeriesElement] {
+                if seriesElement.data != nil {
+                    if seriesElement.data!.count > 1000 {
+                        let dataArr = seriesElement.data![0...999]
+                        seriesElement.data = Array(dataArr)
+                        print("💊💊💊Warning: Data array element count more than 1000, only the first 1000 data elements will be displayed in the console!!!")
+                    }
+                }
+            }
+        }
+        
         let modelJsonDic = aaOptions.toDic()!
         let data = try? JSONSerialization.data(withJSONObject: modelJsonDic, options: .prettyPrinted)
         if data != nil {
             let prettyPrintedModelJson = String(data: data!, encoding: String.Encoding.utf8)
-//            print("""
-//                -----------🖨🖨🖨 console log AAOptions JSON information of AAChartView 🖨🖨🖨-----------:
-//                \(prettyPrintedModelJson!)
-//                """)
+            print("""
+                -----------🖨🖨🖨 console log AAOptions JSON information of AAChartView 🖨🖨🖨-----------:
+                \(prettyPrintedModelJson!)
+                """)
         }
         #endif
-        
-        optionsJson = aaOptions.toJSON()!
     }
     
     private func addClickEventMessageHandler() {
