@@ -188,7 +188,7 @@ public class AAChartView: WKWebView {
         translatesAutoresizingMaskIntoConstraints = false
     }
     
-    func loadScripts(from scriptsArray: [String], index: Int, completion: @escaping (Bool) -> Void) {
+    private func loadScripts(from scriptsArray: [String], index: Int, completion: @escaping (Bool) -> Void) {
         if index >= scriptsArray.count {
             // 所有脚本已加载完成
             print("✅✅✅ All plugin scripts loaded successfully")
@@ -214,7 +214,7 @@ public class AAChartView: WKWebView {
         }
     }
 
-    func loadAllPluginsAndDrawChart() {
+    private func loadAllPluginsAndDrawChart() {
         if pluginsArray.isEmpty {
             drawChart()
             return
@@ -311,10 +311,10 @@ public class AAChartView: WKWebView {
         let data = try? JSONSerialization.data(withJSONObject: modelJsonDic, options: .prettyPrinted)
         if data != nil {
             let prettyPrintedModelJson = String(data: data!, encoding: String.Encoding.utf8)
-            print("""
-                -----------🖨🖨🖨 console log AAOptions JSON information of AAChartView 🖨🖨🖨-----------:
-                \(prettyPrintedModelJson!)
-                """)
+//            print("""
+//                -----------🖨🖨🖨 console log AAOptions JSON information of AAChartView 🖨🖨🖨-----------:
+//                \(prettyPrintedModelJson!)
+//                """)
         }
         #endif
         
