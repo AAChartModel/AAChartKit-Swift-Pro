@@ -327,6 +327,16 @@ public class AAChartView: WKWebView {
             }
         }
         
+        //如果 series 数组中的 AASeriesElement 对象元素个数超过 10 个,
+        //则只打印前 10 个元素,避免控制台输出太多导致卡顿
+        //同时添加警告提醒开发者注意数组元素个数超出 10 个的问题
+        if aaOptions.series != nil && aaOptions.series!.count > 10 && aaOptions.series is [AASeriesElement] {
+            let seriesElementArr = aaOptions.series as! [AASeriesElement]
+            let firstTenElementArr = seriesElementArr[0...9]
+            aaOptions.series = Array(firstTenElementArr)
+            print("💊💊💊Warning: Series element count more than 10, only the first 10 elements will be displayed in the console!!!")
+        }
+        
         let modelJsonDic = aaOptions.toDic()!
         let data = try? JSONSerialization.data(withJSONObject: modelJsonDic, options: .prettyPrinted)
         if data != nil {
