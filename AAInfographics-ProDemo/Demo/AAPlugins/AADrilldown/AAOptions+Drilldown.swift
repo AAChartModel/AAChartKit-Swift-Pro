@@ -41,8 +41,19 @@ public extension AAOptions {
 //遵循协议以提供计算属性
 extension AAOptions: SerializableWithComputedProperties {
     public func computedProperties() -> [String: Any] {
-        return [
-            "drilldown": drilldown?.toDic() as Any
-        ]
+//        return [
+//            "drilldown": drilldown?.toDic() as Any,
+//            "boost": boost?.toDic() as Any
+//        ]
+        var dict = [String: Any]()
+        if drilldown != nil {
+            dict["drilldown"] = drilldown?.toDic() as Any
+        }
+        
+        if boost != nil {
+            dict["boost"] = boost?.toDic() as Any
+        }
+        
+        return dict
     }
 }
