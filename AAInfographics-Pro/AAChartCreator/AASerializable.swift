@@ -46,7 +46,7 @@ public extension AAObject {
 import Foundation
 
 @available(iOS 10.0, macCatalyst 13.1, macOS 10.13, *)
-public protocol SerializableWithComputedProperties {
+public protocol AASerializableWithComputedProperties {
     /// 返回计算属性的键值对
     func computedProperties() -> [String: Any]
 }
@@ -96,7 +96,7 @@ public extension AAObject {
         }
         
         // 如果实现了 SerializableWithComputedProperties 协议，获取计算属性
-        if let selfWithComputed = self as? SerializableWithComputedProperties {
+        if let selfWithComputed = self as? AASerializableWithComputedProperties {
             let computedProps = selfWithComputed.computedProperties()
             for (key, value) in computedProps {
                 representation[key] = value

@@ -122,7 +122,7 @@ public extension AAChart {
 }
 
 // 遵循协议以提供计算属性
-extension AAChart: SerializableWithComputedProperties {
+extension AAChart: AASerializableWithComputedProperties {
     public func computedProperties() -> [String: Any] {
         return [
             "nickname": nickname as Any

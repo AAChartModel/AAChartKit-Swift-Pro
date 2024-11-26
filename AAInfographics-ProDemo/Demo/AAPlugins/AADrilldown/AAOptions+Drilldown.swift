@@ -39,7 +39,7 @@ public extension AAOptions {
 //}
 
 //遵循协议以提供计算属性
-extension AAOptions: SerializableWithComputedProperties {
+extension AAOptions: AASerializableWithComputedProperties {
     public func computedProperties() -> [String: Any] {
 //        return [
 //            "drilldown": drilldown?.toDic() as Any,
