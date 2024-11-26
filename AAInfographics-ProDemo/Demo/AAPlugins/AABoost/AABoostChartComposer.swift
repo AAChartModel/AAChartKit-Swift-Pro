@@ -78,6 +78,151 @@ public class AABoostChartComposer {
         return aaOptions
     }
     
+    /**
+     // Prepare the data
+
+     const data = [],
+         n = 1000000;
+
+     // Generate and position the datapoints in a tangent wave pattern
+     for (let i = 0; i < n; i += 1) {
+         const theta = Math.random() * 2 * Math.PI;
+         const radius = Math.pow(Math.random(), 2) * 100;
+
+         const waveDeviation = (Math.random() - 0.5) * 70;
+         const waveValue = Math.tan(theta) * waveDeviation;
+
+         data.push([
+             50 + (radius + waveValue) * Math.cos(theta),
+             50 + (radius + waveValue) * Math.sin(theta)
+         ]);
+     }
+
+     if (!Highcharts.Series.prototype.renderCanvas) {
+         throw 'Module not loaded';
+     }
+
+     console.time('scatter');
+     Highcharts.chart('container', {
+
+         chart: {
+             zooming: {
+                 type: 'xy'
+             },
+             height: '100%'
+         },
+
+         boost: {
+             useGPUTranslations: true,
+             usePreAllocated: true
+         },
+
+         accessibility: {
+             screenReaderSection: {
+                 beforeChartFormat: '<{headingTagName}>' +
+                     '{chartTitle}</{headingTagName}><div>{chartLongdesc}</div>' +
+                     '<div>{xAxisDescription}</div><div>{yAxisDescription}</div>'
+             }
+         },
+
+         xAxis: {
+             min: 0,
+             max: 100,
+             gridLineWidth: 1
+         },
+
+         yAxis: {
+             // Renders faster when we don't have to compute min and max
+             min: 0,
+             max: 100,
+             minPadding: 0,
+             maxPadding: 0,
+             title: {
+                 text: null
+             }
+         },
+
+         title: {
+             text: 'Scatter chart with 1 million points',
+             align: 'left'
+         },
+
+         legend: {
+             enabled: false
+         },
+
+         series: [{
+             type: 'scatter',
+             color: 'rgba(152,0,67,0.1)',
+             data: data,
+             marker: {
+                 radius: 0.5
+             },
+             tooltip: {
+                 followPointer: false,
+                 pointFormat: '[{point.x:.1f}, {point.y:.1f}]'
+             }
+         }]
+
+     });
+     console.timeEnd('scatter');
+
+     */
+    static func scatterChartWith1MillionPoints() -> AAOptions {
+        // Prepare the data
+        
+        let n = 1000000
+        var data: [[Double]] = []
+        
+        // Generate and position the datapoints in a tangent wave pattern
+        for _ in 0..<n {
+            let theta = Double(arc4random_uniform(1000000)) / 1000000.0 * 2 * Double.pi
+            let radius = pow(Double(arc4random_uniform(1000000)) / 1000000.0, 2) * 100
+            let waveDeviation = (Double(arc4random_uniform(1000000)) / 1000000.0 - 0.5) * 70
+            let waveValue = tan(theta) * waveDeviation
+            data.append([
+                50 + (radius + waveValue) * cos(theta),
+                50 + (radius + waveValue) * sin(theta)
+            ])
+        }
+        
+        let aaOptions = AAOptions()
+            .boost(AABoost()
+                .useGPUTranslations(true)
+                .usePreallocated(true))
+            .chart(AAChart()
+                .zoomType(.xy)
+                .height("100%"))
+            .xAxis(AAXAxis()
+                .min(0)
+                .max(100)
+                .gridLineWidth(1))
+            .yAxis(AAYAxis()
+                .min(0)
+                .max(100)
+                .minPadding(0)
+                .maxPadding(0)
+                .title(AATitle()
+                    .text(nil)))
+            .title(AATitle()
+                .text("Scatter chart with 1 million points")
+                .align(.left))
+            .legend(AALegend()
+                .enabled(false))
+            .series([
+                AASeriesElement()
+                    .type(.scatter)
+                    .color("rgba(152,0,67,0.1)")
+                    .data(data)
+                    .marker(AAMarker()
+                        .radius(0.5))
+                    .tooltip(AATooltip()
+                        .followPointer(false)
+                        .pointFormat("[{point.x:.1f}, {point.y:.1f}]"))
+            ])
+        
+        return aaOptions
+    }
     
 }
 
