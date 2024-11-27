@@ -43,8 +43,6 @@ public extension AAObject {
     }
 }
 
-import Foundation
-
 @available(iOS 10.0, macCatalyst 13.1, macOS 10.13, *)
 public protocol AASerializableWithComputedProperties {
     /// 返回计算属性的键值对
