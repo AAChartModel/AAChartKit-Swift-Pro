@@ -29,7 +29,6 @@
  * -------------------------------------------------------------------------------
  
  */
-import ObjectiveC
 
 public extension AAStyle {
     convenience init(color : String?) {
@@ -94,39 +93,6 @@ public extension AAChartModel {
     //Convert AAChartModel to be AAOptions
     func aa_toAAOptions() -> AAOptions {
         AAOptionsConstructor.configureChartOptions(self)
-    }
-}
-
-
-// 定义关联对象的键
-private var NicknameKey: UInt8 = 0
-
-// 扩展 Person 类
-public extension AAChart {
-    // 计算属性来设置和获取 nickname
-    var nickname: String? {
-        get {
-            return objc_getAssociatedObject(self, &NicknameKey) as? String
-        }
-        set {
-            objc_setAssociatedObject(self, &NicknameKey, newValue, .OBJC_ASSOCIATION_COPY_NONATOMIC)
-        }
-    }
-    
-    
-    @discardableResult
-    func nickname(prop: String?) -> AAChart {
-        nickname = prop
-        return self
-    }
-}
-
-// 遵循协议以提供计算属性
-extension AAChart: AASerializableWithComputedProperties {
-    public func computedProperties() -> [String: Any] {
-        return [
-            "nickname": nickname as Any
-        ]
     }
 }
 
