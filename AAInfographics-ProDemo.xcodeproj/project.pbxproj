@@ -72,6 +72,7 @@
 		84526E072CEB3DD700EB2563 /* AABoostChartComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84526E062CEB3DD700EB2563 /* AABoostChartComposer.swift */; };
 		84526E092CEB3F1E00EB2563 /* AABoostChartVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84526E082CEB3F1E00EB2563 /* AABoostChartVC.swift */; };
 		84526E0B2CEB401500EB2563 /* AABoost.js in Resources */ = {isa = PBXBuildFile; fileRef = 84526E0A2CEB401500EB2563 /* AABoost.js */; };
+		848970412CF9CAFD00C519A0 /* timeline2Data.json in Resources */ = {isa = PBXBuildFile; fileRef = 848970402CF9CAFD00C519A0 /* timeline2Data.json */; };
 		84A5691127FEC88700883553 /* streamgraphSeries.json in Resources */ = {isa = PBXBuildFile; fileRef = 84A5690F27FEC88700883553 /* streamgraphSeries.json */; };
 		84A5691227FEC88700883553 /* packedbubbleSeries.json in Resources */ = {isa = PBXBuildFile; fileRef = 84A5691027FEC88700883553 /* packedbubbleSeries.json */; };
 		84A5693127FEC89F00883553 /* sankeyData.json in Resources */ = {isa = PBXBuildFile; fileRef = 84A5691327FEC89B00883553 /* sankeyData.json */; };
@@ -217,6 +218,7 @@
 		84526E062CEB3DD700EB2563 /* AABoostChartComposer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AABoostChartComposer.swift; sourceTree = "<group>"; };
 		84526E082CEB3F1E00EB2563 /* AABoostChartVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AABoostChartVC.swift; path = "AAInfographics-ProDemo/Demo/AAPlugins/AADrilldown/AABoostChartVC.swift"; sourceTree = SOURCE_ROOT; };
 		84526E0A2CEB401500EB2563 /* AABoost.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = AABoost.js; sourceTree = "<group>"; };
+		848970402CF9CAFD00C519A0 /* timeline2Data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = timeline2Data.json; sourceTree = "<group>"; };
 		84A5690F27FEC88700883553 /* streamgraphSeries.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = streamgraphSeries.json; sourceTree = "<group>"; };
 		84A5691027FEC88700883553 /* packedbubbleSeries.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = packedbubbleSeries.json; sourceTree = "<group>"; };
 		84A5691327FEC89B00883553 /* sankeyData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sankeyData.json; sourceTree = "<group>"; };
@@ -454,6 +456,7 @@
 				84A5692C27FEC89E00883553 /* sunburstData.json */,
 				84A5692327FEC89D00883553 /* tilemapData.json */,
 				84A5692D27FEC89E00883553 /* timelineData.json */,
+				848970402CF9CAFD00C519A0 /* timeline2Data.json */,
 				84A5692627FEC89D00883553 /* treemapWithColorAxisData.json */,
 				84A5691B27FEC89C00883553 /* treemapWithLevelsData.json */,
 				84A5692427FEC89D00883553 /* variablepieData.json */,
@@ -711,6 +714,7 @@
 				84A5691227FEC88700883553 /* packedbubbleSeries.json in Resources */,
 				84A5693B27FEC89F00883553 /* flameData.json in Resources */,
 				84B13F39289E15DB007356C6 /* marathonData.json in Resources */,
+				848970412CF9CAFD00C519A0 /* timeline2Data.json in Resources */,
 				84A5693527FEC89F00883553 /* eulerData.json in Resources */,
 				84A5694D27FEC89F00883553 /* vectorData.json in Resources */,
 				84A5694627FEC89F00883553 /* dependencywheelData.json in Resources */,
