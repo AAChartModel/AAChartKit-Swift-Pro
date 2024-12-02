@@ -76,6 +76,10 @@ class AAOptionsData {
         getJsonDataWithJsonFileName("timelineData")
     }
     
+    public class var timeline2Data : [Any] {
+        getJsonDataWithJsonFileName("timeline2Data")
+    }
+    
     public class var itemData : [Any] {
         getJsonDataWithJsonFileName("itemData")
     }
