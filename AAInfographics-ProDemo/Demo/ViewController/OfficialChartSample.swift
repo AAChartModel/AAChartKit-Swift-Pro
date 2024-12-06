@@ -64,7 +64,47 @@ struct SwiftUIChartView: View {
 
 struct GridView: View {
       
-    let items = Array(1...50) // 模拟数据
+    /**
+     case 0: return AARelationshipChartComposer.sankeyChart()
+     case 1: return AARelationshipChartComposer.dependencywheelChart()
+     case 2: return AARelationshipChartComposer.arcdiagramChart1()
+     case 3: return AARelationshipChartComposer.arcdiagramChart2()
+     case 4: return AARelationshipChartComposer.arcdiagramChart3()
+     case 5: return AARelationshipChartComposer.organizationChart()
+     case 6: return AARelationshipChartComposer.networkgraphChart()
+     case 7: return AARelationshipChartComposer.simpleDependencyWheelChart()
+     */
+    let optionsItems = [
+        AARelationshipChartComposer.sankeyChart(),
+        AARelationshipChartComposer.dependencywheelChart(),
+        AARelationshipChartComposer.arcdiagramChart1(),
+        AARelationshipChartComposer.arcdiagramChart2(),
+        AARelationshipChartComposer.arcdiagramChart3(),
+        AARelationshipChartComposer.organizationChart(),
+        AARelationshipChartComposer.networkgraphChart(),
+        AARelationshipChartComposer.simpleDependencyWheelChart(),
+        
+        AABubbleChartComposer.packedbubbleChart(),
+        AABubbleChartComposer.packedbubbleSplitChart(),
+        AABubbleChartComposer.packedbubbleSpiralChart(),
+        AABubbleChartComposer.eulerChart(),
+        AABubbleChartComposer.vennChart(),
+        
+        AAColumnVariantChartComposer.variwideChart(),
+        AAColumnVariantChartComposer.columnpyramidChart(),
+        AAColumnVariantChartComposer.dumbbellChart(),
+        AAColumnVariantChartComposer.lollipopChart(),
+        AAColumnVariantChartComposer.xrangeChart(),
+        AAColumnVariantChartComposer.histogramChart(),
+        AAColumnVariantChartComposer.bellcurveChart(),
+        AAColumnVariantChartComposer.bulletChart(),
+    
+    ] as [AAOptions]
+    
+    var items: [Int] {
+           return Array(0...optionsItems.count-1)
+       }
+
 
     // 定义网格的列
     let columns: [GridItem] = [
@@ -81,8 +121,10 @@ struct GridView: View {
 //                    RoundedRectangle(cornerRadius: 10)
 //                        .fill(Color.gray)
 //                        .frame(height: 100) // 设置高度
-                    AAChartViewRepresentable(chartOptions: Binding.constant(AARelationshipChartComposer.sankeyChart()))
-                        .frame(height: 300) // 设置图表高度
+                    AAChartViewRepresentable(chartOptions: Binding.constant(optionsItems[item]))
+                        .frame(height: 300)
+                    
+                   
                 }
             }
             .padding() // 添加内边距
