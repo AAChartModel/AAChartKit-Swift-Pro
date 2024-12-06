@@ -17,31 +17,31 @@ class ChartProVC: AABaseChartVC {
     // https://www.highcharts.com/demo
     override func chartConfigurationWithSelectedIndex(_ selectedIndex: Int) -> Any? {
         switch (selectedIndex) {
-        case  0: return sunburstChart()
-        case  1: return streamgraphChart()
-        case  2: return vectorChart()
-        case  3: return bellcurveChart()
-        case  4: return timelineChart()
-        case  5: return itemChart()
-        case  6: return windbarbChart()
-        case  7: return wordcloudChart()
-        case  8: return flameChart()
-        case  9: return itemChart2()
-        case 10: return itemChart3()
-        case 11: return icicleChart()
-        case 12: return sunburstChart2()
-        case 13: return solidgaugeChart()
-        case 14: return parallelCoordinatesSplineChart()
-        case 15: return parallelCoordinatesLineChart()
-        case 16: return volinPlotChart()
-        case 17: return variablepieChart()
-        case 18: return semicircleSolidGaugeChart()
+        case  0: return ChartProVC.sunburstChart()
+        case  1: return ChartProVC.streamgraphChart()
+        case  2: return ChartProVC.vectorChart()
+        case  3: return ChartProVC.bellcurveChart()
+        case  4: return ChartProVC.timelineChart()
+        case  5: return ChartProVC.itemChart()
+        case  6: return ChartProVC.windbarbChart()
+        case  7: return ChartProVC.wordcloudChart()
+        case  8: return ChartProVC.flameChart()
+        case  9: return ChartProVC.itemChart2()
+        case 10: return ChartProVC.itemChart3()
+        case 11: return ChartProVC.icicleChart()
+        case 12: return ChartProVC.sunburstChart2()
+        case 13: return ChartProVC.solidgaugeChart()
+        case 14: return ChartProVC.parallelCoordinatesSplineChart()
+        case 15: return ChartProVC.parallelCoordinatesLineChart()
+        case 16: return ChartProVC.volinPlotChart()
+        case 17: return ChartProVC.variablepieChart()
+        case 18: return ChartProVC.semicircleSolidGaugeChart()
 
         default: return nil
         }
     }
 
-    private func sunburstChart() -> AAOptions {
+    public static func sunburstChart() -> AAOptions {
         let aaChart = AAChart()
             .type(.sunburst)
 
@@ -92,7 +92,7 @@ class ChartProVC: AABaseChartVC {
             .series(seriesElementArr)
     }
 
-    private func streamgraphChart() -> AAOptions {
+    public static func streamgraphChart() -> AAOptions {
         AAOptions()
             .chart(AAChart()
                     .type(.streamgraph))
@@ -123,7 +123,7 @@ class ChartProVC: AABaseChartVC {
             .series(AAOptionsSeries.streamgraphSeries)
     }
 
-    private func vectorChart() -> AAOptions {
+    public static func vectorChart() -> AAOptions {
         AAOptions()
             .chart(AAChart()
                     .type(.vector))
@@ -137,7 +137,7 @@ class ChartProVC: AABaseChartVC {
             ])
     }
 
-    private func bellcurveChart() -> AAOptions {
+    public static func bellcurveChart() -> AAOptions {
         AAOptions()
             .title(AATitle()
                     .text("Bell curve"))
@@ -177,7 +177,7 @@ class ChartProVC: AABaseChartVC {
             ])
     }
 
-    private func timelineChart() -> AAOptions {
+    public static func timelineChart() -> AAOptions {
         return timeline2Chart()
         AAOptions()
             .chart(AAChart()
@@ -244,7 +244,7 @@ class ChartProVC: AABaseChartVC {
              }
          }]
      }, **/
-    private func timeline2Chart() -> AAOptions {
+    public static func timeline2Chart() -> AAOptions {
         var dataArr = AAOptionsData.timeline2Data
         /**
          {
@@ -321,7 +321,7 @@ class ChartProVC: AABaseChartVC {
             ])
     }
     
-    private func itemChart() -> AAOptions {
+    public static func itemChart() -> AAOptions {
         AAOptions()
             .chart(AAChart()
                     .type(.item))
@@ -343,7 +343,7 @@ class ChartProVC: AABaseChartVC {
             ])
     }
     
-    private func itemChart2() -> AAOptions {
+    public static func itemChart2() -> AAOptions {
         AAOptions()
             .chart(AAChart()
                     .type(.item))
@@ -365,7 +365,7 @@ class ChartProVC: AABaseChartVC {
             ])
     }
     
-    private func itemChart3() -> AAOptions {
+    public static func itemChart3() -> AAOptions {
         AAOptions()
             .chart(AAChart()
                     .type(.item))
@@ -387,7 +387,7 @@ class ChartProVC: AABaseChartVC {
             ])
     }
     
-    private func windbarbChart() -> AAOptions {
+    public static func windbarbChart() -> AAOptions {
         AAOptions()
             .title(AATitle()
                     .text("AAChartKit-Pro Wind Barbst"))
@@ -410,7 +410,7 @@ class ChartProVC: AABaseChartVC {
             ])
     }
 
-    private func wordcloudChart() -> AAOptions {
+    public static func wordcloudChart() -> AAOptions {
         AAOptions()
             .chart(AAChart()
                     .type(.wordcloud))
@@ -424,7 +424,7 @@ class ChartProVC: AABaseChartVC {
 
 //    The Highcharts flame chart implementation is based on inverted chart with columnrange series (for the flame and icicle layouts)
 //    and a sunburst series (for the sunburst layout).
-    private func flameChart() -> AAOptions {
+    public static func flameChart() -> AAOptions {
         AAOptions()
             .chart(AAChart()
                 .inverted(true))
@@ -486,7 +486,7 @@ class ChartProVC: AABaseChartVC {
                 .pointFormat("selfSize of {point.name} is {point.value}"))
     }
     
-    private func icicleChart() -> AAOptions {
+    public static func icicleChart() -> AAOptions {
         let aaOptions = flameChart()
         
         aaOptions.chart?.inverted(true)
@@ -504,7 +504,7 @@ class ChartProVC: AABaseChartVC {
         return aaOptions
     }
     
-    private func sunburstChart2() -> AAOptions {
+    public static func sunburstChart2() -> AAOptions {
         let aaOptions = flameChart()
         
         aaOptions.chart?.inverted(false)
@@ -526,7 +526,7 @@ class ChartProVC: AABaseChartVC {
         return String(data: try! JSONSerialization.data(withJSONObject: dic, options: .prettyPrinted), encoding: .utf8)!
     }
     
-    private func configureVirturalTemperatureDataArr() -> [Any] {
+    public static func configureVirturalTemperatureDataArr() -> [Any] {
         var dataArr = [Any]()
         for month in 1...12 {
             var daysNum = 30
@@ -550,7 +550,7 @@ class ChartProVC: AABaseChartVC {
         return dataArr
     }
     
-    private func solidgaugeChart() -> AAOptions {
+    public static func solidgaugeChart() -> AAOptions {
          AAOptions()
             .chart(AAChart()
                 .type(AAChartType.solidgauge)
@@ -727,7 +727,7 @@ class ChartProVC: AABaseChartVC {
                 ])
     }
 
-    private func parallelCoordinatesSplineChart() -> AAOptions {
+    public static func parallelCoordinatesSplineChart() -> AAOptions {
         AAOptions()
             .chart(AAChart()
                 .type(.spline)
@@ -816,7 +816,7 @@ class ChartProVC: AABaseChartVC {
             }))
     }
     
-    private func parallelCoordinatesLineChart() -> AAOptions {
+    public static func parallelCoordinatesLineChart() -> AAOptions {
         let aaOptions = parallelCoordinatesSplineChart()
         aaOptions.chart?.type(.line)
         aaOptions.colors([AAGradientColor.linearGradient(
@@ -832,7 +832,7 @@ class ChartProVC: AABaseChartVC {
         return aaOptions
     }
 
-    private func volinPlotChart() -> AAOptions {
+    public static func volinPlotChart() -> AAOptions {
          AAOptions()
                 .chart(AAChart()
                         .type(.streamgraph)
@@ -876,7 +876,7 @@ class ChartProVC: AABaseChartVC {
                 ])
     }
 
-    private func variablepieChart() -> AAOptions {
+    public static func variablepieChart() -> AAOptions {
             let aaChart = AAChart()
                 .type(.variablepie)
             
@@ -907,7 +907,7 @@ class ChartProVC: AABaseChartVC {
         }
 
     //https://www.highcharts.com/forum/viewtopic.php?f=9&t=49662&p=181012#p181048
-    private func semicircleSolidGaugeChart() -> AAOptions {
+    public static func semicircleSolidGaugeChart() -> AAOptions {
         AAOptions()
             .chart(AAChart()
                     .type(.solidgauge))
