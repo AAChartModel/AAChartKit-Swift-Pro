@@ -178,6 +178,7 @@ class ChartProVC: AABaseChartVC {
     }
 
     private func timelineChart() -> AAOptions {
+        return timeline2Chart()
         AAOptions()
             .chart(AAChart()
                     .type(.timeline))
@@ -190,6 +191,133 @@ class ChartProVC: AABaseChartVC {
             .series([
                 AASeriesElement()
                     .data(AAOptionsData.timelineData)
+            ])
+    }
+    
+    /**
+     Highcharts.stockChart('container', {
+         chart: {
+             inverted: true,
+         },
+         title: {
+             text: 'List of historic inventions',
+             align: 'left'
+         },
+         subtitle: {
+             text: 'Source: <a href="https://en.wikipedia.org/wiki/Timeline_of_historic_inventions" >Wikipedia</a>',
+             align: 'left'
+         },
+         xAxis: {
+             visible: false,
+             ordinal: false,
+             min: Date.UTC(1900, 0, 1),
+             reversed: false
+         },
+         yAxis: {
+             visible: false,
+             min: 0,
+             max: 2
+         },
+         tooltip: {
+             style: {
+                 width: '300px'
+             },
+             headerFormat: '<b>{point.key}</b><br>',
+             pointFormat:
+                 'Year: {point.x:%Y}<br>' +
+                 '{#if point.custom.location}' +
+                     'Location: {point.custom.location}<br>{/if}' +
+                 '{point.custom.details}'
+         },
+         series: [{
+             type: 'timeline',
+             pointStart: Date.UTC(1600, 0, 1),
+             pointIntervalUnit: 'year',
+             marker: {
+                 enabled: true,
+                 radius: 4,
+                 symbol: 'circle'
+             },
+             data: eventsData,
+             dataLabels: {
+                 format: '<b>{x:%Y}: {point.name}</b>'
+             }
+         }]
+     }, **/
+    private func timeline2Chart() -> AAOptions {
+        var dataArr = AAOptionsData.timeline2Data
+        /**
+         {
+             "x": -2847720920000,
+             "name": "Incandescent light bulb",
+             "custom": {
+                 "details": "Joseph Swan and Thomas Edison both patent a functional incandescent light bulb. Some two dozen inventors had experimented with electric incandescent lighting over the first three-quarters of the 19th century but never came up with a practical design. Swan's, which he had been working on since the 1860s, had a low resistance so was only suited for small installations. Edison designed a high-resistance bulb as part of a large-scale commercial electric lighting utility."
+             }
+         },
+         */
+        //遍历数组,将每个元素的custom属性的custom
+        for i in 0..<dataArr.count {
+            var dataDic = dataArr[i] as! [String: Any]
+            var customDic = dataDic["custom"] as! [String: Any]
+            let details = customDic["details"] as! String
+            let pureDetails = details.aa_toPureJSString2()
+            customDic["details"] = pureDetails
+            dataDic["custom"] = customDic
+            dataArr[i] = dataDic
+            
+            let name = dataDic["name"] as! String
+            //这个数据是 Incandescent light bulb 的数据, 有点特殊问题现在, 需要去掉 custom 属性
+            if name == "Incandescent light bulb" {
+                let location = "Newcastle upon Tyne, England"
+                dataDic["custom"] = ""
+                dataArr[i] = dataDic
+            }
+        }
+        
+        return AAOptions()
+            .chart(AAChart()
+                .inverted(true))
+            .title(AATitle()
+                .text("List of historic inventions")
+                .align(.left))
+            .subtitle(AASubtitle()
+                .text("Source: <a href='https://en.wikipedia.org/wiki/Timeline_of_historic_inventions'>Wikipedia</a>".aa_toPureJSString2())
+                .align(.left))
+            .xAxis(AAXAxis()
+                .visible(false)
+//                .ordinal(false)
+//                .min(Date.UTC(1900, 0, 1))
+                .reversed(false))
+            .yAxis(AAYAxis()
+                .visible(false)
+                .min(0)
+                .max(2))
+            .tooltip(AATooltip()
+                .style(AAStyle()
+                    .fontSize(30)
+                    .backgroundColor("#555555")
+                    .color(AAColor.red)
+//                    .width("300px")
+                )
+                .headerFormat("<b>{point.key}</b><br>")
+                .pointFormat(#"Year: {point.x:%Y}<br>{#if point.custom.location}Location: {point.custom.location}<br>{/if}{point.custom.details}"#.aa_toPureJSString()))
+            .plotOptions(AAPlotOptions()
+                .series(AASeries()
+//                    .pointStart(Date.UTC(1600, 0, 1))
+                    .pointIntervalUnit("year")
+                       ))
+            .series([
+                AASeriesElement()
+                    .type(.timeline)
+//                    .pointStart(Date.UTC(1600, 0, 1))
+//                    .pointIntervalUnit("year")
+                    .marker(AAMarker()
+                        .enabled(true)
+                        .radius(4)
+                        .symbol(AAChartSymbolType.circle.rawValue))
+                    .data(dataArr)
+                    .dataLabels(AADataLabels()
+                        .format("<b>{x:%Y}: {point.name}</b>"))
             ])
     }
     
