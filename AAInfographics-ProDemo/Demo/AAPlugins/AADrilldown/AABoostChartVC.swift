@@ -16,8 +16,8 @@ class AABoostChartVC: AABaseChartVC {
          NSString *jsPath = [[NSBundle mainBundle] pathForResource:@"AADrilldown" ofType:@"js"];
          self.aaChartView.pluginsArray = @[jsPath];
          */
-        let jsPath: String = Bundle.main.path(forResource: "AABoost", ofType: "js") ?? ""
-        self.aaChartView?.pluginsArray = [jsPath]
+//        let jsPath: String = Bundle.main.path(forResource: "AABoost", ofType: "js") ?? ""
+//        self.aaChartView?.pluginsArray = [jsPath]
         
         //输出查看 AAOption 的 computedProperties 内容
 //        AAOptions *aaOptions = [self chartConfigurationWithSelectedIndex:self.selectedIndex];
@@ -34,10 +34,10 @@ class AABoostChartVC: AABaseChartVC {
          case 1: return [AABoostChartComposer areaChart];
          case 2: return [AABoostChartComposer columnChart];
          */
-        case 0: return AABoostChartComposer.lineChart()
-        case 1: return AABoostChartComposer.areaChart()
-        case 2: return AABoostChartComposer.columnChart()
-        case 3: return AABoostChartComposer.scatterChartWith1MillionPoints()
+        case 0: return AABoostChartComposer.lineChart().pluginsArray([Bundle.main.path(forResource: "AABoost", ofType: "js") ?? ""])
+        case 1: return AABoostChartComposer.areaChart().pluginsArray([Bundle.main.path(forResource: "AABoost", ofType: "js") ?? ""])
+        case 2: return AABoostChartComposer.columnChart().pluginsArray([Bundle.main.path(forResource: "AABoost", ofType: "js") ?? ""])
+        case 3: return AABoostChartComposer.scatterChartWith1MillionPoints().pluginsArray([Bundle.main.path(forResource: "AABoost", ofType: "js") ?? ""])
             
         default: return nil
         }

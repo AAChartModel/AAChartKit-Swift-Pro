@@ -58,6 +58,9 @@ public class AAOptions: AAObject {
     public var clickEventEnabled: Bool?//Please DO NOT use this property
     public var touchEventEnabled: Bool?//Please DO NOT use this property
     
+    public var pluginsArray: [String]?
+
+    
     @discardableResult
     public func chart(_ prop: AAChart?) -> AAOptions {
         chart = prop
@@ -162,6 +165,12 @@ public class AAOptions: AAObject {
          return self
      }
     /*---------------------AAInfogrphics-Pro---------------------*/
+    
+    @discardableResult
+    public func pluginsArray(_ prop: [String]?) -> AAOptions {
+        pluginsArray = prop
+        return self
+    }
 
     
     public override init() {

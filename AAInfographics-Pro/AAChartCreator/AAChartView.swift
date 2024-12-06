@@ -166,7 +166,7 @@ public class AAChartView: WKWebView {
         }
     }
     
-    public var pluginsArray: [String] = []
+    private var pluginsArray: [String] = []
     
     private var optionsJson: String?
     
@@ -293,6 +293,9 @@ public class AAChartView: WKWebView {
     }
     
     private func configureOptionsJsonStringWithAAOptions(_ aaOptions: AAOptions) {
+        pluginsArray = aaOptions.pluginsArray ?? []
+        
+        
         if isClearBackgroundColor == true {
             aaOptions.chart?.backgroundColor = "rgba(0,0,0,0)"
         }

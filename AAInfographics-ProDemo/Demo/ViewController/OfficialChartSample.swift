@@ -136,6 +136,14 @@ struct GridView: View {
         ChartProVC.volinPlotChart(),
         ChartProVC.variablepieChart(),
         ChartProVC.semicircleSolidGaugeChart(),
+
+        AADrilldownChartComposer.columnChart().pluginsArray([Bundle.main.path(forResource: "AADrilldown", ofType: "js") ?? ""]),
+
+        AABoostChartComposer.lineChart().pluginsArray([Bundle.main.path(forResource: "AABoost", ofType: "js") ?? ""]),
+        AABoostChartComposer.areaChart().pluginsArray([Bundle.main.path(forResource: "AABoost", ofType: "js") ?? ""]),
+        AABoostChartComposer.columnChart().pluginsArray([Bundle.main.path(forResource: "AABoost", ofType: "js") ?? ""]),
+        AABoostChartComposer.scatterChartWith1MillionPoints().pluginsArray([Bundle.main.path(forResource: "AABoost", ofType: "js") ?? ""]),
+
     
     ] as [AAOptions]
     
@@ -156,8 +164,8 @@ struct GridView: View {
     // 定义网格的列
     let columns: [GridItem] = [
         GridItem(.flexible()),  // 列宽自动调整
-        GridItem(.flexible()),
-        GridItem(.flexible())   // 3 列
+//        GridItem(.flexible()),
+//        GridItem(.flexible())   // 3 列
     ]
 
     var body: some View {
@@ -187,12 +195,11 @@ struct GridView: View {
             chartOptions.chart?.animation = false
         }  //🤔这里禁用动画不行, 有点奇怪, 后续再看看吧
         
-//        chartOptions.plotOptions?.series?.animation = false
-        configurePlotOptionsSeriesPointEvents(chartOptions)
+        let chartOptions = configurePlotOptionsSeriesAnimation(chartOptions)
         return chartOptions
     }
     
-    private func configurePlotOptionsSeriesPointEvents(_ aaOptions: AAOptions) {
+    private func configurePlotOptionsSeriesAnimation(_ aaOptions: AAOptions) -> AAOptions {
         if aaOptions.plotOptions == nil {
             aaOptions.plotOptions = AAPlotOptions().series(AASeries().point(AAPoint().events(AAPointEvents())))
         } else if aaOptions.plotOptions?.series == nil {
@@ -200,6 +207,7 @@ struct GridView: View {
         } 
         
         aaOptions.plotOptions?.series?.animation = false
+        return aaOptions
     }
 }
 
