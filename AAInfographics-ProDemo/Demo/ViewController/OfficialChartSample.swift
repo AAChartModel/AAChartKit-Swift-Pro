@@ -116,6 +116,26 @@ struct GridView: View {
         AAHeatOrTreeMapChartComposer.tilemapChartForAmericaWithCircleTileShape(),
         AAHeatOrTreeMapChartComposer.tilemapChartForAmericaWithDiamondTileShape(),
         AAHeatOrTreeMapChartComposer.tilemapChartForAmericaWithSquareTileShape(),
+        
+        ChartProVC.sunburstChart(),
+        ChartProVC.streamgraphChart(),
+        ChartProVC.vectorChart(),
+        ChartProVC.bellcurveChart(),
+        ChartProVC.timelineChart(),
+        ChartProVC.itemChart(),
+        ChartProVC.windbarbChart(),
+        ChartProVC.wordcloudChart(),
+        ChartProVC.flameChart(),
+        ChartProVC.itemChart2(),
+        ChartProVC.itemChart3(),
+        ChartProVC.icicleChart(),
+        ChartProVC.sunburstChart2(),
+        ChartProVC.solidgaugeChart(),
+        ChartProVC.parallelCoordinatesSplineChart(),
+        ChartProVC.parallelCoordinatesLineChart(),
+        ChartProVC.volinPlotChart(),
+        ChartProVC.variablepieChart(),
+        ChartProVC.semicircleSolidGaugeChart(),
     
     ] as [AAOptions]
     
