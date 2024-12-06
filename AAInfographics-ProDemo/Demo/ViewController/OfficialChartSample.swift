@@ -75,6 +75,30 @@ struct GridView: View {
      case 7: return AARelationshipChartComposer.simpleDependencyWheelChart()
      */
     let optionsItems = [
+        AARandomValueDataComposer.configureChartOptions(chartType: .column),
+        AARandomValueDataComposer.configureChartOptions(chartType: .bar),
+        AARandomValueDataComposer.configureChartOptions(chartType: .line),
+        AARandomValueDataComposer.configureChartOptions(chartType: .spline),
+        AARandomValueDataComposer.configureChartOptions(chartType: .area),
+        AARandomValueDataComposer.configureChartOptions(chartType: .areaspline),
+        AARandomValueDataComposer.configureChartOptions(chartType: .columnrange),
+        AARandomValueDataComposer.configureChartOptions(chartType: .arearange),
+        AARandomValueDataComposer.configureChartOptions(chartType: .columnpyramid),
+        AARandomValueDataComposer.configureChartOptions(chartType: .funnel),
+        AARandomValueDataComposer.configureChartOptions(chartType: .pyramid),
+        AARandomValueDataComposer.configureChartOptions(chartType: .waterfall),
+        AARandomValueDataComposer.configureChartOptions(chartType: .scatter),
+        AARandomValueDataComposer.configureChartOptions(chartType: .bubble),
+        AARandomValueDataComposer.configureChartOptions(chartType: .heatmap),
+        AARandomValueDataComposer.configureChartOptions(chartType: .treemap),
+        AARandomValueDataComposer.configureChartOptions(chartType: .packedbubble),
+        AARandomValueDataComposer.configureChartOptions(chartType: .pie),
+        AARandomValueDataComposer.configureChartOptions(chartType: .solidgauge),
+        AARandomValueDataComposer.configureChartOptions(chartType: .gauge),
+        AARandomValueDataComposer.configureChartOptions(chartType: .variablepie),
+        
+        
+        
         AARelationshipChartComposer.sankeyChart(),
         AARelationshipChartComposer.dependencywheelChart(),
         AARelationshipChartComposer.arcdiagramChart1(),
@@ -226,3 +250,39 @@ struct GridView: View {
 //#Preview {
 //    GridView()
 //}
+
+
+class AARandomValueDataComposer {
+    public static func configureChartOptions(chartType: AAChartType) -> AAOptions {
+       let aaChartModel = AAChartModel()
+            .chartType(chartType)//图形类型
+            .animationType(.easeOutQuart)//图形渲染动画类型为"bounce"
+            .dataLabelsEnabled(false)//是否显示数字
+            .markerRadius(4)//折线连接点半径长度,为0时相当于没有折线连接点
+            .markerSymbolStyle(.innerBlank)
+            .legendEnabled(false)
+            .tooltipEnabled(true)
+            .series([
+                AASeriesElement()
+                    .color("#fe117c")
+                    .data(configureSeriesDataArray())
+                ,
+            ])
+        
+        return aaChartModel.aa_toAAOptions()
+    }
+    
+    private static func configureSeriesDataArray() -> [Any] {
+        let randomNumArrA = NSMutableArray()
+        var y1 = 0.0
+        let Q = arc4random() % 38
+        for  x in 0 ..< 100 {
+            y1 = sin(Double(Q) * (Double(x) * Double.pi / 180)) + Double(x) * 2.0 * 0.01 - 1
+            randomNumArrA.add(
+                AADataElement()
+                    .color(AAColor.red)
+                    .y(Float(y1)))
+        }
+        return randomNumArrA as! [Any]
+    }
+}
