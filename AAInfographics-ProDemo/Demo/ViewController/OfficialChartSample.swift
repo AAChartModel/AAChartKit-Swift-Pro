@@ -9,7 +9,8 @@ import SwiftUI
 
 // 封装 AAChartView
 struct AAChartViewRepresentable: UIViewRepresentable {
-    @Binding var chartModel: AAChartModel
+    @Binding var chartOptions: AAOptions
+    
     
     func makeUIView(context: Context) -> AAChartView {
         let chartView = AAChartView()
@@ -18,7 +19,7 @@ struct AAChartViewRepresentable: UIViewRepresentable {
     }
     
     func updateUIView(_ uiView: AAChartView, context: Context) {
-        uiView.aa_drawChartWithChartModel(chartModel)
+        uiView.aa_drawChartWithChartOptions(chartOptions)
     }
 }
 
@@ -39,15 +40,15 @@ struct SwiftUIChartView: View {
     
     var body: some View {
         VStack {
-            AAChartViewRepresentable(chartModel: $chartModel)
+            AAChartViewRepresentable(chartOptions: Binding.constant(AARelationshipChartComposer.sankeyChart()))
                 .frame(height: 300) // 设置图表高度
-            AAChartViewRepresentable(chartModel: $chartModel)
+            AAChartViewRepresentable(chartOptions: Binding.constant(AARelationshipChartComposer.arcdiagramChart1()))
                 .frame(height: 300) // 设置图表高度
-            AAChartViewRepresentable(chartModel: $chartModel)
+            AAChartViewRepresentable(chartOptions: Binding.constant(AARelationshipChartComposer.dependencywheelChart()))
                 .frame(height: 300) // 设置图表高度
-            AAChartViewRepresentable(chartModel: $chartModel)
+            AAChartViewRepresentable(chartOptions: Binding.constant(AARelationshipChartComposer.organizationChart()))
                 .frame(height: 300) // 设置图表高度
-            AAChartViewRepresentable(chartModel: $chartModel)
+            AAChartViewRepresentable(chartOptions: Binding.constant(AARelationshipChartComposer.arcdiagramChart3()))
                 .frame(height: 300) // 设置图表高度
             Button("Update Data") {
                 chartModel.series([
@@ -61,6 +62,6 @@ struct SwiftUIChartView: View {
 }
 
 
-#Preview {
-    SwiftUIChartView()
-}
+//#Preview {
+//    SwiftUIChartView()
+//}
