@@ -14,7 +14,7 @@ class OfficialChartSampleVC: UIViewController {
         view.backgroundColor = .white
         
         // 将 SwiftUI 视图嵌入到当前 UIViewController
-        let swiftUIView = SwiftUIChartView()
+        let swiftUIView = GridView()
         let hostingController = UIHostingController(rootView: swiftUIView)
         
         // 添加为子控制器
