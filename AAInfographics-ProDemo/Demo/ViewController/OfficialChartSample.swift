@@ -62,6 +62,46 @@ struct SwiftUIChartView: View {
 }
 
 
+struct GridView: View {
+      
+    let items = Array(1...50) // 模拟数据
+
+    // 定义网格的列
+    let columns: [GridItem] = [
+        GridItem(.flexible()),  // 列宽自动调整
+        GridItem(.flexible()),
+        GridItem(.flexible())   // 3 列
+    ]
+
+    var body: some View {
+        ScrollView { // 添加滚动视图支持
+            LazyVGrid(columns: columns, spacing: 16) { // 设置列和间距
+                ForEach(items, id: \.self) { item in
+//                 //添加一个充满的红色背景视图
+//                    RoundedRectangle(cornerRadius: 10)
+//                        .fill(Color.gray)
+//                        .frame(height: 100) // 设置高度
+                    AAChartViewRepresentable(chartOptions: Binding.constant(AARelationshipChartComposer.sankeyChart()))
+                        .frame(height: 300) // 设置图表高度
+                }
+            }
+            .padding() // 添加内边距
+        }
+    }
+}
+
+struct GridView_Previews: PreviewProvider {
+    static var previews: some View {
+        GridView()
+    }
+}
+
+
+
 //#Preview {
 //    SwiftUIChartView()
 //}
+
+#Preview {
+    GridView()
+}
