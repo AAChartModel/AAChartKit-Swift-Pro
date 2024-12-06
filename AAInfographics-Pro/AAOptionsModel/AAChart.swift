@@ -41,7 +41,7 @@ public class AAChart: AAObject {
     public var panning: Bool?
     public var panKey: String?
     public var polar: Bool?
-    public var animation: AAAnimation?
+    public var animation: Any?
     public var inverted: Bool?
     public var margin: [Any?]? //Margin between the outer edge of the chart and the drawing area. The numbers in the array represent the top, right, bottom, and left ([👆, 👉, 👇, 👈]). You can also use marginTop, marginRight, marginBottom, and marginLeft to set the margins in a certain direction. Defaults to [null]
     public var marginTop: Float? //👆

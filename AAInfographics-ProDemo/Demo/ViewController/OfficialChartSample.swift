@@ -139,6 +139,15 @@ struct GridView: View {
     
     ] as [AAOptions]
     
+//    var optionsItemsWithoutAnimation: [AAOptions] {
+//        var aaOptionsArr = [AAOptions]()
+//        for aaOptions in optionsItems {
+//            aaOptions.plotOptions?.series?.animation = false
+//            aaOptionsArr.append(aaOptions)
+//        }
+//        return aaOptionsArr
+//    }
+    
     var items: [Int] {
            return Array(0...optionsItems.count-1)
        }
@@ -159,7 +168,7 @@ struct GridView: View {
 //                    RoundedRectangle(cornerRadius: 10)
 //                        .fill(Color.gray)
 //                        .frame(height: 100) // 设置高度
-                    AAChartViewRepresentable(chartOptions: Binding.constant(optionsItems[item]))
+                    AAChartViewRepresentable(chartOptions: Binding.constant(optionsItemsWithoutAnimation(chartOptions: optionsItems[item])))
                         .frame(height: 300)
                     
                    
@@ -167,6 +176,30 @@ struct GridView: View {
             }
             .padding() // 添加内边距
         }
+    }
+    
+    func optionsItemsWithoutAnimation(chartOptions: AAOptions) -> AAOptions {
+//        chartOptions.chart?.animation = false
+        if chartOptions.chart != nil {
+            chartOptions.chart?.animation = false
+        } else {
+            chartOptions.chart = AAChart()
+            chartOptions.chart?.animation = false
+        }  //🤔这里禁用动画不行, 有点奇怪, 后续再看看吧
+        
+//        chartOptions.plotOptions?.series?.animation = false
+        configurePlotOptionsSeriesPointEvents(chartOptions)
+        return chartOptions
+    }
+    
+    private func configurePlotOptionsSeriesPointEvents(_ aaOptions: AAOptions) {
+        if aaOptions.plotOptions == nil {
+            aaOptions.plotOptions = AAPlotOptions().series(AASeries().point(AAPoint().events(AAPointEvents())))
+        } else if aaOptions.plotOptions?.series == nil {
+            aaOptions.plotOptions?.series = AASeries().point(AAPoint().events(AAPointEvents()))
+        } 
+        
+        aaOptions.plotOptions?.series?.animation = false
     }
 }
 

@@ -50,7 +50,7 @@ public class AASeries: AAObject {
     public var borderRadiusBottomRight: Any?
     public var marker: AAMarker?
     public var stacking: String?
-    public var animation: AAAnimation?
+    public var animation: Any?
     public var keys: [String]?
     public var colorByPoint: Bool?
     public var connectNulls: Bool? //Whether reconnects the broken line of the chart
