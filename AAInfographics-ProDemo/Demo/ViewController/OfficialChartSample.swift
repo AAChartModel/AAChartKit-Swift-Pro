@@ -98,6 +98,24 @@ struct GridView: View {
         AAColumnVariantChartComposer.histogramChart(),
         AAColumnVariantChartComposer.bellcurveChart(),
         AAColumnVariantChartComposer.bulletChart(),
+        
+        AAHeatOrTreeMapChartComposer.heatmapChart(),
+        AAHeatOrTreeMapChartComposer.treemapWithColorAxisData(),
+        AAHeatOrTreeMapChartComposer.treemapWithLevelsData(),
+        AAHeatOrTreeMapChartComposer.drilldownLargeDataTreemapChart(),
+        AAHeatOrTreeMapChartComposer.largeDataHeatmapChart(),
+        AAHeatOrTreeMapChartComposer.simpleTilemapWithHexagonTileShape(),
+        AAHeatOrTreeMapChartComposer.simpleTilemapWithCircleTileShape(),
+        AAHeatOrTreeMapChartComposer.simpleTilemapWithDiamondTileShape(),
+        AAHeatOrTreeMapChartComposer.simpleTilemapWithSquareTileShape(),
+        AAHeatOrTreeMapChartComposer.tilemapForAfricaWithHexagonTileShape(),
+        AAHeatOrTreeMapChartComposer.tilemapForAfricaWithCircleTileShape(),
+        AAHeatOrTreeMapChartComposer.tilemapForAfricaWithDiamondTileShape(),
+        AAHeatOrTreeMapChartComposer.tilemapForAfricaWithSquareTileShape(),
+        AAHeatOrTreeMapChartComposer.tilemapChartForAmericaWithHexagonTileShape(),
+        AAHeatOrTreeMapChartComposer.tilemapChartForAmericaWithCircleTileShape(),
+        AAHeatOrTreeMapChartComposer.tilemapChartForAmericaWithDiamondTileShape(),
+        AAHeatOrTreeMapChartComposer.tilemapChartForAmericaWithSquareTileShape(),
     
     ] as [AAOptions]
     
@@ -132,11 +150,11 @@ struct GridView: View {
     }
 }
 
-struct GridView_Previews: PreviewProvider {
-    static var previews: some View {
-        GridView()
-    }
-}
+//struct GridView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        GridView()
+//    }
+//}
 
 
 
@@ -144,6 +162,6 @@ struct GridView_Previews: PreviewProvider {
 //    SwiftUIChartView()
 //}
 
-#Preview {
-    GridView()
-}
+//#Preview {
+//    GridView()
+//}
