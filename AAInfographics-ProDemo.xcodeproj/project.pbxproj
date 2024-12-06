@@ -72,6 +72,8 @@
 		84526E072CEB3DD700EB2563 /* AABoostChartComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84526E062CEB3DD700EB2563 /* AABoostChartComposer.swift */; };
 		84526E092CEB3F1E00EB2563 /* AABoostChartVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84526E082CEB3F1E00EB2563 /* AABoostChartVC.swift */; };
 		84526E0B2CEB401500EB2563 /* AABoost.js in Resources */ = {isa = PBXBuildFile; fileRef = 84526E0A2CEB401500EB2563 /* AABoost.js */; };
+		845BABEA2D02D08A004C15D4 /* OfficialChartSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845BABE92D02D08A004C15D4 /* OfficialChartSample.swift */; };
+		845BABEC2D02D2EB004C15D4 /* OfficialChartSampleVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845BABEB2D02D2EB004C15D4 /* OfficialChartSampleVC.swift */; };
 		848970412CF9CAFD00C519A0 /* timeline2Data.json in Resources */ = {isa = PBXBuildFile; fileRef = 848970402CF9CAFD00C519A0 /* timeline2Data.json */; };
 		84A5691127FEC88700883553 /* streamgraphSeries.json in Resources */ = {isa = PBXBuildFile; fileRef = 84A5690F27FEC88700883553 /* streamgraphSeries.json */; };
 		84A5691227FEC88700883553 /* packedbubbleSeries.json in Resources */ = {isa = PBXBuildFile; fileRef = 84A5691027FEC88700883553 /* packedbubbleSeries.json */; };
@@ -218,6 +220,8 @@
 		84526E062CEB3DD700EB2563 /* AABoostChartComposer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AABoostChartComposer.swift; sourceTree = "<group>"; };
 		84526E082CEB3F1E00EB2563 /* AABoostChartVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AABoostChartVC.swift; path = "AAInfographics-ProDemo/Demo/AAPlugins/AADrilldown/AABoostChartVC.swift"; sourceTree = SOURCE_ROOT; };
 		84526E0A2CEB401500EB2563 /* AABoost.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = AABoost.js; sourceTree = "<group>"; };
+		845BABE92D02D08A004C15D4 /* OfficialChartSample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfficialChartSample.swift; sourceTree = "<group>"; };
+		845BABEB2D02D2EB004C15D4 /* OfficialChartSampleVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfficialChartSampleVC.swift; sourceTree = "<group>"; };
 		848970402CF9CAFD00C519A0 /* timeline2Data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = timeline2Data.json; sourceTree = "<group>"; };
 		84A5690F27FEC88700883553 /* streamgraphSeries.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = streamgraphSeries.json; sourceTree = "<group>"; };
 		84A5691027FEC88700883553 /* packedbubbleSeries.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = packedbubbleSeries.json; sourceTree = "<group>"; };
@@ -550,6 +554,8 @@
 				84DEB8BB28FAE50500BF9423 /* AAColumnVariantChartVC.swift */,
 				44D27E10255ADF1300D0C636 /* ChartProVC.swift */,
 				84B13EEA28990388007356C6 /* CustomClickEventCallbackMessageVC.swift */,
+				845BABE92D02D08A004C15D4 /* OfficialChartSample.swift */,
+				845BABEB2D02D2EB004C15D4 /* OfficialChartSampleVC.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -796,6 +802,7 @@
 				44D27E02255A735700D0C636 /* AALayoutAlgorithm.swift in Sources */,
 				84B13F2F289BDB5F007356C6 /* AASolidgaugeDataElement.swift in Sources */,
 				84461589283F57C600E26DA4 /* AAOptions.swift in Sources */,
+				845BABEA2D02D08A004C15D4 /* OfficialChartSample.swift in Sources */,
 				844615B5283F580300E26DA4 /* AAPlotBandsElement.swift in Sources */,
 				844615BB283F580300E26DA4 /* AASeries.swift in Sources */,
 				44D27D91255A631500D0C636 /* AABaseChartVC.swift in Sources */,
@@ -820,6 +827,7 @@
 				844615AA283F580300E26DA4 /* AAAxis.swift in Sources */,
 				84DEB8BA28FAE4F300BF9423 /* AABubbleChartVC.swift in Sources */,
 				844615A8283F580300E26DA4 /* AAStyle.swift in Sources */,
+				845BABEC2D02D2EB004C15D4 /* OfficialChartSampleVC.swift in Sources */,
 				84DEB8BC28FAE50500BF9423 /* AAColumnVariantChartVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

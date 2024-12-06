@@ -43,6 +43,7 @@ class MainVC: UIViewController {
         "Custom Event | 自定义交互事件",
         "DrilldownChart | 可钻取图表",
         "BoostChart | 加速图表",
+        "OfficialChartSample | 官方示例",
     ]
     private var chartTypeNameArr = [
         // "RelationshipChart | 关系类型图表",
@@ -136,6 +137,11 @@ class MainVC: UIViewController {
             //            case 2: return [AABoostChartComposer columnChart];
             "lineChart---折线图",
             "areaChart---区域填充图",
+            "columnChart---柱形图",
+            "scatterChartWith1MillionPoints---散点图(100万数据量)",
+        ],
+        // "OfficialChartSample---官方示例",
+        [
             "columnChart---柱形图",
         ],
     ]
@@ -261,6 +267,12 @@ extension MainVC: UITableViewDelegate, UITableViewDataSource {
             let vc = AABoostChartVC()
             vc.selectedIndex = indexPath.row
             vc.navigationItemTitleArr = chartTypeNameArr[indexPath.section]
+            navigationController?.pushViewController(vc, animated: true)
+            
+        case 8:
+            let vc = OfficialChartSampleVC()
+//            vc.selectedIndex = indexPath.row
+//            vc.navigationItemTitleArr = chartTypeNameArr[indexPath.section]
             navigationController?.pushViewController(vc, animated: true)
             
         default:
