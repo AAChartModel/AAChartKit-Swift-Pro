@@ -37,6 +37,7 @@ class AABoostChartVC: AABaseChartVC {
         case 0: return AABoostChartComposer.lineChart()
         case 1: return AABoostChartComposer.areaChart()
         case 2: return AABoostChartComposer.columnChart()
+        case 3: return AABoostChartComposer.scatterChartWith1MillionPoints()
             
         default: return nil
         }
