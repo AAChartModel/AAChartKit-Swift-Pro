@@ -117,6 +117,7 @@
 		84B13F39289E15DB007356C6 /* marathonData.json in Resources */ = {isa = PBXBuildFile; fileRef = 84B13F38289E15DB007356C6 /* marathonData.json */; };
 		84B13F3B289E2CA0007356C6 /* AAParallelAxes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B13F3A289E2CA0007356C6 /* AAParallelAxes.swift */; };
 		84B13F3D289E5FAB007356C6 /* AABulletDataElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B13F3C289E5FAB007356C6 /* AABulletDataElement.swift */; };
+		84DC910E2D2FDDB7002EDC1F /* CustomClickEventCallbackMessageVC2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84DC910D2D2FDDB7002EDC1F /* CustomClickEventCallbackMessageVC2.swift */; };
 		84DEB8B628FAE48300BF9423 /* AARelationshipChartVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84DEB8B528FAE48300BF9423 /* AARelationshipChartVC.swift */; };
 		84DEB8B828FAE4DF00BF9423 /* AAHeatOrTreeMapChartVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84DEB8B728FAE4DF00BF9423 /* AAHeatOrTreeMapChartVC.swift */; };
 		84DEB8BA28FAE4F300BF9423 /* AABubbleChartVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84DEB8B928FAE4F300BF9423 /* AABubbleChartVC.swift */; };
@@ -266,6 +267,7 @@
 		84B13F3A289E2CA0007356C6 /* AAParallelAxes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AAParallelAxes.swift; sourceTree = "<group>"; };
 		84B13F3C289E5FAB007356C6 /* AABulletDataElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AABulletDataElement.swift; sourceTree = "<group>"; };
 		84B2386B283F6D4C00193B9A /* PackageBundlePathLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageBundlePathLoader.swift; sourceTree = "<group>"; };
+		84DC910D2D2FDDB7002EDC1F /* CustomClickEventCallbackMessageVC2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomClickEventCallbackMessageVC2.swift; sourceTree = "<group>"; };
 		84DEB8B528FAE48300BF9423 /* AARelationshipChartVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AARelationshipChartVC.swift; sourceTree = "<group>"; };
 		84DEB8B728FAE4DF00BF9423 /* AAHeatOrTreeMapChartVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AAHeatOrTreeMapChartVC.swift; sourceTree = "<group>"; };
 		84DEB8B928FAE4F300BF9423 /* AABubbleChartVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AABubbleChartVC.swift; sourceTree = "<group>"; };
@@ -554,6 +556,7 @@
 				84DEB8BB28FAE50500BF9423 /* AAColumnVariantChartVC.swift */,
 				44D27E10255ADF1300D0C636 /* ChartProVC.swift */,
 				84B13EEA28990388007356C6 /* CustomClickEventCallbackMessageVC.swift */,
+				84DC910D2D2FDDB7002EDC1F /* CustomClickEventCallbackMessageVC2.swift */,
 				845BABE92D02D08A004C15D4 /* OfficialChartSample.swift */,
 				845BABEB2D02D2EB004C15D4 /* OfficialChartSampleVC.swift */,
 			);
@@ -798,6 +801,7 @@
 				8446158C283F57C600E26DA4 /* AASeriesElement.swift in Sources */,
 				44D27DF8255A726400D0C636 /* AAPackedbubble.swift in Sources */,
 				44D27DFD255A733D00D0C636 /* AATreemap.swift in Sources */,
+				84DC910E2D2FDDB7002EDC1F /* CustomClickEventCallbackMessageVC2.swift in Sources */,
 				844615BD283F580300E26DA4 /* AAYAxis.swift in Sources */,
 				44D27E02255A735700D0C636 /* AALayoutAlgorithm.swift in Sources */,
 				84B13F2F289BDB5F007356C6 /* AASolidgaugeDataElement.swift in Sources */,

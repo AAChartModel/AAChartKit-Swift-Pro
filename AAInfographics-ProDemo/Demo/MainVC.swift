@@ -44,6 +44,7 @@ class MainVC: UIViewController {
         "DrilldownChart | 可钻取图表",
         "BoostChart | 加速图表",
         "OfficialChartSample | 官方示例",
+        "Custom Event2 | 自定义交互事件2",
     ]
     private var chartTypeNameArr = [
         // "RelationshipChart | 关系类型图表",
@@ -143,6 +144,10 @@ class MainVC: UIViewController {
         // "OfficialChartSample---官方示例",
         [
             "columnChart---柱形图",
+        ],
+        // "Custom Event2---自定义交互事件2",
+        [
+            "Custom Event2---自定义交互事件2",
         ],
     ]
     
@@ -273,6 +278,10 @@ extension MainVC: UITableViewDelegate, UITableViewDataSource {
             let vc = OfficialChartSampleVC()
 //            vc.selectedIndex = indexPath.row
 //            vc.navigationItemTitleArr = chartTypeNameArr[indexPath.section]
+            navigationController?.pushViewController(vc, animated: true)
+            
+        case 9:
+            let vc = CustomClickEventCallbackMessageVC2()
             navigationController?.pushViewController(vc, animated: true)
             
         default:
