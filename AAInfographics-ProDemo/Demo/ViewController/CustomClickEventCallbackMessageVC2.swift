@@ -43,13 +43,14 @@ class CustomClickEventCallbackMessageVC2: UIViewController {
     
     private func configureChartView() {
         aaChartView = AAChartView()
-        let chartViewWidth = view.frame.size.width
-        let chartViewHeight = view.frame.size.height
-        aaChartView!.frame = CGRect(x: 0,
-                                    y: 60,
-                                    width: chartViewWidth,
-                                    height: chartViewHeight)
-        view.addSubview(aaChartView!)
+        view.addSubview(aaChartView)
+        //使用自动布局, 让图表视图距离屏幕四周均为 0
+        aaChartView.translatesAutoresizingMaskIntoConstraints = false
+        aaChartView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        aaChartView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        aaChartView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        aaChartView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        
         aaChartView!.isScrollEnabled = false//Disable chart content scrolling
         //禁止自动调整滚动视图的内边距
         aaChartView!.scrollView.contentInsetAdjustmentBehavior = .never
@@ -75,7 +76,7 @@ class CustomClickEventCallbackMessageVC2: UIViewController {
                     "立春", "雨水", "惊蛰", "春分", "清明", "谷雨", "立夏", "小满", "芒种", "夏至", "小暑", "大暑",
                     "立秋", "处暑", "白露", "秋分", "寒露", "霜降", "立冬", "小雪", "大雪", "冬至", "小寒", "大寒"
                 ])
-                 .xAxisLabelsStyle(AAStyle(color: AAColor.black, fontSize: 16))
+                 .xAxisLabelsStyle(AAStyle(color: AAColor.black, fontSize: 12))
                  .dataLabelsEnabled(false)
                  .stacking(.normal)
                  .tooltipValueSuffix("℃")
@@ -144,30 +145,27 @@ return """
         return aaOptions
     }
     
-    func convertJSValueToFloat(jsValue: Any?) -> Float {
-        var floatValue: Float = 0
-        if jsValue is String {
-            floatValue = Float(jsValue as! String)!
-        } else if jsValue is Int {
-            floatValue = Float(jsValue as! Int)
-        } else if jsValue is Float {
-            floatValue = (jsValue as! Float)
-        } else if jsValue is Double {
-            floatValue = Float(jsValue as! Double)
+    private func getFloatValue<T>(_ value: T?) -> Float? {
+        switch value {
+        case let value as Float: return value
+        case let value as Int: return Float(value)
+        case let value as Double: return Float(value)
+        case let value as String: return Float(value)
+        default:
+            return nil
         }
-        return floatValue
     }
     
     private func getEventMessageModel(DOMRectDic: [String: Any]) -> DOMRectModel {
         let DOMRectModel = DOMRectModel()
-        DOMRectModel.x = convertJSValueToFloat(jsValue: DOMRectDic["x"])
-        DOMRectModel.y = convertJSValueToFloat(jsValue: DOMRectDic["y"])
-        DOMRectModel.width = convertJSValueToFloat(jsValue: DOMRectDic["width"])
-        DOMRectModel.height = convertJSValueToFloat(jsValue: DOMRectDic["height"])
-        DOMRectModel.top = convertJSValueToFloat(jsValue: DOMRectDic["top"])
-        DOMRectModel.right = convertJSValueToFloat(jsValue: DOMRectDic["right"])
-        DOMRectModel.bottom = convertJSValueToFloat(jsValue: DOMRectDic["bottom"])
-        DOMRectModel.left = convertJSValueToFloat(jsValue: DOMRectDic["left"])
+        DOMRectModel.x = getFloatValue(DOMRectDic["x"])
+        DOMRectModel.y = getFloatValue(DOMRectDic["y"])
+        DOMRectModel.width = getFloatValue(DOMRectDic["width"])
+        DOMRectModel.height = getFloatValue(DOMRectDic["height"])
+        DOMRectModel.top = getFloatValue(DOMRectDic["top"])
+        DOMRectModel.right = getFloatValue(DOMRectDic["right"])
+        DOMRectModel.bottom = getFloatValue(DOMRectDic["bottom"])
+        DOMRectModel.left = getFloatValue(DOMRectDic["left"])
         return DOMRectModel
     }
 }
