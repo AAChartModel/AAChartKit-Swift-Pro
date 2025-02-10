@@ -87,12 +87,22 @@ public extension AAObject {
     func toDic() -> [String: Any] {
         var representation = [String: Any]()
         
+        // 遍历当前类的反射子属性
         let mirrorChildren = Mirror(reflecting: self).children
         loopForMirrorChildren(mirrorChildren, &representation)
         
+        // 遍历父类的反射子属性
         let superMirrorChildren = Mirror(reflecting: self).superclassMirror?.children
         if superMirrorChildren?.count ?? 0 > 0 {
             loopForMirrorChildren(superMirrorChildren!, &representation)
+        }
+        
+        // 如果实现了 SerializableWithComputedProperties 协议，获取计算属性
+        if let selfWithComputed = self as? AASerializableWithComputedProperties {
+            let computedProps = selfWithComputed.computedProperties()
+            for (key, value) in computedProps {
+                representation[key] = value
+            }
         }
         
         return representation
