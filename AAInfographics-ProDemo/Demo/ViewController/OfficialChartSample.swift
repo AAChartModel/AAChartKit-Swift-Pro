@@ -14,7 +14,7 @@ struct AAChartViewRepresentable: UIViewRepresentable {
     
     func makeUIView(context: Context) -> AAChartView {
         let chartView = AAChartView()
-        chartView.scrollEnabled = false
+        chartView.isScrollEnabled = false
         return chartView
     }
     

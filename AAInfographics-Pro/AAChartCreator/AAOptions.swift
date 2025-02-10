@@ -58,6 +58,11 @@ public class AAOptions: AAObject {
     public var clickEventEnabled: Bool?//Please DO NOT use this property
     public var touchEventEnabled: Bool?//Please DO NOT use this property
     
+    //beforeDrawChartJavaScript
+    public var beforeDrawChartJavaScript: String?
+    //afterDrawChartJavaScript
+    public var afterDrawChartJavaScript: String?
+    
     public var pluginsArray: [String]?
 
     
