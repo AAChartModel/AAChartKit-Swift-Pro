@@ -250,4 +250,182 @@ class AAFractalChartData: NSObject {
 
         return data
     }
+    
+    /**
+     function generateSierpinskiTriangleData() {
+         const data = [];
+         const canvasSize = 800;
+         const padding = 50; // 边距
+
+         // --- Triangle Parameters ---
+         const maxDepth = 8; // 控制递归深度 (7-9 通常效果不错)
+         // --- End Triangle Parameters ---
+
+         // --- Vibrant Color Function (可复用或微调) ---
+         function getColor(depth, maxDepth, x, y) { // 添加 x, y 坐标以供颜色变化
+             const t = depth / maxDepth;
+
+             // 霓虹/宇宙风格
+             const freq1 = 0.3, phase1 = 1;
+             const freq2 = 0.35, phase2 = 2;
+             const freq3 = 0.4, phase3 = 4;
+
+             // 基于位置的轻微扰动
+             const posFactorX = x / canvasSize * 0.3;
+             const posFactorY = y / canvasSize * 0.3;
+
+             let r = Math.sin(freq1 * depth + phase1 + posFactorX) * 127 + 128;
+             let g = Math.sin(freq2 * depth + phase2 + posFactorY) * 127 + 128;
+             let b = Math.sin(freq3 * depth + phase3) * 127 + 128;
+
+             // 亮度增强
+             const brightnessBoost = Math.pow(t, 0.5);
+             r = r * (0.7 + brightnessBoost * 0.8);
+             g = g * (0.7 + brightnessBoost * 0.8);
+             b = b * (0.7 + brightnessBoost * 0.8);
+
+             r = Math.max(0, Math.min(255, Math.floor(r)));
+             g = Math.max(0, Math.min(255, Math.floor(g)));
+             b = Math.max(0, Math.min(255, Math.floor(b)));
+
+             return `rgb(${r}, ${g}, ${b})`;
+         }
+         // --- End Color Function ---
+
+         // 递归函数，参数为当前三角形的三个顶点和深度
+         function generateTriangle(v1, v2, v3, depth) {
+             // Base Case: 达到最大深度，绘制当前三角形的顶点
+             if (depth >= maxDepth) {
+                 const color1 = getColor(depth, maxDepth, v1.x, v1.y);
+                 const color2 = getColor(depth, maxDepth, v2.x, v2.y);
+                 const color3 = getColor(depth, maxDepth, v3.x, v3.y);
+                 // 可以为每个顶点计算颜色，或者使用统一颜色
+                 data.push({ x: v1.x, y: v1.y, color: color1 });
+                 data.push({ x: v2.x, y: v2.y, color: color2 });
+                 data.push({ x: v3.x, y: v3.y, color: color3 });
+                 return;
+             }
+
+             // Recursive Step: 计算三条边的中点
+             const m12 = { x: (v1.x + v2.x) / 2, y: (v1.y + v2.y) / 2 };
+             const m23 = { x: (v2.x + v3.x) / 2, y: (v2.y + v3.y) / 2 };
+             const m31 = { x: (v3.x + v1.x) / 2, y: (v3.y + v1.y) / 2 };
+
+             // 对三个角落的子三角形进行递归调用
+             generateTriangle(v1, m12, m31, depth + 1); // 包含顶点 v1 的子三角形
+             generateTriangle(m12, v2, m23, depth + 1); // 包含顶点 v2 的子三角形
+             generateTriangle(m31, m23, v3, depth + 1); // 包含顶点 v3 的子三角形
+             // 注意：中间的三角形 (m12, m23, m31) 被跳过，不进行绘制或递归
+         }
+
+         // --- 定义初始大三角形的顶点 ---
+         //  (使其大致居中并填满画布，Y轴向上)
+         const baseWidth = canvasSize - 2 * padding;
+         const triangleHeight = (Math.sqrt(3) / 2) * baseWidth;
+
+         // 顶点1 (顶部)
+         const topVertex = { x: canvasSize / 2, y: padding + triangleHeight };
+         // 顶点2 (左下)
+         const leftVertex = { x: padding, y: padding };
+         // 顶点3 (右下)
+         const rightVertex = { x: canvasSize - padding, y: padding };
+
+         // 开始递归生成
+         generateTriangle(topVertex, leftVertex, rightVertex, 0);
+
+         console.log("Generated points:", data.length);
+         return data;
+     }
+     */
+
+    static func generateSierpinskiTriangleData() -> [[String: Any]] {
+        var data: [[String: Any]] = []
+        let canvasSize = 800
+        let padding = 50 // 边距
+        
+        // --- Triangle Parameters ---
+        let maxDepth = 8 // 控制递归深度 (7-9 通常效果不错)
+        // --- End Triangle Parameters ---
+        
+        // --- Vibrant Color Function (可复用或微调) ---
+        func getColor(depth: Int, maxDepth: Int, x: Double, y: Double) -> String { // 添加 x, y 坐标以供颜色变化
+            let t = Double(depth) / Double(maxDepth)
+            
+            // 霓虹/宇宙风格
+            let freq1: Double = 0.3, phase1: Double = 1
+            let freq2: Double = 0.35, phase2: Double = 2
+            let freq3: Double = 0.4, phase3: Double = 4
+            
+            // 基于位置的轻微扰动
+            let posFactorX = x / Double(canvasSize) * 0.3
+            let posFactorY = y / Double(canvasSize) * 0.3
+            
+            var r = sin(freq1 * Double(depth) + phase1 + posFactorX) * 127 + 128
+            var g = sin(freq2 * Double(depth) + phase2 + posFactorY) * 127 + 128
+            var b = sin(freq3 * Double(depth) + phase3) * 127 + 128
+            
+            // 亮度增强
+            let brightnessBoost = pow(t, 0.5)
+            r = r * (0.7 + brightnessBoost * 0.8)
+            g = g * (0.7 + brightnessBoost * 0.8)
+            b = b * (0.7 + brightnessBoost * 0.8)
+            
+            r = max(0, min(255, r))
+            g = max(0, min(255, g))
+            b = max(0, min(255, b))
+            
+            return "rgb(\(Int(r)), \(Int(g)), \(Int(b)))"
+        }
+        // --- End Color Function ---
+        
+        // 顶点结构体
+        struct Vertex {
+            let x: Double
+            let y: Double
+        }
+        
+        // 递归函数，参数为当前三角形的三个顶点和深度
+        func generateTriangle(v1: Vertex, v2: Vertex, v3: Vertex, depth: Int) {
+            // Base Case: 达到最大深度，绘制当前三角形的顶点
+            if depth >= maxDepth {
+                let color1 = getColor(depth: depth, maxDepth: maxDepth, x: v1.x, y: v1.y)
+                let color2 = getColor(depth: depth, maxDepth: maxDepth, x: v2.x, y: v2.y)
+                let color3 = getColor(depth: depth, maxDepth: maxDepth, x: v3.x, y: v3.y)
+                // 可以为每个顶点计算颜色，或者使用统一颜色
+                data.append(["x": v1.x, "y": v1.y, "color": color1])
+                data.append(["x": v2.x, "y": v2.y, "color": color2])
+                data.append(["x": v3.x, "y": v3.y, "color": color3])
+                return
+            }
+            
+            // Recursive Step: 计算三条边的中点
+            let m12 = Vertex(x: (v1.x + v2.x) / 2, y: (v1.y + v2.y) / 2)
+            let m23 = Vertex(x: (v2.x + v3.x) / 2, y: (v2.y + v3.y) / 2)
+            let m31 = Vertex(x: (v3.x + v1.x) / 2, y: (v3.y + v1.y) / 2)
+            
+            // 对三个角落的子三角形进行递归调用
+            generateTriangle(v1: v1, v2: m12, v3: m31, depth: depth + 1) // 包含顶点 v1 的子三角形
+            generateTriangle(v1: m12, v2: v2, v3: m23, depth: depth + 1) // 包含顶点 v2 的子三角形
+            generateTriangle(v1: m31, v2: m23, v3: v3, depth: depth + 1) // 包含顶点 v3 的子三角形
+            // 注意：中间的三角形 (m12, m23, m31) 被跳过，不进行绘制或递归
+        }
+        
+        // --- 定义初始大三角形的顶点 ---
+        //  (使其大致居中并填满画布，Y轴向上)
+        let baseWidth = Double(canvasSize - 2 * padding)
+        let triangleHeight = (sqrt(3) / 2) * baseWidth
+        
+        // 顶点1 (顶部)
+        let topVertex = Vertex(x: Double(canvasSize) / 2, y: Double(padding) + triangleHeight)
+        // 顶点2 (左下)
+        let leftVertex = Vertex(x: Double(padding), y: Double(padding))
+        // 顶点3 (右下)
+        let rightVertex = Vertex(x: Double(canvasSize - padding), y: Double(padding))
+        
+        // 开始递归生成
+        generateTriangle(v1: topVertex, v2: leftVertex, v3: rightVertex, depth: 0)
+        
+        print("Generated points: \(data.count)") // 日志记录生成的点数
+        return data
+    }
 }
