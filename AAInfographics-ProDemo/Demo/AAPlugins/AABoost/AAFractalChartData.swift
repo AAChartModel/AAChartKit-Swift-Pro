@@ -156,5 +156,98 @@ class AAFractalChartData: NSObject {
         print("Generated points: \(data.count)") // Log number of points for performance check
         return data
     }
+    
+    /**
+     function generateMandelbrot() {
+         const width = 800;
+         const height = 800;
+         const maxIterations = 100;
+         const data = [];
+         
+         // 更鲜明的颜色映射
+         function getColor(iterations) {
+             if (iterations === maxIterations) {
+                 return '#000000'; // 集合内的点保持黑色
+             }
+             // 根据迭代次数生成 RGB 颜色
+             const r = Math.sin(iterations * 0.1) * 127 + 128;
+             const g = Math.sin(iterations * 0.13 + 2) * 127 + 128;
+             const b = Math.sin(iterations * 0.15 + 4) * 127 + 128;
+             return `rgb(${Math.floor(r)},${Math.floor(g)},${Math.floor(b)})`;
+         }
 
+         for (let x = 0; x < width; x++) {
+             for (let y = 0; y < height; y++) {
+                 const real = (x - width/2) * 4.0/width;
+                 const imag = (y - height/2) * 4.0/height;
+                 
+                 let zReal = real;
+                 let zImag = imag;
+                 let iterations = 0;
+
+                 while (iterations < maxIterations &&
+                        zReal * zReal + zImag * zImag < 4) {
+                     const tempReal = zReal * zReal - zImag * zImag + real;
+                     zImag = 2 * zReal * zImag + imag;
+                     zReal = tempReal;
+                     iterations++;
+                 }
+
+                 data.push({
+                     x: x,
+                     y: y,
+                     color: getColor(iterations)
+                 });
+             }
+         }
+
+         return data;
+     }
+     */
+    static func generateMandelbrot() -> [[String: Any]] {
+        let width = 800
+        let height = 800
+        let maxIterations = 100
+        var data: [[String: Any]] = []
+        
+        // 更鲜明的颜色映射
+        func getColor(iterations: Int) -> String {
+            if iterations == maxIterations {
+                return "#000000" // 集合内的点保持黑色
+            }
+            // 根据迭代次数生成 RGB 颜色
+            let r = sin(Double(iterations) * 0.1) * 127 + 128
+            let g = sin(Double(iterations) * 0.13 + 2) * 127 + 128
+            let b = sin(Double(iterations) * 0.15 + 4) * 127 + 128
+            return "rgb(\(Int(r)),\(Int(g)),\(Int(b)))"
+        }
+        
+        for x in 0..<width {
+            for y in 0..<height {
+                let real = Double(x - width/2) * 4.0/Double(width)
+                let imag = Double(y - height/2) * 4.0/Double(height)
+                
+                var zReal = real
+                var zImag = imag
+                var iterations = 0
+                
+                while iterations < maxIterations &&
+                        zReal * zReal + zImag * zImag < 4 {
+                    let tempReal = zReal * zReal - zImag * zImag + real
+                    zImag = 2 * zReal * zImag + imag
+                    zReal = tempReal
+                    iterations += 1
+                }
+                
+                data.append([
+                    "x": x,
+                    "y": y,
+                    "color": getColor(iterations: iterations)
+                ])
+            }
+        }
+        print("Generated points: \(data.count)") // Log number of points for performance check
+
+        return data
+    }
 }
