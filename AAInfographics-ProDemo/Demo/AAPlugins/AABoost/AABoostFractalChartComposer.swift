@@ -287,7 +287,7 @@ class AABoostFractalChartComposer {
         
         let seriesElement = AASeriesElement()
             .name("Carpet")
-            .data(generateSierpinskiData())
+            .data(AAFractalChartData.generateFractalTreeData())
             .marker(AAMarker()
                 .radius(1)
 //                .symbol(.square)
