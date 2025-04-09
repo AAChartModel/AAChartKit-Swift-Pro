@@ -34,10 +34,30 @@ class AABoostChartVC: AABaseChartVC {
          case 1: return [AABoostChartComposer areaChart];
          case 2: return [AABoostChartComposer columnChart];
          */
-        case 0: return AABoostChartComposer.lineChart().pluginsArray([Bundle.main.path(forResource: "AABoost", ofType: "js") ?? ""])
-        case 1: return AABoostChartComposer.areaChart().pluginsArray([Bundle.main.path(forResource: "AABoost", ofType: "js") ?? ""])
-        case 2: return AABoostChartComposer.columnChart().pluginsArray([Bundle.main.path(forResource: "AABoost", ofType: "js") ?? ""])
-        case 3: return AABoostChartComposer.scatterChartWith1MillionPoints().pluginsArray([Bundle.main.path(forResource: "AABoost", ofType: "js") ?? ""])
+            
+            /**
+             //分形曼德尔布罗特图
+             class func fractalMandelbrot() -> AAOptions
+             
+             //分形谢尔宾斯基树图
+             class func fractalSierpinskiTreeData() -> AAOptions
+             
+             //分形谢尔宾斯基三角形图
+             class func fractalSierpinskiTriangleData() -> AAOptions
+             
+             //分形谢尔宾斯基地毯图
+             class func fractalSierpinskiCarpetData() -> AAOptions
+             */
+            
+        case 0: return AABoostFractalChartComposer.fractalMandelbrot()
+        case 1: return AABoostFractalChartComposer.fractalSierpinskiTreeData()
+        case 2: return AABoostFractalChartComposer.fractalSierpinskiTriangleData()
+        case 3: return AABoostFractalChartComposer.fractalSierpinskiCarpetData()
+            
+//                .pluginsArray([Bundle.main.path(forResource: "AABoost", ofType: "js") ?? ""])
+//        case 1: return AABoostChartComposer.areaChart().pluginsArray([Bundle.main.path(forResource: "AABoost", ofType: "js") ?? ""])
+//        case 2: return AABoostChartComposer.columnChart().pluginsArray([Bundle.main.path(forResource: "AABoost", ofType: "js") ?? ""])
+//        case 3: return AABoostChartComposer.scatterChartWith1MillionPoints().pluginsArray([Bundle.main.path(forResource: "AABoost", ofType: "js") ?? ""])
             
         default: return nil
         }
