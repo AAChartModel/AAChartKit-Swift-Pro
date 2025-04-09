@@ -196,12 +196,42 @@ class AAFractalChartData: NSObject {
         
         // --- Color Function ---
         // Color based on depth, cycling through hues
+                // --- Color Function ---
+        // Color based on depth, cycling through hues
         func getColor(depth: Int) -> String {
-            let hue = (depth * 30) % 360 // Cycle through hues
-            let saturation = 90 + Double.random(in: 0...10) // High saturation with slight variance
-            let lightness = 50 + (Double(depth) / Double(maxDepth)) * 20 // Get slightly lighter towards tips
-            return "hsl(\(hue), \(saturation)%, \(lightness)%)"
+            // Convert HSL to RGB
+            let hue = Double((depth * 30) % 360)
+            let saturation = 0.9 + Double.random(in: 0...0.1) // High saturation with slight variance
+            let lightness = 0.5 + (Double(depth) / Double(maxDepth)) * 0.2 // Get slightly lighter towards tips
+            
+            // HSL to RGB conversion
+            let c = (1 - abs(2 * lightness - 1)) * saturation
+            let x = c * (1 - abs(((hue / 60).truncatingRemainder(dividingBy: 2)) - 1))
+            let m = lightness - c/2
+            
+            var r: Double = 0, g: Double = 0, b: Double = 0
+            
+            if hue < 60 {
+                r = c; g = x; b = 0
+            } else if hue < 120 {
+                r = x; g = c; b = 0
+            } else if hue < 180 {
+                r = 0; g = c; b = x
+            } else if hue < 240 {
+                r = 0; g = x; b = c
+            } else if hue < 300 {
+                r = x; g = 0; b = c
+            } else {
+                r = c; g = 0; b = x
+            }
+            
+            let red = Int((r + m) * 255)
+            let green = Int((g + m) * 255)
+            let blue = Int((b + m) * 255)
+            
+            return "rgb(\(red), \(green), \(blue))"
         }
+        // --- End Color Function ---
         // --- End Color Function ---
         
         func generateBranch(x1: Double, y1: Double, currentAngle: Double, length: Double, depth: Int) {
