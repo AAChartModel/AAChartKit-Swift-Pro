@@ -11,13 +11,8 @@ class FractalChartListVC: UIViewController {
     
     private let cellIdentifier = "ChartCell"
     private var collectionView: UICollectionView!
-    private let chartOptions = [
-        AABoostFractalChartComposer.fractalMandelbrot(),
-        AABoostFractalChartComposer.fractalSierpinskiTreeData(),
-        AABoostFractalChartComposer.fractalSierpinskiTriangleData(),
-        AABoostFractalChartComposer.fractalSierpinskiCarpetData(),
-        AABoostFractalChartComposer.fractalJuliaSetData(),
-    ]
+    private var chartOptions: [AAOptions] = [] // Empty array initially
+    private var isLoading = true // Track loading state
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +20,7 @@ class FractalChartListVC: UIViewController {
         title = "基础分形图示例"
         
         setupCollectionView()
+        loadChartOptionsAsync() // Start loading chart options asynchronously
     }
     
     private func setupCollectionView() {
@@ -55,10 +51,32 @@ class FractalChartListVC: UIViewController {
         ])
     }
     
-    // 创建四种不同的柱状图
-    private func createChartModel(index: Int) -> AAOptions {
-        let aaOptions = chartOptions[index]
-        return aaOptions
+    // 异步加载图表选项
+    private func loadChartOptionsAsync() {
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+            // Generate options in background thread
+            let options = [
+                AABoostFractalChartComposer.fractalMandelbrot(),
+                AABoostFractalChartComposer.fractalSierpinskiTreeData(),
+                AABoostFractalChartComposer.fractalSierpinskiTriangleData(),
+                AABoostFractalChartComposer.fractalSierpinskiCarpetData(),
+                AABoostFractalChartComposer.fractalJuliaSetData(),
+            ]
+            
+            // Return to main thread to update UI
+            DispatchQueue.main.async {
+                guard let self = self else { return }
+                self.chartOptions = options
+                self.isLoading = false
+                self.collectionView.reloadData()
+            }
+        }
+    }
+    
+    // 创建图表模型
+    private func createChartModel(index: Int) -> AAOptions? {
+        guard index < chartOptions.count else { return nil }
+        return chartOptions[index]
     }
 }
 
@@ -71,8 +89,14 @@ extension FractalChartListVC: UICollectionViewDataSource, UICollectionViewDelega
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! ChartCollectionViewCell
         
-        let chartOptions = createChartModel(index: indexPath.item)
-        cell.configureChart(with: chartOptions)
+        if isLoading || indexPath.item >= chartOptions.count {
+            cell.showLoadingIndicator(true)
+        } else {
+            cell.showLoadingIndicator(false)
+            if let chartOptions = createChartModel(index: indexPath.item) {
+                cell.configureChart(with: chartOptions)
+            }
+        }
         
         return cell
     }
@@ -81,6 +105,7 @@ extension FractalChartListVC: UICollectionViewDataSource, UICollectionViewDelega
 // MARK: - 自定义Chart单元格
 class ChartCollectionViewCell: UICollectionViewCell {
     private var aaChartView: AAChartView!
+    private var loadingIndicator: UIActivityIndicatorView!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -92,8 +117,15 @@ class ChartCollectionViewCell: UICollectionViewCell {
     }
     
     private func setupChartView() {
+        // Add chart view
         aaChartView = AAChartView()
         contentView.addSubview(aaChartView)
+        
+        // Add loading indicator
+        loadingIndicator = UIActivityIndicatorView(style: .large)
+        loadingIndicator.color = .gray
+        loadingIndicator.hidesWhenStopped = false
+        contentView.addSubview(loadingIndicator)
         
         // 设置圆角和阴影效果
         contentView.layer.cornerRadius = 12
@@ -108,12 +140,29 @@ class ChartCollectionViewCell: UICollectionViewCell {
         
         // 设置布局
         aaChartView.translatesAutoresizingMaskIntoConstraints = false
+        loadingIndicator.translatesAutoresizingMaskIntoConstraints = false
+        
         NSLayoutConstraint.activate([
             aaChartView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             aaChartView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             aaChartView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            aaChartView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+            aaChartView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            
+            // Center loading indicator
+            loadingIndicator.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            loadingIndicator.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
         ])
+    }
+    
+    // Show or hide loading indicator
+    func showLoadingIndicator(_ show: Bool) {
+        if show {
+            loadingIndicator.startAnimating()
+            loadingIndicator.isHidden = false
+        } else {
+            loadingIndicator.stopAnimating()
+            loadingIndicator.isHidden = true
+        }
     }
     
     // 配置图表显示
