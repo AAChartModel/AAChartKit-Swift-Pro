@@ -147,4 +147,12 @@ class AABoostFractalChartComposer {
         seriesElement.data = AAFractalChartData.generateSierpinskiCarpetData()
         return aaOptions
     }
+    
+    //分形茱莉亚集合图
+    class func fractalJuliaSetData() -> AAOptions {
+        let aaOptions = boostFractalChart()
+        let seriesElement = aaOptions.series?.first as!AASeriesElement
+        seriesElement.data = AAFractalJuliaSetData.generateJuliaSetData()
+        return aaOptions
+    }
 }
