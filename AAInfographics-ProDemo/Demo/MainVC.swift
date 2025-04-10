@@ -44,6 +44,7 @@ class MainVC: UIViewController {
         "DrilldownChart | 可钻取图表",
         "BoostChart | 加速图表",
         "OfficialChartSample | 官方示例",
+        "FractalChartListVC | 分形图表列表",
         "Custom Event2 | 自定义交互事件2",
     ]
     private var chartTypeNameArr = [
@@ -144,6 +145,10 @@ class MainVC: UIViewController {
         // "OfficialChartSample---官方示例",
         [
             "columnChart---柱形图",
+        ],
+        //"FractalChartListVC---分形图表列表",
+        [
+            "FractalChartListVC---分形图表列表",
         ],
         // "Custom Event2---自定义交互事件2",
         [
@@ -281,6 +286,12 @@ extension MainVC: UITableViewDelegate, UITableViewDataSource {
             navigationController?.pushViewController(vc, animated: true)
             
         case 9:
+            let vc = FractalChartListVC()
+//            vc.selectedIndex = indexPath.row
+//            vc.navigationItemTitleArr = chartTypeNameArr[indexPath.section]
+            navigationController?.pushViewController(vc, animated: true)
+            
+        case 10:
             let vc = CustomClickEventCallbackMessageVC2()
             navigationController?.pushViewController(vc, animated: true)
             

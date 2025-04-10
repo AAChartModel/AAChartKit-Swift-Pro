@@ -65,6 +65,7 @@
 		844736082DA635E00040CCCE /* AABoostFractalChartComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844736072DA635E00040CCCE /* AABoostFractalChartComposer.swift */; };
 		8447360A2DA65E0D0040CCCE /* AAFractalChartData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844736092DA65E0D0040CCCE /* AAFractalChartData.swift */; };
 		844736102DA6994D0040CCCE /* AAFractalJuliaSetData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8447360F2DA6994D0040CCCE /* AAFractalJuliaSetData.swift */; };
+		844736122DA79BCF0040CCCE /* FractalChartListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844736112DA79BCF0040CCCE /* FractalChartListVC.swift */; };
 		84526DF72CEB305800EB2563 /* AAOptions+Drilldown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84526DF62CEB305800EB2563 /* AAOptions+Drilldown.swift */; };
 		84526DF92CEB310200EB2563 /* AADrilldown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84526DF82CEB310200EB2563 /* AADrilldown.swift */; };
 		84526DFB2CEB332600EB2563 /* AADrilldownChartComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84526DFA2CEB332600EB2563 /* AADrilldownChartComposer.swift */; };
@@ -217,6 +218,7 @@
 		844736072DA635E00040CCCE /* AABoostFractalChartComposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AABoostFractalChartComposer.swift; sourceTree = "<group>"; };
 		844736092DA65E0D0040CCCE /* AAFractalChartData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AAFractalChartData.swift; sourceTree = "<group>"; };
 		8447360F2DA6994D0040CCCE /* AAFractalJuliaSetData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AAFractalJuliaSetData.swift; sourceTree = "<group>"; };
+		844736112DA79BCF0040CCCE /* FractalChartListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FractalChartListVC.swift; sourceTree = "<group>"; };
 		84526DF62CEB305800EB2563 /* AAOptions+Drilldown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AAOptions+Drilldown.swift"; sourceTree = "<group>"; };
 		84526DF82CEB310200EB2563 /* AADrilldown.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AADrilldown.swift; path = "AAInfographics-ProDemo/Demo/AAPlugins/AADrilldown/AADrilldown.swift"; sourceTree = SOURCE_ROOT; };
 		84526DFA2CEB332600EB2563 /* AADrilldownChartComposer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AADrilldownChartComposer.swift; path = "AAInfographics-ProDemo/Demo/AAPlugins/AADrilldown/AADrilldownChartComposer.swift"; sourceTree = SOURCE_ROOT; };
@@ -568,6 +570,7 @@
 				84DC910D2D2FDDB7002EDC1F /* CustomClickEventCallbackMessageVC2.swift */,
 				845BABE92D02D08A004C15D4 /* OfficialChartSample.swift */,
 				845BABEB2D02D2EB004C15D4 /* OfficialChartSampleVC.swift */,
+				844736112DA79BCF0040CCCE /* FractalChartListVC.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -819,6 +822,7 @@
 				84B13F2F289BDB5F007356C6 /* AASolidgaugeDataElement.swift in Sources */,
 				84461589283F57C600E26DA4 /* AAOptions.swift in Sources */,
 				845BABEA2D02D08A004C15D4 /* OfficialChartSample.swift in Sources */,
+				844736122DA79BCF0040CCCE /* FractalChartListVC.swift in Sources */,
 				844615B5283F580300E26DA4 /* AAPlotBandsElement.swift in Sources */,
 				844615BB283F580300E26DA4 /* AASeries.swift in Sources */,
 				44D27D91255A631500D0C636 /* AABaseChartVC.swift in Sources */,
