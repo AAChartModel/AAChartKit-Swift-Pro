@@ -182,13 +182,15 @@ class AABoostFractalChartComposer {
         seriesElement.data = AAFractalChartData.generateBarnsleyFernData()
         // 蕨类植物使用小圆点可能效果更好
         seriesElement.marker?.radius(0.5)
-//        if let scatter = aaOptions.plotOptions?.scatter {
+//        if let scatter = aaOptions.plotOptions?.scatter { // plotOptions might not exist in base func
 //            scatter.marker?.radius(0.5)
 //        }
-        // 可能需要调整坐标轴范围以更好地显示蕨类
-        aaOptions.xAxis?.min(-300).max(300) // 示例范围，需要根据生成数据调整
-        aaOptions.yAxis?.min(0).max(600)   // 示例范围
+        // Reset axes to default 0-800 as data generation already scales/offsets
+        aaOptions.xAxis?.min(0).max(800)
+        aaOptions.yAxis?.min(0).max(800)
         aaOptions.chart?.zoomType(.xy) // 蕨类细节多，允许缩放
+        // Boost can be kept or removed depending on performance with 50k points
+        // aaOptions.boost = nil
         return aaOptions
     }
 
@@ -205,7 +207,7 @@ class AABoostFractalChartComposer {
        // 可能需要调整坐标轴范围
         aaOptions.xAxis?.min(0).max(800)
         aaOptions.yAxis?.min(100).max(900) // 雪花通常在中间偏上
-//        aaOptions.chart?.zoomType(.xy) // 允许缩放
+        aaOptions.chart?.zoomType(.xy) // 允许缩放
         return aaOptions
     }
 
@@ -237,7 +239,7 @@ class AABoostFractalChartComposer {
 //        }
         aaOptions.xAxis?.min(100).max(700)
         aaOptions.yAxis?.min(100).max(700)
-//        aaOptions.chart?.zoomType(.xy)
+        aaOptions.chart?.zoomType(.xy)
         aaOptions.boost = nil // Might not need boost
         return aaOptions
     }
@@ -254,7 +256,7 @@ class AABoostFractalChartComposer {
         // Use default 0-800 axes for pixel mapping
         aaOptions.xAxis?.min(0).max(800)
         aaOptions.yAxis?.min(0).max(800)
-//        aaOptions.chart?.zoomType(.xy) // Allow zoom
+        aaOptions.chart?.zoomType(.xy) // Allow zoom
         // Keep boost enabled for escape time fractals
         return aaOptions
     }
@@ -270,7 +272,7 @@ class AABoostFractalChartComposer {
 //        }
         aaOptions.xAxis?.min(0).max(800)
         aaOptions.yAxis?.min(0).max(800)
-//        aaOptions.chart?.zoomType(.xy)
+        aaOptions.chart?.zoomType(.xy)
         // Keep boost enabled
         return aaOptions
     }
