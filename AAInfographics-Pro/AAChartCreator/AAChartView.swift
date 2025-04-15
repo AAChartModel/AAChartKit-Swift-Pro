@@ -209,6 +209,8 @@ public class AAChartView: WKWebView {
             }
             
             let path = scriptsArray[index]
+        
+
             do {
                 let jsString = try String(contentsOfFile: path, encoding: .utf8)
                 evaluateJavaScript(jsString) { result, error in
@@ -298,8 +300,201 @@ public class AAChartView: WKWebView {
         }
     }
     
+    /*
+     <!--            <script src="AAModules/AASankey.js"></script>-->
+     <!--            <script src="AAModules/AADependency-Wheel.js"></script>-->
+     <!--            <script src="AAModules/AAOldie.js"></script>-->
+     <!--            <script src="AAModules/AAVariable-Pie.js"></script>-->
+     <!--            <script src="AAModules/AATreemap.js"></script>-->
+     <!--            <script src="AAModules/AAVariwide.js"></script>-->
+     <!--            <script src="AAModules/AASunburst.js"></script>-->
+     <!--            <script src="AAModules/AAHeatmap.js"></script>-->
+     <!--            <script src="AAModules/AAStreamgraph.js"></script>-->
+     <!--            <script src="AAModules/AAVenn.js"></script>-->
+     <!--            <script src="AAModules/AATilemap.js"></script>-->
+     <!--            <script src="AAModules/AADumbbell.js"></script>-->
+     <!--            <script src="AAModules/AALollipop.js"></script>-->
+     <!--            <script src="AAModules/AAXrange.js"></script>-->
+     <!--            <script src="AAModules/AAVector.js"></script>-->
+     <!--            <script src="AAModules/AAHistogram-Bellcurve.js"></script>-->
+     <!--            <script src="AAModules/AATimeline.js"></script>-->
+     <!--            <script src="AAModules/AAItem-Series.js"></script>-->
+     <!--            <script src="AAModules/AAWindbarb.js"></script>-->
+     <!--            <script src="AAModules/AANetworkgraph.js"></script>-->
+     <!--            <script src="AAModules/AAWordcloud.js"></script>-->
+     <!--            <script src="AAModules/AASolid-Gauge.js"></script>-->
+     <!--            <script src="AAModules/AAPareto.js"></script>-->
+     <!--            <script src="AAModules/AABullet.js"></script>-->
+     */
+    //向 pluginsArray 数组中添加插件脚本路径(避免重复添加)
+    private func addChartPluginScriptsArrayForProTypeChart(_ chartType: String?) {
+//        let chartType = aaOptions.chart?.type
+        if chartType == AAChartType.sankey.rawValue {
+            pluginsArray.append(generateScriptPathWithScriptName("AASankey"))
+        } else if chartType == AAChartType.dependencywheel.rawValue {
+            pluginsArray.append(generateScriptPathWithScriptName("AASankey"))
+            pluginsArray.append(generateScriptPathWithScriptName("AADependency-Wheel"))
+        }
+//        else if chartType == AAChartType.oldie.rawValue {
+//            pluginsArray.append(generateScriptPathWithScriptName("AAOldie"))
+//        }
+        else if chartType == AAChartType.variablepie.rawValue {
+            pluginsArray.append(generateScriptPathWithScriptName("AAVariable-Pie"))
+        } else if chartType == AAChartType.treemap.rawValue {
+            pluginsArray.append(generateScriptPathWithScriptName("AATreemap"))
+        } else if chartType == AAChartType.variwide.rawValue {
+            pluginsArray.append(generateScriptPathWithScriptName("AAVariwide"))
+        } else if chartType == AAChartType.sunburst.rawValue {
+            pluginsArray.append(generateScriptPathWithScriptName("AASunburst"))
+        } else if chartType == AAChartType.heatmap.rawValue {
+            pluginsArray.append(generateScriptPathWithScriptName("AAHeatmap"))
+        } else if chartType == AAChartType.streamgraph.rawValue {
+            pluginsArray.append(generateScriptPathWithScriptName("AAStreamgraph"))
+        } else if chartType == AAChartType.venn.rawValue {
+            pluginsArray.append(generateScriptPathWithScriptName("AAVenn"))
+        } else if chartType == AAChartType.tilemap.rawValue {
+            pluginsArray.append(generateScriptPathWithScriptName("AAHeatmap"))
+            pluginsArray.append(generateScriptPathWithScriptName("AATilemap"))
+        } else if chartType == AAChartType.dumbbell.rawValue {
+            pluginsArray.append(generateScriptPathWithScriptName("AADumbbell"))
+        } else if chartType == AAChartType.lollipop.rawValue {
+            pluginsArray.append(generateScriptPathWithScriptName("AADumbbell"))
+            pluginsArray.append(generateScriptPathWithScriptName("AALollipop"))
+        } else if chartType == AAChartType.xrange.rawValue {
+            pluginsArray.append(generateScriptPathWithScriptName("AAXrange"))
+        } else if chartType == AAChartType.vector.rawValue {
+            pluginsArray.append(generateScriptPathWithScriptName("AAVector"))
+        } else if chartType == AAChartType.histogram.rawValue {
+            pluginsArray.append(generateScriptPathWithScriptName("AAHistogram-Bellcurve"))
+        }
+        else if chartType == AAChartType.bellcurve.rawValue {
+            pluginsArray.append(generateScriptPathWithScriptName("AAHistogram-Bellcurve"))
+        }
+        
+        else if chartType == AAChartType.timeline.rawValue {
+            pluginsArray.append(generateScriptPathWithScriptName("AATimeline"))
+        }
+        else if chartType == AAChartType.item.rawValue {
+            pluginsArray.append(generateScriptPathWithScriptName("AAItem-Series"))
+        }
+else if chartType == AAChartType.windbarb.rawValue {
+            pluginsArray.append(generateScriptPathWithScriptName("AAWindbarb"))
+        } else if chartType == AAChartType.networkgraph.rawValue {
+            pluginsArray.append(generateScriptPathWithScriptName("AANetworkgraph"))
+        } else if chartType == AAChartType.wordcloud.rawValue {
+            pluginsArray.append(generateScriptPathWithScriptName("AAWordcloud"))
+        } else if chartType == AAChartType.solidgauge.rawValue {
+            pluginsArray.append(generateScriptPathWithScriptName("AASolid-Gauge"))
+        } 
+//        else if chartType == AAChartType.pareto.rawValue {
+//            pluginsArray.append(generateScriptPathWithScriptName("AAPareto"))
+//        } 
+        else if chartType == AAChartType.bullet.rawValue {
+            pluginsArray.append(generateScriptPathWithScriptName("AABullet"))
+        }
+
+        
+        //<!--            <script src="AAModules/AAPattern-Fill.js"></script>-->
+//        <!--            <script src="AAModules/AAOrganization.js"></script>-->
+//        <!--            <script src="AAModules/AAArc-Diagram.js"></script>-->
+//        <!--            <script src="AAModules/AAFlame.js"></script>-->
+//        <!--            <script src="AAModules/AAData.js"></script>-->
+//        <!--            <script src="AAModules/AAParallel-coordinates.js"></script>-->
+        else if chartType == AAChartType.organization.rawValue {
+            pluginsArray.append(generateScriptPathWithScriptName("AASankey"))
+            pluginsArray.append(generateScriptPathWithScriptName("AAOrganization"))
+        }
+        else if chartType == AAChartType.arcdiagram.rawValue {
+            pluginsArray.append(generateScriptPathWithScriptName("AASankey"))
+            pluginsArray.append(generateScriptPathWithScriptName("AAArc-Diagram"))
+        }
+        else if chartType == AAChartType.flame.rawValue {
+            pluginsArray.append(generateScriptPathWithScriptName("AAFlame"))
+        }
+//        else if chartType == AAChartType.pa.rawValue {
+//            pluginsArray.append(generateScriptPathWithScriptName("AATimeline"))
+//        }
+        //打印 pluginsArray 数组的内容
+        #if DEBUG
+        print("🔌🔌🔌pluginsArray for pro type chart: \(pluginsArray)")
+        #endif
+    }
+    
+    private func addChartPluginScriptsArrayForAAOptions(_ aaOptions: AAOptions?) {
+        if aaOptions?.chart?.parallelCoordinates == true {
+            pluginsArray.append(generateScriptPathWithScriptName("AAParallel-coordinates"))
+        }
+        if aaOptions?.data != nil {
+            pluginsArray.append(generateScriptPathWithScriptName("AAData"))
+        }
+//        if aaOptions?.colorAxis != nil {
+//            pluginsArray.append(generateScriptPathWithScriptName(""))
+//        }
+        
+        //打印 pluginsArray 数组的内容
+        #if DEBUG
+        print("🔌🔌🔌pluginsArray for AAOptions: \(pluginsArray)")
+        #endif
+    }
+    
+    //判断 AAOptions 是否为除了基础类型之外的特殊类型
+    private func isSpecialProTypeChart(_ aaOptions: AAOptions) {
+        addChartPluginScriptsArrayForAAOptions(aaOptions)
+        
+        let aaChartType = aaOptions.chart?.type
+        addChartPluginScriptsArrayForProTypeChart(aaChartType)
+        //遍历 series 数组的每个元素,判断是否为特殊类型图表
+        if aaOptions.series != nil {
+            for aaSeriesElement in aaOptions.series! {
+                let finalSeriesElement = aaSeriesElement as? AASeriesElement
+                if finalSeriesElement?.type != nil {
+                    let aaSeriesType = finalSeriesElement?.type
+                    addChartPluginScriptsArrayForProTypeChart(aaSeriesType)
+                        
+                    }
+                }
+            }
+        }
+    
+  
+    /**
+    //通过脚本文件名, 生成脚本路径
+    private func generateScriptPathWithScriptName(_ scriptName: String) -> String {
+//        /Users/admin/Documents/GitHub/AAChartKit-Swift-Pro/AAInfographics-Pro/AAJSFiles.bundle/AAModules/AASankey.js
+//       let testPath = BundlePathLoader().path(forResource: scriptName, ofType: "js", inDirectory: "AAJSFiles.bundle")
+//        let urlStr = NSURL.fileURL(withPath: testPath ?? "")
+//        
+//        //打印 urlStr 路径
+//        print("🧠🧠🚀urlStr: \(urlStr)")
+//        testPrintHtmlPath()
+
+       let path = Bundle.main.path(forResource: scriptName, ofType: "js") ?? ""
+        return path
+        
+//        return urlStr.absoluteString
+    }
+     */
+    
+    private func generateScriptPathWithScriptName(_ scriptName: String) -> String {
+        let path = BundlePathLoader()
+            .path(forResource: scriptName,
+                  ofType: "js",
+                  inDirectory: "AAJSFiles.bundle/AAModules")
+        let urlStr = NSURL.fileURL(withPath: path!)
+        //打印 urlStr 路径
+        print("🫁🫁🫁urlStr: \(urlStr)")
+
+        //打印 urlStr 路径文件的内容
+        let jsContent = try? String(contentsOf: urlStr)
+        print(try? jsContent ?? "")
+        return urlStr.path
+    }
+    
     private func configureOptionsJsonStringWithAAOptions(_ aaOptions: AAOptions) {
         pluginsArray = aaOptions.pluginsArray ?? []
+        isSpecialProTypeChart(aaOptions)
+        
+//        addChartPluginScriptsArray(aaOptions)
 
         //        if (aaOptions.beforeDrawChartJavaScript) {
         //            _beforeDrawChartJavaScript = aaOptions.beforeDrawChartJavaScript;
@@ -439,6 +634,8 @@ extension AAChartView {
                       ofType: "html",
                       inDirectory: "AAJSFiles.bundle")
             let urlStr = NSURL.fileURL(withPath: path!)
+            //打印 urlStr 路径文件的内容
+//            print(try? String(contentsOf: urlStr) ?? "")
             let urlRequest = NSURLRequest(url: urlStr) as URLRequest
             load(urlRequest)
         } else {
@@ -467,7 +664,7 @@ extension AAChartView {
     /// - Parameter aaOptions: The instance object of AAOptions model
     public func aa_refreshChartWholeContentWithChartOptions(_ aaOptions: AAOptions) {
         configureOptionsJsonStringWithAAOptions(aaOptions)
-        drawChart()
+        loadAllPluginsAndDrawChart()
     }
 }
 
