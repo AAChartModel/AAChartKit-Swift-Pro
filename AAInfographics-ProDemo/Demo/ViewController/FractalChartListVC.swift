@@ -51,7 +51,7 @@ class FractalChartListVC: UIViewController {
         ])
     }
 
-    
+   
     // 异步加载图表选项
     private func loadChartOptionsAsync() {
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
@@ -64,6 +64,12 @@ class FractalChartListVC: UIViewController {
                 AABoostFractalChartComposer.fractalJuliaSetData(),
                 AABoostFractalChartComposer.fractalBarnsleyFern(),
                 AABoostFractalChartComposer.fractalKochSnowflake(),
+                
+                AABoostFractalChartComposer.fractalDragonCurve(),
+                AABoostFractalChartComposer.fractalLevyCCurve(),
+                AABoostFractalChartComposer.fractalBurningShip(),
+                AABoostFractalChartComposer.fractalNewton(),
+                AABoostFractalChartComposer.fractalVicsek(),
                 
             ]
             
@@ -87,7 +93,7 @@ class FractalChartListVC: UIViewController {
 // MARK: - UICollectionViewDataSource & UICollectionViewDelegate
 extension FractalChartListVC: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 7
+        return 7 + 5 // 7个分形图 + 5个其他图
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

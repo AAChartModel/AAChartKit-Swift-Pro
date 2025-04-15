@@ -58,14 +58,16 @@ class AABoostFractalChartComposer {
      });
 
      */
+    private class func boostFractalChart(titleText: String) -> AAOptions {
         // 配置 AAChartKit 图表选项
         let chart = AAChart()
             .type(.scatter)
-//            .zoomType(.xy)
+        //            .zoomType(.xy)
             .backgroundColor(AAColor.black)
-//                .useGPUTranslations(true)
-//                .usePreallocated(true)
-//                .seriesThreshold(1))
+        //            .boost(AABoost()
+        //                .useGPUTranslations(true)
+        //                .usePreallocated(true)
+        //                .seriesThreshold(1))
         
         let boost = AABoost()
             .useGPUTranslations(true)
@@ -73,26 +75,29 @@ class AABoostFractalChartComposer {
             .seriesThreshold(1)
         
         let title = AATitle()
+            .text(titleText)
             .style(AAStyle()
                 .color("#e0f0ff")
-//                .fontSize("24px")
+                   //                .fontSize("24px")
                 .textOutline("0 0 5px #ffffff"))
         
         let xAxis = AAXAxis()
             .min(0)
+            .max(800)
             .visible(false)
             .startOnTick(false)
             .endOnTick(false)
         
         let yAxis = AAYAxis()
             .min(0)
+            .max(800)
             .visible(false)
             .startOnTick(false)
             .endOnTick(false)
         
         let seriesElement = AASeriesElement()
-            .name("Fractal") // 通用名称
-            // .data(...) // 数据将在具体函数中设置
+            .name("Carpet")
+        //            .data(AAFractalChartData.generateSierpinskiTriangleData())
             .marker(AAMarker()
                 .radius(1)
                 .symbol(AAChartSymbolType.square.rawValue)
@@ -200,7 +205,90 @@ class AABoostFractalChartComposer {
        // 可能需要调整坐标轴范围
         aaOptions.xAxis?.min(0).max(800)
         aaOptions.yAxis?.min(100).max(900) // 雪花通常在中间偏上
-        aaOptions.chart?.zoomType(.xy) // 允许缩放
+//        aaOptions.chart?.zoomType(.xy) // 允许缩放
         return aaOptions
     }
-}
+
+    // 新增：龙形曲线
+    class func fractalDragonCurve() -> AAOptions {
+        let aaOptions = boostFractalChart(titleText: "Dragon Curve")
+        let seriesElement = aaOptions.series?.first as! AASeriesElement
+        seriesElement.data = AAExtraFractalChartData.generateDragonCurveData()
+        seriesElement.marker?.radius(0.5) // Small radius for line-like appearance
+//        if let scatter = aaOptions.plotOptions?.scatter {
+//            scatter.marker?.radius(0.5)
+//        }
+        // Adjust axes if needed, Dragon curve tends to grow
+        aaOptions.xAxis?.min(100).max(700)
+        aaOptions.yAxis?.min(100).max(700)
+//        aaOptions.chart?.zoomType(.xy)
+        aaOptions.boost = nil // Might not need boost
+        return aaOptions
+    }
+
+    // 新增：Levy C 曲线
+    class func fractalLevyCCurve() -> AAOptions {
+        let aaOptions = boostFractalChart(titleText: "Levy C Curve")
+        let seriesElement = aaOptions.series?.first as! AASeriesElement
+        seriesElement.data = AAExtraFractalChartData.generateLevyCCurveData()
+        seriesElement.marker?.radius(0.6)
+//        if let scatter = aaOptions.plotOptions?.scatter {
+//            scatter.marker?.radius(0.6)
+//        }
+        aaOptions.xAxis?.min(100).max(700)
+        aaOptions.yAxis?.min(100).max(700)
+//        aaOptions.chart?.zoomType(.xy)
+        aaOptions.boost = nil // Might not need boost
+        return aaOptions
+    }
+
+    // 新增：燃烧船分形
+    class func fractalBurningShip() -> AAOptions {
+        let aaOptions = boostFractalChart(titleText: "Burning Ship Fractal")
+        let seriesElement = aaOptions.series?.first as! AASeriesElement
+        seriesElement.data = AAExtraFractalChartData.generateBurningShipData()
+        seriesElement.marker?.symbol(AAChartSymbolType.square.rawValue).radius(1) // Use squares like Mandelbrot
+//        if let scatter = aaOptions.plotOptions?.scatter {
+//            scatter.marker?.symbol(AAChartSymbolType.square.rawValue).radius(1)
+//        }
+        // Use default 0-800 axes for pixel mapping
+        aaOptions.xAxis?.min(0).max(800)
+        aaOptions.yAxis?.min(0).max(800)
+//        aaOptions.chart?.zoomType(.xy) // Allow zoom
+        // Keep boost enabled for escape time fractals
+        return aaOptions
+    }
+
+    // 新增：牛顿分形 (z^3 - 1)
+    class func fractalNewton() -> AAOptions {
+        let aaOptions = boostFractalChart(titleText: "Newton Fractal (z³ - 1)")
+        let seriesElement = aaOptions.series?.first as! AASeriesElement
+        seriesElement.data = AAExtraFractalChartData.generateNewtonFractalData()
+        seriesElement.marker?.symbol(AAChartSymbolType.square.rawValue).radius(1)
+//        if let scatter = aaOptions.plotOptions?.scatter {
+//            scatter.marker?.symbol(AAChartSymbolType.square.rawValue).radius(1)
+//        }
+        aaOptions.xAxis?.min(0).max(800)
+        aaOptions.yAxis?.min(0).max(800)
+//        aaOptions.chart?.zoomType(.xy)
+        // Keep boost enabled
+        return aaOptions
+    }
+
+    // 新增：Vicsek 分形
+    class func fractalVicsek() -> AAOptions {
+        let aaOptions = boostFractalChart(titleText: "Vicsek Fractal")
+        let seriesElement = aaOptions.series?.first as! AASeriesElement
+        seriesElement.data = AAExtraFractalChartData.generateVicsekFractalData()
+        seriesElement.marker?.symbol(AAChartSymbolType.square.rawValue).radius(0.8) // Squares fit the theme
+//        if let scatter = aaOptions.plotOptions?.scatter {
+//            scatter.marker?.symbol(AAChartSymbolType.square.rawValue).radius(0.8)
+//        }
+        aaOptions.xAxis?.min(0).max(800)
+        aaOptions.yAxis?.min(0).max(800)
+        aaOptions.chart?.zoomType(.xy)
+        aaOptions.boost = nil // Probably not needed
+        return aaOptions
+    }
+
+} // End of AABoostFractalChartComposer class
