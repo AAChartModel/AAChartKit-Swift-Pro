@@ -16,8 +16,8 @@ class AABoostChartVC: AABaseChartVC {
          NSString *jsPath = [[NSBundle mainBundle] pathForResource:@"AADrilldown" ofType:@"js"];
          self.aaChartView.pluginsArray = @[jsPath];
          */
-//        let jsPath: String = Bundle.main.path(forResource: "AABoost", ofType: "js") ?? ""
-//        self.aaChartView?.pluginsArray = [jsPath]
+        let jsPath: String = Bundle.main.path(forResource: "AABoost", ofType: "js") ?? ""
+        self.aaChartView?.jsPluginsArray = [jsPath]
         
         //输出查看 AAOption 的 computedProperties 内容
 //        AAOptions *aaOptions = [self chartConfigurationWithSelectedIndex:self.selectedIndex];
@@ -54,10 +54,6 @@ class AABoostChartVC: AABaseChartVC {
         case 2: return AABoostFractalChartComposer.fractalSierpinskiTriangleData()
         case 3: return AABoostFractalChartComposer.fractalSierpinskiCarpetData()
             
-//                .pluginsArray([Bundle.main.path(forResource: "AABoost", ofType: "js") ?? ""])
-//        case 1: return AABoostChartComposer.areaChart().pluginsArray([Bundle.main.path(forResource: "AABoost", ofType: "js") ?? ""])
-//        case 2: return AABoostChartComposer.columnChart().pluginsArray([Bundle.main.path(forResource: "AABoost", ofType: "js") ?? ""])
-//        case 3: return AABoostChartComposer.scatterChartWith1MillionPoints().pluginsArray([Bundle.main.path(forResource: "AABoost", ofType: "js") ?? ""])
             
         default: return nil
         }
