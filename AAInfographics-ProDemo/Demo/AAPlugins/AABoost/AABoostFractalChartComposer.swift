@@ -62,7 +62,7 @@ class AABoostFractalChartComposer {
         // 配置 AAChartKit 图表选项
         let chart = AAChart()
             .type(.scatter)
-        //            .zoomType(.xy)
+            .zoomType(.xy)
             .backgroundColor(AAColor.black)
         //            .boost(AABoost()
         //                .useGPUTranslations(true)
@@ -121,9 +121,7 @@ class AABoostFractalChartComposer {
         let seriesElement = aaOptions.series?.first as! AASeriesElement
         seriesElement.data = AAFractalChartData.generateMandelbrotData()
         seriesElement.marker?.symbol(AAChartSymbolType.square.rawValue) // Mandelbrot 用方形
-//        if let scatter = aaOptions.plotOptions?.scatter {
-//            scatter.marker?.symbol(AAChartSymbolType.square.rawValue)
-//        }
+
         return aaOptions
     }
     
@@ -145,9 +143,6 @@ class AABoostFractalChartComposer {
         let seriesElement = aaOptions.series?.first as! AASeriesElement
         seriesElement.data = AAFractalChartData.generateSierpinskiTriangleData()
         seriesElement.marker?.symbol(AAChartSymbolType.triangle.rawValue) // 三角形用三角形标记
-//        if let scatter = aaOptions.plotOptions?.scatter {
-//            scatter.marker?.symbol(AAChartSymbolType.triangle.rawValue)
-//        }
         return aaOptions
     }
     
@@ -157,9 +152,6 @@ class AABoostFractalChartComposer {
         let seriesElement = aaOptions.series?.first as! AASeriesElement
         seriesElement.data = AAFractalChartData.generateSierpinskiCarpetData()
         seriesElement.marker?.symbol(AAChartSymbolType.square.rawValue) // 地毯用方形标记
-//        if let scatter = aaOptions.plotOptions?.scatter {
-//            scatter.marker?.symbol(AAChartSymbolType.square.rawValue)
-//        }
         return aaOptions
     }
     
@@ -169,9 +161,6 @@ class AABoostFractalChartComposer {
         let seriesElement = aaOptions.series?.first as! AASeriesElement
         seriesElement.data = AAFractalJuliaSetData.generateJuliaSetData()
         seriesElement.marker?.symbol(AAChartSymbolType.square.rawValue) // Julia Set 也常用方形
-//         if let scatter = aaOptions.plotOptions?.scatter {
-//            scatter.marker?.symbol(AAChartSymbolType.square.rawValue)
-//        }
        return aaOptions
     }
 
@@ -182,13 +171,10 @@ class AABoostFractalChartComposer {
         seriesElement.data = AAFractalChartData.generateBarnsleyFernData()
         // 蕨类植物使用小圆点可能效果更好
         seriesElement.marker?.radius(0.5)
-//        if let scatter = aaOptions.plotOptions?.scatter { // plotOptions might not exist in base func
-//            scatter.marker?.radius(0.5)
-//        }
+
         // Reset axes to default 0-800 as data generation already scales/offsets
         aaOptions.xAxis?.min(0).max(800)
         aaOptions.yAxis?.min(0).max(800)
-        aaOptions.chart?.zoomType(.xy) // 蕨类细节多，允许缩放
         // Boost can be kept or removed depending on performance with 50k points
         // aaOptions.boost = nil
         return aaOptions
@@ -201,13 +187,10 @@ class AABoostFractalChartComposer {
         seriesElement.data = AAFractalChartData.generateKochSnowflakeData()
         // 雪花可以用小圆点
         seriesElement.marker?.radius(0.8)
-//         if let scatter = aaOptions.plotOptions?.scatter {
-//            scatter.marker?.radius(0.8)
-//        }
+
        // 可能需要调整坐标轴范围
         aaOptions.xAxis?.min(0).max(800)
         aaOptions.yAxis?.min(100).max(900) // 雪花通常在中间偏上
-        aaOptions.chart?.zoomType(.xy) // 允许缩放
         return aaOptions
     }
 
@@ -217,13 +200,10 @@ class AABoostFractalChartComposer {
         let seriesElement = aaOptions.series?.first as! AASeriesElement
         seriesElement.data = AAExtraFractalChartData.generateDragonCurveData()
         seriesElement.marker?.radius(0.5) // Small radius for line-like appearance
-//        if let scatter = aaOptions.plotOptions?.scatter { // plotOptions might not exist in base func
-//            scatter.marker?.radius(0.5)
-//        }
+
         // Reset axes to default 0-800 to see the full extent
         aaOptions.xAxis?.min(0).max(800)
         aaOptions.yAxis?.min(0).max(800)
-        aaOptions.chart?.zoomType(.xy) // Ensure zoom is enabled
         aaOptions.boost = nil // Might not need boost, can be re-enabled if slow
         return aaOptions
     }
@@ -234,12 +214,9 @@ class AABoostFractalChartComposer {
         let seriesElement = aaOptions.series?.first as! AASeriesElement
         seriesElement.data = AAExtraFractalChartData.generateLevyCCurveData()
         seriesElement.marker?.radius(0.6)
-//        if let scatter = aaOptions.plotOptions?.scatter {
-//            scatter.marker?.radius(0.6)
-//        }
+
         aaOptions.xAxis?.min(100).max(700)
         aaOptions.yAxis?.min(100).max(700)
-        aaOptions.chart?.zoomType(.xy)
         aaOptions.boost = nil // Might not need boost
         return aaOptions
     }
@@ -250,13 +227,10 @@ class AABoostFractalChartComposer {
         let seriesElement = aaOptions.series?.first as! AASeriesElement
         seriesElement.data = AAExtraFractalChartData.generateBurningShipData()
         seriesElement.marker?.symbol(AAChartSymbolType.square.rawValue).radius(1) // Use squares like Mandelbrot
-//        if let scatter = aaOptions.plotOptions?.scatter {
-//            scatter.marker?.symbol(AAChartSymbolType.square.rawValue).radius(1)
-//        }
+
         // Use default 0-800 axes for pixel mapping
         aaOptions.xAxis?.min(0).max(800)
         aaOptions.yAxis?.min(0).max(800)
-        aaOptions.chart?.zoomType(.xy) // Allow zoom
         // Keep boost enabled for escape time fractals
         return aaOptions
     }
@@ -267,12 +241,9 @@ class AABoostFractalChartComposer {
         let seriesElement = aaOptions.series?.first as! AASeriesElement
         seriesElement.data = AAExtraFractalChartData.generateNewtonFractalData()
         seriesElement.marker?.symbol(AAChartSymbolType.square.rawValue).radius(1)
-//        if let scatter = aaOptions.plotOptions?.scatter {
-//            scatter.marker?.symbol(AAChartSymbolType.square.rawValue).radius(1)
-//        }
+
         aaOptions.xAxis?.min(0).max(800)
         aaOptions.yAxis?.min(0).max(800)
-        aaOptions.chart?.zoomType(.xy)
         // Keep boost enabled
         return aaOptions
     }
@@ -283,12 +254,9 @@ class AABoostFractalChartComposer {
         let seriesElement = aaOptions.series?.first as! AASeriesElement
         seriesElement.data = AAExtraFractalChartData.generateVicsekFractalData()
         seriesElement.marker?.symbol(AAChartSymbolType.square.rawValue).radius(0.8) // Squares fit the theme
-//        if let scatter = aaOptions.plotOptions?.scatter {
-//            scatter.marker?.symbol(AAChartSymbolType.square.rawValue).radius(0.8)
-//        }
+
         aaOptions.xAxis?.min(0).max(800)
         aaOptions.yAxis?.min(0).max(800)
-        aaOptions.chart?.zoomType(.xy)
         aaOptions.boost = nil // Probably not needed
         return aaOptions
     }
