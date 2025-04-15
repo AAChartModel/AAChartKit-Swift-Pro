@@ -148,10 +148,12 @@ class ChartCollectionViewCell: UICollectionViewCell {
         aaChartView.layer.cornerRadius = 12
         aaChartView.layer.masksToBounds = true
         
+        let jsPath: String = Bundle.main.path(forResource: "AABoost", ofType: "js") ?? ""
+        self.aaChartView?.jsPluginsArray = [jsPath]
+        
         // 设置布局
         aaChartView.translatesAutoresizingMaskIntoConstraints = false
         loadingIndicator.translatesAutoresizingMaskIntoConstraints = false
-        
         NSLayoutConstraint.activate([
             aaChartView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             aaChartView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
