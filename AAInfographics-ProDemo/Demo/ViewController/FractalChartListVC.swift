@@ -50,6 +50,7 @@ class FractalChartListVC: UIViewController {
             collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
+
     
     // 异步加载图表选项
     private func loadChartOptionsAsync() {
@@ -61,6 +62,9 @@ class FractalChartListVC: UIViewController {
                 AABoostFractalChartComposer.fractalSierpinskiTriangleData(),
                 AABoostFractalChartComposer.fractalSierpinskiCarpetData(),
                 AABoostFractalChartComposer.fractalJuliaSetData(),
+                AABoostFractalChartComposer.fractalBarnsleyFern(),
+                AABoostFractalChartComposer.fractalKochSnowflake(),
+                
             ]
             
             // Return to main thread to update UI
@@ -83,7 +87,7 @@ class FractalChartListVC: UIViewController {
 // MARK: - UICollectionViewDataSource & UICollectionViewDelegate
 extension FractalChartListVC: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return 7
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

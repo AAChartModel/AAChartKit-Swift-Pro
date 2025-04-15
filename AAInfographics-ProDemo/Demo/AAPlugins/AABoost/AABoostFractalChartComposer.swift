@@ -58,13 +58,11 @@ class AABoostFractalChartComposer {
      });
 
      */
-    private class func boostFractalChart() -> AAOptions {
         // 配置 AAChartKit 图表选项
         let chart = AAChart()
             .type(.scatter)
 //            .zoomType(.xy)
             .backgroundColor(AAColor.black)
-//            .boost(AABoost()
 //                .useGPUTranslations(true)
 //                .usePreallocated(true)
 //                .seriesThreshold(1))
@@ -75,7 +73,6 @@ class AABoostFractalChartComposer {
             .seriesThreshold(1)
         
         let title = AATitle()
-            .text("Colorful Sierpinski Carpet")
             .style(AAStyle()
                 .color("#e0f0ff")
 //                .fontSize("24px")
@@ -83,21 +80,19 @@ class AABoostFractalChartComposer {
         
         let xAxis = AAXAxis()
             .min(0)
-            .max(800)
             .visible(false)
             .startOnTick(false)
             .endOnTick(false)
         
         let yAxis = AAYAxis()
             .min(0)
-            .max(800)
             .visible(false)
             .startOnTick(false)
             .endOnTick(false)
         
         let seriesElement = AASeriesElement()
-            .name("Carpet")
-//            .data(AAFractalChartData.generateSierpinskiTriangleData())
+            .name("Fractal") // 通用名称
+            // .data(...) // 数据将在具体函数中设置
             .marker(AAMarker()
                 .radius(1)
                 .symbol(AAChartSymbolType.square.rawValue)
@@ -117,42 +112,95 @@ class AABoostFractalChartComposer {
     
     //分形曼德尔布罗特图
     class func fractalMandelbrot() -> AAOptions {
-        let aaOptions = boostFractalChart()
-        let seriesElement = aaOptions.series?.first as!AASeriesElement
+        let aaOptions = boostFractalChart(titleText: "Mandelbrot Set") // 更新标题
+        let seriesElement = aaOptions.series?.first as! AASeriesElement
         seriesElement.data = AAFractalChartData.generateMandelbrotData()
+        seriesElement.marker?.symbol(AAChartSymbolType.square.rawValue) // Mandelbrot 用方形
+//        if let scatter = aaOptions.plotOptions?.scatter {
+//            scatter.marker?.symbol(AAChartSymbolType.square.rawValue)
+//        }
         return aaOptions
     }
     
     //分形谢尔宾斯基树图
     class func fractalSierpinskiTreeData() -> AAOptions {
-        let aaOptions = boostFractalChart()
-        let seriesElement = aaOptions.series?.first as!AASeriesElement
+        let aaOptions = boostFractalChart(titleText: "Fractal Canopy Tree") // 更新标题
+        let seriesElement = aaOptions.series?.first as! AASeriesElement
         seriesElement.data = AAFractalChartData.generateSierpinskiTreeData()
-        aaOptions.boost = nil
+        aaOptions.boost = nil // 树的点可能不多，禁用 boost
+        // 树形结构可能需要调整坐标轴范围
+        aaOptions.xAxis?.max(800)
+        aaOptions.yAxis?.max(800)
         return aaOptions
     }
     
     //分形谢尔宾斯基三角形图
     class func fractalSierpinskiTriangleData() -> AAOptions {
-        let aaOptions = boostFractalChart()
-        let seriesElement = aaOptions.series?.first as!AASeriesElement
+        let aaOptions = boostFractalChart(titleText: "Sierpinski Triangle") // 更新标题
+        let seriesElement = aaOptions.series?.first as! AASeriesElement
         seriesElement.data = AAFractalChartData.generateSierpinskiTriangleData()
+        seriesElement.marker?.symbol(AAChartSymbolType.triangle.rawValue) // 三角形用三角形标记
+//        if let scatter = aaOptions.plotOptions?.scatter {
+//            scatter.marker?.symbol(AAChartSymbolType.triangle.rawValue)
+//        }
         return aaOptions
     }
     
     //分形谢尔宾斯基地毯图
     class func fractalSierpinskiCarpetData() -> AAOptions {
-        let aaOptions = boostFractalChart()
-        let seriesElement = aaOptions.series?.first as!AASeriesElement
+        let aaOptions = boostFractalChart(titleText: "Sierpinski Carpet") // 更新标题
+        let seriesElement = aaOptions.series?.first as! AASeriesElement
         seriesElement.data = AAFractalChartData.generateSierpinskiCarpetData()
+        seriesElement.marker?.symbol(AAChartSymbolType.square.rawValue) // 地毯用方形标记
+//        if let scatter = aaOptions.plotOptions?.scatter {
+//            scatter.marker?.symbol(AAChartSymbolType.square.rawValue)
+//        }
         return aaOptions
     }
     
     //分形茱莉亚集合图
     class func fractalJuliaSetData() -> AAOptions {
-        let aaOptions = boostFractalChart()
-        let seriesElement = aaOptions.series?.first as!AASeriesElement
+        let aaOptions = boostFractalChart(titleText: "Julia Set") // 更新标题
+        let seriesElement = aaOptions.series?.first as! AASeriesElement
         seriesElement.data = AAFractalJuliaSetData.generateJuliaSetData()
+        seriesElement.marker?.symbol(AAChartSymbolType.square.rawValue) // Julia Set 也常用方形
+//         if let scatter = aaOptions.plotOptions?.scatter {
+//            scatter.marker?.symbol(AAChartSymbolType.square.rawValue)
+//        }
+       return aaOptions
+    }
+
+    // 新增：巴恩斯利蕨
+    class func fractalBarnsleyFern() -> AAOptions {
+        let aaOptions = boostFractalChart(titleText: "Barnsley Fern")
+        let seriesElement = aaOptions.series?.first as! AASeriesElement
+        seriesElement.data = AAFractalChartData.generateBarnsleyFernData()
+        // 蕨类植物使用小圆点可能效果更好
+        seriesElement.marker?.radius(0.5)
+//        if let scatter = aaOptions.plotOptions?.scatter {
+//            scatter.marker?.radius(0.5)
+//        }
+        // 可能需要调整坐标轴范围以更好地显示蕨类
+        aaOptions.xAxis?.min(-300).max(300) // 示例范围，需要根据生成数据调整
+        aaOptions.yAxis?.min(0).max(600)   // 示例范围
+        aaOptions.chart?.zoomType(.xy) // 蕨类细节多，允许缩放
+        return aaOptions
+    }
+
+    // 新增：科赫雪花 (点表示)
+    class func fractalKochSnowflake() -> AAOptions {
+        let aaOptions = boostFractalChart(titleText: "Koch Snowflake (Points)")
+        let seriesElement = aaOptions.series?.first as! AASeriesElement
+        seriesElement.data = AAFractalChartData.generateKochSnowflakeData()
+        // 雪花可以用小圆点
+        seriesElement.marker?.radius(0.8)
+//         if let scatter = aaOptions.plotOptions?.scatter {
+//            scatter.marker?.radius(0.8)
+//        }
+       // 可能需要调整坐标轴范围
+        aaOptions.xAxis?.min(0).max(800)
+        aaOptions.yAxis?.min(100).max(900) // 雪花通常在中间偏上
+        aaOptions.chart?.zoomType(.xy) // 允许缩放
         return aaOptions
     }
 }

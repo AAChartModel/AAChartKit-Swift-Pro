@@ -630,7 +630,7 @@ class AAFractalChartData: NSObject {
             let newSize = size / 3
             for i in 0..<3 { // 列 (x)
                 for j in 0..<3 { // 行 (y)
-                    // 跳过中心方块 (i=1, j=1)
+                    // 跳过中心方块 (i==1, j==1)
                     if i == 1 && j == 1 {
                         continue
                     }
@@ -647,6 +647,145 @@ class AAFractalChartData: NSObject {
         generateCarpet(x: 0, y: 0, size: canvasSize, depth: 0)
         
         print("Generated points: \(data.count)")
+        return data
+    }
+
+    static func generateBarnsleyFernData(iterations: Int = 50000) -> [[String: Any]] {
+        var data: [[String: Any]] = []
+        var x: Double = 0, y: Double = 0
+        let scale: Double = 50 // Scale factor for visualization
+        let offsetX: Double = 400 // Center horizontally
+        let offsetY: Double = 50  // Position vertically
+
+        // Barnsley IFS parameters and cumulative probabilities
+        let f1 = (a: 0.0, b: 0.0, c: 0.0, d: 0.16, e: 0.0, f: 0.0, p: 0.01)
+        let f2 = (a: 0.85, b: 0.04, c: -0.04, d: 0.85, e: 0.0, f: 1.6, p: 0.85)
+        let f3 = (a: 0.2, b: -0.26, c: 0.23, d: 0.22, e: 0.0, f: 1.6, p: 0.07)
+        let f4 = (a: -0.15, b: 0.28, c: 0.26, d: 0.24, e: 0.0, f: 0.44, p: 0.07)
+        
+        let p1 = f1.p
+        let p2 = p1 + f2.p
+        let p3 = p2 + f3.p
+        // p4 is implicitly 1.0
+
+        let fernColor = "rgb(0, 150, 0)" // Green color for the fern
+
+        for i in 0..<iterations {
+            let rand = Double.random(in: 0..<1)
+            var nextX: Double, nextY: Double
+            let transform: (a: Double, b: Double, c: Double, d: Double, e: Double, f: Double, p: Double)
+
+            if rand < p1 {
+                transform = f1
+            } else if rand < p2 {
+                transform = f2
+            } else if rand < p3 {
+                transform = f3
+            } else {
+                transform = f4
+            }
+
+            nextX = transform.a * x + transform.b * y + transform.e
+            nextY = transform.c * x + transform.d * y + transform.f
+
+            x = nextX
+            y = nextY
+
+            // Add point after a few initial iterations to let it settle
+            if i > 20 {
+                data.append([
+                    "x": x * scale + offsetX,
+                    "y": y * scale + offsetY,
+                    "color": fernColor // Simple green color
+                ])
+            }
+        }
+        print("Generated Barnsley Fern points: \(data.count)")
+        return data
+    }
+
+    static func generateKochSnowflakeData(iterations: Int = 4) -> [[String: Any]] {
+        var data: [[String: Any]] = []
+        let canvasSize: CGFloat = 800
+        let margin: CGFloat = 100 // Margin from canvas edges
+        let sideLength = canvasSize - 2 * margin
+        let angle = Double.pi / 3 // 60 degrees
+
+        // Calculate initial triangle vertices (equilateral)
+        let height = sideLength * sqrt(3) / 2
+        let p1 = CGPoint(x: margin, y: margin + height / 3) // Bottom left
+        let p2 = CGPoint(x: margin + sideLength, y: margin + height / 3) // Bottom right
+        let p3 = CGPoint(x: margin + sideLength / 2, y: margin + height * 4 / 3) // Top
+
+        // --- Color Function (HSL to RGB) ---
+        func getColor(depth: Int, maxDepth: Int) -> String {
+            let hue = 180.0 + (Double(depth) / Double(maxDepth)) * 60.0 // Blue to Cyan range
+            let saturation = 0.8 + Double.random(in: 0...0.2)
+            let lightness = 0.5 + (Double(depth) / Double(maxDepth)) * 0.25
+
+            // HSL to RGB conversion
+            let c = (1 - abs(2 * lightness - 1)) * saturation
+            let x_hsl = c * (1 - abs(((hue / 60).truncatingRemainder(dividingBy: 2)) - 1))
+            let m = lightness - c / 2
+            var r: Double = 0, g: Double = 0, b: Double = 0
+
+            if hue < 60 { r = c; g = x_hsl; b = 0 }
+            else if hue < 120 { r = x_hsl; g = c; b = 0 }
+            else if hue < 180 { r = 0; g = c; b = x_hsl }
+            else if hue < 240 { r = 0; g = x_hsl; b = c }
+            else if hue < 300 { r = x_hsl; g = 0; b = c }
+            else { r = c; g = 0; b = x_hsl }
+
+            let red = Int((r + m) * 255)
+            let green = Int((g + m) * 255)
+            let blue = Int((b + m) * 255)
+            return "rgb(\(red), \(green), \(blue))"
+        }
+        // --- End Color Function ---
+
+        // Recursive function to generate Koch curve segments
+        func generateKochSegment(pA: CGPoint, pB: CGPoint, depth: Int) {
+            if depth == 0 {
+                // Base case: Add points along the final segment
+                let numPoints = 5 // Points per segment
+                let segmentColor = getColor(depth: iterations, maxDepth: iterations) // Use final depth for color
+                for i in 0...numPoints {
+                    let t = CGFloat(i) / CGFloat(numPoints)
+                    data.append([
+                        "x": pA.x + (pB.x - pA.x) * t,
+                        "y": pA.y + (pB.y - pA.y) * t,
+                        "color": segmentColor
+                    ])
+                }
+                return
+            }
+
+            // Calculate points for the Koch curve modification
+            let dx = pB.x - pA.x
+            let dy = pB.y - pA.y
+
+            let pC = CGPoint(x: pA.x + dx / 3, y: pA.y + dy / 3)
+            let pD = CGPoint(x: pA.x + 2 * dx / 3, y: pA.y + 2 * dy / 3)
+
+            // Calculate the peak point (pE)
+            let pE = CGPoint(
+                x: pC.x + (dx / 3) * CGFloat(cos(angle)) - (dy / 3) * CGFloat(sin(angle)),
+                y: pC.y + (dx / 3) * CGFloat(sin(angle)) + (dy / 3) * CGFloat(cos(angle))
+            )
+
+            // Recursive calls for the four new segments
+            generateKochSegment(pA: pA, pB: pC, depth: depth - 1)
+            generateKochSegment(pA: pC, pB: pE, depth: depth - 1)
+            generateKochSegment(pA: pE, pB: pD, depth: depth - 1)
+            generateKochSegment(pA: pD, pB: pB, depth: depth - 1)
+        }
+
+        // Generate the three sides of the initial triangle
+        generateKochSegment(pA: p1, pB: p2, depth: iterations)
+        generateKochSegment(pA: p2, pB: p3, depth: iterations)
+        generateKochSegment(pA: p3, pB: p1, depth: iterations)
+
+        print("Generated Koch Snowflake points: \(data.count)")
         return data
     }
 }
