@@ -215,14 +215,14 @@ class AABoostFractalChartComposer {
         let seriesElement = aaOptions.series?.first as! AASeriesElement
         seriesElement.data = AAExtraFractalChartData.generateDragonCurveData()
         seriesElement.marker?.radius(0.5) // Small radius for line-like appearance
-//        if let scatter = aaOptions.plotOptions?.scatter {
+//        if let scatter = aaOptions.plotOptions?.scatter { // plotOptions might not exist in base func
 //            scatter.marker?.radius(0.5)
 //        }
-        // Adjust axes if needed, Dragon curve tends to grow
-        aaOptions.xAxis?.min(100).max(700)
-        aaOptions.yAxis?.min(100).max(700)
-//        aaOptions.chart?.zoomType(.xy)
-        aaOptions.boost = nil // Might not need boost
+        // Reset axes to default 0-800 to see the full extent
+        aaOptions.xAxis?.min(0).max(800)
+        aaOptions.yAxis?.min(0).max(800)
+        aaOptions.chart?.zoomType(.xy) // Ensure zoom is enabled
+        aaOptions.boost = nil // Might not need boost, can be re-enabled if slow
         return aaOptions
     }
 

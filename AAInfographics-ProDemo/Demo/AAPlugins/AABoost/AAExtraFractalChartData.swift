@@ -6,51 +6,99 @@ class AAExtraFractalChartData: NSObject {
     // MARK: - Dragon Curve (Iterated Function System - Geometric)
 
     /**
-     Generates points for the Dragon Curve using an L-system approach visually.
-     Draws segments between points.
+     Generates points for the Dragon Curve, automatically scaling and centering it.
      */
-    static func generateDragonCurveData(iterations: Int = 12) -> [[String: Any]] {
-        var data: [[String: Any]] = []
-        var path: [CGPoint] = [CGPoint(x: 200, y: 400)] // Starting point
+    static func generateDragonCurveData(iterations: Int = 12, targetWidth: CGFloat = 700, targetHeight: CGFloat = 700, canvasWidth: CGFloat = 800, canvasHeight: CGFloat = 800) -> [[String: Any]] {
+        var rawPoints: [CGPoint] = [CGPoint(x: 0, y: 0)] // Start at origin for raw calculation
         var currentAngle: CGFloat = 0.0
-        let segmentLength: CGFloat = 3.0 // Adjust for detail vs size
-        var turnSequence: [Int] = [] // +1 for left (90 deg), -1 for right (-90 deg)
+        let baseSegmentLength: CGFloat = 1.0 // Use base length for raw coordinates
+        var turnSequence: [Int] = []
 
-        // Build the turn sequence based on iterations
+        // Build the turn sequence (same as before)
         for _ in 0..<iterations {
             var nextSequence = turnSequence
-            nextSequence.append(1) // Add a left turn in the middle
-            let reversedTurns = turnSequence.reversed().map { -$0 } // Reverse and flip turns
+            nextSequence.append(1)
+            let reversedTurns = turnSequence.reversed().map { -$0 }
             nextSequence.append(contentsOf: reversedTurns)
             turnSequence = nextSequence
         }
 
-        // Generate points based on the turn sequence
-        var currentPoint = path[0]
+        // Generate raw points without scaling/offset
+        var currentPoint = rawPoints[0]
+        var minX = currentPoint.x, maxX = currentPoint.x
+        var minY = currentPoint.y, maxY = currentPoint.y
+
+        for turn in turnSequence {
+            currentAngle += CGFloat(turn) * (Double.pi / 2.0)
+            let nextX = currentPoint.x + baseSegmentLength * cos(currentAngle)
+            let nextY = currentPoint.y + baseSegmentLength * sin(currentAngle)
+            currentPoint = CGPoint(x: nextX, y: nextY)
+            rawPoints.append(currentPoint)
+
+            // Update bounds
+            minX = min(minX, currentPoint.x)
+            maxX = max(maxX, currentPoint.x)
+            minY = min(minY, currentPoint.y)
+            maxY = max(maxY, currentPoint.y)
+        }
+
+        // Calculate scale factor and offset
+        let rawWidth = maxX - minX
+        let rawHeight = maxY - minY
+        var scaleFactor: CGFloat = 1.0
+
+        if rawWidth > 0 && rawHeight > 0 {
+             scaleFactor = min(targetWidth / rawWidth, targetHeight / rawHeight)
+        } else if rawWidth > 0 {
+            scaleFactor = targetWidth / rawWidth
+        } else if rawHeight > 0 {
+            scaleFactor = targetHeight / rawHeight
+        }
+
+
+        // Center the scaled drawing within the canvas
+        let scaledWidth = rawWidth * scaleFactor
+        let scaledHeight = rawHeight * scaleFactor
+        let offsetX = (canvasWidth - scaledWidth) / 2.0 - minX * scaleFactor
+        let offsetY = (canvasHeight - scaledHeight) / 2.0 - minY * scaleFactor
+
+        // Generate final data with scaling, offset, and color
+        var data: [[String: Any]] = []
         let startColor = UIColor.cyan
         let endColor = UIColor.magenta
 
-        for (index, turn) in turnSequence.enumerated() {
-            currentAngle += CGFloat(turn) * (Double.pi / 2.0) // Apply turn (90 degrees)
-            let nextX = currentPoint.x + segmentLength * cos(currentAngle)
-            let nextY = currentPoint.y + segmentLength * sin(currentAngle)
-            let nextPoint = CGPoint(x: nextX, y: nextY)
+        var previousScaledPoint: CGPoint? = nil
 
-            // Interpolate color based on progress
-            let t = CGFloat(index) / CGFloat(turnSequence.count)
+        for (index, rawPoint) in rawPoints.enumerated() {
+            let scaledX = rawPoint.x * scaleFactor + offsetX
+            let scaledY = rawPoint.y * scaleFactor + offsetY
+            let scaledPoint = CGPoint(x: scaledX, y: scaledY)
+
+            let t = CGFloat(index) / CGFloat(rawPoints.count - 1)
             let color = interpolateColor(from: startColor, to: endColor, with: t)
+            let colorHex = colorToHexString(color)
 
-            // Add points along the segment for visual density
-            let pointsPerSegment = 2
-            for i in 1...pointsPerSegment {
-                 let segmentT = CGFloat(i) / CGFloat(pointsPerSegment)
-                 let px = currentPoint.x + (nextPoint.x - currentPoint.x) * segmentT
-                 let py = currentPoint.y + (nextPoint.y - currentPoint.y) * segmentT
-                 data.append(["x": px, "y": py, "color": colorToHexString(color)])
+            // Add points along the segment from the previous scaled point
+            if let prevPoint = previousScaledPoint {
+                 let pointsPerSegment = 2 // Add points between calculated vertices
+                 for i in 1...pointsPerSegment {
+                     let segmentT = CGFloat(i) / CGFloat(pointsPerSegment)
+                     let px = prevPoint.x + (scaledPoint.x - prevPoint.x) * segmentT
+                     let py = prevPoint.y + (scaledPoint.y - prevPoint.y) * segmentT
+                      // Basic bounds check
+                     if px >= 0 && px <= canvasWidth && py >= 0 && py <= canvasHeight {
+                         data.append(["x": px, "y": py, "color": colorHex])
+                     }
+                 }
+            } else {
+                 // Add the very first point
+                 if scaledX >= 0 && scaledX <= canvasWidth && scaledY >= 0 && scaledY <= canvasHeight {
+                    data.append(["x": scaledX, "y": scaledY, "color": colorHex])
+                 }
             }
-
-            currentPoint = nextPoint
+             previousScaledPoint = scaledPoint
         }
+
 
         print("Generated Dragon Curve points: \(data.count)")
         return data
