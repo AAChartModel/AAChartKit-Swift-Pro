@@ -176,9 +176,10 @@ public class AAChartView: WKWebView {
         }
     }
     
-    private var pluginsArray: [String] = []
+    private var modulesJSPluginsArray: [String] = []
     
     private var optionsJson: String?
+    public var jsPluginsArray: [String] = []
     
     // MARK: - Initialization
     override private init(frame: CGRect, configuration: WKWebViewConfiguration) {
@@ -229,12 +230,13 @@ public class AAChartView: WKWebView {
         }
         
         
-        if pluginsArray.isEmpty {
+        if modulesJSPluginsArray.isEmpty && jsPluginsArray.isEmpty {
             drawChart()
             return
         }
         
-        loadScripts(from: pluginsArray, index: 0) { success in
+        let totalJSPluginsArray = modulesJSPluginsArray + jsPluginsArray
+        loadScripts(from: totalJSPluginsArray, index: 0) { success in
             if success {
                 self.drawChart()
             } else {
@@ -330,67 +332,67 @@ public class AAChartView: WKWebView {
     private func addChartPluginScriptsArrayForProTypeChart(_ chartType: String?) {
 //        let chartType = aaOptions.chart?.type
         if chartType == AAChartType.sankey.rawValue {
-            pluginsArray.append(generateScriptPathWithScriptName("AASankey"))
+            modulesJSPluginsArray.append(generateScriptPathWithScriptName("AASankey"))
         } else if chartType == AAChartType.dependencywheel.rawValue {
-            pluginsArray.append(generateScriptPathWithScriptName("AASankey"))
-            pluginsArray.append(generateScriptPathWithScriptName("AADependency-Wheel"))
+            modulesJSPluginsArray.append(generateScriptPathWithScriptName("AASankey"))
+            modulesJSPluginsArray.append(generateScriptPathWithScriptName("AADependency-Wheel"))
         }
 //        else if chartType == AAChartType.oldie.rawValue {
 //            pluginsArray.append(generateScriptPathWithScriptName("AAOldie"))
 //        }
         else if chartType == AAChartType.variablepie.rawValue {
-            pluginsArray.append(generateScriptPathWithScriptName("AAVariable-Pie"))
+            modulesJSPluginsArray.append(generateScriptPathWithScriptName("AAVariable-Pie"))
         } else if chartType == AAChartType.treemap.rawValue {
-            pluginsArray.append(generateScriptPathWithScriptName("AATreemap"))
+            modulesJSPluginsArray.append(generateScriptPathWithScriptName("AATreemap"))
         } else if chartType == AAChartType.variwide.rawValue {
-            pluginsArray.append(generateScriptPathWithScriptName("AAVariwide"))
+            modulesJSPluginsArray.append(generateScriptPathWithScriptName("AAVariwide"))
         } else if chartType == AAChartType.sunburst.rawValue {
-            pluginsArray.append(generateScriptPathWithScriptName("AASunburst"))
+            modulesJSPluginsArray.append(generateScriptPathWithScriptName("AASunburst"))
         } else if chartType == AAChartType.heatmap.rawValue {
-            pluginsArray.append(generateScriptPathWithScriptName("AAHeatmap"))
+            modulesJSPluginsArray.append(generateScriptPathWithScriptName("AAHeatmap"))
         } else if chartType == AAChartType.streamgraph.rawValue {
-            pluginsArray.append(generateScriptPathWithScriptName("AAStreamgraph"))
+            modulesJSPluginsArray.append(generateScriptPathWithScriptName("AAStreamgraph"))
         } else if chartType == AAChartType.venn.rawValue {
-            pluginsArray.append(generateScriptPathWithScriptName("AAVenn"))
+            modulesJSPluginsArray.append(generateScriptPathWithScriptName("AAVenn"))
         } else if chartType == AAChartType.tilemap.rawValue {
-            pluginsArray.append(generateScriptPathWithScriptName("AAHeatmap"))
-            pluginsArray.append(generateScriptPathWithScriptName("AATilemap"))
+            modulesJSPluginsArray.append(generateScriptPathWithScriptName("AAHeatmap"))
+            modulesJSPluginsArray.append(generateScriptPathWithScriptName("AATilemap"))
         } else if chartType == AAChartType.dumbbell.rawValue {
-            pluginsArray.append(generateScriptPathWithScriptName("AADumbbell"))
+            modulesJSPluginsArray.append(generateScriptPathWithScriptName("AADumbbell"))
         } else if chartType == AAChartType.lollipop.rawValue {
-            pluginsArray.append(generateScriptPathWithScriptName("AADumbbell"))
-            pluginsArray.append(generateScriptPathWithScriptName("AALollipop"))
+            modulesJSPluginsArray.append(generateScriptPathWithScriptName("AADumbbell"))
+            modulesJSPluginsArray.append(generateScriptPathWithScriptName("AALollipop"))
         } else if chartType == AAChartType.xrange.rawValue {
-            pluginsArray.append(generateScriptPathWithScriptName("AAXrange"))
+            modulesJSPluginsArray.append(generateScriptPathWithScriptName("AAXrange"))
         } else if chartType == AAChartType.vector.rawValue {
-            pluginsArray.append(generateScriptPathWithScriptName("AAVector"))
+            modulesJSPluginsArray.append(generateScriptPathWithScriptName("AAVector"))
         } else if chartType == AAChartType.histogram.rawValue {
-            pluginsArray.append(generateScriptPathWithScriptName("AAHistogram-Bellcurve"))
+            modulesJSPluginsArray.append(generateScriptPathWithScriptName("AAHistogram-Bellcurve"))
         }
         else if chartType == AAChartType.bellcurve.rawValue {
-            pluginsArray.append(generateScriptPathWithScriptName("AAHistogram-Bellcurve"))
+            modulesJSPluginsArray.append(generateScriptPathWithScriptName("AAHistogram-Bellcurve"))
         }
         
         else if chartType == AAChartType.timeline.rawValue {
-            pluginsArray.append(generateScriptPathWithScriptName("AATimeline"))
+            modulesJSPluginsArray.append(generateScriptPathWithScriptName("AATimeline"))
         }
         else if chartType == AAChartType.item.rawValue {
-            pluginsArray.append(generateScriptPathWithScriptName("AAItem-Series"))
+            modulesJSPluginsArray.append(generateScriptPathWithScriptName("AAItem-Series"))
         }
 else if chartType == AAChartType.windbarb.rawValue {
-            pluginsArray.append(generateScriptPathWithScriptName("AAWindbarb"))
+            modulesJSPluginsArray.append(generateScriptPathWithScriptName("AAWindbarb"))
         } else if chartType == AAChartType.networkgraph.rawValue {
-            pluginsArray.append(generateScriptPathWithScriptName("AANetworkgraph"))
+            modulesJSPluginsArray.append(generateScriptPathWithScriptName("AANetworkgraph"))
         } else if chartType == AAChartType.wordcloud.rawValue {
-            pluginsArray.append(generateScriptPathWithScriptName("AAWordcloud"))
+            modulesJSPluginsArray.append(generateScriptPathWithScriptName("AAWordcloud"))
         } else if chartType == AAChartType.solidgauge.rawValue {
-            pluginsArray.append(generateScriptPathWithScriptName("AASolid-Gauge"))
+            modulesJSPluginsArray.append(generateScriptPathWithScriptName("AASolid-Gauge"))
         } 
 //        else if chartType == AAChartType.pareto.rawValue {
 //            pluginsArray.append(generateScriptPathWithScriptName("AAPareto"))
 //        } 
         else if chartType == AAChartType.bullet.rawValue {
-            pluginsArray.append(generateScriptPathWithScriptName("AABullet"))
+            modulesJSPluginsArray.append(generateScriptPathWithScriptName("AABullet"))
         }
 
         
@@ -401,31 +403,31 @@ else if chartType == AAChartType.windbarb.rawValue {
 //        <!--            <script src="AAModules/AAData.js"></script>-->
 //        <!--            <script src="AAModules/AAParallel-coordinates.js"></script>-->
         else if chartType == AAChartType.organization.rawValue {
-            pluginsArray.append(generateScriptPathWithScriptName("AASankey"))
-            pluginsArray.append(generateScriptPathWithScriptName("AAOrganization"))
+            modulesJSPluginsArray.append(generateScriptPathWithScriptName("AASankey"))
+            modulesJSPluginsArray.append(generateScriptPathWithScriptName("AAOrganization"))
         }
         else if chartType == AAChartType.arcdiagram.rawValue {
-            pluginsArray.append(generateScriptPathWithScriptName("AASankey"))
-            pluginsArray.append(generateScriptPathWithScriptName("AAArc-Diagram"))
+            modulesJSPluginsArray.append(generateScriptPathWithScriptName("AASankey"))
+            modulesJSPluginsArray.append(generateScriptPathWithScriptName("AAArc-Diagram"))
         }
         else if chartType == AAChartType.flame.rawValue {
-            pluginsArray.append(generateScriptPathWithScriptName("AAFlame"))
+            modulesJSPluginsArray.append(generateScriptPathWithScriptName("AAFlame"))
         }
 //        else if chartType == AAChartType.pa.rawValue {
 //            pluginsArray.append(generateScriptPathWithScriptName("AATimeline"))
 //        }
         //打印 pluginsArray 数组的内容
         #if DEBUG
-        print("🔌🔌🔌pluginsArray for pro type chart: \(pluginsArray)")
+        print("🔌🔌🔌pluginsArray for pro type chart: \(modulesJSPluginsArray)")
         #endif
     }
     
     private func addChartPluginScriptsArrayForAAOptions(_ aaOptions: AAOptions?) {
         if aaOptions?.chart?.parallelCoordinates == true {
-            pluginsArray.append(generateScriptPathWithScriptName("AAParallel-coordinates"))
+            modulesJSPluginsArray.append(generateScriptPathWithScriptName("AAParallel-coordinates"))
         }
         if aaOptions?.data != nil {
-            pluginsArray.append(generateScriptPathWithScriptName("AAData"))
+            modulesJSPluginsArray.append(generateScriptPathWithScriptName("AAData"))
         }
 //        if aaOptions?.colorAxis != nil {
 //            pluginsArray.append(generateScriptPathWithScriptName(""))
@@ -433,7 +435,7 @@ else if chartType == AAChartType.windbarb.rawValue {
         
         //打印 pluginsArray 数组的内容
         #if DEBUG
-        print("🔌🔌🔌pluginsArray for AAOptions: \(pluginsArray)")
+        print("🔌🔌🔌pluginsArray for AAOptions: \(modulesJSPluginsArray)")
         #endif
     }
     
@@ -491,7 +493,7 @@ else if chartType == AAChartType.windbarb.rawValue {
     }
     
     private func configureOptionsJsonStringWithAAOptions(_ aaOptions: AAOptions) {
-        pluginsArray = aaOptions.pluginsArray ?? []
+        modulesJSPluginsArray = aaOptions.pluginsArray ?? []
         isSpecialProTypeChart(aaOptions)
         
 //        addChartPluginScriptsArray(aaOptions)
