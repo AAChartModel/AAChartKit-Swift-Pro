@@ -489,7 +489,8 @@ else if chartType == AAChartType.windbarb.rawValue {
         //打印 urlStr 路径文件的内容
         let jsContent = try? String(contentsOf: urlStr)
         print(try? jsContent ?? "")
-        return urlStr.path
+        let jsPluginPath = urlStr.path
+        return jsPluginPath
     }
     
     private func configureOptionsJsonStringWithAAOptions(_ aaOptions: AAOptions) {
