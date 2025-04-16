@@ -23,7 +23,7 @@ class AADrilldownChartVC: AABaseChartVC {
 
     override func chartConfigurationWithSelectedIndex(_ selectedIndex: Int) -> Any? {
         switch (selectedIndex) {
-        case 0: return AADrilldownChartComposer.columnChart().pluginsArray([Bundle.main.path(forResource: "AADrilldown", ofType: "js") ?? ""])
+        case 0: return AADrilldownChartComposer.columnChart()
 //        case 1: return AABubbleChartComposer.packedbubbleSplitChart()
 //        case 2: return AABubbleChartComposer.packedbubbleSpiralChart()
 //        case 3: return AABubbleChartComposer.eulerChart()

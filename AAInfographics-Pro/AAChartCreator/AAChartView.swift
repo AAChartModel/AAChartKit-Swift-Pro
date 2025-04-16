@@ -372,9 +372,6 @@ public class AAChartView: WKWebView {
     }
     
     private func determineRequiredPlugins(for aaOptions: AAOptions) {
-        // Start with user-defined plugins from AAOptions, if any
-        requiredPluginPaths = Set(aaOptions.pluginsArray ?? [])
-
         // Use the provider to get additional required plugins based on options
         let providerPlugins = pluginProvider.getRequiredPluginPaths(for: aaOptions)
         requiredPluginPaths.formUnion(providerPlugins)
