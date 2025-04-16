@@ -244,15 +244,15 @@ public class AAChartView: WKWebView {
                 let jsString = try String(contentsOfFile: path, encoding: .utf8)
                 evaluateJavaScript(jsString) { result, error in
                     if let error = error {
-                        print("❌❌❌ Error loading plugin script at index \(index): \(error)")
+                        print("❌❌❌ Error evaluating plugin JavaScript at index \(index): \(error), error JavaScript name: \(path)")
                         completion(false) // 或者可以选择忽略错误并继续加载下一个脚本
                     } else {
-                        print("✅✅✅ Plugin script at index \(index) loaded successfully")
+                        print("✅✅✅ Plugin JavaScript at index \(index) evaluated successfully, JavaScript name: \(path)")
                         loadScripts(from: scriptsArray, index: index + 1, completion: completion)
                     }
                 }
             } catch {
-                print("❌❌❌ Failed to load plugin script at index \(index): \(error)")
+                print("❌❌❌ Failed to load plugin JavaScript at index \(index): \(error), error JavaScript name: \(path)")
                 completion(false) // 或者可以选择忽略错误并继续加载下一个脚本
             }
         }
@@ -329,7 +329,6 @@ public class AAChartView: WKWebView {
             aaOptions.plotOptions?.series?.point?.events = AAPointEvents()
         }
     }
-    
 
     // Helper function to generate script path and append uniquely
     private func appendUniqueScript(scriptName: String) {
@@ -403,11 +402,7 @@ public class AAChartView: WKWebView {
     private func configureOptionsJsonStringWithAAOptions(_ aaOptions: AAOptions) {
         modulesJSPluginsArray = aaOptions.pluginsArray ?? []
         isSpecialProTypeChart(aaOptions)
-        
-//        addChartPluginScriptsArray(aaOptions)
 
-        //        if (aaOptions.beforeDrawChartJavaScript) {
-        //            _beforeDrawChartJavaScript = aaOptions.beforeDrawChartJavaScript;
         if aaOptions.beforeDrawChartJavaScript != nil {
             beforeDrawChartJavaScript = aaOptions.beforeDrawChartJavaScript
             aaOptions.beforeDrawChartJavaScript = nil
@@ -444,7 +439,9 @@ public class AAChartView: WKWebView {
                     if seriesElement.data!.count > 1000 {
                         let dataArr = seriesElement.data![0...999]
                         seriesElement.data = Array(dataArr)
+                        //打印⚠️信息, 中英对照
                         print("💊💊💊Warning: Data array element count more than 1000, only the first 1000 data elements will be displayed in the console!!!")
+                        print("💊💊💊警告: 数据数组元素个数超过 1000 个, 只打印前 1000 个数据元素到控制台!!!")
                     }
                 }
             }
@@ -457,7 +454,9 @@ public class AAChartView: WKWebView {
             let seriesElementArr = aaOptions.series as! [AASeriesElement]
             let firstTenElementArr = seriesElementArr[0...9]
             aaOptions.series = Array(firstTenElementArr)
+            //打印⚠️信息, 中英对照
             print("💊💊💊Warning: Series element count more than 10, only the first 10 elements will be displayed in the console!!!")
+            print("💊💊💊警告: 系列元素个数超过 10 个, 只打印前 10 个元素到控制台!!!")
         }
         
         let modelJsonDic = aaOptions.toDic()
