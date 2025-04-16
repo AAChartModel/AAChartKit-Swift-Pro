@@ -149,7 +149,7 @@ class ChartCollectionViewCell: UICollectionViewCell {
         aaChartView.layer.masksToBounds = true
         
         let jsPath: String = Bundle.main.path(forResource: "AABoost", ofType: "js") ?? ""
-        self.aaChartView?.jsPluginsArray = [jsPath]
+        self.aaChartView?.jsPluginsSet = [jsPath]
         
         // 设置布局
         aaChartView.translatesAutoresizingMaskIntoConstraints = false

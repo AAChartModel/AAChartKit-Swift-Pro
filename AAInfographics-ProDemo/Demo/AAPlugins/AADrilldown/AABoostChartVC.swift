@@ -17,7 +17,7 @@ class AABoostChartVC: AABaseChartVC {
          self.aaChartView.pluginsArray = @[jsPath];
          */
         let jsPath: String = Bundle.main.path(forResource: "AABoost", ofType: "js") ?? ""
-        self.aaChartView?.jsPluginsArray = [jsPath]
+        self.aaChartView?.jsPluginsSet = [jsPath]
         
         //输出查看 AAOption 的 computedProperties 内容
 //        AAOptions *aaOptions = [self chartConfigurationWithSelectedIndex:self.selectedIndex];

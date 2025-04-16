@@ -174,10 +174,10 @@ public class AAChartView: WKWebView {
         }
     }
     
-    private var modulesJSPluginsArray: Set<String> = []
+    private var modulesJSPluginsSet: Set<String> = []
     private var optionsJson: String?
     
-    public var jsPluginsArray: Set<String> = []
+    public var jsPluginsSet: Set<String> = []
     
     // Static mapping from chart type rawValue to script names
     private static let chartTypeScriptMapping: [String: [String]] = [
@@ -229,8 +229,8 @@ public class AAChartView: WKWebView {
    
     
     private func loadAllPluginsAndDrawChart() {
-        func loadScripts(from scriptsArray: [String], index: Int, completion: @escaping (Bool) -> Void) {
-            if index >= scriptsArray.count {
+        func loadScripts(from scriptsSet: Set<String>, index: Int, completion: @escaping (Bool) -> Void) {
+            if index >= scriptsSet.count {
                 #if DEBUG
                 print("✅ All plugin scripts evaluated successfully.")
                 #endif
@@ -238,7 +238,8 @@ public class AAChartView: WKWebView {
                 return
             }
             
-            let path = scriptsArray[index]
+//            let path = scriptsSet[index]
+            let path = scriptsSet[scriptsSet.index(scriptsSet.startIndex, offsetBy: index)]
             let scriptName = (path as NSString).lastPathComponent // Extract filename
 
             do {
@@ -252,10 +253,10 @@ public class AAChartView: WKWebView {
                     } else {
                         #if DEBUG
                         // Optional: Keep success log for debugging if needed
-                        // print("✅ Plugin script '\(scriptName)' (index \(index)) evaluated.")
+                         print("✅ Plugin script '\(scriptName)' (index \(index)) evaluated.")
                         #endif
                         // Recursively load the next script
-                        loadScripts(from: scriptsArray, index: index + 1, completion: completion)
+                        loadScripts(from: scriptsSet, index: index + 1, completion: completion)
                     }
                 }
             } catch {
@@ -267,7 +268,7 @@ public class AAChartView: WKWebView {
         }
         
         
-        if modulesJSPluginsArray.isEmpty && jsPluginsArray.isEmpty {
+        if modulesJSPluginsSet.isEmpty && jsPluginsSet.isEmpty {
             #if DEBUG
             print("ℹ️ No external JS plugins to load.")
             #endif
@@ -276,15 +277,13 @@ public class AAChartView: WKWebView {
         }
         
         // Combine the sets using union
-        let totalJSPluginsSet = modulesJSPluginsArray.union(jsPluginsArray)
-        // Convert the set to an array for the loadScripts function
-        let totalJSPluginsArray = Array(totalJSPluginsSet)
+        let totalJSPluginsSet = modulesJSPluginsSet.union(jsPluginsSet)
 
         #if DEBUG
-        print("ℹ️ Loading \(totalJSPluginsArray.count) unique plugin scripts...")
+        print("ℹ️ Loading \(totalJSPluginsSet.count) unique plugin scripts...")
         #endif
         
-        loadScripts(from: totalJSPluginsArray, index: 0) { success in
+        loadScripts(from: totalJSPluginsSet, index: 0) { success in
             if success {
                 self.drawChart()
             } else {
@@ -362,7 +361,7 @@ public class AAChartView: WKWebView {
 
         scriptNames.forEach { scriptName in
             let scriptPath = generateScriptPathWithScriptName(scriptName)
-            modulesJSPluginsArray.insert(scriptPath) // Directly insert into the Set
+            modulesJSPluginsSet.insert(scriptPath) // Directly insert into the Set
         }
 
         #if DEBUG
@@ -372,11 +371,11 @@ public class AAChartView: WKWebView {
     private func addChartPluginScriptsArrayForAAOptions(_ aaOptions: AAOptions?) {
         if aaOptions?.chart?.parallelCoordinates == true {
             let scriptPath = generateScriptPathWithScriptName("AAParallel-coordinates")
-            modulesJSPluginsArray.insert(scriptPath) // Directly insert
+            modulesJSPluginsSet.insert(scriptPath) // Directly insert
         }
         if aaOptions?.data != nil {
             let scriptPath = generateScriptPathWithScriptName("AAData")
-            modulesJSPluginsArray.insert(scriptPath) // Directly insert
+            modulesJSPluginsSet.insert(scriptPath) // Directly insert
         }
 
         #if DEBUG
@@ -418,7 +417,7 @@ public class AAChartView: WKWebView {
     
     private func configureOptionsJsonStringWithAAOptions(_ aaOptions: AAOptions) {
         // Initialize the Set from the optional array, ensuring uniqueness
-        modulesJSPluginsArray = Set(aaOptions.pluginsArray ?? [])
+        modulesJSPluginsSet = Set(aaOptions.pluginsArray ?? [])
         
         // Determine and add required scripts based on options and chart/series types
         isSpecialProTypeChart(aaOptions)
