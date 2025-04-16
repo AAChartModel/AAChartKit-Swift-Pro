@@ -89,8 +89,6 @@ public class AAChartView: WKWebView {
     
     private var clickEventEnabled: Bool?
     private var touchEventEnabled: Bool?
-//    NSString *_beforeDrawChartJavaScript;
-//    NSString *_afterDrawChartJavaScript;
     private var beforeDrawChartJavaScript: String?
     private var afterDrawChartJavaScript: String?
     
@@ -181,6 +179,36 @@ public class AAChartView: WKWebView {
     private var optionsJson: String?
     public var jsPluginsArray: [String] = []
     
+    // Static mapping from chart type rawValue to script names
+    private static let chartTypeScriptMapping: [String: [String]] = [
+        AAChartType.sankey.rawValue: ["AASankey"],
+        AAChartType.dependencywheel.rawValue: ["AASankey", "AADependency-Wheel"],
+        AAChartType.variablepie.rawValue: ["AAVariable-Pie"],
+        AAChartType.treemap.rawValue: ["AATreemap"],
+        AAChartType.variwide.rawValue: ["AAVariwide"],
+        AAChartType.sunburst.rawValue: ["AASunburst"],
+        AAChartType.heatmap.rawValue: ["AAHeatmap"],
+        AAChartType.streamgraph.rawValue: ["AAStreamgraph"],
+        AAChartType.venn.rawValue: ["AAVenn"],
+        AAChartType.tilemap.rawValue: ["AAHeatmap", "AATilemap"],
+        AAChartType.dumbbell.rawValue: ["AADumbbell"],
+        AAChartType.lollipop.rawValue: ["AADumbbell", "AALollipop"],
+        AAChartType.xrange.rawValue: ["AAXrange"],
+        AAChartType.vector.rawValue: ["AAVector"],
+        AAChartType.histogram.rawValue: ["AAHistogram-Bellcurve"],
+        AAChartType.bellcurve.rawValue: ["AAHistogram-Bellcurve"],
+        AAChartType.timeline.rawValue: ["AATimeline"],
+        AAChartType.item.rawValue: ["AAItem-Series"],
+        AAChartType.windbarb.rawValue: ["AAWindbarb"],
+        AAChartType.networkgraph.rawValue: ["AANetworkgraph"],
+        AAChartType.wordcloud.rawValue: ["AAWordcloud"],
+        AAChartType.solidgauge.rawValue: ["AASolid-Gauge"],
+        AAChartType.bullet.rawValue: ["AABullet"],
+        AAChartType.organization.rawValue: ["AASankey", "AAOrganization"],
+        AAChartType.arcdiagram.rawValue: ["AASankey", "AAArc-Diagram"],
+        AAChartType.flame.rawValue: ["AAFlame"],
+    ]
+
     // MARK: - Initialization
     override private init(frame: CGRect, configuration: WKWebViewConfiguration) {
         super.init(frame: frame, configuration: configuration)
@@ -302,161 +330,60 @@ public class AAChartView: WKWebView {
         }
     }
     
-    /*
-     <!--            <script src="AAModules/AASankey.js"></script>-->
-     <!--            <script src="AAModules/AADependency-Wheel.js"></script>-->
-     <!--            <script src="AAModules/AAOldie.js"></script>-->
-     <!--            <script src="AAModules/AAVariable-Pie.js"></script>-->
-     <!--            <script src="AAModules/AATreemap.js"></script>-->
-     <!--            <script src="AAModules/AAVariwide.js"></script>-->
-     <!--            <script src="AAModules/AASunburst.js"></script>-->
-     <!--            <script src="AAModules/AAHeatmap.js"></script>-->
-     <!--            <script src="AAModules/AAStreamgraph.js"></script>-->
-     <!--            <script src="AAModules/AAVenn.js"></script>-->
-     <!--            <script src="AAModules/AATilemap.js"></script>-->
-     <!--            <script src="AAModules/AADumbbell.js"></script>-->
-     <!--            <script src="AAModules/AALollipop.js"></script>-->
-     <!--            <script src="AAModules/AAXrange.js"></script>-->
-     <!--            <script src="AAModules/AAVector.js"></script>-->
-     <!--            <script src="AAModules/AAHistogram-Bellcurve.js"></script>-->
-     <!--            <script src="AAModules/AATimeline.js"></script>-->
-     <!--            <script src="AAModules/AAItem-Series.js"></script>-->
-     <!--            <script src="AAModules/AAWindbarb.js"></script>-->
-     <!--            <script src="AAModules/AANetworkgraph.js"></script>-->
-     <!--            <script src="AAModules/AAWordcloud.js"></script>-->
-     <!--            <script src="AAModules/AASolid-Gauge.js"></script>-->
-     <!--            <script src="AAModules/AAPareto.js"></script>-->
-     <!--            <script src="AAModules/AABullet.js"></script>-->
-     */
+
+    // Helper function to generate script path and append uniquely
+    private func appendUniqueScript(scriptName: String) {
+        let scriptPath = generateScriptPathWithScriptName(scriptName)
+        if !modulesJSPluginsArray.contains(scriptPath) {
+            modulesJSPluginsArray.append(scriptPath)
+        }
+    }
+
     //向 pluginsArray 数组中添加插件脚本路径(避免重复添加)
     private func addChartPluginScriptsArrayForProTypeChart(_ chartType: String?) {
-        guard let type = chartType else { return }
-
-        switch type {
-        case AAChartType.sankey.rawValue:
-            modulesJSPluginsArray.append(generateScriptPathWithScriptName("AASankey"))
-        case AAChartType.dependencywheel.rawValue:
-            modulesJSPluginsArray.append(generateScriptPathWithScriptName("AASankey"))
-            modulesJSPluginsArray.append(generateScriptPathWithScriptName("AADependency-Wheel"))
-        case AAChartType.variablepie.rawValue:
-            modulesJSPluginsArray.append(generateScriptPathWithScriptName("AAVariable-Pie"))
-        case AAChartType.treemap.rawValue:
-            modulesJSPluginsArray.append(generateScriptPathWithScriptName("AATreemap"))
-        case AAChartType.variwide.rawValue:
-            modulesJSPluginsArray.append(generateScriptPathWithScriptName("AAVariwide"))
-        case AAChartType.sunburst.rawValue:
-            modulesJSPluginsArray.append(generateScriptPathWithScriptName("AASunburst"))
-        case AAChartType.heatmap.rawValue:
-            modulesJSPluginsArray.append(generateScriptPathWithScriptName("AAHeatmap"))
-        case AAChartType.streamgraph.rawValue:
-            modulesJSPluginsArray.append(generateScriptPathWithScriptName("AAStreamgraph"))
-        case AAChartType.venn.rawValue:
-            modulesJSPluginsArray.append(generateScriptPathWithScriptName("AAVenn"))
-        case AAChartType.tilemap.rawValue:
-            modulesJSPluginsArray.append(generateScriptPathWithScriptName("AAHeatmap"))
-            modulesJSPluginsArray.append(generateScriptPathWithScriptName("AATilemap"))
-        case AAChartType.dumbbell.rawValue:
-            modulesJSPluginsArray.append(generateScriptPathWithScriptName("AADumbbell"))
-        case AAChartType.lollipop.rawValue:
-            modulesJSPluginsArray.append(generateScriptPathWithScriptName("AADumbbell"))
-            modulesJSPluginsArray.append(generateScriptPathWithScriptName("AALollipop"))
-        case AAChartType.xrange.rawValue:
-            modulesJSPluginsArray.append(generateScriptPathWithScriptName("AAXrange"))
-        case AAChartType.vector.rawValue:
-            modulesJSPluginsArray.append(generateScriptPathWithScriptName("AAVector"))
-        case AAChartType.histogram.rawValue, AAChartType.bellcurve.rawValue:
-            modulesJSPluginsArray.append(generateScriptPathWithScriptName("AAHistogram-Bellcurve"))
-        case AAChartType.timeline.rawValue:
-            modulesJSPluginsArray.append(generateScriptPathWithScriptName("AATimeline"))
-        case AAChartType.item.rawValue:
-            modulesJSPluginsArray.append(generateScriptPathWithScriptName("AAItem-Series"))
-        case AAChartType.windbarb.rawValue:
-            modulesJSPluginsArray.append(generateScriptPathWithScriptName("AAWindbarb"))
-        case AAChartType.networkgraph.rawValue:
-            modulesJSPluginsArray.append(generateScriptPathWithScriptName("AANetworkgraph"))
-        case AAChartType.wordcloud.rawValue:
-            modulesJSPluginsArray.append(generateScriptPathWithScriptName("AAWordcloud"))
-        case AAChartType.solidgauge.rawValue:
-            modulesJSPluginsArray.append(generateScriptPathWithScriptName("AASolid-Gauge"))
-        case AAChartType.bullet.rawValue:
-            modulesJSPluginsArray.append(generateScriptPathWithScriptName("AABullet"))
-        case AAChartType.organization.rawValue:
-            modulesJSPluginsArray.append(generateScriptPathWithScriptName("AASankey"))
-            modulesJSPluginsArray.append(generateScriptPathWithScriptName("AAOrganization"))
-        case AAChartType.arcdiagram.rawValue:
-            modulesJSPluginsArray.append(generateScriptPathWithScriptName("AASankey"))
-            modulesJSPluginsArray.append(generateScriptPathWithScriptName("AAArc-Diagram"))
-        case AAChartType.flame.rawValue:
-            modulesJSPluginsArray.append(generateScriptPathWithScriptName("AAFlame"))
-        // Add cases for commented out types if needed, e.g.:
-        // case AAChartType.pareto.rawValue:
-        //     modulesJSPluginsArray.append(generateScriptPathWithScriptName("AAPareto"))
-        default:
-            // Do nothing for other chart types or if chartType is nil
-            break
+        guard let type = chartType, let scriptNames = Self.chartTypeScriptMapping[type] else {
+            return
         }
 
-        //打印 pluginsArray 数组的内容
+        scriptNames.forEach { scriptName in
+            appendUniqueScript(scriptName: scriptName)
+        }
+
         #if DEBUG
-        print("🔌🔌🔌pluginsArray for pro type chart: \(modulesJSPluginsArray)")
+        print("🔌🔌🔌pluginsArray after checking pro type chart '\(type)': \(modulesJSPluginsArray)")
         #endif
     }
-    
+
     private func addChartPluginScriptsArrayForAAOptions(_ aaOptions: AAOptions?) {
         if aaOptions?.chart?.parallelCoordinates == true {
-            modulesJSPluginsArray.append(generateScriptPathWithScriptName("AAParallel-coordinates"))
+            appendUniqueScript(scriptName: "AAParallel-coordinates")
         }
         if aaOptions?.data != nil {
-            modulesJSPluginsArray.append(generateScriptPathWithScriptName("AAData"))
+            appendUniqueScript(scriptName: "AAData")
         }
-//        if aaOptions?.colorAxis != nil {
-//            pluginsArray.append(generateScriptPathWithScriptName(""))
-//        }
-        
-        //打印 pluginsArray 数组的内容
+
         #if DEBUG
-        print("🔌🔌🔌pluginsArray for AAOptions: \(modulesJSPluginsArray)")
+        print("🔌🔌🔌pluginsArray after checking AAOptions: \(modulesJSPluginsArray)")
         #endif
     }
-    
+
     //判断 AAOptions 是否为除了基础类型之外的特殊类型
     private func isSpecialProTypeChart(_ aaOptions: AAOptions) {
         addChartPluginScriptsArrayForAAOptions(aaOptions)
-        
+
         let aaChartType = aaOptions.chart?.type
         addChartPluginScriptsArrayForProTypeChart(aaChartType)
-        //遍历 series 数组的每个元素,判断是否为特殊类型图表
-        if aaOptions.series != nil {
-            for aaSeriesElement in aaOptions.series! {
-                let finalSeriesElement = aaSeriesElement as? AASeriesElement
-                if finalSeriesElement?.type != nil {
-                    let aaSeriesType = finalSeriesElement?.type
+
+        if let seriesArray = aaOptions.series {
+            for aaSeriesElement in seriesArray {
+                if let finalSeriesElement = aaSeriesElement as? AASeriesElement,
+                   let aaSeriesType = finalSeriesElement.type {
                     addChartPluginScriptsArrayForProTypeChart(aaSeriesType)
-                        
-                    }
                 }
             }
         }
-    
-  
-    /**
-    //通过脚本文件名, 生成脚本路径
-    private func generateScriptPathWithScriptName(_ scriptName: String) -> String {
-//        /Users/admin/Documents/GitHub/AAChartKit-Swift-Pro/AAInfographics-Pro/AAJSFiles.bundle/AAModules/AASankey.js
-//       let testPath = BundlePathLoader().path(forResource: scriptName, ofType: "js", inDirectory: "AAJSFiles.bundle")
-//        let urlStr = NSURL.fileURL(withPath: testPath ?? "")
-//        
-//        //打印 urlStr 路径
-//        print("🧠🧠🚀urlStr: \(urlStr)")
-//        testPrintHtmlPath()
-
-       let path = Bundle.main.path(forResource: scriptName, ofType: "js") ?? ""
-        return path
-        
-//        return urlStr.absoluteString
     }
-     */
-    
+
     private func generateScriptPathWithScriptName(_ scriptName: String) -> String {
         let path = BundlePathLoader()
             .path(forResource: scriptName,
@@ -481,17 +408,10 @@ public class AAChartView: WKWebView {
 
         //        if (aaOptions.beforeDrawChartJavaScript) {
         //            _beforeDrawChartJavaScript = aaOptions.beforeDrawChartJavaScript;
-        //            aaOptions.beforeDrawChartJavaScript = nil;
-        //        }
         if aaOptions.beforeDrawChartJavaScript != nil {
             beforeDrawChartJavaScript = aaOptions.beforeDrawChartJavaScript
             aaOptions.beforeDrawChartJavaScript = nil
         }
-        
-        //        if (aaOptions.afterDrawChartJavaScript) {
-        //            _afterDrawChartJavaScript = aaOptions.afterDrawChartJavaScript;
-        //            aaOptions.afterDrawChartJavaScript = nil;
-        //        }
         
         if aaOptions.afterDrawChartJavaScript != nil {
             afterDrawChartJavaScript = aaOptions.afterDrawChartJavaScript
