@@ -461,44 +461,12 @@ public class AAChartView: WKWebView {
         return jsPluginPath
     }
     
-    internal func configureOptionsJsonStringWithAAOptions(_ aaOptions: AAOptions) {
-        // Initialize the Set from the optional array, ensuring uniqueness
-        requiredPluginPaths = Set(aaOptions.pluginsArray ?? [])
-        
-        // Determine and add required scripts based on options and chart/series types
-        isSpecialProTypeChart(aaOptions)
-
-        if aaOptions.beforeDrawChartJavaScript != nil {
-            beforeDrawChartJavaScript = aaOptions.beforeDrawChartJavaScript
-            aaOptions.beforeDrawChartJavaScript = nil
-        }
-        
-        if aaOptions.afterDrawChartJavaScript != nil {
-            afterDrawChartJavaScript = aaOptions.afterDrawChartJavaScript
-            aaOptions.afterDrawChartJavaScript = nil
-        }
-        
-        if isClearBackgroundColor == true {
-            aaOptions.chart?.backgroundColor = AAColor.clear
-        }
-        
-        if clickEventEnabled == true {
-            aaOptions.clickEventEnabled = true
-        }
-        if touchEventEnabled == true {
-            aaOptions.touchEventEnabled = true
-        }
-        if clickEventEnabled == true || touchEventEnabled == true {
-            configurePlotOptionsSeriesPointEvents(aaOptions)
-        }
-        
-        optionsJson = aaOptions.toJSON()
-        
 #if DEBUG
+    private func printOptionsJSONInfo(_ aaOptions: AAOptions) {
         // --- 数据量截断处理 ---
         // 检查 series 是否为 [AASeriesElement] 类型且不为空
         if let seriesElements = aaOptions.series as? [AASeriesElement],
-            !seriesElements.isEmpty {
+           !seriesElements.isEmpty {
             
             // 检查1: 单个 series 的 data 数组元素个数是否超过 1000
             var didTruncateData = false
@@ -547,6 +515,44 @@ public class AAChartView: WKWebView {
             // 捕获并打印序列化错误
             print("⚠️ Warning: Could not serialize AAOptions to JSON for logging: \(error)")
         }
+    }
+#endif
+    
+    internal func configureOptionsJsonStringWithAAOptions(_ aaOptions: AAOptions) {
+        // Initialize the Set from the optional array, ensuring uniqueness
+        requiredPluginPaths = Set(aaOptions.pluginsArray ?? [])
+        
+        // Determine and add required scripts based on options and chart/series types
+        isSpecialProTypeChart(aaOptions)
+
+        if aaOptions.beforeDrawChartJavaScript != nil {
+            beforeDrawChartJavaScript = aaOptions.beforeDrawChartJavaScript
+            aaOptions.beforeDrawChartJavaScript = nil
+        }
+        
+        if aaOptions.afterDrawChartJavaScript != nil {
+            afterDrawChartJavaScript = aaOptions.afterDrawChartJavaScript
+            aaOptions.afterDrawChartJavaScript = nil
+        }
+        
+        if isClearBackgroundColor == true {
+            aaOptions.chart?.backgroundColor = AAColor.clear
+        }
+        
+        if clickEventEnabled == true {
+            aaOptions.clickEventEnabled = true
+        }
+        if touchEventEnabled == true {
+            aaOptions.touchEventEnabled = true
+        }
+        if clickEventEnabled == true || touchEventEnabled == true {
+            configurePlotOptionsSeriesPointEvents(aaOptions)
+        }
+        
+        optionsJson = aaOptions.toJSON()
+        
+#if DEBUG
+        printOptionsJSONInfo(aaOptions)
 #endif
     }
     
