@@ -295,6 +295,14 @@ public class AAChartView: WKWebView {
 
         // 1. Determine the total set of required plugins for the current chart options
         let totalRequiredPluginsSet = modulesJSPluginsSet.union(jsPluginsSet)
+        
+        if totalRequiredPluginsSet.isEmpty {
+            #if DEBUG
+            print("ℹ️ No additional plugins needed for the current chart options.")
+            #endif
+            drawChart()
+            return
+        }
 
         // 2. Determine which plugins are required but not yet loaded
         let pluginsToLoad = totalRequiredPluginsSet.subtracting(loadedPluginsSet)
@@ -302,7 +310,7 @@ public class AAChartView: WKWebView {
         // 3. Check if any new plugins need to be loaded
         if pluginsToLoad.isEmpty {
             #if DEBUG
-            print("ℹ️ All required plugins (\(totalRequiredPluginsSet.count)) already loaded.")
+            print("ℹ️ All required plugins (count: \(totalRequiredPluginsSet.count)) already loaded.")
             #endif
             drawChart() // All necessary plugins are already loaded, just draw the chart
             return
@@ -398,7 +406,7 @@ public class AAChartView: WKWebView {
         }
         
 #if DEBUG
-        print("🔌🔌🔌pluginsArray after checking pro type chart '\(type)': \(modulesJSPluginsSet)")
+        print("🔌 modulesJSPluginsSet after checking pro type chart '\(type)': \(modulesJSPluginsSet)")
 #endif
     }
     
@@ -413,7 +421,7 @@ public class AAChartView: WKWebView {
         }
         
 #if DEBUG
-        print("🔌🔌🔌pluginsArray after checking AAOptions: \(modulesJSPluginsSet)")
+        print("🔌 modulesJSPluginsSet after checking AAOptions: \(modulesJSPluginsSet)")
 #endif
     }
 
@@ -488,7 +496,8 @@ public class AAChartView: WKWebView {
 #if DEBUG
         // --- 数据量截断处理 ---
         // 检查 series 是否为 [AASeriesElement] 类型且不为空
-        if var seriesElements = aaOptions.series as? [AASeriesElement], !seriesElements.isEmpty {
+        if let seriesElements = aaOptions.series as? [AASeriesElement],
+            !seriesElements.isEmpty {
             
             // 检查1: 单个 series 的 data 数组元素个数是否超过 1000
             var didTruncateData = false
@@ -503,8 +512,8 @@ public class AAChartView: WKWebView {
             }
             // 如果进行了数据截断，打印警告信息
             if didTruncateData {
-                print("💊💊💊Warning: Data array element count more than 1000, only the first 1000 data elements will be displayed in the console!!!")
-                print("💊💊💊警告: 数据数组元素个数超过 1000 个, 只打印前 1000 个数据元素到控制台!!!")
+                print("💊 Warning: Data array element count more than 1000, only the first 1000 data elements will be displayed in the console!!!")
+                print("💊 警告: 数据数组元素个数超过 1000 个, 只打印前 1000 个数据元素到控制台!!!")
             }
             
             // 检查2: series 数组本身元素个数是否超过 10
@@ -513,8 +522,8 @@ public class AAChartView: WKWebView {
                 // 注意：这里直接修改了 aaOptions.series，仅影响后续的打印
                 aaOptions.series = Array(seriesElements.prefix(10))
                 // 打印警告信息
-                print("💊💊💊Warning: Series element count more than 10, only the first 10 elements will be displayed in the console!!!")
-                print("💊💊💊警告: 系列元素个数超过 10 个, 只打印前 10 个元素到控制台!!!")
+                print("💊 Warning: Series element count more than 10, only the first 10 elements will be displayed in the console!!!")
+                print("💊 警告: 系列元素个数超过 10 个, 只打印前 10 个元素到控制台!!!")
             }
         }
         
