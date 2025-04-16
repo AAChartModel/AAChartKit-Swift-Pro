@@ -174,11 +174,12 @@ public class AAChartView: WKWebView {
         }
     }
     
-    private var modulesJSPluginsSet: Set<String> = []
     private var optionsJson: String?
-    private var loadedPluginsSet: Set<String> = [] // Keep track of loaded plugins
+    
+    private var requiredPluginPaths: Set<String> = []
+    private var loadedPluginPaths: Set<String> = [] // Keep track of loaded plugins
 
-    public var jsPluginsSet: Set<String> = []
+    public var userPluginPaths: Set<String> = []
     
     // Static mapping from chart type rawValue to script names
     private static let chartTypeScriptMapping: [String: [String]] = [
@@ -294,7 +295,7 @@ public class AAChartView: WKWebView {
         // --- Main logic of loadAllPluginsAndDrawChart ---
 
         // 1. Determine the total set of required plugins for the current chart options
-        let totalRequiredPluginsSet = modulesJSPluginsSet.union(jsPluginsSet)
+        let totalRequiredPluginsSet = requiredPluginPaths.union(userPluginPaths)
         
         if totalRequiredPluginsSet.isEmpty {
             #if DEBUG
@@ -305,7 +306,7 @@ public class AAChartView: WKWebView {
         }
 
         // 2. Determine which plugins are required but not yet loaded
-        let pluginsToLoad = totalRequiredPluginsSet.subtracting(loadedPluginsSet)
+        let pluginsToLoad = totalRequiredPluginsSet.subtracting(loadedPluginPaths)
 
         // 3. Check if any new plugins need to be loaded
         if pluginsToLoad.isEmpty {
@@ -323,13 +324,13 @@ public class AAChartView: WKWebView {
 
         loadScripts(scriptsToLoad: pluginsToLoad, index: 0, successfullyLoaded: Set<String>()) { newlyLoadedPlugins in
             // 5. Update the set of all loaded plugins
-            self.loadedPluginsSet.formUnion(newlyLoadedPlugins)
+            self.loadedPluginPaths.formUnion(newlyLoadedPlugins)
 
             #if DEBUG
             if newlyLoadedPlugins.count < pluginsToLoad.count {
                  print("⚠️ Failed to evaluate one or more new plugin scripts. Chart drawing may be affected.")
             }
-            print("ℹ️ Total loaded plugins count: \(self.loadedPluginsSet.count)")
+            print("ℹ️ Total loaded plugins count: \(self.loadedPluginPaths.count)")
             #endif
 
             // 6. Draw the chart after attempting to load new plugins
@@ -402,26 +403,26 @@ public class AAChartView: WKWebView {
         
         scriptNames.forEach { scriptName in
             let scriptPath = generateScriptPathWithScriptName(scriptName)
-            modulesJSPluginsSet.insert(scriptPath) // Directly insert into the Set
+            requiredPluginPaths.insert(scriptPath) // Directly insert into the Set
         }
         
 #if DEBUG
-        print("🔌 modulesJSPluginsSet after checking pro type chart '\(type)': \(modulesJSPluginsSet)")
+        print("🔌 requiredPluginPaths after checking pro type chart '\(type)': \(requiredPluginPaths)")
 #endif
     }
     
     private func addChartPluginScriptsArrayForAAOptions(_ aaOptions: AAOptions?) {
         if aaOptions?.chart?.parallelCoordinates == true {
             let scriptPath = generateScriptPathWithScriptName("AAParallel-coordinates")
-            modulesJSPluginsSet.insert(scriptPath) // Directly insert
+            requiredPluginPaths.insert(scriptPath) // Directly insert
         }
         if aaOptions?.data != nil {
             let scriptPath = generateScriptPathWithScriptName("AAData")
-            modulesJSPluginsSet.insert(scriptPath) // Directly insert
+            requiredPluginPaths.insert(scriptPath) // Directly insert
         }
         
 #if DEBUG
-        print("🔌 modulesJSPluginsSet after checking AAOptions: \(modulesJSPluginsSet)")
+        print("🔌 requiredPluginPaths after checking AAOptions: \(requiredPluginPaths)")
 #endif
     }
 
@@ -462,7 +463,7 @@ public class AAChartView: WKWebView {
     
     private func configureOptionsJsonStringWithAAOptions(_ aaOptions: AAOptions) {
         // Initialize the Set from the optional array, ensuring uniqueness
-        modulesJSPluginsSet = Set(aaOptions.pluginsArray ?? [])
+        requiredPluginPaths = Set(aaOptions.pluginsArray ?? [])
         
         // Determine and add required scripts based on options and chart/series types
         isSpecialProTypeChart(aaOptions)
@@ -643,7 +644,7 @@ extension AAChartView {
     ///
     /// - Parameter aaOptions: The instance object of AAOptions model
     public func aa_refreshChartWholeContentWithChartOptions(_ aaOptions: AAOptions) {
-        configureOptionsJsonStringWithAAOptions(aaOptions) // Updates optionsJson and determines required plugins (modulesJSPluginsSet)
+        configureOptionsJsonStringWithAAOptions(aaOptions) // Updates optionsJson and determines required plugins (requiredPluginPaths)
         loadAllPluginsAndDrawChart() // Now intelligently loads only *new* plugins before drawing
     }
 }
