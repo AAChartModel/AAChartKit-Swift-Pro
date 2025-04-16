@@ -268,9 +268,7 @@ public class AAChartView: WKWebView {
         }
         
         // 4. Load the necessary new plugins sequentially
-#if DEBUG
-        print("ℹ️ Loading \(pluginsToLoad.count) new plugin scripts...")
-#endif
+        debugLog("ℹ️ Loading \(pluginsToLoad.count) new plugin scripts...")
         
         loadPluginScriptsSequentially(scriptsToLoad: pluginsToLoad) { [weak self] newlyLoadedPlugins in
             guard let self = self else { return }
@@ -327,30 +325,24 @@ public class AAChartView: WKWebView {
                 evaluateJavaScript(jsString) { [weak self] _, error in
                     guard self != nil else {
                         // If self is deallocated, stop loading further scripts
-                        print("⚠️ AAChartView deallocated during script evaluation. Aborting plugin load.")
+                        self?.debugLog("⚠️ AAChartView deallocated during script evaluation. Aborting plugin load.")
                         completion(successfullyLoaded)
                         return
                     }
                     
                     if let error = error {
-#if DEBUG
-                        print("❌ Error evaluating new plugin script '\(scriptName)' (index \(index)): \(error)")
-#endif
+                        self?.debugLog("❌ Error evaluating new plugin script '\(scriptName)' (index \(index)): \(error)")
                         // Continue to the next script even if this one fails
                         loadNextScript(index: index + 1)
                     } else {
-#if DEBUG
-                        print("✅ New plugin script '\(scriptName)' (index \(index)) evaluated.")
-#endif
+                        self?.debugLog("✅ New plugin script '\(scriptName)' (index \(index)) evaluated.")
                         successfullyLoaded.insert(path) // Add successfully evaluated script path
                         // Recursively load the next script
                         loadNextScript(index: index + 1)
                     }
                 }
             } catch {
-#if DEBUG
-                print("❌ Failed to load plugin script file '\(scriptName)' (index \(index)): \(error)")
-#endif
+                debugLog("❌ Failed to load plugin script file '\(scriptName)' (index \(index)): \(error)")
                 // Continue to the next script even if file loading fails
                 loadNextScript(index: index + 1)
             }
@@ -368,9 +360,7 @@ public class AAChartView: WKWebView {
     
     internal func safeEvaluateJavaScriptString (_ jsString: String) {
         if optionsJson == nil {
-#if DEBUG
-            print("💀💀💀AAChartView did not finish loading!!!")
-#endif
+            debugLog("💀💀💀AAChartView did not finish loading!!!")
             return
         }
         
@@ -429,9 +419,7 @@ public class AAChartView: WKWebView {
             requiredPluginPaths.insert(scriptPath) // Directly insert into the Set
         }
         
-#if DEBUG
-        print("🔌 requiredPluginPaths after checking pro type chart '\(type)': \(requiredPluginPaths)")
-#endif
+        debugLog("🔌 requiredPluginPaths after checking pro type chart '\(type)': \(requiredPluginPaths)")
     }
     
     private func addChartPluginScriptsArrayForAAOptions(_ aaOptions: AAOptions?) {
@@ -444,9 +432,7 @@ public class AAChartView: WKWebView {
             requiredPluginPaths.insert(scriptPath) // Directly insert
         }
         
-#if DEBUG
-        print("🔌 requiredPluginPaths after checking AAOptions: \(requiredPluginPaths)")
-#endif
+        debugLog("🔌 requiredPluginPaths after checking AAOptions: \(requiredPluginPaths)")
     }
     
     //判断 AAOptions 是否为除了基础类型之外的特殊类型
@@ -589,13 +575,18 @@ public class AAChartView: WKWebView {
         configuration.userContentController.add(AALeakAvoider.init(delegate: self), name: kUserContentMessageNameMouseOver)
     }
     
+    //添加一个 debug log 方法, 用于打印一些调试信息
+    private func debugLog(_ message: String) {
+#if DEBUG
+        print(message)
+#endif
+    }
+    
     
     deinit {
         configuration.userContentController.removeAllUserScripts()
         NotificationCenter.default.removeObserver(self)
-#if DEBUG
-        print("👻👻👻 AAChartView instance \(self) has been destroyed!")
-#endif
+        debugLog("👻👻👻 AAChartView instance \(self) has been destroyed!")
     }
 }
 
