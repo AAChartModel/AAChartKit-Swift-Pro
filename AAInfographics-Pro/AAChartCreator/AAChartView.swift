@@ -175,8 +175,8 @@ public class AAChartView: WKWebView {
     }
     
     private var modulesJSPluginsArray: [String] = []
-    
     private var optionsJson: String?
+    
     public var jsPluginsArray: [String] = []
     
     // Static mapping from chart type rawValue to script names
@@ -231,44 +231,71 @@ public class AAChartView: WKWebView {
     private func loadAllPluginsAndDrawChart() {
         func loadScripts(from scriptsArray: [String], index: Int, completion: @escaping (Bool) -> Void) {
             if index >= scriptsArray.count {
-                // 所有脚本已加载完成
-                print("✅✅✅ All plugin scripts loaded successfully")
+                #if DEBUG
+                print("✅ All plugin scripts evaluated successfully.")
+                #endif
                 completion(true)
                 return
             }
             
             let path = scriptsArray[index]
-        
+            let scriptName = (path as NSString).lastPathComponent // Extract filename
 
             do {
                 let jsString = try String(contentsOfFile: path, encoding: .utf8)
                 evaluateJavaScript(jsString) { result, error in
                     if let error = error {
-                        print("❌❌❌ Error evaluating plugin JavaScript at index \(index): \(error), error JavaScript name: \(path)")
-                        completion(false) // 或者可以选择忽略错误并继续加载下一个脚本
+                        #if DEBUG
+                        print("❌ Error evaluating plugin script '\(scriptName)' (index \(index)): \(error)")
+                        #endif
+                        completion(false) // Stop loading on error
                     } else {
-                        print("✅✅✅ Plugin JavaScript at index \(index) evaluated successfully, JavaScript name: \(path)")
+                        #if DEBUG
+                        // Optional: Keep success log for debugging if needed
+                        // print("✅ Plugin script '\(scriptName)' (index \(index)) evaluated.")
+                        #endif
+                        // Recursively load the next script
                         loadScripts(from: scriptsArray, index: index + 1, completion: completion)
                     }
                 }
             } catch {
-                print("❌❌❌ Failed to load plugin JavaScript at index \(index): \(error), error JavaScript name: \(path)")
-                completion(false) // 或者可以选择忽略错误并继续加载下一个脚本
+                #if DEBUG
+                print("❌ Failed to load plugin script file '\(scriptName)' (index \(index)): \(error)")
+                #endif
+                completion(false) // Stop loading on error
             }
         }
         
         
         if modulesJSPluginsArray.isEmpty && jsPluginsArray.isEmpty {
+            #if DEBUG
+            print("ℹ️ No external JS plugins to load.")
+            #endif
             drawChart()
             return
         }
         
-        let totalJSPluginsArray = modulesJSPluginsArray + jsPluginsArray
+        // Combine and remove duplicates just in case appendUniqueScript wasn't perfectly used or jsPluginsArray has duplicates
+        let uniqueModules = Set(modulesJSPluginsArray)
+        let uniqueJsPlugins = Set(jsPluginsArray)
+        let totalJSPluginsSet = uniqueModules.union(uniqueJsPlugins)
+        // Maintain a somewhat predictable order if possible, though Set iteration order isn't guaranteed.
+        // A sorted array might be better if order matters, but likely doesn't for independent plugins.
+        let totalJSPluginsArray = Array(totalJSPluginsSet)
+
+        #if DEBUG
+        print("ℹ️ Loading \(totalJSPluginsArray.count) unique plugin scripts...")
+        #endif
+        
         loadScripts(from: totalJSPluginsArray, index: 0) { success in
             if success {
                 self.drawChart()
             } else {
-                print("❌❌❌ Failed to load one or more plugin scripts.")
+                #if DEBUG
+                print("❌ Failed to evaluate one or more plugin scripts. Chart drawing may be affected.")
+                #endif
+                // Decide if drawChart() should still be called even if plugins fail.
+                // Currently, it's not called on failure.
             }
         }
     }
