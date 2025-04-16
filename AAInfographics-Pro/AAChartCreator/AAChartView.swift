@@ -49,7 +49,7 @@ public class AAEventMessageModel: NSObject {
     public var category: String?
     public var offset: [String: Any]?
     public var index: Int?
-
+    
     required override init() {
         
     }
@@ -96,7 +96,7 @@ public class AAChartView: WKWebView {
     public weak var delegate: AAChartViewDelegate? {
         set {
             assert(optionsJson == nil, "You should set the delegate before drawing the chart") //To Make sure the clickEventEnabled and touchEventEnabled properties are working correctly
-
+            
             _delegate = newValue
             if newValue?.responds(to: #selector(AAChartViewDelegate.aaChartView(_:clickEventMessage:))) == true {
                 clickEventEnabled = true
@@ -112,20 +112,20 @@ public class AAChartView: WKWebView {
             _delegate
         }
     }
-  
+    
     // MARK: - Setter Method
-    #if os(iOS)
+#if os(iOS)
     public var isScrollEnabled: Bool? {
         willSet {
             scrollView.isScrollEnabled = newValue!
         }
     }
-    #endif
-
+#endif
+    
     
     public var isClearBackgroundColor: Bool? {
         willSet {
-            #if os(iOS)
+#if os(iOS)
             if newValue! == true {
                 backgroundColor = .clear
                 isOpaque = false
@@ -133,7 +133,7 @@ public class AAChartView: WKWebView {
                 backgroundColor = .white
                 isOpaque = true
             }
-            #elseif os(macOS)
+#elseif os(macOS)
             if newValue! == true {
                 layer?.backgroundColor = .clear
                 layer?.isOpaque = false
@@ -141,7 +141,7 @@ public class AAChartView: WKWebView {
                 layer?.backgroundColor = .white
                 layer?.isOpaque = true
             }
-            #endif
+#endif
         }
     }
     
@@ -178,7 +178,7 @@ public class AAChartView: WKWebView {
     
     private var requiredPluginPaths: Set<String> = []
     private var loadedPluginPaths: Set<String> = [] // Keep track of loaded plugins
-
+    
     public var userPluginPaths: Set<String> = []
     
     // Static mapping from chart type rawValue to script names
@@ -224,7 +224,7 @@ public class AAChartView: WKWebView {
         AAChartType.windbarb.rawValue        : ["AAWindbarb"], // Meteorological
         AAChartType.wordcloud.rawValue       : ["AAWordcloud"], // Text visualization
     ]
-
+    
     // MARK: - Initialization
     override private init(frame: CGRect, configuration: WKWebViewConfiguration) {
         super.init(frame: frame, configuration: configuration)
@@ -242,26 +242,26 @@ public class AAChartView: WKWebView {
         self.init(frame: .zero, configuration: configuration)
         translatesAutoresizingMaskIntoConstraints = false
     }
-   
+    
     
     internal func loadAllPluginsAndDrawChart() {
         // Inner recursive function to load scripts sequentially
         func loadScripts(scriptsToLoad: Set<String>, index: Int, successfullyLoaded: Set<String>, completion: @escaping (Set<String>) -> Void) {
             // Base case: All scripts in the set attempted
             if index >= scriptsToLoad.count {
-                #if DEBUG
+#if DEBUG
                 if !scriptsToLoad.isEmpty { // Only log if we actually tried loading something
                     print("✅ \(successfullyLoaded.count) out of \(scriptsToLoad.count) new plugin scripts evaluated successfully.")
                 }
-                #endif
+#endif
                 completion(successfullyLoaded) // Return the set of successfully loaded scripts
                 return
             }
-
+            
             // Get the script path for the current index
             let path = scriptsToLoad[scriptsToLoad.index(scriptsToLoad.startIndex, offsetBy: index)]
             let scriptName = (path as NSString).lastPathComponent // Extract filename for logging
-
+            
             do {
                 // Read the script content
                 let jsString = try String(contentsOfFile: path, encoding: .utf8)
@@ -269,70 +269,70 @@ public class AAChartView: WKWebView {
                 evaluateJavaScript(jsString) { result, error in
                     var currentSuccessSet = successfullyLoaded
                     if let error = error {
-                        #if DEBUG
+#if DEBUG
                         print("❌ Error evaluating new plugin script '\(scriptName)' (index \(index)): \(error)")
-                        #endif
+#endif
                         // Continue to the next script even if this one fails
                         loadScripts(scriptsToLoad: scriptsToLoad, index: index + 1, successfullyLoaded: currentSuccessSet, completion: completion)
                     } else {
-                        #if DEBUG
+#if DEBUG
                         print("✅ New plugin script '\(scriptName)' (index \(index)) evaluated.")
-                        #endif
+#endif
                         currentSuccessSet.insert(path) // Add successfully evaluated script path
                         // Recursively load the next script
                         loadScripts(scriptsToLoad: scriptsToLoad, index: index + 1, successfullyLoaded: currentSuccessSet, completion: completion)
                     }
                 }
             } catch {
-                #if DEBUG
+#if DEBUG
                 print("❌ Failed to load plugin script file '\(scriptName)' (index \(index)): \(error)")
-                #endif
+#endif
                 // Continue to the next script even if loading fails
-                 loadScripts(scriptsToLoad: scriptsToLoad, index: index + 1, successfullyLoaded: successfullyLoaded, completion: completion)
+                loadScripts(scriptsToLoad: scriptsToLoad, index: index + 1, successfullyLoaded: successfullyLoaded, completion: completion)
             }
         }
-
+        
         // --- Main logic of loadAllPluginsAndDrawChart ---
-
+        
         // 1. Determine the total set of required plugins for the current chart options
         let totalRequiredPluginsSet = requiredPluginPaths.union(userPluginPaths)
         
         if totalRequiredPluginsSet.isEmpty {
-            #if DEBUG
+#if DEBUG
             print("ℹ️ No additional plugins needed for the current chart options.")
-            #endif
+#endif
             drawChart()
             return
         }
-
+        
         // 2. Determine which plugins are required but not yet loaded
         let pluginsToLoad = totalRequiredPluginsSet.subtracting(loadedPluginPaths)
-
+        
         // 3. Check if any new plugins need to be loaded
         if pluginsToLoad.isEmpty {
-            #if DEBUG
+#if DEBUG
             print("ℹ️ All required plugins (count: \(totalRequiredPluginsSet.count)) already loaded.")
-            #endif
+#endif
             drawChart() // All necessary plugins are already loaded, just draw the chart
             return
         }
-
+        
         // 4. Load the necessary new plugins
-        #if DEBUG
+#if DEBUG
         print("ℹ️ Loading \(pluginsToLoad.count) new plugin scripts...")
-        #endif
-
+#endif
+        
         loadScripts(scriptsToLoad: pluginsToLoad, index: 0, successfullyLoaded: Set<String>()) { newlyLoadedPlugins in
             // 5. Update the set of all loaded plugins
             self.loadedPluginPaths.formUnion(newlyLoadedPlugins)
-
-            #if DEBUG
+            
+#if DEBUG
             if newlyLoadedPlugins.count < pluginsToLoad.count {
-                 print("⚠️ Failed to evaluate one or more new plugin scripts. Chart drawing may be affected.")
+                print("⚠️ Failed to evaluate one or more new plugin scripts. Chart drawing may be affected.")
             }
             print("ℹ️ Total loaded plugins count: \(self.loadedPluginPaths.count)")
-            #endif
-
+#endif
+            
             // 6. Draw the chart after attempting to load new plugins
             self.drawChart()
         }
@@ -345,14 +345,14 @@ public class AAChartView: WKWebView {
     
     internal func safeEvaluateJavaScriptString (_ jsString: String) {
         if optionsJson == nil {
-            #if DEBUG
+#if DEBUG
             print("💀💀💀AAChartView did not finish loading!!!")
-            #endif
+#endif
             return
         }
         
         evaluateJavaScript(jsString, completionHandler: { (item, error) in
-            #if DEBUG
+#if DEBUG
             if error != nil {
                 let objcError = error! as NSError
                 let errorUserInfo = objcError.userInfo
@@ -377,8 +377,8 @@ public class AAChartView: WKWebView {
                 """
                 print(errorInfo)
             }
-            #endif
-
+#endif
+            
             self.delegate?.aaChartViewDidFinishEvaluate?(self)
         })
     }
@@ -394,7 +394,7 @@ public class AAChartView: WKWebView {
             aaOptions.plotOptions?.series?.point?.events = AAPointEvents()
         }
     }
-
+    
     //向 pluginsArray 数组中添加插件脚本路径(避免重复添加)
     private func addChartPluginScriptsArrayForProTypeChart(_ chartType: String?) {
         guard let type = chartType, let scriptNames = Self.chartTypeScriptMapping[type] else {
@@ -425,14 +425,14 @@ public class AAChartView: WKWebView {
         print("🔌 requiredPluginPaths after checking AAOptions: \(requiredPluginPaths)")
 #endif
     }
-
+    
     //判断 AAOptions 是否为除了基础类型之外的特殊类型
     private func isSpecialProTypeChart(_ aaOptions: AAOptions) {
         addChartPluginScriptsArrayForAAOptions(aaOptions)
-
+        
         let aaChartType = aaOptions.chart?.type
         addChartPluginScriptsArrayForProTypeChart(aaChartType)
-
+        
         if let seriesArray = aaOptions.series {
             for aaSeriesElement in seriesArray {
                 if let finalSeriesElement = aaSeriesElement as? AASeriesElement,
@@ -442,7 +442,7 @@ public class AAChartView: WKWebView {
             }
         }
     }
-
+    
     private func generateScriptPathWithScriptName(_ scriptName: String) -> String {
         let path = BundlePathLoader()
             .path(forResource: scriptName,
@@ -450,12 +450,12 @@ public class AAChartView: WKWebView {
                   inDirectory: "AAJSFiles.bundle/AAModules")
         let urlStr = NSURL.fileURL(withPath: path!)
         
-//        //打印 urlStr 路径
-//        print("🫁🫁🫁urlStr: \(urlStr)")
-//
-//        //打印 urlStr 路径文件的内容
-//        let jsContent = try? String(contentsOf: urlStr)
-//        print(try? jsContent ?? "")
+        //        //打印 urlStr 路径
+        //        print("🫁🫁🫁urlStr: \(urlStr)")
+        //
+        //        //打印 urlStr 路径文件的内容
+        //        let jsContent = try? String(contentsOf: urlStr)
+        //        print(try? jsContent ?? "")
         
         let jsPluginPath = urlStr.path
         return jsPluginPath
@@ -524,7 +524,7 @@ public class AAChartView: WKWebView {
         
         // Determine and add required scripts based on options and chart/series types
         isSpecialProTypeChart(aaOptions)
-
+        
         if aaOptions.beforeDrawChartJavaScript != nil {
             beforeDrawChartJavaScript = aaOptions.beforeDrawChartJavaScript
             aaOptions.beforeDrawChartJavaScript = nil
@@ -566,13 +566,13 @@ public class AAChartView: WKWebView {
         configuration.userContentController.add(AALeakAvoider.init(delegate: self), name: kUserContentMessageNameMouseOver)
     }
     
-
+    
     deinit {
         configuration.userContentController.removeAllUserScripts()
         NotificationCenter.default.removeObserver(self)
-        #if DEBUG
+#if DEBUG
         print("👻👻👻 AAChartView instance \(self) has been destroyed!")
-        #endif
+#endif
     }
 }
 
@@ -586,7 +586,7 @@ extension AAChartView: WKUIDelegate {
         initiatedByFrame frame: WKFrameInfo,
         completionHandler: @escaping () -> Void
     ) {
-        #if os(iOS)
+#if os(iOS)
         let alertController = UIAlertController(title: "JS WARNING", message: message, preferredStyle: .alert)
         
         let okayAction = UIAlertAction(title: "Okay", style: .default) { _ in
@@ -602,7 +602,7 @@ extension AAChartView: WKUIDelegate {
         
         presentingViewController.present(alertController, animated: true, completion: nil)
         
-        #elseif os(macOS)
+#elseif os(macOS)
         let alert = NSAlert()
         alert.alertStyle = .warning
         alert.messageText = "JS WARNING"
@@ -614,10 +614,10 @@ extension AAChartView: WKUIDelegate {
                 completionHandler()
             }
         }
-        #endif
+#endif
     }
     
-    #if os(iOS)
+#if os(iOS)
     private func nextUIViewController() -> UIViewController? {
         var responder: UIResponder? = self
         while responder != nil {
@@ -628,7 +628,8 @@ extension AAChartView: WKUIDelegate {
         }
         return nil
     }
-    #endif
+#endif
+    
 }
 
 
@@ -672,7 +673,7 @@ extension AAChartView {
         eventMessageModel.index = messageBody["index"] as? Int
         return eventMessageModel
     }
-
+    
     private func getFloatValue<T>(_ value: T?) -> Float? {
         switch value {
         case let value as Float: return value
