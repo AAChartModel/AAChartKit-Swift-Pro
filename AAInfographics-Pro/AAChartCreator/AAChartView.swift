@@ -358,16 +358,17 @@ public class AAChartView: WKWebView {
         guard let type = chartType, let scriptNames = Self.chartTypeScriptMapping[type] else {
             return
         }
-
+        
         scriptNames.forEach { scriptName in
             let scriptPath = generateScriptPathWithScriptName(scriptName)
             modulesJSPluginsSet.insert(scriptPath) // Directly insert into the Set
         }
-
-        #if DEBUG
-        #endif
+        
+#if DEBUG
+        print("🔌🔌🔌pluginsArray after checking pro type chart '\(type)': \(modulesJSPluginsSet)")
+#endif
     }
-
+    
     private func addChartPluginScriptsArrayForAAOptions(_ aaOptions: AAOptions?) {
         if aaOptions?.chart?.parallelCoordinates == true {
             let scriptPath = generateScriptPathWithScriptName("AAParallel-coordinates")
@@ -377,9 +378,10 @@ public class AAChartView: WKWebView {
             let scriptPath = generateScriptPathWithScriptName("AAData")
             modulesJSPluginsSet.insert(scriptPath) // Directly insert
         }
-
-        #if DEBUG
-        #endif
+        
+#if DEBUG
+        print("🔌🔌🔌pluginsArray after checking AAOptions: \(modulesJSPluginsSet)")
+#endif
     }
 
     //判断 AAOptions 是否为除了基础类型之外的特殊类型
@@ -405,12 +407,14 @@ public class AAChartView: WKWebView {
                   ofType: "js",
                   inDirectory: "AAJSFiles.bundle/AAModules")
         let urlStr = NSURL.fileURL(withPath: path!)
-        //打印 urlStr 路径
-        print("🫁🫁🫁urlStr: \(urlStr)")
-
-        //打印 urlStr 路径文件的内容
-        let jsContent = try? String(contentsOf: urlStr)
-        print(try? jsContent ?? "")
+        
+//        //打印 urlStr 路径
+//        print("🫁🫁🫁urlStr: \(urlStr)")
+//
+//        //打印 urlStr 路径文件的内容
+//        let jsContent = try? String(contentsOf: urlStr)
+//        print(try? jsContent ?? "")
+        
         let jsPluginPath = urlStr.path
         return jsPluginPath
     }
@@ -448,50 +452,59 @@ public class AAChartView: WKWebView {
         
         optionsJson = aaOptions.toJSON()
         
-        #if DEBUG
-        //如果 series 数组中的 AASeriesElement 对象的 data 数组元素个数超过 1000 个,
-        //则只打印前 1000 个元素,避免控制台输出太多导致卡顿
-        //同时添加警告提醒开发者注意数组元素个数超出 1000 个的问题
-        if     aaOptions.series != nil
-            && aaOptions.series!.count > 0
-            && aaOptions.series is [AASeriesElement] {
-            for  seriesElement in aaOptions.series as! [AASeriesElement] {
-                if seriesElement.data != nil {
-                    if seriesElement.data!.count > 1000 {
-                        let dataArr = seriesElement.data![0...999]
-                        seriesElement.data = Array(dataArr)
-                        //打印⚠️信息, 中英对照
-                        print("💊💊💊Warning: Data array element count more than 1000, only the first 1000 data elements will be displayed in the console!!!")
-                        print("💊💊💊警告: 数据数组元素个数超过 1000 个, 只打印前 1000 个数据元素到控制台!!!")
-                    }
+#if DEBUG
+        // --- 数据量截断处理 ---
+        // 检查 series 是否为 [AASeriesElement] 类型且不为空
+        if var seriesElements = aaOptions.series as? [AASeriesElement], !seriesElements.isEmpty {
+            
+            // 检查1: 单个 series 的 data 数组元素个数是否超过 1000
+            var didTruncateData = false
+            for seriesElement in seriesElements {
+                // 使用可选绑定确保 data 存在
+                if let data = seriesElement.data, data.count > 1000 {
+                    // 截取前 1000 个元素
+                    // 注意：这里直接修改了 aaOptions 中的 seriesElement.data，仅影响后续的打印
+                    seriesElement.data = Array(data.prefix(1000))
+                    didTruncateData = true
                 }
+            }
+            // 如果进行了数据截断，打印警告信息
+            if didTruncateData {
+                print("💊💊💊Warning: Data array element count more than 1000, only the first 1000 data elements will be displayed in the console!!!")
+                print("💊💊💊警告: 数据数组元素个数超过 1000 个, 只打印前 1000 个数据元素到控制台!!!")
+            }
+            
+            // 检查2: series 数组本身元素个数是否超过 10
+            if seriesElements.count > 10 {
+                // 截取前 10 个 series 元素
+                // 注意：这里直接修改了 aaOptions.series，仅影响后续的打印
+                aaOptions.series = Array(seriesElements.prefix(10))
+                // 打印警告信息
+                print("💊💊💊Warning: Series element count more than 10, only the first 10 elements will be displayed in the console!!!")
+                print("💊💊💊警告: 系列元素个数超过 10 个, 只打印前 10 个元素到控制台!!!")
             }
         }
         
-        //如果 series 数组中的 AASeriesElement 对象元素个数超过 10 个,
-        //则只打印前 10 个元素,避免控制台输出太多导致卡顿
-        //同时添加警告提醒开发者注意数组元素个数超出 10 个的问题
-        if     aaOptions.series != nil
-            && aaOptions.series!.count > 10
-            && aaOptions.series is [AASeriesElement] {
-            let seriesElementArr = aaOptions.series as! [AASeriesElement]
-            let firstTenElementArr = seriesElementArr[0...9]
-            aaOptions.series = Array(firstTenElementArr)
-            //打印⚠️信息, 中英对照
-            print("💊💊💊Warning: Series element count more than 10, only the first 10 elements will be displayed in the console!!!")
-            print("💊💊💊警告: 系列元素个数超过 10 个, 只打印前 10 个元素到控制台!!!")
-        }
-        
+        // --- JSON 打印 ---
+        // 将（可能已被截断的）aaOptions 转换为字典
         let modelJsonDic = aaOptions.toDic()
-        let data = try? JSONSerialization.data(withJSONObject: modelJsonDic, options: .prettyPrinted)
-        if data != nil {
-            let prettyPrintedModelJson = String(data: data!, encoding: String.Encoding.utf8)
-            print("""
-                -----------🖨🖨🖨 console log AAOptions JSON information of AAChartView 🖨🖨🖨-----------:
-                \(prettyPrintedModelJson!)
-                """)
+        do {
+            // 尝试序列化为 JSON Data
+            let jsonData = try JSONSerialization.data(withJSONObject: modelJsonDic, options: .prettyPrinted)
+            // 尝试将 JSON Data 转换为 UTF8 字符串，并安全解包
+            if let prettyPrintedModelJson = String(data: jsonData, encoding: .utf8) {
+                print("""
+                            -----------🖨🖨🖨 console log AAOptions JSON information of AAChartView 🖨🖨🖨-----------:
+                            \(prettyPrintedModelJson)
+                            """)
+            } else {
+                print("⚠️ Warning: Could not convert JSON data to UTF8 string for logging.")
+            }
+        } catch {
+            // 捕获并打印序列化错误
+            print("⚠️ Warning: Could not serialize AAOptions to JSON for logging: \(error)")
         }
-        #endif
+#endif
     }
     
     private func addClickEventMessageHandler() {
