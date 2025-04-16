@@ -244,85 +244,37 @@ public class AAChartView: WKWebView {
     }
     
     
+    // MARK: - Plugin Loading and Chart Drawing
+    
+    /// Determines required plugins, loads any missing ones sequentially, and then draws the chart.
     internal func loadAllPluginsAndDrawChart() {
-        // Inner recursive function to load scripts sequentially
-        func loadScripts(scriptsToLoad: Set<String>, index: Int, successfullyLoaded: Set<String>, completion: @escaping (Set<String>) -> Void) {
-            // Base case: All scripts in the set attempted
-            if index >= scriptsToLoad.count {
-#if DEBUG
-                if !scriptsToLoad.isEmpty { // Only log if we actually tried loading something
-                    print("✅ \(successfullyLoaded.count) out of \(scriptsToLoad.count) new plugin scripts evaluated successfully.")
-                }
-#endif
-                completion(successfullyLoaded) // Return the set of successfully loaded scripts
-                return
-            }
-            
-            // Get the script path for the current index
-            let path = scriptsToLoad[scriptsToLoad.index(scriptsToLoad.startIndex, offsetBy: index)]
-            let scriptName = (path as NSString).lastPathComponent // Extract filename for logging
-            
-            do {
-                // Read the script content
-                let jsString = try String(contentsOfFile: path, encoding: .utf8)
-                // Evaluate the script
-                evaluateJavaScript(jsString) { result, error in
-                    var currentSuccessSet = successfullyLoaded
-                    if let error = error {
-#if DEBUG
-                        print("❌ Error evaluating new plugin script '\(scriptName)' (index \(index)): \(error)")
-#endif
-                        // Continue to the next script even if this one fails
-                        loadScripts(scriptsToLoad: scriptsToLoad, index: index + 1, successfullyLoaded: currentSuccessSet, completion: completion)
-                    } else {
-#if DEBUG
-                        print("✅ New plugin script '\(scriptName)' (index \(index)) evaluated.")
-#endif
-                        currentSuccessSet.insert(path) // Add successfully evaluated script path
-                        // Recursively load the next script
-                        loadScripts(scriptsToLoad: scriptsToLoad, index: index + 1, successfullyLoaded: currentSuccessSet, completion: completion)
-                    }
-                }
-            } catch {
-#if DEBUG
-                print("❌ Failed to load plugin script file '\(scriptName)' (index \(index)): \(error)")
-#endif
-                // Continue to the next script even if loading fails
-                loadScripts(scriptsToLoad: scriptsToLoad, index: index + 1, successfullyLoaded: successfullyLoaded, completion: completion)
-            }
-        }
-        
-        // --- Main logic of loadAllPluginsAndDrawChart ---
-        
-        // 1. Determine the total set of required plugins for the current chart options
+        // 1. Determine the total set of required plugins (base requirements + user-defined)
         let totalRequiredPluginsSet = requiredPluginPaths.union(userPluginPaths)
         
-        if totalRequiredPluginsSet.isEmpty {
+        // 2. Identify plugins that are required but not yet loaded
+        let pluginsToLoad = totalRequiredPluginsSet.subtracting(loadedPluginPaths)
+        
+        // 3. If no new plugins need loading, draw the chart immediately
+        guard !pluginsToLoad.isEmpty else {
 #if DEBUG
-            print("ℹ️ No additional plugins needed for the current chart options.")
+            if totalRequiredPluginsSet.isEmpty {
+                print("ℹ️ No additional plugins needed for the current chart options.")
+            } else {
+                print("ℹ️ All required plugins (count: \(totalRequiredPluginsSet.count)) already loaded.")
+            }
 #endif
             drawChart()
             return
         }
         
-        // 2. Determine which plugins are required but not yet loaded
-        let pluginsToLoad = totalRequiredPluginsSet.subtracting(loadedPluginPaths)
-        
-        // 3. Check if any new plugins need to be loaded
-        if pluginsToLoad.isEmpty {
-#if DEBUG
-            print("ℹ️ All required plugins (count: \(totalRequiredPluginsSet.count)) already loaded.")
-#endif
-            drawChart() // All necessary plugins are already loaded, just draw the chart
-            return
-        }
-        
-        // 4. Load the necessary new plugins
+        // 4. Load the necessary new plugins sequentially
 #if DEBUG
         print("ℹ️ Loading \(pluginsToLoad.count) new plugin scripts...")
 #endif
         
-        loadScripts(scriptsToLoad: pluginsToLoad, index: 0, successfullyLoaded: Set<String>()) { newlyLoadedPlugins in
+        loadPluginScriptsSequentially(scriptsToLoad: pluginsToLoad) { [weak self] newlyLoadedPlugins in
+            guard let self = self else { return }
+            
             // 5. Update the set of all loaded plugins
             self.loadedPluginPaths.formUnion(newlyLoadedPlugins)
             
@@ -337,6 +289,77 @@ public class AAChartView: WKWebView {
             self.drawChart()
         }
     }
+    
+    /// Loads a set of plugin scripts sequentially, evaluating them one by one.
+    /// - Parameters:
+    ///   - scriptsToLoad: A Set of file paths for the JavaScript plugins to load.
+    ///   - completion: A closure called when all scripts have been attempted, passing a Set of paths for successfully loaded scripts.
+    private func loadPluginScriptsSequentially(
+        scriptsToLoad: Set<String>,
+        completion: @escaping (Set<String>) -> Void
+    ) {
+        // Convert Set to Array for indexed access, maintaining order isn't critical here
+        // but Array makes indexed recursion simpler than Set index manipulation.
+        let scriptPathsArray = Array(scriptsToLoad)
+        var successfullyLoaded = Set<String>()
+        
+        // Define the recursive loading function
+        func loadNextScript(index: Int) {
+            // Base case: All scripts in the array attempted
+            guard index < scriptPathsArray.count else {
+#if DEBUG
+                if !scriptPathsArray.isEmpty {
+                    print("✅ \(successfullyLoaded.count) out of \(scriptPathsArray.count) new plugin scripts evaluated successfully.")
+                }
+#endif
+                completion(successfullyLoaded) // Return the set of successfully loaded scripts
+                return
+            }
+            
+            let path = scriptPathsArray[index]
+            let scriptName = (path as NSString).lastPathComponent // Extract filename for logging
+            
+            do {
+                // Read the script content
+                let jsString = try String(contentsOfFile: path, encoding: .utf8)
+                
+                // Evaluate the script
+                evaluateJavaScript(jsString) { [weak self] _, error in
+                    guard self != nil else {
+                        // If self is deallocated, stop loading further scripts
+                        print("⚠️ AAChartView deallocated during script evaluation. Aborting plugin load.")
+                        completion(successfullyLoaded)
+                        return
+                    }
+                    
+                    if let error = error {
+#if DEBUG
+                        print("❌ Error evaluating new plugin script '\(scriptName)' (index \(index)): \(error)")
+#endif
+                        // Continue to the next script even if this one fails
+                        loadNextScript(index: index + 1)
+                    } else {
+#if DEBUG
+                        print("✅ New plugin script '\(scriptName)' (index \(index)) evaluated.")
+#endif
+                        successfullyLoaded.insert(path) // Add successfully evaluated script path
+                        // Recursively load the next script
+                        loadNextScript(index: index + 1)
+                    }
+                }
+            } catch {
+#if DEBUG
+                print("❌ Failed to load plugin script file '\(scriptName)' (index \(index)): \(error)")
+#endif
+                // Continue to the next script even if file loading fails
+                loadNextScript(index: index + 1)
+            }
+        }
+        
+        // Start loading from the first script
+        loadNextScript(index: 0)
+    }
+    
     
     internal func drawChart() {
         let jsStr = "loadTheHighChartView('\(optionsJson ?? "")','\(contentWidth ?? 0)','\(contentHeight ?? 0)')"
