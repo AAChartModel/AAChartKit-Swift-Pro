@@ -175,55 +175,14 @@ public class AAChartView: WKWebView {
     }
     
     internal var optionsJson: String?
-    
+
+    // Property to hold the plugin provider instance.
+    private var pluginProvider: AAChartViewPluginProvider = DefaultPluginProvider()
+
     private var requiredPluginPaths: Set<String> = []
     private var loadedPluginPaths: Set<String> = [] // Keep track of loaded plugins
-    
+
     public var userPluginPaths: Set<String> = []
-    
-    // Static mapping from chart type rawValue to script names
-    private static let chartTypeScriptMapping: [String: [String]] = [
-        // --- Flow & Relationship Charts ---
-        AAChartType.sankey.rawValue          : ["AASankey"],
-        AAChartType.dependencywheel.rawValue : ["AASankey", "AADependency-Wheel"],
-        AAChartType.networkgraph.rawValue    : ["AANetworkgraph"],
-        AAChartType.organization.rawValue    : ["AASankey", "AAOrganization"],
-        AAChartType.arcdiagram.rawValue      : ["AASankey", "AAArc-Diagram"],
-        AAChartType.venn.rawValue            : ["AAVenn"], // Can also be considered set theory
-        
-        // --- Hierarchical Charts ---
-        AAChartType.treemap.rawValue         : ["AATreemap"],
-        AAChartType.sunburst.rawValue        : ["AASunburst"],
-        AAChartType.flame.rawValue           : ["AAFlame"], // Often used for profiling/hierarchy
-        
-        // --- Distribution & Comparison Charts ---
-        AAChartType.variablepie.rawValue     : ["AAVariable-Pie"],
-        AAChartType.variwide.rawValue        : ["AAVariwide"],
-        AAChartType.dumbbell.rawValue        : ["AADumbbell"],
-        AAChartType.lollipop.rawValue        : ["AADumbbell", "AALollipop"],
-        AAChartType.histogram.rawValue       : ["AAHistogram-Bellcurve"],
-        AAChartType.bellcurve.rawValue       : ["AAHistogram-Bellcurve"],
-        AAChartType.bullet.rawValue          : ["AABullet"], // Can also be gauge/indicator
-        
-        // --- Heatmap & Matrix Charts ---
-        AAChartType.heatmap.rawValue         : ["AAHeatmap"],
-        AAChartType.tilemap.rawValue         : ["AAHeatmap", "AATilemap"],
-        
-        // --- Time, Range & Stream Charts ---
-        AAChartType.streamgraph.rawValue     : ["AAStreamgraph"],
-        AAChartType.xrange.rawValue          : ["AAXrange"],
-        AAChartType.timeline.rawValue        : ["AATimeline"],
-        
-        // --- Gauge & Indicator Charts ---
-        AAChartType.solidgauge.rawValue      : ["AASolid-Gauge"],
-        // AAChartType.bullet is listed under Distribution/Comparison but fits here too
-        
-        // --- Specialized & Other Charts ---
-        AAChartType.vector.rawValue          : ["AAVector"],
-        AAChartType.item.rawValue            : ["AAItem-Series"], // Specific series type
-        AAChartType.windbarb.rawValue        : ["AAWindbarb"], // Meteorological
-        AAChartType.wordcloud.rawValue       : ["AAWordcloud"], // Text visualization
-    ]
     
     // MARK: - Initialization
     override private init(frame: CGRect, configuration: WKWebViewConfiguration) {
@@ -408,66 +367,15 @@ public class AAChartView: WKWebView {
         }
     }
     
-    //向 pluginsArray 数组中添加插件脚本路径(避免重复添加)
-    private func addChartPluginScriptsArrayForProTypeChart(_ chartType: String?) {
-        guard let type = chartType, let scriptNames = Self.chartTypeScriptMapping[type] else {
-            return
-        }
-        
-        scriptNames.forEach { scriptName in
-            let scriptPath = generateScriptPathWithScriptName(scriptName)
-            requiredPluginPaths.insert(scriptPath) // Directly insert into the Set
-        }
-        
-        debugLog("🔌 requiredPluginPaths after checking pro type chart '\(type)': \(requiredPluginPaths)")
-    }
-    
-    private func addChartPluginScriptsArrayForAAOptions(_ aaOptions: AAOptions?) {
-        if aaOptions?.chart?.parallelCoordinates == true {
-            let scriptPath = generateScriptPathWithScriptName("AAParallel-coordinates")
-            requiredPluginPaths.insert(scriptPath) // Directly insert
-        }
-        if aaOptions?.data != nil {
-            let scriptPath = generateScriptPathWithScriptName("AAData")
-            requiredPluginPaths.insert(scriptPath) // Directly insert
-        }
-        
-        debugLog("🔌 requiredPluginPaths after checking AAOptions: \(requiredPluginPaths)")
-    }
-    
-    //判断 AAOptions 是否为除了基础类型之外的特殊类型
-    private func isSpecialProTypeChart(_ aaOptions: AAOptions) {
-        addChartPluginScriptsArrayForAAOptions(aaOptions)
-        
-        let aaChartType = aaOptions.chart?.type
-        addChartPluginScriptsArrayForProTypeChart(aaChartType)
-        
-        if let seriesArray = aaOptions.series {
-            for aaSeriesElement in seriesArray {
-                if let finalSeriesElement = aaSeriesElement as? AASeriesElement,
-                   let aaSeriesType = finalSeriesElement.type {
-                    addChartPluginScriptsArrayForProTypeChart(aaSeriesType)
-                }
-            }
-        }
-    }
-    
-    private func generateScriptPathWithScriptName(_ scriptName: String) -> String {
-        let path = BundlePathLoader()
-            .path(forResource: scriptName,
-                  ofType: "js",
-                  inDirectory: "AAJSFiles.bundle/AAModules")
-        let urlStr = NSURL.fileURL(withPath: path!)
-        
-        //        //打印 urlStr 路径
-        //        print("🫁🫁🫁urlStr: \(urlStr)")
-        //
-        //        //打印 urlStr 路径文件的内容
-        //        let jsContent = try? String(contentsOf: urlStr)
-        //        print(try? jsContent ?? "")
-        
-        let jsPluginPath = urlStr.path
-        return jsPluginPath
+    private func determineRequiredPlugins(for aaOptions: AAOptions) {
+        // Start with user-defined plugins from AAOptions, if any
+        requiredPluginPaths = Set(aaOptions.pluginsArray ?? [])
+
+        // Use the provider to get additional required plugins based on options
+        let providerPlugins = pluginProvider.getRequiredPluginPaths(for: aaOptions)
+        requiredPluginPaths.formUnion(providerPlugins)
+
+        debugLog("🔌 Determined requiredPluginPaths: \(requiredPluginPaths)")
     }
     
 #if DEBUG
@@ -528,26 +436,23 @@ public class AAChartView: WKWebView {
 #endif
     
     internal func configureOptionsJsonStringWithAAOptions(_ aaOptions: AAOptions) {
-        // Initialize the Set from the optional array, ensuring uniqueness
-        requiredPluginPaths = Set(aaOptions.pluginsArray ?? [])
-        
-        // Determine and add required scripts based on options and chart/series types
-        isSpecialProTypeChart(aaOptions)
-        
+        // Determine required plugins using the new method and provider
+        determineRequiredPlugins(for: aaOptions)
+
         if aaOptions.beforeDrawChartJavaScript != nil {
             beforeDrawChartJavaScript = aaOptions.beforeDrawChartJavaScript
             aaOptions.beforeDrawChartJavaScript = nil
         }
-        
+
         if aaOptions.afterDrawChartJavaScript != nil {
             afterDrawChartJavaScript = aaOptions.afterDrawChartJavaScript
             aaOptions.afterDrawChartJavaScript = nil
         }
-        
+
         if isClearBackgroundColor == true {
             aaOptions.chart?.backgroundColor = AAColor.clear
         }
-        
+
         if clickEventEnabled == true {
             aaOptions.clickEventEnabled = true
         }
@@ -557,9 +462,9 @@ public class AAChartView: WKWebView {
         if clickEventEnabled == true || touchEventEnabled == true {
             configurePlotOptionsSeriesPointEvents(aaOptions)
         }
-        
+
         optionsJson = aaOptions.toJSON()
-        
+
 #if DEBUG
         printOptionsJSONInfo(aaOptions)
 #endif
