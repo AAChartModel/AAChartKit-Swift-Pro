@@ -282,25 +282,29 @@ public class AAChartView: WKWebView {
                 
                 // Evaluate the script
                 evaluateJavaScript(jsString) { [weak self] _, error in
-                    guard self != nil else {
+                    // Use guard let to safely unwrap self and create a strong reference
+                    guard let self = self else {
                         // If self is deallocated, stop loading further scripts
-                        self?.debugLog("⚠️ AAChartView deallocated during script evaluation. Aborting plugin load.")
+                        print("⚠️ AAChartView deallocated during script evaluation. Aborting plugin load.") // Direct print or use a static logger if available
                         completion(successfullyLoaded)
                         return
                     }
                     
                     if let error = error {
-                        self?.debugLog("❌ Error evaluating new plugin script '\(scriptName)' (index \(index)): \(error)")
+                        // Use self directly now, no optional chaining needed
+                        self.debugLog("❌ Error evaluating new plugin script '\(scriptName)' (index \(index)): \(error)")
                         // Continue to the next script even if this one fails
                         loadNextScript(index: index + 1)
                     } else {
-                        self?.debugLog("✅ New plugin script '\(scriptName)' (index \(index)) evaluated.")
+                        // Use self directly now, no optional chaining needed
+                        self.debugLog("✅ New plugin script '\(scriptName)' (index \(index)) evaluated.")
                         successfullyLoaded.insert(path) // Add successfully evaluated script path
                         // Recursively load the next script
                         loadNextScript(index: index + 1)
                     }
                 }
             } catch {
+                // No change needed here as self is accessed synchronously if debugLog is called
                 debugLog("❌ Failed to load plugin script file '\(scriptName)' (index \(index)): \(error)")
                 // Continue to the next script even if file loading fails
                 loadNextScript(index: index + 1)
