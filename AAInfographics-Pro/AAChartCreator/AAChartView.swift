@@ -183,6 +183,9 @@ public class AAChartView: WKWebView {
     private var loadedPluginPaths: Set<String> = [] // Keep track of loaded plugins
 
     public var userPluginPaths: Set<String> = []
+#if DEBUG
+    public var shouldPrintOptionsJSON: Bool = true
+#endif
     
     // MARK: - Initialization
     override private init(frame: CGRect, configuration: WKWebViewConfiguration) {
@@ -343,7 +346,7 @@ public class AAChartView: WKWebView {
                 userInfo = {
                     NSLocalizedDescription = "\(errorUserInfo["NSLocalizedDescription"] ?? "")";
                     WKJavaScriptExceptionColumnNumber = \(errorUserInfo["WKJavaScriptExceptionColumnNumber"] ?? "");
-                    WKJavaScriptExceptionLineNumber = \(errorUserInfo["WKJavaScriptExceptionLineNumber"]  ?? "");
+                    WKJavaScriptExceptionLineNumber = \(errorUserInfo["WKJavaScriptExceptionLineNumber"] ?? "");
                     WKJavaScriptExceptionMessage = \(errorUserInfo["WKJavaScriptExceptionMessage"] ?? "");
                     WKJavaScriptExceptionSourceURL = \(errorUserInfo["WKJavaScriptExceptionSourceURL"] ?? "");
                 }
@@ -467,7 +470,9 @@ public class AAChartView: WKWebView {
         optionsJson = aaOptions.toJSON()
 
 #if DEBUG
-        printOptionsJSONInfo(aaOptions)
+        if shouldPrintOptionsJSON {
+            printOptionsJSONInfo(aaOptions)
+        }
 #endif
     }
     
