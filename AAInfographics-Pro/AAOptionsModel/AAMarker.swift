@@ -37,6 +37,7 @@ public class AAMarker: AAObject {
     public var radius: Float?
     public var symbol: String?
     public var fillColor: String?
+    public var fillOpacity: Float?
     public var lineWidth: Float?
     public var lineColor: Any?
     public var states: AAMarkerStates?
@@ -64,6 +65,12 @@ public class AAMarker: AAObject {
         fillColor = prop
         return self
     }
+
+    @discardableResult
+     public func fillOpacity(_ prop: Float?) -> AAMarker {
+         fillOpacity = prop
+         return self
+     }
     
     @discardableResult
     public func lineWidth(_ prop: Float?) -> AAMarker {
