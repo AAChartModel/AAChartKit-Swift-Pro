@@ -400,10 +400,9 @@ public class AAChartView: WKWebView {
                     didTruncateData = true
                 }
             }
-            // 如果进行了数据截断，打印警告信息
+            // 如果进行了数据截断，打印警告信息=>"💊 警告: 数据数组元素个数超过 1000 个, 只打印前 1000 个数据元素到控制台!!!"
             if didTruncateData {
                 print("💊 Warning: Data array element count more than 1000, only the first 1000 data elements will be displayed in the console!!!")
-                print("💊 警告: 数据数组元素个数超过 1000 个, 只打印前 1000 个数据元素到控制台!!!")
             }
             
             // 检查2: series 数组本身元素个数是否超过 10
@@ -411,9 +410,8 @@ public class AAChartView: WKWebView {
                 // 截取前 10 个 series 元素
                 // 注意：这里直接修改了 aaOptions.series，仅影响后续的打印
                 aaOptions.series = Array(seriesElements.prefix(10))
-                // 打印警告信息
+                // 打印警告信息=>"💊 警告: 系列元素个数超过 10 个, 只打印前 10 个元素到控制台!!!"
                 print("💊 Warning: Series element count more than 10, only the first 10 elements will be displayed in the console!!!")
-                print("💊 警告: 系列元素个数超过 10 个, 只打印前 10 个元素到控制台!!!")
             }
         }
         
