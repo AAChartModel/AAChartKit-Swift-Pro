@@ -131,6 +131,8 @@ public class ProPluginProvider: AAChartViewPluginProvider {
         else {
             #if DEBUG
             print("⚠️ Warning: Could not find path for script '\(scriptName).js'")
+            //断言
+            assert(false, "⚠️ Warning: Could not find path for script '\(scriptName).js'")
             #endif
             return nil
         }
