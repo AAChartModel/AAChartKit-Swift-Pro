@@ -330,92 +330,72 @@ public class AAChartView: WKWebView {
      */
     //向 pluginsArray 数组中添加插件脚本路径(避免重复添加)
     private func addChartPluginScriptsArrayForProTypeChart(_ chartType: String?) {
-//        let chartType = aaOptions.chart?.type
-        if chartType == AAChartType.sankey.rawValue {
+        guard let type = chartType else { return }
+
+        switch type {
+        case AAChartType.sankey.rawValue:
             modulesJSPluginsArray.append(generateScriptPathWithScriptName("AASankey"))
-        } else if chartType == AAChartType.dependencywheel.rawValue {
+        case AAChartType.dependencywheel.rawValue:
             modulesJSPluginsArray.append(generateScriptPathWithScriptName("AASankey"))
             modulesJSPluginsArray.append(generateScriptPathWithScriptName("AADependency-Wheel"))
-        }
-//        else if chartType == AAChartType.oldie.rawValue {
-//            pluginsArray.append(generateScriptPathWithScriptName("AAOldie"))
-//        }
-        else if chartType == AAChartType.variablepie.rawValue {
+        case AAChartType.variablepie.rawValue:
             modulesJSPluginsArray.append(generateScriptPathWithScriptName("AAVariable-Pie"))
-        } else if chartType == AAChartType.treemap.rawValue {
+        case AAChartType.treemap.rawValue:
             modulesJSPluginsArray.append(generateScriptPathWithScriptName("AATreemap"))
-        } else if chartType == AAChartType.variwide.rawValue {
+        case AAChartType.variwide.rawValue:
             modulesJSPluginsArray.append(generateScriptPathWithScriptName("AAVariwide"))
-        } else if chartType == AAChartType.sunburst.rawValue {
+        case AAChartType.sunburst.rawValue:
             modulesJSPluginsArray.append(generateScriptPathWithScriptName("AASunburst"))
-        } else if chartType == AAChartType.heatmap.rawValue {
+        case AAChartType.heatmap.rawValue:
             modulesJSPluginsArray.append(generateScriptPathWithScriptName("AAHeatmap"))
-        } else if chartType == AAChartType.streamgraph.rawValue {
+        case AAChartType.streamgraph.rawValue:
             modulesJSPluginsArray.append(generateScriptPathWithScriptName("AAStreamgraph"))
-        } else if chartType == AAChartType.venn.rawValue {
+        case AAChartType.venn.rawValue:
             modulesJSPluginsArray.append(generateScriptPathWithScriptName("AAVenn"))
-        } else if chartType == AAChartType.tilemap.rawValue {
+        case AAChartType.tilemap.rawValue:
             modulesJSPluginsArray.append(generateScriptPathWithScriptName("AAHeatmap"))
             modulesJSPluginsArray.append(generateScriptPathWithScriptName("AATilemap"))
-        } else if chartType == AAChartType.dumbbell.rawValue {
+        case AAChartType.dumbbell.rawValue:
             modulesJSPluginsArray.append(generateScriptPathWithScriptName("AADumbbell"))
-        } else if chartType == AAChartType.lollipop.rawValue {
+        case AAChartType.lollipop.rawValue:
             modulesJSPluginsArray.append(generateScriptPathWithScriptName("AADumbbell"))
             modulesJSPluginsArray.append(generateScriptPathWithScriptName("AALollipop"))
-        } else if chartType == AAChartType.xrange.rawValue {
+        case AAChartType.xrange.rawValue:
             modulesJSPluginsArray.append(generateScriptPathWithScriptName("AAXrange"))
-        } else if chartType == AAChartType.vector.rawValue {
+        case AAChartType.vector.rawValue:
             modulesJSPluginsArray.append(generateScriptPathWithScriptName("AAVector"))
-        } else if chartType == AAChartType.histogram.rawValue {
+        case AAChartType.histogram.rawValue, AAChartType.bellcurve.rawValue:
             modulesJSPluginsArray.append(generateScriptPathWithScriptName("AAHistogram-Bellcurve"))
-        }
-        else if chartType == AAChartType.bellcurve.rawValue {
-            modulesJSPluginsArray.append(generateScriptPathWithScriptName("AAHistogram-Bellcurve"))
-        }
-        
-        else if chartType == AAChartType.timeline.rawValue {
+        case AAChartType.timeline.rawValue:
             modulesJSPluginsArray.append(generateScriptPathWithScriptName("AATimeline"))
-        }
-        else if chartType == AAChartType.item.rawValue {
+        case AAChartType.item.rawValue:
             modulesJSPluginsArray.append(generateScriptPathWithScriptName("AAItem-Series"))
-        }
-else if chartType == AAChartType.windbarb.rawValue {
+        case AAChartType.windbarb.rawValue:
             modulesJSPluginsArray.append(generateScriptPathWithScriptName("AAWindbarb"))
-        } else if chartType == AAChartType.networkgraph.rawValue {
+        case AAChartType.networkgraph.rawValue:
             modulesJSPluginsArray.append(generateScriptPathWithScriptName("AANetworkgraph"))
-        } else if chartType == AAChartType.wordcloud.rawValue {
+        case AAChartType.wordcloud.rawValue:
             modulesJSPluginsArray.append(generateScriptPathWithScriptName("AAWordcloud"))
-        } else if chartType == AAChartType.solidgauge.rawValue {
+        case AAChartType.solidgauge.rawValue:
             modulesJSPluginsArray.append(generateScriptPathWithScriptName("AASolid-Gauge"))
-        } 
-//        else if chartType == AAChartType.pareto.rawValue {
-//            pluginsArray.append(generateScriptPathWithScriptName("AAPareto"))
-//        } 
-        else if chartType == AAChartType.bullet.rawValue {
+        case AAChartType.bullet.rawValue:
             modulesJSPluginsArray.append(generateScriptPathWithScriptName("AABullet"))
-        }
-
-        
-        //<!--            <script src="AAModules/AAPattern-Fill.js"></script>-->
-//        <!--            <script src="AAModules/AAOrganization.js"></script>-->
-//        <!--            <script src="AAModules/AAArc-Diagram.js"></script>-->
-//        <!--            <script src="AAModules/AAFlame.js"></script>-->
-//        <!--            <script src="AAModules/AAData.js"></script>-->
-//        <!--            <script src="AAModules/AAParallel-coordinates.js"></script>-->
-        else if chartType == AAChartType.organization.rawValue {
+        case AAChartType.organization.rawValue:
             modulesJSPluginsArray.append(generateScriptPathWithScriptName("AASankey"))
             modulesJSPluginsArray.append(generateScriptPathWithScriptName("AAOrganization"))
-        }
-        else if chartType == AAChartType.arcdiagram.rawValue {
+        case AAChartType.arcdiagram.rawValue:
             modulesJSPluginsArray.append(generateScriptPathWithScriptName("AASankey"))
             modulesJSPluginsArray.append(generateScriptPathWithScriptName("AAArc-Diagram"))
-        }
-        else if chartType == AAChartType.flame.rawValue {
+        case AAChartType.flame.rawValue:
             modulesJSPluginsArray.append(generateScriptPathWithScriptName("AAFlame"))
+        // Add cases for commented out types if needed, e.g.:
+        // case AAChartType.pareto.rawValue:
+        //     modulesJSPluginsArray.append(generateScriptPathWithScriptName("AAPareto"))
+        default:
+            // Do nothing for other chart types or if chartType is nil
+            break
         }
-//        else if chartType == AAChartType.pa.rawValue {
-//            pluginsArray.append(generateScriptPathWithScriptName("AATimeline"))
-//        }
+
         //打印 pluginsArray 数组的内容
         #if DEBUG
         print("🔌🔌🔌pluginsArray for pro type chart: \(modulesJSPluginsArray)")
