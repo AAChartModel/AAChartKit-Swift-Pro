@@ -174,10 +174,10 @@ public class AAChartView: WKWebView {
         }
     }
     
-    private var modulesJSPluginsArray: [String] = []
+    private var modulesJSPluginsArray: Set<String> = []
     private var optionsJson: String?
     
-    public var jsPluginsArray: [String] = []
+    public var jsPluginsArray: Set<String> = []
     
     // Static mapping from chart type rawValue to script names
     private static let chartTypeScriptMapping: [String: [String]] = [
@@ -275,12 +275,9 @@ public class AAChartView: WKWebView {
             return
         }
         
-        // Combine and remove duplicates just in case appendUniqueScript wasn't perfectly used or jsPluginsArray has duplicates
-        let uniqueModules = Set(modulesJSPluginsArray)
-        let uniqueJsPlugins = Set(jsPluginsArray)
-        let totalJSPluginsSet = uniqueModules.union(uniqueJsPlugins)
-        // Maintain a somewhat predictable order if possible, though Set iteration order isn't guaranteed.
-        // A sorted array might be better if order matters, but likely doesn't for independent plugins.
+        // Combine the sets using union
+        let totalJSPluginsSet = modulesJSPluginsArray.union(jsPluginsArray)
+        // Convert the set to an array for the loadScripts function
         let totalJSPluginsArray = Array(totalJSPluginsSet)
 
         #if DEBUG
@@ -357,14 +354,6 @@ public class AAChartView: WKWebView {
         }
     }
 
-    // Helper function to generate script path and append uniquely
-    private func appendUniqueScript(scriptName: String) {
-        let scriptPath = generateScriptPathWithScriptName(scriptName)
-        if !modulesJSPluginsArray.contains(scriptPath) {
-            modulesJSPluginsArray.append(scriptPath)
-        }
-    }
-
     //向 pluginsArray 数组中添加插件脚本路径(避免重复添加)
     private func addChartPluginScriptsArrayForProTypeChart(_ chartType: String?) {
         guard let type = chartType, let scriptNames = Self.chartTypeScriptMapping[type] else {
@@ -372,24 +361,25 @@ public class AAChartView: WKWebView {
         }
 
         scriptNames.forEach { scriptName in
-            appendUniqueScript(scriptName: scriptName)
+            let scriptPath = generateScriptPathWithScriptName(scriptName)
+            modulesJSPluginsArray.insert(scriptPath) // Directly insert into the Set
         }
 
         #if DEBUG
-        print("🔌🔌🔌pluginsArray after checking pro type chart '\(type)': \(modulesJSPluginsArray)")
         #endif
     }
 
     private func addChartPluginScriptsArrayForAAOptions(_ aaOptions: AAOptions?) {
         if aaOptions?.chart?.parallelCoordinates == true {
-            appendUniqueScript(scriptName: "AAParallel-coordinates")
+            let scriptPath = generateScriptPathWithScriptName("AAParallel-coordinates")
+            modulesJSPluginsArray.insert(scriptPath) // Directly insert
         }
         if aaOptions?.data != nil {
-            appendUniqueScript(scriptName: "AAData")
+            let scriptPath = generateScriptPathWithScriptName("AAData")
+            modulesJSPluginsArray.insert(scriptPath) // Directly insert
         }
 
         #if DEBUG
-        print("🔌🔌🔌pluginsArray after checking AAOptions: \(modulesJSPluginsArray)")
         #endif
     }
 
@@ -427,7 +417,10 @@ public class AAChartView: WKWebView {
     }
     
     private func configureOptionsJsonStringWithAAOptions(_ aaOptions: AAOptions) {
-        modulesJSPluginsArray = aaOptions.pluginsArray ?? []
+        // Initialize the Set from the optional array, ensuring uniqueness
+        modulesJSPluginsArray = Set(aaOptions.pluginsArray ?? [])
+        
+        // Determine and add required scripts based on options and chart/series types
         isSpecialProTypeChart(aaOptions)
 
         if aaOptions.beforeDrawChartJavaScript != nil {
@@ -460,7 +453,9 @@ public class AAChartView: WKWebView {
         //如果 series 数组中的 AASeriesElement 对象的 data 数组元素个数超过 1000 个,
         //则只打印前 1000 个元素,避免控制台输出太多导致卡顿
         //同时添加警告提醒开发者注意数组元素个数超出 1000 个的问题
-        if aaOptions.series != nil && aaOptions.series!.count > 0 && aaOptions.series is [AASeriesElement] {
+        if     aaOptions.series != nil
+            && aaOptions.series!.count > 0
+            && aaOptions.series is [AASeriesElement] {
             for  seriesElement in aaOptions.series as! [AASeriesElement] {
                 if seriesElement.data != nil {
                     if seriesElement.data!.count > 1000 {
@@ -477,7 +472,9 @@ public class AAChartView: WKWebView {
         //如果 series 数组中的 AASeriesElement 对象元素个数超过 10 个,
         //则只打印前 10 个元素,避免控制台输出太多导致卡顿
         //同时添加警告提醒开发者注意数组元素个数超出 10 个的问题
-        if aaOptions.series != nil && aaOptions.series!.count > 10 && aaOptions.series is [AASeriesElement] {
+        if     aaOptions.series != nil
+            && aaOptions.series!.count > 10
+            && aaOptions.series is [AASeriesElement] {
             let seriesElementArr = aaOptions.series as! [AASeriesElement]
             let firstTenElementArr = seriesElementArr[0...9]
             aaOptions.series = Array(firstTenElementArr)
