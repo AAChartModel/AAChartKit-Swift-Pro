@@ -181,32 +181,46 @@ public class AAChartView: WKWebView {
     
     // Static mapping from chart type rawValue to script names
     private static let chartTypeScriptMapping: [String: [String]] = [
+        // --- Flow & Relationship Charts ---
         AAChartType.sankey.rawValue          : ["AASankey"],
         AAChartType.dependencywheel.rawValue : ["AASankey", "AADependency-Wheel"],
-        AAChartType.variablepie.rawValue     : ["AAVariable-Pie"],
-        AAChartType.treemap.rawValue         : ["AATreemap"],
-        AAChartType.variwide.rawValue        : ["AAVariwide"],
-        AAChartType.sunburst.rawValue        : ["AASunburst"],
-        AAChartType.heatmap.rawValue         : ["AAHeatmap"],
-        AAChartType.streamgraph.rawValue     : ["AAStreamgraph"],
-        AAChartType.venn.rawValue            : ["AAVenn"],
-        AAChartType.tilemap.rawValue         : ["AAHeatmap", "AATilemap"],
-        AAChartType.dumbbell.rawValue        : ["AADumbbell"],
-        AAChartType.lollipop.rawValue        : ["AADumbbell", "AALollipop"],
-        AAChartType.xrange.rawValue          : ["AAXrange"],
-        AAChartType.vector.rawValue          : ["AAVector"],
-        AAChartType.histogram.rawValue       : ["AAHistogram-Bellcurve"],
-        AAChartType.bellcurve.rawValue       : ["AAHistogram-Bellcurve"],
-        AAChartType.timeline.rawValue        : ["AATimeline"],
-        AAChartType.item.rawValue            : ["AAItem-Series"],
-        AAChartType.windbarb.rawValue        : ["AAWindbarb"],
         AAChartType.networkgraph.rawValue    : ["AANetworkgraph"],
-        AAChartType.wordcloud.rawValue       : ["AAWordcloud"],
-        AAChartType.solidgauge.rawValue      : ["AASolid-Gauge"],
-        AAChartType.bullet.rawValue          : ["AABullet"],
         AAChartType.organization.rawValue    : ["AASankey", "AAOrganization"],
         AAChartType.arcdiagram.rawValue      : ["AASankey", "AAArc-Diagram"],
-        AAChartType.flame.rawValue           : ["AAFlame"],
+        AAChartType.venn.rawValue            : ["AAVenn"], // Can also be considered set theory
+        
+        // --- Hierarchical Charts ---
+        AAChartType.treemap.rawValue         : ["AATreemap"],
+        AAChartType.sunburst.rawValue        : ["AASunburst"],
+        AAChartType.flame.rawValue           : ["AAFlame"], // Often used for profiling/hierarchy
+        
+        // --- Distribution & Comparison Charts ---
+        AAChartType.variablepie.rawValue     : ["AAVariable-Pie"],
+        AAChartType.variwide.rawValue        : ["AAVariwide"],
+        AAChartType.dumbbell.rawValue        : ["AADumbbell"],
+        AAChartType.lollipop.rawValue        : ["AADumbbell", "AALollipop"],
+        AAChartType.histogram.rawValue       : ["AAHistogram-Bellcurve"],
+        AAChartType.bellcurve.rawValue       : ["AAHistogram-Bellcurve"],
+        AAChartType.bullet.rawValue          : ["AABullet"], // Can also be gauge/indicator
+        
+        // --- Heatmap & Matrix Charts ---
+        AAChartType.heatmap.rawValue         : ["AAHeatmap"],
+        AAChartType.tilemap.rawValue         : ["AAHeatmap", "AATilemap"],
+        
+        // --- Time, Range & Stream Charts ---
+        AAChartType.streamgraph.rawValue     : ["AAStreamgraph"],
+        AAChartType.xrange.rawValue          : ["AAXrange"],
+        AAChartType.timeline.rawValue        : ["AATimeline"],
+        
+        // --- Gauge & Indicator Charts ---
+        AAChartType.solidgauge.rawValue      : ["AASolid-Gauge"],
+        // AAChartType.bullet is listed under Distribution/Comparison but fits here too
+        
+        // --- Specialized & Other Charts ---
+        AAChartType.vector.rawValue          : ["AAVector"],
+        AAChartType.item.rawValue            : ["AAItem-Series"], // Specific series type
+        AAChartType.windbarb.rawValue        : ["AAWindbarb"], // Meteorological
+        AAChartType.wordcloud.rawValue       : ["AAWordcloud"], // Text visualization
     ]
 
     // MARK: - Initialization
