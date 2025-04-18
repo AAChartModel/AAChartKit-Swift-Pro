@@ -15,6 +15,9 @@ struct AAChartViewRepresentable: UIViewRepresentable {
     func makeUIView(context: Context) -> AAChartView {
         let chartView = AAChartView()
         chartView.isScrollEnabled = false
+//#if DEBUG
+//        chartView.shouldPrintOptionsJSON = false
+//#endif
         return chartView
     }
     
@@ -220,10 +223,10 @@ struct GridView: View {
     // 定义网格的列
     let columns: [GridItem] = [
         GridItem(.flexible()),  // 列宽自动调整
-        GridItem(.flexible()),  // 列宽自动调整
-        GridItem(.flexible()),  // 列宽自动调整
-        GridItem(.flexible()),  // 列宽自动调整
-        GridItem(.flexible()),  // 列宽自动调整
+//        GridItem(.flexible()),  // 列宽自动调整
+//        GridItem(.flexible()),  // 列宽自动调整
+//        GridItem(.flexible()),  // 列宽自动调整
+//        GridItem(.flexible()),  // 列宽自动调整
 
 //        GridItem(.flexible()),
 //        GridItem(.flexible())   // 3 列
@@ -272,6 +275,7 @@ struct GridView: View {
     }
 }
 
+
 //struct GridView_Previews: PreviewProvider {
 //    static var previews: some View {
 //        GridView()
@@ -287,6 +291,8 @@ struct GridView: View {
 //#Preview {
 //    GridView()
 //}
+
+
 
 
 class AARandomValueDataComposer {
