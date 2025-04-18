@@ -294,8 +294,33 @@ public class AAChartView: WKWebView {
                     }
                     
                     if let error = error {
+                        // Format the error message
+                        var errorDetails = "Error: \(error.localizedDescription)"
+                        if let nsError = error as NSError? {
+                            var userInfoString = ""
+                            if !nsError.userInfo.isEmpty {
+                                userInfoString = "\n    User Info:"
+                                for (key, value) in nsError.userInfo {
+                                    userInfoString += "\n      - \(key): \(value)"
+                                }
+                            }
+                            errorDetails = """
+                            Error Details:
+                              - Domain: \(nsError.domain)
+                              - Code: \(nsError.code)
+                              - Description: \(nsError.localizedDescription)\(userInfoString)
+                            """
+                        }
+                        
                         // Use self directly now, no optional chaining needed
-                        self.debugLog("❌ Error evaluating new plugin script '\(scriptName)' (index \(index)): \(error)")
+                        self.debugLog("""
+                        ❌ Error evaluating new plugin script:
+                        --------------------------------------------------
+                        Script Name: \(scriptName)
+                        Index: \(index)
+                        \(errorDetails)
+                        --------------------------------------------------
+                        """)
                         // Continue to the next script even if this one fails
                         loadNextScript(index: index + 1)
                     } else {
