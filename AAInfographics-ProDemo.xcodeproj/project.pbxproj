@@ -84,6 +84,8 @@
 		8466E38B2DB1EA8700DBF03B /* ChartListTableViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8466E38A2DB1EA8700DBF03B /* ChartListTableViewVC.swift */; };
 		8466E38D2DB1EF0B00DBF03B /* ChartExampleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8466E38C2DB1EF0B00DBF03B /* ChartExampleCell.swift */; };
 		8466E3912DB1F2E300DBF03B /* ChartSampleProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8466E3902DB1F2E300DBF03B /* ChartSampleProvider.swift */; };
+		8466E3942DB1F5FA00DBF03B /* ChartSampleTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8466E3932DB1F5FA00DBF03B /* ChartSampleTableViewCell.xib */; };
+		8466E3952DB1F5FA00DBF03B /* ChartSampleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8466E3922DB1F5FA00DBF03B /* ChartSampleTableViewCell.swift */; };
 		848970412CF9CAFD00C519A0 /* timeline2Data.json in Resources */ = {isa = PBXBuildFile; fileRef = 848970402CF9CAFD00C519A0 /* timeline2Data.json */; };
 		84A5691127FEC88700883553 /* streamgraphSeries.json in Resources */ = {isa = PBXBuildFile; fileRef = 84A5690F27FEC88700883553 /* streamgraphSeries.json */; };
 		84A5691227FEC88700883553 /* packedbubbleSeries.json in Resources */ = {isa = PBXBuildFile; fileRef = 84A5691027FEC88700883553 /* packedbubbleSeries.json */; };
@@ -243,6 +245,8 @@
 		8466E38A2DB1EA8700DBF03B /* ChartListTableViewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartListTableViewVC.swift; sourceTree = "<group>"; };
 		8466E38C2DB1EF0B00DBF03B /* ChartExampleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartExampleCell.swift; sourceTree = "<group>"; };
 		8466E3902DB1F2E300DBF03B /* ChartSampleProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartSampleProvider.swift; sourceTree = "<group>"; };
+		8466E3922DB1F5FA00DBF03B /* ChartSampleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartSampleTableViewCell.swift; sourceTree = "<group>"; };
+		8466E3932DB1F5FA00DBF03B /* ChartSampleTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChartSampleTableViewCell.xib; sourceTree = "<group>"; };
 		848970402CF9CAFD00C519A0 /* timeline2Data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = timeline2Data.json; sourceTree = "<group>"; };
 		84A5690F27FEC88700883553 /* streamgraphSeries.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = streamgraphSeries.json; sourceTree = "<group>"; };
 		84A5691027FEC88700883553 /* packedbubbleSeries.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = packedbubbleSeries.json; sourceTree = "<group>"; };
@@ -589,6 +593,8 @@
 				8466E38A2DB1EA8700DBF03B /* ChartListTableViewVC.swift */,
 				8466E38C2DB1EF0B00DBF03B /* ChartExampleCell.swift */,
 				8466E3902DB1F2E300DBF03B /* ChartSampleProvider.swift */,
+				8466E3922DB1F5FA00DBF03B /* ChartSampleTableViewCell.swift */,
+				8466E3932DB1F5FA00DBF03B /* ChartSampleTableViewCell.xib */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -731,6 +737,7 @@
 				84A5693727FEC89F00883553 /* bigHeatmapData.json in Resources */,
 				84A5694E27FEC89F00883553 /* arcdiagram3Data.json in Resources */,
 				84A5694927FEC89F00883553 /* columnpyramidData.json in Resources */,
+				8466E3942DB1F5FA00DBF03B /* ChartSampleTableViewCell.xib in Resources */,
 				84A5693D27FEC89F00883553 /* organizationData.json in Resources */,
 				84A5693227FEC89F00883553 /* organizationNodesData.json in Resources */,
 				84A5693C27FEC89F00883553 /* vennData.json in Resources */,
@@ -870,6 +877,7 @@
 				84B13F3B289E2CA0007356C6 /* AAParallelAxes.swift in Sources */,
 				844615AA283F580300E26DA4 /* AAAxis.swift in Sources */,
 				84DEB8BA28FAE4F300BF9423 /* AABubbleChartVC.swift in Sources */,
+				8466E3952DB1F5FA00DBF03B /* ChartSampleTableViewCell.swift in Sources */,
 				844615A8283F580300E26DA4 /* AAStyle.swift in Sources */,
 				845BABEC2D02D2EB004C15D4 /* OfficialChartSampleVC.swift in Sources */,
 				84DEB8BC28FAE50500BF9423 /* AAColumnVariantChartVC.swift in Sources */,

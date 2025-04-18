@@ -8,6 +8,7 @@
 import UIKit
 
 class ChartListTableViewVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    let kChartSampleTableViewCellIdentifier = "ChartSampleTableViewCell"
     
     private var tableView: UITableView!
     
@@ -28,8 +29,12 @@ class ChartListTableViewVC: UIViewController, UITableViewDelegate, UITableViewDa
         tableView = UITableView(frame: view.bounds, style: .plain)
         tableView.delegate = self
         tableView.dataSource = self
-        // 注册自定义单元格，假设您已创建 ChartExampleCell.swift
-        tableView.register(ChartExampleCell.self, forCellReuseIdentifier: "ChartExampleCell")
+        
+        // 注册从 XIB 加载的自定义单元格
+        // 确保 "ChartSampleTableViewCell.xib" 文件存在且其名称与此处使用的字符串匹配
+        let nib = UINib(nibName: kChartSampleTableViewCellIdentifier, bundle: nil)
+        tableView.register(nib, forCellReuseIdentifier: kChartSampleTableViewCellIdentifier)
+        
         tableView.tableFooterView = UIView() // 去除空行的分割线
         
         view.addSubview(tableView)
@@ -80,7 +85,7 @@ class ChartListTableViewVC: UIViewController, UITableViewDelegate, UITableViewDa
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // 使用自定义单元格标识符出列
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "ChartExampleCell", for: indexPath) as? ChartExampleCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: kChartSampleTableViewCellIdentifier, for: indexPath) as? ChartSampleTableViewCell else {
             // 如果转换失败，返回一个默认的 UITableViewCell，虽然理论上不应该发生
             return UITableViewCell()
         }
@@ -89,7 +94,10 @@ class ChartListTableViewVC: UIViewController, UITableViewDelegate, UITableViewDa
         let chartOptions = chartExamples[indexPath.row]
         // 禁用动画
         let chartOptionsWithoutAnimation = optionsItemsWithoutAnimation(chartOptions: chartOptions)
-        cell.configureChart(with: chartOptionsWithoutAnimation)
+        cell.setChartOptions(chartOptionsWithoutAnimation) { aaChartView in
+            // 这里可以处理图表加载完成后的回调
+            print("Chart loaded successfully")
+        }
         
         return cell
     }
