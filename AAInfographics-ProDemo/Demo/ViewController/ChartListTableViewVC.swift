@@ -13,8 +13,10 @@ class ChartListTableViewVC: UIViewController, UITableViewDelegate, UITableViewDa
     private var tableView: UITableView!
     
     // 图表示例数据
-    private let chartExamples = ChartSampleProvider.allProTypeSamples()
-
+    private let chartExamples = (
+        ChartSampleProvider.allProTypeSamples()
+    )
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -30,10 +32,11 @@ class ChartListTableViewVC: UIViewController, UITableViewDelegate, UITableViewDa
         tableView.delegate = self
         tableView.dataSource = self
         
-        // 注册从 XIB 加载的自定义单元格
-        // 确保 "ChartSampleTableViewCell.xib" 文件存在且其名称与此处使用的字符串匹配
-        let nib = UINib(nibName: kChartSampleTableViewCellIdentifier, bundle: nil)
-        tableView.register(nib, forCellReuseIdentifier: kChartSampleTableViewCellIdentifier)
+        //        // 注册从 XIB 加载的自定义单元格
+        //        // 确保 "ChartSampleTableViewCell.xib" 文件存在且其名称与此处使用的字符串匹配
+        //        let nib = UINib(nibName: kChartSampleTableViewCellIdentifier, bundle: nil)
+        //        tableView.register(nib, forCellReuseIdentifier: kChartSampleTableViewCellIdentifier)
+        tableView.register(ChartExampleCell.self, forCellReuseIdentifier: kChartSampleTableViewCellIdentifier)
         
         tableView.tableFooterView = UIView() // 去除空行的分割线
         
@@ -50,12 +53,12 @@ class ChartListTableViewVC: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     private func optionsItemsWithoutAnimation(chartOptions: AAOptions) -> AAOptions {
-//        chartOptions.chart?.animation = false
+        //        chartOptions.chart?.animation = false
         if chartOptions.chart != nil {
-            chartOptions.chart?.animation = false
+            chartOptions.chart?.animation = nil
         } else {
             chartOptions.chart = AAChart()
-            chartOptions.chart?.animation = false
+            chartOptions.chart?.animation = nil
         }  //🤔这里禁用动画不行, 有点奇怪, 后续再看看吧
         
         let chartOptions = configurePlotOptionsSeriesAnimation(chartOptions)
@@ -85,16 +88,19 @@ class ChartListTableViewVC: UIViewController, UITableViewDelegate, UITableViewDa
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // 使用自定义单元格标识符出列
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: kChartSampleTableViewCellIdentifier, for: indexPath) as? ChartSampleTableViewCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: kChartSampleTableViewCellIdentifier, for: indexPath) as? ChartExampleCell else {
             // 如果转换失败，返回一个默认的 UITableViewCell，虽然理论上不应该发生
             return UITableViewCell()
         }
         
         // 配置自定义单元格
         let chartOptions = chartExamples[indexPath.row]
+        //        let chartOptions = BubbleLegendChartOptionsComposer.bubbleLegendChart()
         // 禁用动画
         let chartOptionsWithoutAnimation = optionsItemsWithoutAnimation(chartOptions: chartOptions)
-        cell.setChartOptions(chartOptionsWithoutAnimation) { aaChartView in
+        //        let testOptionsJson = chartOptionsWithoutAnimation.toDic()
+        //        print("测试图表配置项: \(testOptionsJson)")
+        cell.setChartOptions(chartOptions) { aaChartView in
             // 这里可以处理图表加载完成后的回调
             print("Chart loaded successfully")
         }
@@ -104,7 +110,7 @@ class ChartListTableViewVC: UIViewController, UITableViewDelegate, UITableViewDa
     
     // MARK: - UITableViewDelegate
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-   
+        
     }
 }
 
