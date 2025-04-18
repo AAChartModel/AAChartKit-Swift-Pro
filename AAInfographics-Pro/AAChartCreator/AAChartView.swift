@@ -300,8 +300,12 @@ public class AAChartView: WKWebView {
                             var userInfoString = ""
                             if !nsError.userInfo.isEmpty {
                                 userInfoString = "\n    User Info:"
-                                for (key, value) in nsError.userInfo {
-                                    userInfoString += "\n      - \(key): \(value)"
+                                // Sort the keys alphabetically before iterating
+                                let sortedKeys = nsError.userInfo.keys.sorted { $0.localizedCaseInsensitiveCompare($1) == .orderedAscending }
+                                for key in sortedKeys {
+                                    if let value = nsError.userInfo[key] {
+                                        userInfoString += "\n      - \(key): \(value)"
+                                    }
                                 }
                             }
                             errorDetails = """
