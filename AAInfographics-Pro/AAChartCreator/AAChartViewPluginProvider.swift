@@ -26,18 +26,18 @@ public class ProPluginProvider: AAChartViewPluginProvider {
     // Mapping from chart type rawValue to script names (moved from AAChartView)
     private static let chartTypeScriptMapping: [String: [String]] = [
         // --- Flow & Relationship Charts ---
-//        AAChartType.sankey.rawValue          : ["AASankey"],
+        AAChartType.sankey.rawValue          : ["AASankey"],
         AAChartType.dependencywheel.rawValue : [
-//            "AASankey",
+            "AASankey",
             "AADependency-Wheel"
         ],
         AAChartType.networkgraph.rawValue    : ["AANetworkgraph"],
         AAChartType.organization.rawValue    : [
-//            "AASankey",
+            "AASankey",
             "AAOrganization"
         ],
         AAChartType.arcdiagram.rawValue      : [
-//            "AASankey",
+            "AASankey",
             "AAArc-Diagram"
         ],
         AAChartType.venn.rawValue            : ["AAVenn"], // Can also be considered set theory
@@ -52,7 +52,7 @@ public class ProPluginProvider: AAChartViewPluginProvider {
         AAChartType.variwide.rawValue        : ["AAVariwide"],
         AAChartType.dumbbell.rawValue        : ["AADumbbell"],
         AAChartType.lollipop.rawValue        : [
-//            "AADumbbell",
+            "AADumbbell",
             "AALollipop"
         ],
         AAChartType.histogram.rawValue       : ["AAHistogram-Bellcurve"],
@@ -62,7 +62,7 @@ public class ProPluginProvider: AAChartViewPluginProvider {
         // --- Heatmap & Matrix Charts ---
         AAChartType.heatmap.rawValue         : ["AAHeatmap"],
         AAChartType.tilemap.rawValue         : [
-//            "AAHeatmap",
+            "AAHeatmap",
             "AATilemap"
         ],
 

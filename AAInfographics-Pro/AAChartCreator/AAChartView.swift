@@ -229,18 +229,22 @@ public class AAChartView: WKWebView {
             return
         }
         
-        // 4. Load the necessary new plugins sequentially
-        debugLog("ℹ️ Loading \(pluginsToLoad.count) new plugin scripts...")
+        // 4. Load the necessary new plugins as a single combined script
+        debugLog("ℹ️ Preparing to load \(pluginsToLoad.count) new plugin scripts...")
         
-        loadPluginScriptsSequentially(scriptsToLoad: pluginsToLoad) { [weak self] newlyLoadedPlugins in
+        // Use the new combined loading function
+        loadAndEvaluateCombinedPluginScript(scriptsToLoad: pluginsToLoad) { [weak self] successfullyLoadedPlugins in
             guard let self = self else { return }
             
             // 5. Update the set of all loaded plugins
-            self.loadedPluginPaths.formUnion(newlyLoadedPlugins)
+            self.loadedPluginPaths.formUnion(successfullyLoadedPlugins)
             
 #if DEBUG
-            if newlyLoadedPlugins.count < pluginsToLoad.count {
-                print("⚠️ Failed to evaluate one or more new plugin scripts. Chart drawing may be affected.")
+            if successfullyLoadedPlugins.count < pluginsToLoad.count {
+                 // This might happen if reading a file failed before evaluation or evaluation itself failed
+                 print("⚠️ One or more plugin script files could not be read, or the combined script evaluation failed.")
+            } else if !successfullyLoadedPlugins.isEmpty {
+                 print("✅ \(successfullyLoadedPlugins.count) new plugin scripts loaded and evaluated successfully.")
             }
             print("ℹ️ Total loaded plugins count: \(self.loadedPluginPaths.count)")
 #endif
@@ -249,104 +253,136 @@ public class AAChartView: WKWebView {
             self.drawChart()
         }
     }
-    
-    /// Loads a set of plugin scripts sequentially, evaluating them one by one.
-    /// - Parameters:
-    ///   - scriptsToLoad: A Set of file paths for the JavaScript plugins to load.
-    ///   - completion: A closure called when all scripts have been attempted, passing a Set of paths for successfully loaded scripts.
-    private func loadPluginScriptsSequentially(
+
+    // Helper function to sort plugin paths based on known dependencies
+    private func sortPluginPaths(_ paths: Set<String>) -> [String] {
+        var sortedPaths = Array(paths)
+        // Define known dependencies (module -> depends on)
+        // Ensure the dependency file name matches exactly (e.g., "AASankey.js")
+        let dependencies: [String: String] = [
+            "AADependency-Wheel.js": "AASankey.js",
+            "AAOrganization.js": "AASankey.js",
+            "AALollipop.js": "AADumbbell.js", // Example if Lollipop depends on Dumbbell
+            "AATilemap.js": "AAHeatmap.js"    // Example if Tilemap depends on Heatmap
+            // Add other known dependencies here
+        ]
+
+        // Custom sort: If A depends on B, B should come before A.
+        sortedPaths.sort { path1, path2 in
+            let file1 = (path1 as NSString).lastPathComponent
+            let file2 = (path2 as NSString).lastPathComponent
+
+            // Check if file2 depends on file1
+            if let dependency = dependencies[file2], dependency == file1 {
+                return true // file1 should come before file2
+            }
+            // Check if file1 depends on file2
+            if let dependency = dependencies[file1], dependency == file2 {
+                return false // file2 should come before file1
+            }
+            // Prioritize base modules like AASankey if no direct dependency is found
+            if file1 == "AASankey.js" && file2 != "AASankey.js" { return true }
+            if file2 == "AASankey.js" && file1 != "AASankey.js" { return false }
+            
+            // Otherwise, maintain relative order or use alphabetical for stability
+            return path1 < path2
+        }
+        
+#if DEBUG
+        let sortedNames = sortedPaths.map { ($0 as NSString).lastPathComponent }
+        if paths.count > 1 && Array(paths).map({ ($0 as NSString).lastPathComponent }).sorted() != sortedNames.sorted() {
+             // Only log if sorting actually changed the order based on dependencies
+             debugLog("🔩 Sorted plugin load order: \(sortedNames)")
+        }
+#endif
+        
+        return sortedPaths
+    }
+
+
+    // New function to load and evaluate scripts as a single combined batch
+    private func loadAndEvaluateCombinedPluginScript(
         scriptsToLoad: Set<String>,
         completion: @escaping (Set<String>) -> Void
     ) {
-        // Convert Set to Array for indexed access, maintaining order isn't critical here
-        // but Array makes indexed recursion simpler than Set index manipulation.
-        let scriptPathsArray = Array(scriptsToLoad)
-        var successfullyLoaded = Set<String>()
-        
-        // Define the recursive loading function
-        func loadNextScript(index: Int) {
-            // Base case: All scripts in the array attempted
-            guard index < scriptPathsArray.count else {
-#if DEBUG
-                if !scriptPathsArray.isEmpty {
-                    print("✅ \(successfullyLoaded.count) out of \(scriptPathsArray.count) new plugin scripts evaluated successfully.")
-                }
-#endif
-                completion(successfullyLoaded) // Return the set of successfully loaded scripts
-                return
-            }
-            
-            let path = scriptPathsArray[index]
-            let scriptName = (path as NSString).lastPathComponent // Extract filename for logging
-            
+        guard !scriptsToLoad.isEmpty else {
+            completion(Set()) // Nothing to load
+            return
+        }
+
+        // Sort paths to respect dependencies
+        let sortedScriptPaths = sortPluginPaths(scriptsToLoad)
+
+        var combinedJSString = ""
+        var successfullyReadPaths = Set<String>() // Track paths successfully read
+
+        for path in sortedScriptPaths {
+            let scriptName = (path as NSString).lastPathComponent
             do {
-                // Read the script content
                 let jsString = try String(contentsOfFile: path, encoding: .utf8)
-                
-                // Evaluate the script
-                evaluateJavaScript(jsString) { [weak self] _, error in
-                    // Use guard let to safely unwrap self and create a strong reference
-                    guard let self = self else {
-                        // If self is deallocated, stop loading further scripts
-                        print("⚠️ AAChartView deallocated during script evaluation. Aborting plugin load.") // Direct print or use a static logger if available
-                        completion(successfullyLoaded)
-                        return
-                    }
-                    
-                    if let error = error {
-                        // Format the error message
-                        var errorDetails = "Error: \(error.localizedDescription)"
-                        if let nsError = error as NSError? {
-                            var userInfoString = ""
-                            if !nsError.userInfo.isEmpty {
-                                userInfoString = "\n    User Info:"
-                                // Sort the keys alphabetically before iterating
-                                let sortedKeys = nsError.userInfo.keys.sorted { $0.localizedCaseInsensitiveCompare($1) == .orderedAscending }
-                                for key in sortedKeys {
-                                    if let value = nsError.userInfo[key] {
-                                        userInfoString += "\n      - \(key): \(value)"
-                                    }
-                                }
-                            }
-                            errorDetails = """
-                            Error Details:
-                              - Domain: \(nsError.domain)
-                              - Code: \(nsError.code)
-                              - Description: \(nsError.localizedDescription)\(userInfoString)
-                            """
-                        }
-                        
-                        // Use self directly now, no optional chaining needed
-                        self.debugLog("""
-                        ❌ Error evaluating new plugin script:
-                        --------------------------------------------------
-                        Script Name: \(scriptName)
-                        Index: \(index)
-                        \(errorDetails)
-                        --------------------------------------------------
-                        """)
-                        // Continue to the next script even if this one fails
-                        loadNextScript(index: index + 1)
-                    } else {
-                        // Use self directly now, no optional chaining needed
-                        self.debugLog("✅ New plugin script '\(scriptName)' (index \(index)) evaluated.")
-                        successfullyLoaded.insert(path) // Add successfully evaluated script path
-                        // Recursively load the next script
-                        loadNextScript(index: index + 1)
-                    }
-                }
+                // Add a newline and a comment for easier debugging in browser dev tools
+                combinedJSString += "// --- Start: \(scriptName) ---\n"
+                combinedJSString += jsString
+                combinedJSString += "\n// --- End: \(scriptName) ---\n\n"
+                successfullyReadPaths.insert(path)
             } catch {
-                // No change needed here as self is accessed synchronously if debugLog is called
-                debugLog("❌ Failed to load plugin script file '\(scriptName)' (index \(index)): \(error)")
-                // Continue to the next script even if file loading fails
-                loadNextScript(index: index + 1)
+                // Log error but continue trying to read other files
+                debugLog("❌ Failed to read plugin script file '\(scriptName)': \(error). Skipping this script.")
+                // Do not add to successfullyReadPaths
             }
         }
-        
-        // Start loading from the first script
-        loadNextScript(index: 0)
+
+        // Only proceed if we have some script content to evaluate
+        guard !combinedJSString.isEmpty else {
+            debugLog("⚠️ No plugin script content could be read. Nothing to evaluate.")
+            completion(Set()) // Return empty set as nothing was evaluated
+            return
+        }
+
+        debugLog("ℹ️ Evaluating combined plugin scripts (\(successfullyReadPaths.count) files)...")
+
+        evaluateJavaScript(combinedJSString) { [weak self] _, error in
+            guard let self = self else {
+                print("⚠️ AAChartView deallocated during combined script evaluation. Aborting.")
+                completion(Set())
+                return
+            }
+
+            if let error = error {
+                // Format the error message (reuse existing error formatting logic if possible)
+                 var errorDetails = "Error: \(error.localizedDescription)"
+                 if let nsError = error as NSError? {
+                     var userInfoString = ""
+                     if !nsError.userInfo.isEmpty {
+                         userInfoString = "\n    User Info:"
+                         let sortedKeys = nsError.userInfo.keys.sorted { $0.localizedCaseInsensitiveCompare($1) == .orderedAscending }
+                         for key in sortedKeys {
+                             if let value = nsError.userInfo[key] {
+                                 userInfoString += "\n      - \(key): \(value)"
+                             }
+                         }
+                     }
+                     errorDetails = """
+                     Error Details:
+                       - Domain: \(nsError.domain)
+                       - Code: \(nsError.code)
+                       - Description: \(nsError.localizedDescription)\(userInfoString)
+                     """
+                 }
+                self.debugLog("""
+                ❌ Error evaluating combined plugin scripts:
+                --------------------------------------------------
+                \(errorDetails)
+                --------------------------------------------------
+                """)
+                completion(Set()) // Indicate failure by returning an empty set
+            } else {
+                completion(successfullyReadPaths)
+            }
+        }
     }
-    
+
+
     private func drawChart() {
         if beforeDrawChartJavaScript != nil {
             debugLog("📝 \(beforeDrawChartJavaScript ?? "")")
