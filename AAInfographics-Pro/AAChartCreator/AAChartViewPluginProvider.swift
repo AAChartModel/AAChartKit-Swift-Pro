@@ -26,11 +26,20 @@ public class ProPluginProvider: AAChartViewPluginProvider {
     // Mapping from chart type rawValue to script names (moved from AAChartView)
     private static let chartTypeScriptMapping: [String: [String]] = [
         // --- Flow & Relationship Charts ---
-        AAChartType.sankey.rawValue          : ["AASankey"],
-        AAChartType.dependencywheel.rawValue : ["AASankey", "AADependency-Wheel"],
+//        AAChartType.sankey.rawValue          : ["AASankey"],
+        AAChartType.dependencywheel.rawValue : [
+//            "AASankey",
+            "AADependency-Wheel"
+        ],
         AAChartType.networkgraph.rawValue    : ["AANetworkgraph"],
-        AAChartType.organization.rawValue    : ["AASankey", "AAOrganization"],
-        AAChartType.arcdiagram.rawValue      : ["AASankey", "AAArc-Diagram"],
+        AAChartType.organization.rawValue    : [
+//            "AASankey",
+            "AAOrganization"
+        ],
+        AAChartType.arcdiagram.rawValue      : [
+//            "AASankey",
+            "AAArc-Diagram"
+        ],
         AAChartType.venn.rawValue            : ["AAVenn"], // Can also be considered set theory
 
         // --- Hierarchical Charts ---
@@ -42,14 +51,20 @@ public class ProPluginProvider: AAChartViewPluginProvider {
         AAChartType.variablepie.rawValue     : ["AAVariable-Pie"],
         AAChartType.variwide.rawValue        : ["AAVariwide"],
         AAChartType.dumbbell.rawValue        : ["AADumbbell"],
-        AAChartType.lollipop.rawValue        : ["AADumbbell", "AALollipop"],
+        AAChartType.lollipop.rawValue        : [
+//            "AADumbbell",
+            "AALollipop"
+        ],
         AAChartType.histogram.rawValue       : ["AAHistogram-Bellcurve"],
         AAChartType.bellcurve.rawValue       : ["AAHistogram-Bellcurve"],
         AAChartType.bullet.rawValue          : ["AABullet"], // Can also be gauge/indicator
 
         // --- Heatmap & Matrix Charts ---
         AAChartType.heatmap.rawValue         : ["AAHeatmap"],
-        AAChartType.tilemap.rawValue         : ["AAHeatmap", "AATilemap"],
+        AAChartType.tilemap.rawValue         : [
+//            "AAHeatmap",
+            "AATilemap"
+        ],
 
         // --- Time, Range & Stream Charts ---
         AAChartType.streamgraph.rawValue     : ["AAStreamgraph"],
@@ -106,9 +121,9 @@ public class ProPluginProvider: AAChartViewPluginProvider {
     // Helper to add scripts based on specific AAOptions properties
     private func addChartPluginScripts(for options: AAOptions, into requiredPaths: inout Set<String>) {
         if options.chart?.parallelCoordinates == true {
-            if let scriptPath = generateScriptPathWithScriptName("AAParallel-coordinates") {
-                requiredPaths.insert(scriptPath)
-            }
+//            if let scriptPath = generateScriptPathWithScriptName("AAParallel-coordinates") {
+//                requiredPaths.insert(scriptPath)
+//            }
         }
         if options.data != nil {
              if let scriptPath = generateScriptPathWithScriptName("AAData") {
