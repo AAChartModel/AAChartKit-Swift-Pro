@@ -89,8 +89,6 @@ public class AAChartView: WKWebView {
     
     private var clickEventEnabled: Bool?
     private var touchEventEnabled: Bool?
-    private var beforeDrawChartJavaScript: String?
-    private var afterDrawChartJavaScript: String?
     
     private weak var _delegate: AAChartViewDelegate?
     public weak var delegate: AAChartViewDelegate? {
@@ -176,11 +174,8 @@ public class AAChartView: WKWebView {
     
     internal var optionsJson: String?
 
-    // Property to hold the plugin provider instance.
-    private var pluginProvider: AAChartViewPluginProvider = DefaultPluginProvider()
-
-    private var requiredPluginPaths: Set<String> = []
-    private var loadedPluginPaths: Set<String> = [] // Keep track of loaded plugins
+    // --- Plugin Loader ---
+    private var pluginLoader: AAChartViewPluginLoader = ProPluginLoader(provider: ProPluginProvider())
 
     public var userPluginPaths: Set<String> = []
 #if DEBUG
@@ -207,207 +202,27 @@ public class AAChartView: WKWebView {
     
     
     // MARK: - Plugin Loading and Chart Drawing
-    
-    /// Determines required plugins, loads any missing ones sequentially, and then draws the chart.
-    internal func loadAllPluginsAndDrawChart() {
-        // 1. Determine the total set of required plugins (base requirements + user-defined)
-        let totalRequiredPluginsSet = requiredPluginPaths.union(userPluginPaths)
-        
-        // 2. Identify plugins that are required but not yet loaded
-        let pluginsToLoad = totalRequiredPluginsSet.subtracting(loadedPluginPaths)
-        
-        // 3. If no new plugins need loading, draw the chart immediately
-        guard !pluginsToLoad.isEmpty else {
-#if DEBUG
-            if totalRequiredPluginsSet.isEmpty {
-                print("ℹ️ No additional plugins needed for the current chart options.")
-            } else {
-                print("ℹ️ All required plugins (count: \(totalRequiredPluginsSet.count)) already loaded.")
-            }
-#endif
-            drawChart()
-            return
-        }
-        
-        // 4. Load the necessary new plugins as a single combined script
-        debugLog("ℹ️ Preparing to load \(pluginsToLoad.count) new plugin scripts...")
-        
-        // Use the new combined loading function
-        loadAndEvaluateCombinedPluginScript(scriptsToLoad: pluginsToLoad) { [weak self] successfullyLoadedPlugins in
-            guard let self = self else { return }
-            
-            // 5. Update the set of all loaded plugins
-            self.loadedPluginPaths.formUnion(successfullyLoadedPlugins)
-            
-#if DEBUG
-            if successfullyLoadedPlugins.count < pluginsToLoad.count {
-                 // This might happen if reading a file failed before evaluation or evaluation itself failed
-                 print("⚠️ One or more plugin script files could not be read, or the combined script evaluation failed.")
-            } else if !successfullyLoadedPlugins.isEmpty {
-                 print("✅ \(successfullyLoadedPlugins.count) new plugin scripts loaded and evaluated successfully.")
-            }
-            print("ℹ️ Total loaded plugins count: \(self.loadedPluginPaths.count)")
-#endif
-            
-            // 6. Draw the chart after attempting to load new plugins
-            self.drawChart()
-        }
-    }
-
-    // Helper function to sort plugin paths based on known dependencies
-    private func sortPluginPaths(_ paths: Set<String>) -> [String] {
-        var sortedPaths = Array(paths)
-        // Define known dependencies (module -> depends on)
-        // Ensure the dependency file name matches exactly (e.g., "AASankey.js")
-        let dependencies: [String: String] = [
-            "AADependency-Wheel.js": "AASankey.js",
-            "AAOrganization.js": "AASankey.js",
-            "AALollipop.js": "AADumbbell.js", // Example if Lollipop depends on Dumbbell
-            "AATilemap.js": "AAHeatmap.js"    // Example if Tilemap depends on Heatmap
-            // Add other known dependencies here
-        ]
-
-        // Custom sort: If A depends on B, B should come before A.
-        sortedPaths.sort { path1, path2 in
-            let file1 = (path1 as NSString).lastPathComponent
-            let file2 = (path2 as NSString).lastPathComponent
-
-            // Check if file2 depends on file1
-            if let dependency = dependencies[file2], dependency == file1 {
-                return true // file1 should come before file2
-            }
-            // Check if file1 depends on file2
-            if let dependency = dependencies[file1], dependency == file2 {
-                return false // file2 should come before file1
-            }
-            // Prioritize base modules like AASankey if no direct dependency is found
-            if file1 == "AASankey.js" && file2 != "AASankey.js" { return true }
-            if file2 == "AASankey.js" && file1 != "AASankey.js" { return false }
-            
-            // Otherwise, maintain relative order or use alphabetical for stability
-            return path1 < path2
-        }
-        
-#if DEBUG
-        let sortedNames = sortedPaths.map { ($0 as NSString).lastPathComponent }
-        if paths.count > 1 && Array(paths).map({ ($0 as NSString).lastPathComponent }).sorted() != sortedNames.sorted() {
-             // Only log if sorting actually changed the order based on dependencies
-             debugLog("🔩 Sorted plugin load order: \(sortedNames)")
-        }
-#endif
-        
-        return sortedPaths
-    }
-
-
-    // New function to load and evaluate scripts as a single combined batch
-    private func loadAndEvaluateCombinedPluginScript(
-        scriptsToLoad: Set<String>,
-        completion: @escaping (Set<String>) -> Void
-    ) {
-        guard !scriptsToLoad.isEmpty else {
-            completion(Set()) // Nothing to load
-            return
-        }
-
-        // Sort paths to respect dependencies
-        let sortedScriptPaths = sortPluginPaths(scriptsToLoad)
-
-        var combinedJSString = ""
-        var successfullyReadPaths = Set<String>() // Track paths successfully read
-
-        for path in sortedScriptPaths {
-            let scriptName = (path as NSString).lastPathComponent
-            do {
-                let jsString = try String(contentsOfFile: path, encoding: .utf8)
-                // Add a newline and a comment for easier debugging in browser dev tools
-                combinedJSString += "// --- Start: \(scriptName) ---\n"
-                combinedJSString += jsString
-                combinedJSString += "\n// --- End: \(scriptName) ---\n\n"
-                successfullyReadPaths.insert(path)
-            } catch {
-                // Log error but continue trying to read other files
-                debugLog("❌ Failed to read plugin script file '\(scriptName)': \(error). Skipping this script.")
-                // Do not add to successfullyReadPaths
-            }
-        }
-
-        // Only proceed if we have some script content to evaluate
-        guard !combinedJSString.isEmpty else {
-            debugLog("⚠️ No plugin script content could be read. Nothing to evaluate.")
-            completion(Set()) // Return empty set as nothing was evaluated
-            return
-        }
-
-        debugLog("ℹ️ Evaluating combined plugin scripts (\(successfullyReadPaths.count) files)...")
-
-        evaluateJavaScript(combinedJSString) { [weak self] _, error in
-            guard let self = self else {
-                print("⚠️ AAChartView deallocated during combined script evaluation. Aborting.")
-                completion(Set())
-                return
-            }
-
-            if let error = error {
-                // Format the error message (reuse existing error formatting logic if possible)
-                 var errorDetails = "Error: \(error.localizedDescription)"
-                 if let nsError = error as NSError? {
-                     var userInfoString = ""
-                     if !nsError.userInfo.isEmpty {
-                         userInfoString = "\n    User Info:"
-                         let sortedKeys = nsError.userInfo.keys.sorted { $0.localizedCaseInsensitiveCompare($1) == .orderedAscending }
-                         for key in sortedKeys {
-                             if let value = nsError.userInfo[key] {
-                                 userInfoString += "\n      - \(key): \(value)"
-                             }
-                         }
-                     }
-                     errorDetails = """
-                     Error Details:
-                       - Domain: \(nsError.domain)
-                       - Code: \(nsError.code)
-                       - Description: \(nsError.localizedDescription)\(userInfoString)
-                     """
-                 }
-                self.debugLog("""
-                ❌ Error evaluating combined plugin scripts:
-                --------------------------------------------------
-                \(errorDetails)
-                --------------------------------------------------
-                """)
-                completion(Set()) // Indicate failure by returning an empty set
-            } else {
-                completion(successfullyReadPaths)
-            }
-        }
-    }
-
 
     private func drawChart() {
-        if beforeDrawChartJavaScript != nil {
-            debugLog("📝 \(beforeDrawChartJavaScript ?? "")")
-            safeEvaluateJavaScriptString(beforeDrawChartJavaScript!)
-            beforeDrawChartJavaScript = nil
-        }
-        
-        //Add `frame.size.height` to solve the problem that the height of the new version of Highcharts chart will not adapt to the container
-        let jsStr = "loadTheHighChartView('\(optionsJson ?? "")','\(contentWidth ?? 0)','\(contentHeight ?? 0)');"
-        safeEvaluateJavaScriptString(jsStr)
-        
-        if afterDrawChartJavaScript != nil {
-            debugLog("📝 \(afterDrawChartJavaScript ?? "")")
-            safeEvaluateJavaScriptString(afterDrawChartJavaScript!)
-            afterDrawChartJavaScript = nil
-        }
-    }
-    
-    internal func safeEvaluateJavaScriptString (_ jsString: String) {
-        if optionsJson == nil {
-            debugLog("💀💀💀AAChartView did not finish loading!!!")
+        // Execute pre-draw script via loader
+        pluginLoader.executeBeforeDrawScript(webView: self)
+
+        // Check if optionsJson is ready before drawing
+        guard optionsJson != nil else {
+            debugLog("💀💀💀 Attempted to draw chart before optionsJson was configured.")
             return
         }
-        
-        evaluateJavaScript(jsString, completionHandler: { (item, error) in
+
+        let jsStr = "loadTheHighChartView('\(optionsJson!)','\(contentWidth ?? 0)','\(contentHeight ?? 0)');"
+        safeEvaluateJavaScriptString(jsStr)
+
+        // Execute post-draw script via loader
+        pluginLoader.executeAfterDrawScript(webView: self)
+    }
+
+    internal func safeEvaluateJavaScriptString (_ jsString: String) {
+        evaluateJavaScript(jsString, completionHandler: { [weak self] (item, error) in
+            guard let self = self else { return }
 #if DEBUG
             if error != nil {
                 let objcError = error! as NSError
@@ -449,14 +264,6 @@ public class AAChartView: WKWebView {
         } else if aaOptions.plotOptions?.series?.point?.events == nil {
             aaOptions.plotOptions?.series?.point?.events = AAPointEvents()
         }
-    }
-    
-    private func determineRequiredPlugins(for aaOptions: AAOptions) {
-        // Use the provider to get additional required plugins based on options
-        let providerPlugins = pluginProvider.getRequiredPluginPaths(for: aaOptions)
-        requiredPluginPaths.formUnion(providerPlugins)
-
-        debugLog("🔌 Determined requiredPluginPaths: \(requiredPluginPaths)")
     }
     
 #if DEBUG
@@ -517,18 +324,8 @@ public class AAChartView: WKWebView {
 #endif
     
     internal func configureOptionsJsonStringWithAAOptions(_ aaOptions: AAOptions) {
-        // Determine required plugins using the new method and provider
-        determineRequiredPlugins(for: aaOptions)
-
-        if aaOptions.beforeDrawChartJavaScript != nil {
-            beforeDrawChartJavaScript = aaOptions.beforeDrawChartJavaScript
-            aaOptions.beforeDrawChartJavaScript = nil
-        }
-
-        if aaOptions.afterDrawChartJavaScript != nil {
-            afterDrawChartJavaScript = aaOptions.afterDrawChartJavaScript
-            aaOptions.afterDrawChartJavaScript = nil
-        }
+        // Configure the plugin loader (determines required plugins, gets scripts)
+        pluginLoader.configure(options: aaOptions)
 
         if isClearBackgroundColor == true {
             aaOptions.chart?.backgroundColor = AAColor.clear
@@ -638,6 +435,18 @@ extension AAChartView: WKUIDelegate {
 // MARK: - WKNavigationDelegate
 @available(iOS 10.0, macCatalyst 13.1, macOS 10.13, *)
 extension AAChartView:  WKNavigationDelegate {
+    internal func loadAllPluginsAndDrawChart() {
+        // Load plugins via loader, then draw chart in completion
+        pluginLoader.loadPluginsIfNeeded(webView: self, userPlugins: userPluginPaths) { [weak self] in
+            // Ensure options are ready before drawing
+            guard let self = self, self.optionsJson != nil else {
+                self?.debugLog("💀💀💀 AAChartView options not ready after plugin load or view deallocated.")
+                return
+            }
+            self.drawChart()
+        }
+    }
+    
     open func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         loadAllPluginsAndDrawChart()
         delegate?.aaChartViewDidFinishLoad?(self)
