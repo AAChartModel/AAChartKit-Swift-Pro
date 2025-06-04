@@ -70,6 +70,7 @@ public class AASeriesElement: AAObject {
     public var stack: String?
     public var tooltip: AATooltip?
     public var pointPlacement: Any?
+    public var pointWidth: Float?
     public var enableMouseTracking: Bool?
     public var dataSorting: AADataSorting?
     public var reversed: Bool?             //Only useful for pyramid chart and funnel chart
@@ -86,6 +87,7 @@ public class AASeriesElement: AAObject {
     public var linkWeight: Int?           //The global link weight. If not set, width is calculated per link, depending on the weight value. Defaults to undefined.
     public var centeredLinks: Bool?       //The option to center links rather than position them one after another. Defaults to false.
     public var id: String?
+    public var clip: Bool?
 
     
     @discardableResult
@@ -323,6 +325,12 @@ public class AASeriesElement: AAObject {
     }
     
     @discardableResult
+    public func pointWidth(_ prop: Float) -> AASeriesElement {
+        pointWidth = prop
+        return self
+    }
+    
+    @discardableResult
     public func enableMouseTracking(_ prop: Bool) -> AASeriesElement {
         enableMouseTracking = prop
         return self
@@ -403,6 +411,12 @@ public class AASeriesElement: AAObject {
     @discardableResult
     public func id(_ prop: String) -> AASeriesElement {
         id = prop
+        return self
+    }
+    
+    @discardableResult
+    public func clip(_ prop: Bool) -> AASeriesElement {
+        clip = prop
         return self
     }
 
