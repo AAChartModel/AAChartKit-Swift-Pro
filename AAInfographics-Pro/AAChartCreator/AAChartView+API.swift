@@ -30,7 +30,7 @@
  
  */
 
-import UIKit
+import Foundation
 
 // MARK: - Configure Chart View Content With AAChartModel
 @available(iOS 10.0, macCatalyst 13.1, macOS 10.13, *)
@@ -71,12 +71,16 @@ extension AAChartView {
     public func aa_drawChartWithChartOptions(_ aaOptions: AAOptions) {
         if optionsJson == nil {
             configureOptionsJsonStringWithAAOptions(aaOptions)
-            let path = BundlePathLoader()
+            guard let path = BundlePathLoader()
                 .path(forResource: "AAChartView",
                       ofType: "html",
-                      inDirectory: "AAJSFiles.bundle")
-            let urlStr = NSURL.fileURL(withPath: path!)
-            let urlRequest = NSURLRequest(url: urlStr) as URLRequest
+                      inDirectory: "AAJSFiles.bundle") else {
+                // Consider more robust error handling or logging framework for production code
+                print("Error: AAChartView.html not found in AAJSFiles.bundle. Chart cannot be loaded.")
+                return
+            }
+            let fileURL = URL(fileURLWithPath: path) // 'path' is a non-optional String here
+            let urlRequest = URLRequest(url: fileURL)
             load(urlRequest)
         } else {
             aa_refreshChartWholeContentWithChartOptions(aaOptions)
@@ -260,7 +264,7 @@ extension AAChartView {
     /// Show the series element content with index
     ///
     /// - Parameter elementIndex: elementIndex element index
-    public func aa_showTheSeriesElementContentWithSeriesElementIndex(_ elementIndex: NSInteger) {
+    public func aa_showTheSeriesElementContentWithSeriesElementIndex(_ elementIndex: Int) {
         let jsStr = "showTheSeriesElementContentWithIndex('\(elementIndex)');"
         safeEvaluateJavaScriptString(jsStr)
     }
@@ -268,7 +272,7 @@ extension AAChartView {
     ///  Hide the series element content with index
     ///
     /// - Parameter elementIndex: element index
-    public func aa_hideTheSeriesElementContentWithSeriesElementIndex(_ elementIndex: NSInteger) {
+    public func aa_hideTheSeriesElementContentWithSeriesElementIndex(_ elementIndex: Int) {
         let jsStr = "hideTheSeriesElementContentWithIndex('\(elementIndex)');"
         safeEvaluateJavaScriptString(jsStr as String)
     }
@@ -313,39 +317,6 @@ extension AAChartView {
         let jsStr = "redrawWithAnimation('\(animation)')"
         safeEvaluateJavaScriptString(jsStr)
     }
-    
-#if os(iOS)
-    /// Set the chart view content be adaptive to screen rotation with default animation effect
-    public func aa_adaptiveScreenRotation() {
-        let aaAnimation = AAAnimation()
-            .duration(800)
-            .easing(.easeOutQuart)
-        aa_adaptiveScreenRotationWithAnimation(aaAnimation)
-    }
-    
-    /// Set the chart view content be adaptive to screen rotation with custom animation effect
-    /// Refer to https://api.highcharts.com/highcharts#Chart.setSize
-    ///
-    /// - Parameter animation: The instance object of AAAnimation
-    public func aa_adaptiveScreenRotationWithAnimation(_ animation: AAAnimation) {
-        NotificationCenter.default.addObserver(
-            forName: UIDevice.orientationDidChangeNotification,
-            object: nil,
-            queue: nil) { [weak self] _ in
-                //Delay execution by 0.01 seconds to prevent incorrect screen width and height obtained when the screen is rotated
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
-                    self?.aa_resizeChart(animation: animation)
-                }
-            }
-    }
-    
-    public func aa_resizeChart(animation: AAAnimation) {
-        let animationJsonStr = animation.toJSON()
-        let jsFuncStr = "changeChartSize('\(frame.size.width)','\(frame.size.height)','\(animationJsonStr)')"
-        safeEvaluateJavaScriptString(jsFuncStr)
-    }
-#endif
-    
 }
 
 

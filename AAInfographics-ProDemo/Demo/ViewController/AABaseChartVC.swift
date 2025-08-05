@@ -84,7 +84,7 @@ class AABaseChartVC: UIViewController {
         aaChartView = AAChartView()
         aaChartView!.isScrollEnabled = false
         aaChartView!.delegate = self as AAChartViewDelegate
-        aaChartView!.aa_adaptiveScreenRotation()
+//        aaChartView!.aa_adaptiveScreenRotation()
         view.addSubview(aaChartView!)
         
         aaChartView?.translatesAutoresizingMaskIntoConstraints = false
