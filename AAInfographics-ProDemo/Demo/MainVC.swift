@@ -286,7 +286,7 @@ extension MainVC: UITableViewDelegate, UITableViewDataSource {
             navigationController?.pushViewController(vc, animated: true)
             
         case 9:
-            let vc = FractalChartListVC()
+            let vc = ChartListTableViewVC()
 //            vc.selectedIndex = indexPath.row
 //            vc.navigationItemTitleArr = chartTypeNameArr[indexPath.section]
             navigationController?.pushViewController(vc, animated: true)

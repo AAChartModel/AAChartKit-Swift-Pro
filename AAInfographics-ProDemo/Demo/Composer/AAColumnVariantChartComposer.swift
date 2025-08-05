@@ -175,9 +175,9 @@ class AAColumnVariantChartComposer {
                 .visible(true)
                 .title(AATitle()
                     .text(""))
-                    .reversed(true)
-                    .categories(["原型","开发","测试","上线"])
-                    .gridLineWidth(0))
+                .reversed(true)
+                .categories(["原型","开发","测试","上线"])
+                .gridLineWidth(0))
             .legend(AALegend()
                 .enabled(false))
             .plotOptions(AAPlotOptions()
@@ -189,6 +189,29 @@ class AAColumnVariantChartComposer {
                     .borderRadius(2)
                     .data(AAOptionsData.xrangeData)
             ])
+    }
+    
+    static func invertedXrangeChart() -> AAOptions {
+        let aaOptions = xrangeChart()
+        
+        aaOptions.colors([])
+        aaOptions.chart?.inverted(true)
+        //离离原上草, 一岁一枯荣
+        //野火烧不尽, 春风吹又生
+        aaOptions.yAxis?.categories([
+            "离", "离", "原", "上", "草",
+            "一", "岁", "一", "枯", "荣",
+            "野", "火", "烧", "不", "尽",
+            "春", "风", "吹", "又", "生"
+            ])
+        aaOptions.plotOptions?.series?.groupPadding(0.1)
+        aaOptions.series([
+            AASeriesElement()
+                .borderRadius(2)
+                .data(AAOptionsData.xrange2Data)
+        ])
+        
+        return aaOptions
     }
     
     static func histogramChart() -> AAOptions {

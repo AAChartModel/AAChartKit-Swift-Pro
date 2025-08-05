@@ -30,6 +30,7 @@
 		58603BB14202D5D0DF0D4482 /* tilemapForAfricaData.json in Resources */ = {isa = PBXBuildFile; fileRef = 58603C0A468CDC4C59D49149 /* tilemapForAfricaData.json */; };
 		58603DF10ACD2DFCE19E231F /* simpleTilemapData.json in Resources */ = {isa = PBXBuildFile; fileRef = 5860351659A57677CB0A6D84 /* simpleTilemapData.json */; };
 		8418479728B861D200094106 /* AABoxplot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8418479628B861D200094106 /* AABoxplot.swift */; };
+		842EB1B12DEEF57A000166C2 /* AAMixedChartComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842EB1B02DEEF57A000166C2 /* AAMixedChartComposer.swift */; };
 		8441A76126C2568F007EAAA7 /* AAExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8441A75E26C2568E007EAAA7 /* AAExtension.swift */; };
 		8441A76226C2568F007EAAA7 /* AAColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8441A75F26C2568F007EAAA7 /* AAColor.swift */; };
 		8441A76326C2568F007EAAA7 /* AAGradientColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8441A76026C2568F007EAAA7 /* AAGradientColor.swift */; };
@@ -67,6 +68,8 @@
 		844736102DA6994D0040CCCE /* AAFractalJuliaSetData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8447360F2DA6994D0040CCCE /* AAFractalJuliaSetData.swift */; };
 		844736122DA79BCF0040CCCE /* FractalChartListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844736112DA79BCF0040CCCE /* FractalChartListVC.swift */; };
 		8447361A2DAE58D00040CCCE /* AAExtraFractalChartData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844736192DAE58D00040CCCE /* AAExtraFractalChartData.swift */; };
+		844736282DAF90C60040CCCE /* AAChartView+API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844736272DAF90C60040CCCE /* AAChartView+API.swift */; };
+		8447362A2DAFA2330040CCCE /* AAChartViewPluginProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844736292DAFA2330040CCCE /* AAChartViewPluginProvider.swift */; };
 		84526DF72CEB305800EB2563 /* AAOptions+Drilldown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84526DF62CEB305800EB2563 /* AAOptions+Drilldown.swift */; };
 		84526DF92CEB310200EB2563 /* AADrilldown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84526DF82CEB310200EB2563 /* AADrilldown.swift */; };
 		84526DFB2CEB332600EB2563 /* AADrilldownChartComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84526DFA2CEB332600EB2563 /* AADrilldownChartComposer.swift */; };
@@ -79,6 +82,11 @@
 		84526E0B2CEB401500EB2563 /* AABoost.js in Resources */ = {isa = PBXBuildFile; fileRef = 84526E0A2CEB401500EB2563 /* AABoost.js */; };
 		845BABEA2D02D08A004C15D4 /* OfficialChartSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845BABE92D02D08A004C15D4 /* OfficialChartSample.swift */; };
 		845BABEC2D02D2EB004C15D4 /* OfficialChartSampleVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845BABEB2D02D2EB004C15D4 /* OfficialChartSampleVC.swift */; };
+		8466E38B2DB1EA8700DBF03B /* ChartListTableViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8466E38A2DB1EA8700DBF03B /* ChartListTableViewVC.swift */; };
+		8466E38D2DB1EF0B00DBF03B /* ChartExampleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8466E38C2DB1EF0B00DBF03B /* ChartExampleCell.swift */; };
+		8466E3912DB1F2E300DBF03B /* ChartSampleProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8466E3902DB1F2E300DBF03B /* ChartSampleProvider.swift */; };
+		8466E3942DB1F5FA00DBF03B /* ChartSampleTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8466E3932DB1F5FA00DBF03B /* ChartSampleTableViewCell.xib */; };
+		8466E3952DB1F5FA00DBF03B /* ChartSampleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8466E3922DB1F5FA00DBF03B /* ChartSampleTableViewCell.swift */; };
 		848970412CF9CAFD00C519A0 /* timeline2Data.json in Resources */ = {isa = PBXBuildFile; fileRef = 848970402CF9CAFD00C519A0 /* timeline2Data.json */; };
 		84A5691127FEC88700883553 /* streamgraphSeries.json in Resources */ = {isa = PBXBuildFile; fileRef = 84A5690F27FEC88700883553 /* streamgraphSeries.json */; };
 		84A5691227FEC88700883553 /* packedbubbleSeries.json in Resources */ = {isa = PBXBuildFile; fileRef = 84A5691027FEC88700883553 /* packedbubbleSeries.json */; };
@@ -184,6 +192,7 @@
 		5860351659A57677CB0A6D84 /* simpleTilemapData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = simpleTilemapData.json; sourceTree = "<group>"; };
 		58603C0A468CDC4C59D49149 /* tilemapForAfricaData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = tilemapForAfricaData.json; sourceTree = "<group>"; };
 		8418479628B861D200094106 /* AABoxplot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AABoxplot.swift; sourceTree = "<group>"; };
+		842EB1B02DEEF57A000166C2 /* AAMixedChartComposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AAMixedChartComposer.swift; sourceTree = "<group>"; };
 		8441A75E26C2568E007EAAA7 /* AAExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AAExtension.swift; sourceTree = "<group>"; };
 		8441A75F26C2568F007EAAA7 /* AAColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AAColor.swift; sourceTree = "<group>"; };
 		8441A76026C2568F007EAAA7 /* AAGradientColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AAGradientColor.swift; sourceTree = "<group>"; };
@@ -221,6 +230,8 @@
 		8447360F2DA6994D0040CCCE /* AAFractalJuliaSetData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AAFractalJuliaSetData.swift; sourceTree = "<group>"; };
 		844736112DA79BCF0040CCCE /* FractalChartListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FractalChartListVC.swift; sourceTree = "<group>"; };
 		844736192DAE58D00040CCCE /* AAExtraFractalChartData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AAExtraFractalChartData.swift; sourceTree = "<group>"; };
+		844736272DAF90C60040CCCE /* AAChartView+API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AAChartView+API.swift"; sourceTree = "<group>"; };
+		844736292DAFA2330040CCCE /* AAChartViewPluginProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AAChartViewPluginProvider.swift; sourceTree = "<group>"; };
 		84526DF62CEB305800EB2563 /* AAOptions+Drilldown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AAOptions+Drilldown.swift"; sourceTree = "<group>"; };
 		84526DF82CEB310200EB2563 /* AADrilldown.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AADrilldown.swift; path = "AAInfographics-ProDemo/Demo/AAPlugins/AADrilldown/AADrilldown.swift"; sourceTree = SOURCE_ROOT; };
 		84526DFA2CEB332600EB2563 /* AADrilldownChartComposer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AADrilldownChartComposer.swift; path = "AAInfographics-ProDemo/Demo/AAPlugins/AADrilldown/AADrilldownChartComposer.swift"; sourceTree = SOURCE_ROOT; };
@@ -233,6 +244,11 @@
 		84526E0A2CEB401500EB2563 /* AABoost.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = AABoost.js; sourceTree = "<group>"; };
 		845BABE92D02D08A004C15D4 /* OfficialChartSample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfficialChartSample.swift; sourceTree = "<group>"; };
 		845BABEB2D02D2EB004C15D4 /* OfficialChartSampleVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfficialChartSampleVC.swift; sourceTree = "<group>"; };
+		8466E38A2DB1EA8700DBF03B /* ChartListTableViewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartListTableViewVC.swift; sourceTree = "<group>"; };
+		8466E38C2DB1EF0B00DBF03B /* ChartExampleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartExampleCell.swift; sourceTree = "<group>"; };
+		8466E3902DB1F2E300DBF03B /* ChartSampleProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartSampleProvider.swift; sourceTree = "<group>"; };
+		8466E3922DB1F5FA00DBF03B /* ChartSampleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartSampleTableViewCell.swift; sourceTree = "<group>"; };
+		8466E3932DB1F5FA00DBF03B /* ChartSampleTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChartSampleTableViewCell.xib; sourceTree = "<group>"; };
 		848970402CF9CAFD00C519A0 /* timeline2Data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = timeline2Data.json; sourceTree = "<group>"; };
 		84A5690F27FEC88700883553 /* streamgraphSeries.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = streamgraphSeries.json; sourceTree = "<group>"; };
 		84A5691027FEC88700883553 /* packedbubbleSeries.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = packedbubbleSeries.json; sourceTree = "<group>"; };
@@ -376,6 +392,8 @@
 			children = (
 				84461588283F57C600E26DA4 /* AAChartModel.swift */,
 				84461585283F57C500E26DA4 /* AAChartView.swift */,
+				844736272DAF90C60040CCCE /* AAChartView+API.swift */,
+				844736292DAFA2330040CCCE /* AAChartViewPluginProvider.swift */,
 				84461584283F57C500E26DA4 /* AAOptions.swift */,
 				84461586283F57C500E26DA4 /* AASerializable.swift */,
 				84461587283F57C500E26DA4 /* AASeriesElement.swift */,
@@ -574,6 +592,11 @@
 				845BABE92D02D08A004C15D4 /* OfficialChartSample.swift */,
 				845BABEB2D02D2EB004C15D4 /* OfficialChartSampleVC.swift */,
 				844736112DA79BCF0040CCCE /* FractalChartListVC.swift */,
+				8466E38A2DB1EA8700DBF03B /* ChartListTableViewVC.swift */,
+				8466E38C2DB1EF0B00DBF03B /* ChartExampleCell.swift */,
+				8466E3902DB1F2E300DBF03B /* ChartSampleProvider.swift */,
+				8466E3922DB1F5FA00DBF03B /* ChartSampleTableViewCell.swift */,
+				8466E3932DB1F5FA00DBF03B /* ChartSampleTableViewCell.xib */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -581,6 +604,7 @@
 		84DEB8B328FAE3F200BF9423 /* Composer */ = {
 			isa = PBXGroup;
 			children = (
+				842EB1B02DEEF57A000166C2 /* AAMixedChartComposer.swift */,
 				84DEB8BD28FAE54500BF9423 /* AARelationshipChartComposer.swift */,
 				84DEB8BF28FAE57B00BF9423 /* AAHeatOrTreeMapChartComposer.swift */,
 				84DEB8C128FAE58C00BF9423 /* AABubbleChartComposer.swift */,
@@ -716,6 +740,7 @@
 				84A5693727FEC89F00883553 /* bigHeatmapData.json in Resources */,
 				84A5694E27FEC89F00883553 /* arcdiagram3Data.json in Resources */,
 				84A5694927FEC89F00883553 /* columnpyramidData.json in Resources */,
+				8466E3942DB1F5FA00DBF03B /* ChartSampleTableViewCell.xib in Resources */,
 				84A5693D27FEC89F00883553 /* organizationData.json in Resources */,
 				84A5693227FEC89F00883553 /* organizationNodesData.json in Resources */,
 				84A5693C27FEC89F00883553 /* vennData.json in Resources */,
@@ -800,9 +825,11 @@
 				27F872AB25E797690068380F /* ProjectBundlePathLoader.swift in Sources */,
 				844615A7283F580300E26DA4 /* AAChart.swift in Sources */,
 				8446158A283F57C600E26DA4 /* AAChartView.swift in Sources */,
+				8466E38B2DB1EA8700DBF03B /* ChartListTableViewVC.swift in Sources */,
 				8418479728B861D200094106 /* AABoxplot.swift in Sources */,
 				84526DFB2CEB332600EB2563 /* AADrilldownChartComposer.swift in Sources */,
 				84B13EE92897A953007356C6 /* AAItem.swift in Sources */,
+				8466E38D2DB1EF0B00DBF03B /* ChartExampleCell.swift in Sources */,
 				84DEB8C228FAE58C00BF9423 /* AABubbleChartComposer.swift in Sources */,
 				844615B6283F580300E26DA4 /* AALang.swift in Sources */,
 				844615A6283F580300E26DA4 /* AAMarker.swift in Sources */,
@@ -812,6 +839,7 @@
 				8441A76126C2568F007EAAA7 /* AAExtension.swift in Sources */,
 				844615B8283F580300E26DA4 /* AASubtitle.swift in Sources */,
 				44D27C77255A3CAF00D0C636 /* ViewController.swift in Sources */,
+				842EB1B12DEEF57A000166C2 /* AAMixedChartComposer.swift in Sources */,
 				8441A76326C2568F007EAAA7 /* AAGradientColor.swift in Sources */,
 				8446158B283F57C600E26DA4 /* AASerializable.swift in Sources */,
 				844615B0283F580300E26DA4 /* AALabel.swift in Sources */,
@@ -820,12 +848,14 @@
 				44D27DF8255A726400D0C636 /* AAPackedbubble.swift in Sources */,
 				44D27DFD255A733D00D0C636 /* AATreemap.swift in Sources */,
 				84DC910E2D2FDDB7002EDC1F /* CustomClickEventCallbackMessageVC2.swift in Sources */,
+				8466E3912DB1F2E300DBF03B /* ChartSampleProvider.swift in Sources */,
 				844615BD283F580300E26DA4 /* AAYAxis.swift in Sources */,
 				44D27E02255A735700D0C636 /* AALayoutAlgorithm.swift in Sources */,
 				84B13F2F289BDB5F007356C6 /* AASolidgaugeDataElement.swift in Sources */,
 				84461589283F57C600E26DA4 /* AAOptions.swift in Sources */,
 				845BABEA2D02D08A004C15D4 /* OfficialChartSample.swift in Sources */,
 				844736122DA79BCF0040CCCE /* FractalChartListVC.swift in Sources */,
+				8447362A2DAFA2330040CCCE /* AAChartViewPluginProvider.swift in Sources */,
 				844615B5283F580300E26DA4 /* AAPlotBandsElement.swift in Sources */,
 				844615BB283F580300E26DA4 /* AASeries.swift in Sources */,
 				8447361A2DAE58D00040CCCE /* AAExtraFractalChartData.swift in Sources */,
@@ -834,6 +864,7 @@
 				84526E092CEB3F1E00EB2563 /* AABoostChartVC.swift in Sources */,
 				84B13F35289D12DF007356C6 /* AAData.swift in Sources */,
 				844615AB283F580300E26DA4 /* AALegend.swift in Sources */,
+				844736282DAF90C60040CCCE /* AAChartView+API.swift in Sources */,
 				44D27E0C255ADE1E00D0C636 /* AAOptionsSeries.swift in Sources */,
 				84526E032CEB3BCD00EB2563 /* AABoost.swift in Sources */,
 				84DEB8C028FAE57B00BF9423 /* AAHeatOrTreeMapChartComposer.swift in Sources */,
@@ -850,6 +881,7 @@
 				84B13F3B289E2CA0007356C6 /* AAParallelAxes.swift in Sources */,
 				844615AA283F580300E26DA4 /* AAAxis.swift in Sources */,
 				84DEB8BA28FAE4F300BF9423 /* AABubbleChartVC.swift in Sources */,
+				8466E3952DB1F5FA00DBF03B /* ChartSampleTableViewCell.swift in Sources */,
 				844615A8283F580300E26DA4 /* AAStyle.swift in Sources */,
 				845BABEC2D02D2EB004C15D4 /* OfficialChartSampleVC.swift in Sources */,
 				84DEB8BC28FAE50500BF9423 /* AAColumnVariantChartVC.swift in Sources */,
@@ -1029,6 +1061,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "AAInfographics-ProDemo/AAInfographics-ProDemo.entitlements";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BPAYP34L8N;
 				INFOPLIST_FILE = "AAInfographics-ProDemo/Info.plist";
@@ -1050,6 +1083,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "AAInfographics-ProDemo/AAInfographics-ProDemo.entitlements";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BPAYP34L8N;
 				INFOPLIST_FILE = "AAInfographics-ProDemo/Info.plist";

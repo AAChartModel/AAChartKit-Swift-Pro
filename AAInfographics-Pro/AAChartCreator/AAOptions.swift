@@ -63,8 +63,6 @@ public class AAOptions: AAObject {
     //afterDrawChartJavaScript
     public var afterDrawChartJavaScript: String?
     
-    public var pluginsArray: [String]?
-
     
     @discardableResult
     public func chart(_ prop: AAChart?) -> AAOptions {
@@ -170,12 +168,6 @@ public class AAOptions: AAObject {
          return self
      }
     /*---------------------AAInfogrphics-Pro---------------------*/
-    
-    @discardableResult
-    public func pluginsArray(_ prop: [String]?) -> AAOptions {
-        pluginsArray = prop
-        return self
-    }
 
     
     public override init() {
