@@ -162,6 +162,42 @@ class AAOptionsData {
         return dataArr
     }
     
+    public class var xrange2Data: [Any] {
+        func getSingleGroupCategoryDataElementArrayWithY(_ y: Int) -> [Any] {
+            var dataArr = [Any]()
+            
+            var x = 0
+            var x2 = x + Int(arc4random()) % 10
+            for _ in 0 ..< 50 {
+                var dataElementDic = [String:Any]()
+                dataElementDic["x"] = x
+                dataElementDic["x2"] = x2
+                dataElementDic["y"] = y
+                
+                //添加随机生成的颜色, 用于测试
+                let R = arc4random_uniform(256)
+                let G = arc4random_uniform(256)
+                let B = arc4random_uniform(256)
+                let rgbaColorStr = AARgba(Int(R), Int(G), Int(B), 0.9)
+                dataElementDic["color"] = rgbaColorStr
+                
+                dataArr.append(dataElementDic)
+                x = x2 + Int(arc4random()) % 1000
+                x2 = x + Int(arc4random()) % 2000
+            }
+            return dataArr
+        }
+        
+        var dataArr = [Any]()
+        for y in 0 ..< 20 {
+            let data = getSingleGroupCategoryDataElementArrayWithY(y)
+            for dataElement in data {
+                dataArr.append(dataElement)
+            }
+        }
+        return dataArr
+    }
+    
     public class var vectorData : [Any] {
         getJsonDataWithJsonFileName("vectorData")
     }
