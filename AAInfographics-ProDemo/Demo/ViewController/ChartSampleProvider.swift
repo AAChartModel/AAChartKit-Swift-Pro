@@ -9,7 +9,8 @@ import UIKit
 
 class ChartSampleProvider: NSObject {
     
-    class func allProTypeSamples() -> [AAOptions] {
+    // MARK: - 关系图表
+    class func relationshipChartSamples() -> [AAOptions] {
         return [
             AARelationshipChartComposer.sankeyChart(),
             AARelationshipChartComposer.dependencywheelChart(),
@@ -19,13 +20,23 @@ class ChartSampleProvider: NSObject {
             AARelationshipChartComposer.organizationChart(),
             AARelationshipChartComposer.networkgraphChart(),
             AARelationshipChartComposer.simpleDependencyWheelChart(),
-            
+        ]
+    }
+    
+    // MARK: - 气泡图表
+    class func bubbleChartSamples() -> [AAOptions] {
+        return [
             AABubbleChartComposer.packedbubbleChart(),
             AABubbleChartComposer.packedbubbleSplitChart(),
             AABubbleChartComposer.packedbubbleSpiralChart(),
             AABubbleChartComposer.eulerChart(),
             AABubbleChartComposer.vennChart(),
-            
+        ]
+    }
+    
+    // MARK: - 柱状图变体
+    class func columnVariantChartSamples() -> [AAOptions] {
+        return [
             AAColumnVariantChartComposer.variwideChart(),
             AAColumnVariantChartComposer.columnpyramidChart(),
             AAColumnVariantChartComposer.dumbbellChart(),
@@ -35,7 +46,12 @@ class ChartSampleProvider: NSObject {
             AAColumnVariantChartComposer.histogramChart(),
             AAColumnVariantChartComposer.bellcurveChart(),
             AAColumnVariantChartComposer.bulletChart(),
-            
+        ]
+    }
+    
+    // MARK: - 热力图和树状图
+    class func heatAndTreeMapChartSamples() -> [AAOptions] {
+        return [
             AAHeatOrTreeMapChartComposer.heatmapChart(),
             AAHeatOrTreeMapChartComposer.treemapWithColorAxisData(),
             AAHeatOrTreeMapChartComposer.treemapWithLevelsData(),
@@ -53,7 +69,12 @@ class ChartSampleProvider: NSObject {
             AAHeatOrTreeMapChartComposer.tilemapChartForAmericaWithCircleTileShape(),
             AAHeatOrTreeMapChartComposer.tilemapChartForAmericaWithDiamondTileShape(),
             AAHeatOrTreeMapChartComposer.tilemapChartForAmericaWithSquareTileShape(),
-            
+        ]
+    }
+    
+    // MARK: - 其他专业图表
+    class func otherProChartSamples() -> [AAOptions] {
+        return [
             ChartProVC.sunburstChart(),
             ChartProVC.streamgraphChart(),
             ChartProVC.vectorChart(),
@@ -74,6 +95,15 @@ class ChartSampleProvider: NSObject {
             ChartProVC.variablepieChart(),
             ChartProVC.semicircleSolidGaugeChart(),
         ]
+    }
+    
+    // MARK: - 所有专业图表样本（原始方法）
+    class func allProTypeSamples() -> [AAOptions] {
+        return relationshipChartSamples() +
+               bubbleChartSamples() +
+               columnVariantChartSamples() +
+               heatAndTreeMapChartSamples() +
+               otherProChartSamples()
     }
 
 }
