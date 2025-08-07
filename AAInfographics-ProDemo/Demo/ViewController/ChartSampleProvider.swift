@@ -31,6 +31,7 @@ class ChartSampleProvider: NSObject {
             AAColumnVariantChartComposer.dumbbellChart(),
             AAColumnVariantChartComposer.lollipopChart(),
             AAColumnVariantChartComposer.xrangeChart(),
+            AAColumnVariantChartComposer.invertedXrangeChart(),
             AAColumnVariantChartComposer.histogramChart(),
             AAColumnVariantChartComposer.bellcurveChart(),
             AAColumnVariantChartComposer.bulletChart(),
