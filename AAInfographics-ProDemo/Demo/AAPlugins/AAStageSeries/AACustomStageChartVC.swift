@@ -516,169 +516,24 @@ class AACustomStageChartVC: AABaseChartVC {
     }
     
     private func createChartOptions() -> AAOptions {
-        let aaOptions = AAOptions()
+        // 创建包络层配置
+        let envelope = AACustomStageChartComposer.createEnvelopeConfig(
+            mode: currentMode,
+            arcsEnabled: arcsEnabled,
+            arcsMode: arcsMode,
+            margin: margin,
+            externalRadius: externalRadius,
+            opacity: opacity,
+            seamEpsilon: seamEpsilon,
+            fixedGradient: fixedGradient
+        )
         
-        // 基本图表配置
-        aaOptions.chart = AAChart()
-            .type("envelope")
-            .backgroundColor("#ffffff")
-//            .spacing([10, 20, 20, 20])
-        
-        aaOptions.title = AATitle()
-            .text("Sleep Stages with Envelope")
-            .style(AAStyle().fontSize(16).fontWeight(.bold))
-        
-        // X轴配置（时间轴）
-        aaOptions.xAxis = AAXAxis()
-            .type(.datetime)
-            .tickInterval(3600 * 1000) // 1小时间隔
-            .gridLineWidth(1)
-            .gridLineDashStyle(.shortDash)
-            .labels(AALabels()
-                .align(.left)
-                .format("{value:%H:%M}")
-                .style(AAStyle().color("#c6c6c6")))
-        
-        // Y轴配置（类别轴）
-        aaOptions.yAxis = AAYAxis()
-            .type(.category)
-            .categories(categories)
-            .title(AATitle().text(""))
-            .gridLineWidth(1)
-            .labels(AALabels()
-                .style(AAStyle()
-                    .color("#64748b")
-                    .fontSize(12)))
-        
-        // 图例配置
-        aaOptions.legend = AALegend()
-            .enabled(true)
-        
-        // 提示框配置
-        aaOptions.tooltip = AATooltip()
-            .enabled(true)
-            .shadow(true)
-            .useHTML(true)
-            .formatter("""
-                function() {
-                    var fmt = function(ts) { return Highcharts.dateFormat('%H:%M', ts); };
-                    return '<div><b>' + this.series.yAxis.categories[this.point.y] + '</b><br/>' + 
-                           fmt(this.point.x) + ' - ' + fmt(this.point.x2) + '</div>';
-                }
-            """)
-        
-        // 添加envelope效果（通过自定义配置）
-        let envelopeConfig = createEnvelopeConfig()
-        
-        // 绘图选项
-        aaOptions.plotOptions = AAPlotOptions()
-            .series(AASeries()
-                .pointPadding(0)
-                .groupPadding(0)
-                .colorByPoint(false)
-//                .borderRadius(Int(barRadius))
-                .envelope(envelopeConfig)
-                .states(AAStates()
-                    .hover(AAHover().enabled(true)))
-                .dataLabels(AADataLabels().enabled(false)))
-        
-        // 系列数据
-        let seriesData = buildSeriesData()
-        let series = AASeriesElement()
-            .type("envelope")
-            .name("Sleep Stages")
-            .data(seriesData)
-//            .borderRadius(Int(barRadius))
-        
-
-//        series.envelope = envelopeConfig
-        
-        aaOptions.series = [series]
-        
-        return aaOptions
-    }
-    
-    private func buildSeriesData() -> [[String: Any]] {
-        var seriesData: [[String: Any]] = []
-        
-        for dataPoint in currentDataset {
-            guard dataPoint.count >= 3 else { continue }
-            
-            let startTimeStr = dataPoint[0]
-            let endTimeStr = dataPoint[1]
-            let stage = dataPoint[2]
-            
-            let startTime = dateFromString(startTimeStr)?.timeIntervalSince1970 ?? 0
-            let endTime = dateFromString(endTimeStr)?.timeIntervalSince1970 ?? 0
-            
-            var yIndex = 0
-            var color = stageColors[0]
-            
-            if let index = categories.firstIndex(of: stage) {
-                yIndex = index
-                color = stageColors[index]
-            }
-            
-            let dataItem: [String: Any] = [
-                "x": startTime * 1000, // Highcharts使用毫秒
-                "x2": endTime * 1000,
-                "y": yIndex,
-                "color": color
-            ]
-            
-            seriesData.append(dataItem)
-        }
-        
-        return seriesData
-    }
-    
-    private func createEnvelopeConfig() -> AAEnvelope {
-        let envelope = AAEnvelope()
-            .mode(currentMode)
-            .arcs(arcsEnabled)
-            .arcsMode(arcsMode)
-            .gapConnect(14)
-            .margin(margin)
-            .externalRadius(externalRadius)
-            .opacity(opacity)
-            .seamEpsilon(seamEpsilon)
-            .connectorTrim(Float(max(1, Int(externalRadius * 0.6))))
-            .shadow(AAShadow()
-                .color("rgba(60, 130, 245, 0.22)")
-                .offsetX(0)
-                .offsetY(2)
-                .opacity(0.55)
-                .width(12)
-            )
-        
-        
-//        if fixedGradient {
-//            config["envelope"]?["color"] = [
-//                "linearGradient": ["x1": 0, "y1": 0, "x2": 0, "y2": 1],
-//                "stops": [
-//                    [0.0, "rgba(150, 200, 255, 0.95)"],
-//                    [0.5, "rgba(90, 160, 255, 0.85)"],
-//                    [1.0, "rgba(70, 140, 250, 0.80)"]
-//                ]
-//            ]
-//        } else {
-//            config["envelope"]?["color"] = "auto"
-//        }
-        
-        if fixedGradient {
-            envelope.color = [
-                "linearGradient": ["x1": 0, "y1": 0, "x2": 0, "y2": 1],
-                "stops": [
-                    [0.0, "rgba(150, 200, 255, 0.95)"],
-                    [0.5, "rgba(90, 160, 255, 0.85)"],
-                    [1.0, "rgba(70, 140, 250, 0.80)"]
-                ]
-            ]
-        } else {
-            envelope.color = "auto"
-        }
-        
-        return envelope
+        // 使用 Composer 创建完整的图表配置
+        return AACustomStageChartComposer.createStageChartOptions(
+            dataset: currentDataset,
+            envelope: envelope,
+            barRadius: barRadius
+        )
     }
     
     private func updateChart() {
