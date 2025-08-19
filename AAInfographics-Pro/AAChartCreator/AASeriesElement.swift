@@ -97,6 +97,12 @@ public class AASeriesElement: AAObject {
     }
     
     @discardableResult
+    public func type(_ prop: String) -> AASeriesElement {
+        type = prop
+        return self
+    }
+    
+    @discardableResult
     public func name(_ prop: String) -> AASeriesElement {
         name = prop
         return self

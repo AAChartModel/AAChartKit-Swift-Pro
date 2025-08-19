@@ -29,6 +29,8 @@
 		44D27E11255ADF1300D0C636 /* ChartProVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D27E10255ADF1300D0C636 /* ChartProVC.swift */; };
 		58603BB14202D5D0DF0D4482 /* tilemapForAfricaData.json in Resources */ = {isa = PBXBuildFile; fileRef = 58603C0A468CDC4C59D49149 /* tilemapForAfricaData.json */; };
 		58603DF10ACD2DFCE19E231F /* simpleTilemapData.json in Resources */ = {isa = PBXBuildFile; fileRef = 5860351659A57677CB0A6D84 /* simpleTilemapData.json */; };
+		8405490F2E54269900B57B44 /* CustomStyleChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8405490E2E54269900B57B44 /* CustomStyleChartViewController.swift */; };
+		840549182E544EC400B57B44 /* AAStageSeries.js in Resources */ = {isa = PBXBuildFile; fileRef = 840549172E544EC400B57B44 /* AAStageSeries.js */; };
 		8418479728B861D200094106 /* AABoxplot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8418479628B861D200094106 /* AABoxplot.swift */; };
 		842EB1B12DEEF57A000166C2 /* AAMixedChartComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842EB1B02DEEF57A000166C2 /* AAMixedChartComposer.swift */; };
 		8441A76126C2568F007EAAA7 /* AAExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8441A75E26C2568E007EAAA7 /* AAExtension.swift */; };
@@ -191,6 +193,8 @@
 		44D27E10255ADF1300D0C636 /* ChartProVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartProVC.swift; sourceTree = "<group>"; };
 		5860351659A57677CB0A6D84 /* simpleTilemapData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = simpleTilemapData.json; sourceTree = "<group>"; };
 		58603C0A468CDC4C59D49149 /* tilemapForAfricaData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = tilemapForAfricaData.json; sourceTree = "<group>"; };
+		8405490E2E54269900B57B44 /* CustomStyleChartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomStyleChartViewController.swift; sourceTree = "<group>"; };
+		840549172E544EC400B57B44 /* AAStageSeries.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = AAStageSeries.js; sourceTree = "<group>"; };
 		8418479628B861D200094106 /* AABoxplot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AABoxplot.swift; sourceTree = "<group>"; };
 		842EB1B02DEEF57A000166C2 /* AAMixedChartComposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AAMixedChartComposer.swift; sourceTree = "<group>"; };
 		8441A75E26C2568E007EAAA7 /* AAExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AAExtension.swift; sourceTree = "<group>"; };
@@ -527,9 +531,19 @@
 			path = AAOptionsProModel;
 			sourceTree = "<group>";
 		};
+		840549122E544B9800B57B44 /* AAStageSeries */ = {
+			isa = PBXGroup;
+			children = (
+				840549172E544EC400B57B44 /* AAStageSeries.js */,
+				8405490E2E54269900B57B44 /* CustomStyleChartViewController.swift */,
+			);
+			path = AAStageSeries;
+			sourceTree = "<group>";
+		};
 		84526DF52CEB302F00EB2563 /* AAPlugins */ = {
 			isa = PBXGroup;
 			children = (
+				840549122E544B9800B57B44 /* AAStageSeries */,
 				84526E012CEB3B7600EB2563 /* AABoost */,
 				84526E002CEB3B4E00EB2563 /* AADrilldown */,
 			);
@@ -762,6 +776,7 @@
 				44D27DAC255A6C0700D0C636 /* AAJSFiles.bundle in Resources */,
 				84A5691227FEC88700883553 /* packedbubbleSeries.json in Resources */,
 				84A5693B27FEC89F00883553 /* flameData.json in Resources */,
+				840549182E544EC400B57B44 /* AAStageSeries.js in Resources */,
 				84B13F39289E15DB007356C6 /* marathonData.json in Resources */,
 				848970412CF9CAFD00C519A0 /* timeline2Data.json in Resources */,
 				84A5693527FEC89F00883553 /* eulerData.json in Resources */,
@@ -858,6 +873,7 @@
 				8447362A2DAFA2330040CCCE /* AAChartViewPluginProvider.swift in Sources */,
 				844615B5283F580300E26DA4 /* AAPlotBandsElement.swift in Sources */,
 				844615BB283F580300E26DA4 /* AASeries.swift in Sources */,
+				8405490F2E54269900B57B44 /* CustomStyleChartViewController.swift in Sources */,
 				8447361A2DAE58D00040CCCE /* AAExtraFractalChartData.swift in Sources */,
 				44D27D91255A631500D0C636 /* AABaseChartVC.swift in Sources */,
 				84DEB8C428FAE59F00BF9423 /* AAColumnVariantChartComposer.swift in Sources */,
