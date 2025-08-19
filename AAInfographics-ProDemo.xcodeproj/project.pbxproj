@@ -33,7 +33,7 @@
 		840549182E544EC400B57B44 /* AAStageSeries.js in Resources */ = {isa = PBXBuildFile; fileRef = 840549172E544EC400B57B44 /* AAStageSeries.js */; };
 		8405491A2E5456DB00B57B44 /* AACustomStageChartComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840549192E5456DB00B57B44 /* AACustomStageChartComposer.swift */; };
 		8405491C2E54578A00B57B44 /* AAEnvelope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8405491B2E54578A00B57B44 /* AAEnvelope.swift */; };
-		8405491E2E545F0400B57B44 /* AAPlotOptions+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8405491D2E545F0400B57B44 /* AAPlotOptions+Additions.swift */; };
+		8405491E2E545F0400B57B44 /* AASeries+Envelope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8405491D2E545F0400B57B44 /* AASeries+Envelope.swift */; };
 		8418479728B861D200094106 /* AABoxplot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8418479628B861D200094106 /* AABoxplot.swift */; };
 		842EB1B12DEEF57A000166C2 /* AAMixedChartComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842EB1B02DEEF57A000166C2 /* AAMixedChartComposer.swift */; };
 		8441A76126C2568F007EAAA7 /* AAExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8441A75E26C2568E007EAAA7 /* AAExtension.swift */; };
@@ -200,7 +200,7 @@
 		840549172E544EC400B57B44 /* AAStageSeries.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = AAStageSeries.js; sourceTree = "<group>"; };
 		840549192E5456DB00B57B44 /* AACustomStageChartComposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AACustomStageChartComposer.swift; sourceTree = "<group>"; };
 		8405491B2E54578A00B57B44 /* AAEnvelope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AAEnvelope.swift; sourceTree = "<group>"; };
-		8405491D2E545F0400B57B44 /* AAPlotOptions+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AAPlotOptions+Additions.swift"; sourceTree = "<group>"; };
+		8405491D2E545F0400B57B44 /* AASeries+Envelope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AASeries+Envelope.swift"; sourceTree = "<group>"; };
 		8418479628B861D200094106 /* AABoxplot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AABoxplot.swift; sourceTree = "<group>"; };
 		842EB1B02DEEF57A000166C2 /* AAMixedChartComposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AAMixedChartComposer.swift; sourceTree = "<group>"; };
 		8441A75E26C2568E007EAAA7 /* AAExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AAExtension.swift; sourceTree = "<group>"; };
@@ -544,7 +544,7 @@
 				8405490E2E54269900B57B44 /* AACustomStageChartVC.swift */,
 				840549192E5456DB00B57B44 /* AACustomStageChartComposer.swift */,
 				8405491B2E54578A00B57B44 /* AAEnvelope.swift */,
-				8405491D2E545F0400B57B44 /* AAPlotOptions+Additions.swift */,
+				8405491D2E545F0400B57B44 /* AASeries+Envelope.swift */,
 			);
 			path = AAStageSeries;
 			sourceTree = "<group>";
@@ -822,7 +822,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8405491E2E545F0400B57B44 /* AAPlotOptions+Additions.swift in Sources */,
+				8405491E2E545F0400B57B44 /* AASeries+Envelope.swift in Sources */,
 				84B13F33289D09EA007356C6 /* AAHeatmap.swift in Sources */,
 				844615A9283F580300E26DA4 /* AAScrollablePlotArea.swift in Sources */,
 				44D27DA4255A64A700D0C636 /* MainVC.swift in Sources */,
