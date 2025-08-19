@@ -13,11 +13,15 @@ class AACustomStageChartComposer {
     
     // MARK: - Properties
     
+    /// 图表类型
+    private static let chartTypeEnvelope = "envelope"
+
     /// 睡眠阶段类别
     private static let categories = ["Deep", "Core", "REM", "Awake"]
     
     /// 阶段对应的颜色
     private static let stageColors = ["#35349D", "#3478F6", "gold", "red"]
+    
     
     // MARK: - Public Methods
     
@@ -32,33 +36,27 @@ class AACustomStageChartComposer {
         envelope: AAEnvelope,
         barRadius: Float = 12.0
     ) -> AAOptions {
-        let aaOptions = AAOptions()
-        
-        // 基本图表配置
-        aaOptions.chart = createChartConfig()
-        
-        // 标题配置
-        aaOptions.title = createTitleConfig()
-        
-        // X轴配置（时间轴）
-        aaOptions.xAxis = createXAxisConfig()
-        
-        // Y轴配置（类别轴）
-        aaOptions.yAxis = createYAxisConfig()
-        
-        // 图例配置
-        aaOptions.legend = createLegendConfig()
-        
-        // 提示框配置
-        aaOptions.tooltip = createTooltipConfig()
-        
-        // 绘图选项
-        aaOptions.plotOptions = createPlotOptionsConfig(envelope: envelope, barRadius: barRadius)
-        
         // 系列数据
         let seriesData = buildSeriesData(from: dataset)
         let series = createSeriesConfig(data: seriesData)
-        aaOptions.series = [series]
+        
+        let aaOptions = AAOptions()
+            // 基本图表配置
+            .chart(createChartConfig())
+            // 标题配置
+            .title(createTitleConfig())
+            // X轴配置（时间轴）
+            .xAxis(createXAxisConfig())
+            // Y轴配置（类别轴）
+            .yAxis(createYAxisConfig())
+            // 图例配置
+            .legend(createLegendConfig())
+            // 提示框配置
+            .tooltip(createTooltipConfig())
+            // 绘图选项
+            .plotOptions(createPlotOptionsConfig(envelope: envelope, barRadius: barRadius))
+            // 系列数据
+            .series([series])
         
         return aaOptions
     }
@@ -124,7 +122,7 @@ class AACustomStageChartComposer {
     /// 创建图表基本配置
     private static func createChartConfig() -> AAChart {
         return AAChart()
-            .type("envelope")
+            .type(chartTypeEnvelope)
             .backgroundColor("#ffffff")
     }
     
@@ -198,7 +196,7 @@ class AACustomStageChartComposer {
     /// 创建系列配置
     private static func createSeriesConfig(data: [[String: Any]]) -> AASeriesElement {
         return AASeriesElement()
-            .type("envelope")
+            .type(chartTypeEnvelope)
             .name("Sleep Stages")
             .data(data)
     }
