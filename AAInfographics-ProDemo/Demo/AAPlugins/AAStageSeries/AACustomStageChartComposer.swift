@@ -104,14 +104,14 @@ class AACustomStageChartComposer {
             .shadow(shadow)
         
         if fixedGradient {
-             envelope.color = [
-                 "linearGradient": ["x1": 0, "y1": 0, "x2": 0, "y2": 1],
-                 "stops": [
-                     [0.0, "rgba(150, 200, 255, 0.95)"],
-                     [0.5, "rgba(90, 160, 255, 0.85)"],
-                     [1.0, "rgba(70, 140, 250, 0.80)"]
-                 ]
-             ]
+            envelope.color = AAGradientColor.linearGradient(
+                direction: .toTop,
+                stops: [
+                    [0.0, "rgba(150, 200, 255, 0.95)"],
+                    [0.5, "rgba(90, 160, 255, 0.85)"],
+                    [1.0, "rgba(70, 140, 250, 0.80)"]
+                ]
+            )
          } else {
              envelope.color = "auto"
          }
