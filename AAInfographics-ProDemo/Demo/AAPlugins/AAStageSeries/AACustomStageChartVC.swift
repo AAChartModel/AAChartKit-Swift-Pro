@@ -51,10 +51,48 @@ class AACustomStageChartVC: AABaseChartVC {
         self.title = "Custom Style Chart"
         self.view.backgroundColor = UIColor.systemBackground
         
+        
+        
         setupData()
         setupUI()
         setupConstraints()
         setupActions()
+        
+                // 移除旧的图表视图
+                aaChartView?.removeFromSuperview()
+        //
+        //        // 创建新的图表视图
+        //        aaChartView = AAChartView()
+        //        aaChartView!.isScrollEnabled = false
+        //        aaChartView!.delegate = self
+                
+                /**
+                 NSString *jsPath = [[NSBundle mainBundle] pathForResource:@"AADrilldown" ofType:@"js"];
+                 self.aaChartView.pluginsArray = @[jsPath];
+                 */
+                let jsPath: String = Bundle.main.path(forResource: "AAStageSeries", ofType: "js") ?? ""
+                self.aaChartView?.userPluginPaths = [jsPath]
+                
+                //输出查看 AAOption 的 computedProperties 内容
+        //        AAOptions *aaOptions = [self chartConfigurationWithSelectedIndex:self.selectedIndex];
+                let aaOptions: AAOptions = self.chartConfigurationWithSelectedIndex(self.selectedIndex) as! AAOptions
+                print("AAOptions 新增的计算属性 computedProperties: \(String(describing: aaOptions.computedProperties()))")
+
+        chartContainerView.addSubview(aaChartView!)
+        
+        
+        
+        
+        // 设置约束
+        aaChartView!.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            aaChartView!.topAnchor.constraint(equalTo: chartContainerView.topAnchor),
+            aaChartView!.leadingAnchor.constraint(equalTo: chartContainerView.leadingAnchor),
+            aaChartView!.trailingAnchor.constraint(equalTo: chartContainerView.trailingAnchor),
+            aaChartView!.bottomAnchor.constraint(equalTo: chartContainerView.bottomAnchor)
+        ])
+
+        
         updateChart()
     }
     
@@ -537,39 +575,6 @@ class AACustomStageChartVC: AABaseChartVC {
     }
     
     private func updateChart() {
-        // 移除旧的图表视图
-        aaChartView?.removeFromSuperview()
-        
-        // 创建新的图表视图
-        aaChartView = AAChartView()
-        aaChartView!.isScrollEnabled = false
-        aaChartView!.delegate = self
-        
-        /**
-         NSString *jsPath = [[NSBundle mainBundle] pathForResource:@"AADrilldown" ofType:@"js"];
-         self.aaChartView.pluginsArray = @[jsPath];
-         */
-        let jsPath: String = Bundle.main.path(forResource: "AAStageSeries", ofType: "js") ?? ""
-        self.aaChartView?.userPluginPaths = [jsPath]
-        
-        //输出查看 AAOption 的 computedProperties 内容
-//        AAOptions *aaOptions = [self chartConfigurationWithSelectedIndex:self.selectedIndex];
-        let aaOptions: AAOptions = self.chartConfigurationWithSelectedIndex(self.selectedIndex) as! AAOptions
-        print("AAOptions 新增的计算属性 computedProperties: \(String(describing: aaOptions.computedProperties()))")
-
-
-        
-        chartContainerView.addSubview(aaChartView!)
-        
-        // 设置约束
-        aaChartView!.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            aaChartView!.topAnchor.constraint(equalTo: chartContainerView.topAnchor),
-            aaChartView!.leadingAnchor.constraint(equalTo: chartContainerView.leadingAnchor),
-            aaChartView!.trailingAnchor.constraint(equalTo: chartContainerView.trailingAnchor),
-            aaChartView!.bottomAnchor.constraint(equalTo: chartContainerView.bottomAnchor)
-        ])
-        
         // 绘制图表
         let chartOptions = createChartOptions()
         aaChartView!.aa_drawChartWithChartOptions(chartOptions)
