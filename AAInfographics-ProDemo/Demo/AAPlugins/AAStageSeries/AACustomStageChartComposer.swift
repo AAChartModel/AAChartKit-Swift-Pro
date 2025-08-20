@@ -22,13 +22,11 @@ class AACustomStageChartComposer {
     /// 阶段对应的颜色
     private static let stageColors = ["#35349D", "#3478F6", "gold", "red"]
     
-    /// 默认图表选项
-    public static var defaultOptions = initStageChartOptions()
     
     
     // MARK: - Public Methods
     
-    static func initStageChartOptions() -> AAOptions {
+    static func defaultOptions() -> AAOptions {
         // 默认的睡眠数据（对应 HTML 中的 ECHARTS_DATASET）
         let dataset = [
             ["2024-09-07 06:12", "2024-09-07 06:12", "Awake"],
@@ -84,20 +82,24 @@ class AACustomStageChartComposer {
     ///   - barRadius: 条形图圆角半径
     /// - Returns: 配置好的 AAOptions 对象
     static func updateStageChartOptions(
+        chartOptions: AAOptions,
         dataset: [[String]],
         envelope: AAEnvelope,
         barRadius: Float = 12.0
     ) -> AAOptions {
-        // 系列数据
-        let seriesData = buildSeriesData(from: dataset)
-        let series = createSeriesConfig(data: seriesData)
-        
-        let newOptions = defaultOptions
+
+        let newOptions = chartOptions
         
         newOptions
             .plotOptions(createPlotOptionsConfig(envelope: envelope, barRadius: barRadius))
-            .series([series])
         
+        if dataset.count > 0 {
+            // 系列数据
+            let seriesData = buildSeriesData(from: dataset)
+            let series = createSeriesConfig(data: seriesData)
+            newOptions
+                .series([series])
+        }
         return newOptions
     }
     

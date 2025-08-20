@@ -9,6 +9,7 @@ class AACustomStageChartVC: UIViewController {
     private var controlsContainerView: UIView!
     private var chartContainerView: UIView!
     var aaChartView: AAChartView!
+    var aaOptions: AAOptions!
     private var controlsView: StageControlsViewUIKit!
     private var shouldResetOnAppear: Bool = true
 
@@ -39,34 +40,30 @@ class AACustomStageChartVC: UIViewController {
         self.view.backgroundColor = UIColor.systemBackground
         
         
-        
-    setupUI()
-    setupConstraints()
-        
+        setupUI()
+        setupConstraints()
         setupChartView()
-        //
-        //        // 创建新的图表视图
-        //        aaChartView = AAChartView()
-        //        aaChartView!.isScrollEnabled = false
-        //        aaChartView!.delegate = self
-                
-                /**
-                 NSString *jsPath = [[NSBundle mainBundle] pathForResource:@"AADrilldown" ofType:@"js"];
-                 self.aaChartView.pluginsArray = @[jsPath];
-                 */
-                let jsPath: String = Bundle.main.path(forResource: "AACustom-Stage", ofType: "js") ?? ""
-                self.aaChartView?.userPluginPaths = [jsPath]
-                
-                //输出查看 AAOption 的 computedProperties 内容
+    }
+    
+    private func setupChartView() {
+        // 创建新的图表视图
+        aaChartView = AAChartView()
+        aaChartView!.isScrollEnabled = false
+        aaChartView!.delegate = self as AAChartViewDelegate
+        
+        /**
+         NSString *jsPath = [[NSBundle mainBundle] pathForResource:@"AADrilldown" ofType:@"js"];
+         self.aaChartView.pluginsArray = @[jsPath];
+         */
+        let jsPath: String = Bundle.main.path(forResource: "AACustom-Stage", ofType: "js") ?? ""
+        self.aaChartView?.userPluginPaths = [jsPath]
+        
+        //输出查看 AAOption 的 computedProperties 内容
         //        AAOptions *aaOptions = [self chartConfigurationWithSelectedIndex:self.selectedIndex];
-        let aaOptions: AAOptions = AACustomStageChartComposer.defaultOptions 
-                print("AAOptions 新增的计算属性 computedProperties: \(String(describing: aaOptions.computedProperties()))")
-
+        self.aaOptions = AACustomStageChartComposer.defaultOptions()
+        print("AAOptions 新增的计算属性 computedProperties: \(String(describing: aaOptions.computedProperties()))")
+        
         chartContainerView.addSubview(aaChartView!)
-        
-        
-        
-        
         // 设置约束
         aaChartView!.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -75,21 +72,14 @@ class AACustomStageChartVC: UIViewController {
             aaChartView!.trailingAnchor.constraint(equalTo: chartContainerView.trailingAnchor),
             aaChartView!.bottomAnchor.constraint(equalTo: chartContainerView.bottomAnchor)
         ])
-
         
         drawChart()
     }
     
-    private func setupChartView() {
-        aaChartView = AAChartView()
-        aaChartView!.isScrollEnabled = false
-//        aaChartView!.delegate = self as AAChartViewDelegate
-    }
-    
     private func drawChart() {
         // 绘制图表
-        let chartOptions = AACustomStageChartComposer.defaultOptions
-        aaChartView!.aa_drawChartWithChartOptions(chartOptions)
+        let chartOptions = self.aaOptions
+        aaChartView!.aa_drawChartWithChartOptions(chartOptions!)
     }
 
     
@@ -214,6 +204,7 @@ class AACustomStageChartVC: UIViewController {
 
         // 使用 Composer 创建完整的图表配置
         return AACustomStageChartComposer.updateStageChartOptions(
+            chartOptions: self.aaOptions,
             dataset: currentDataset,
             envelope: envelope,
             barRadius: barRadius
@@ -240,4 +231,59 @@ class AACustomStageChartVC: UIViewController {
     }
 
    
+}
+
+
+
+extension AACustomStageChartVC: AAChartViewDelegate {
+    open func aaChartViewDidFinishLoad(_ aaChartView: AAChartView) {
+       print("🚀🚀🚀, AAChartView Did Finished Load!!!")
+    }
+    
+    open func aaChartView(_ aaChartView: AAChartView, clickEventMessage: AAClickEventMessageModel) {
+           print(
+               """
+
+               clicked point series element name: \(clickEventMessage.name ?? "")
+               🖱🖱🖱WARNING!!!!!!!!!!!!!!!!!!!! Click Event Message !!!!!!!!!!!!!!!!!!!! WARNING🖱🖱🖱
+               ==========================================================================================
+               ------------------------------------------------------------------------------------------
+               user finger moved over!!!,get the move over event message: {
+               category = \(String(describing: clickEventMessage.category))
+               index = \(String(describing: clickEventMessage.index))
+               name = \(String(describing: clickEventMessage.name))
+               offset = \(String(describing: clickEventMessage.offset))
+               x = \(String(describing: clickEventMessage.x))
+               y = \(String(describing: clickEventMessage.y))
+               }
+               +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+               
+               
+               """
+           )
+       }
+
+    open func aaChartView(_ aaChartView: AAChartView, moveOverEventMessage: AAMoveOverEventMessageModel) {
+        print(
+            """
+            
+            selected point series element name: \(moveOverEventMessage.name ?? "")
+            👌👌👌WARNING!!!!!!!!!!!!!!!!!!!! Touch Event Message !!!!!!!!!!!!!!!!!!!! WARNING👌👌👌
+            || ==========================================================================================
+            || ------------------------------------------------------------------------------------------
+            || user finger moved over!!!,get the move over event message: {
+            || category = \(String(describing: moveOverEventMessage.category))
+            || index = \(String(describing: moveOverEventMessage.index))
+            || name = \(String(describing: moveOverEventMessage.name))
+            || offset = \(String(describing: moveOverEventMessage.offset))
+            || x = \(String(describing: moveOverEventMessage.x))
+            || y = \(String(describing: moveOverEventMessage.y))
+            || }
+            || ------------------------------------------------------------------------------------------
+            || ==========================================================================================
+            
+            
+            """
+        )
+    }
 }
