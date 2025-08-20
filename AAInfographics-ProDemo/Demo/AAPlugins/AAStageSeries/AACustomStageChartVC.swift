@@ -2,13 +2,14 @@ import UIKit
 
 @available(iOS 10.0, *)
 //https://github.com/apache/echarts-custom-series
-class AACustomStageChartVC: AABaseChartVC {
+class AACustomStageChartVC: UIViewController {
     
     // MARK: - Properties
     private var scrollView: UIScrollView!
     private var controlsContainerView: UIView!
     private var chartContainerView: UIView!
-    
+    var aaChartView: AAChartView!
+
     // 控制参数
     private var currentMode: String = "connect"
     private var arcsEnabled: Bool = true
@@ -58,8 +59,7 @@ class AACustomStageChartVC: AABaseChartVC {
         setupConstraints()
         setupActions()
         
-                // 移除旧的图表视图
-                aaChartView?.removeFromSuperview()
+        setupChartView()
         //
         //        // 创建新的图表视图
         //        aaChartView = AAChartView()
@@ -75,7 +75,7 @@ class AACustomStageChartVC: AABaseChartVC {
                 
                 //输出查看 AAOption 的 computedProperties 内容
         //        AAOptions *aaOptions = [self chartConfigurationWithSelectedIndex:self.selectedIndex];
-                let aaOptions: AAOptions = self.chartConfigurationWithSelectedIndex(self.selectedIndex) as! AAOptions
+        let aaOptions: AAOptions = AACustomStageChartComposer.defaultOptions 
                 print("AAOptions 新增的计算属性 computedProperties: \(String(describing: aaOptions.computedProperties()))")
 
         chartContainerView.addSubview(aaChartView!)
@@ -94,6 +94,12 @@ class AACustomStageChartVC: AABaseChartVC {
 
         
         drawChart()
+    }
+    
+    private func setupChartView() {
+        aaChartView = AAChartView()
+        aaChartView!.isScrollEnabled = false
+//        aaChartView!.delegate = self as AAChartViewDelegate
     }
     
     private func drawChart() {
@@ -553,11 +559,7 @@ class AACustomStageChartVC: AABaseChartVC {
     private func generateRandomData() {
         currentDataset = AAOptionsData.randomSleepData(count: sleepSegments)
     }
-    
-    // MARK: - Chart Configuration
-    override func chartConfigurationWithSelectedIndex(_ selectedIndex: Int) -> Any? {
-        return updateChartOptions()
-    }
+
     
     private func updateChartOptions() -> AAOptions {
         // 创建包络层配置
