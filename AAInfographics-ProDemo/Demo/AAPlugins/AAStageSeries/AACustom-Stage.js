@@ -25,7 +25,7 @@
         // --- 1. Default Series Options ---
         {
             // Options for individual task bars
-            barBorderRadius: 6,
+            borderRadius: 6,
             verticalMargin: 10,
             // Minimum width (in px) to show a bar, even if x==x2
             minPointWidthPx: 3,
@@ -163,11 +163,11 @@
              * @param {Object} envelopeOpts - Envelope configuration options.
              */
             drawEnvelopeBaseShapes: function (path, allBoxes, envelopeOpts) {
-                const { barBorderRadius } = this.options;
+                const { borderRadius } = this.options;
                 const { margin, seamEpsilon: eps } = envelopeOpts;
 
                 allBoxes.forEach(box => {
-                    const expandedRadius = Math.min(barBorderRadius, box.width / 2) + margin;
+                    const expandedRadius = Math.min(borderRadius, box.width / 2) + margin;
                     const x = Math.round(box.x - margin - eps);
                     const y = Math.round(box.y - margin - eps);
                     const w = Math.round(box.width + margin * 2 + 2 * eps);
@@ -240,16 +240,16 @@
              * @param {Object} envelopeOpts - Envelope configuration options.
              */
             drawVerticalConnector: function (path, prevBox, currentBox, envelopeOpts) {
-                const { barBorderRadius } = this.options;
+                const { borderRadius } = this.options;
                 const { margin } = envelopeOpts;
                 const isPrevLower = prevBox.y > currentBox.y;
 
                 const height = isPrevLower
-                    ? prevBox.y - currentBox.y - currentBox.height + barBorderRadius * 2
-                    : currentBox.y - prevBox.y - prevBox.height + barBorderRadius * 2;
+                    ? prevBox.y - currentBox.y - currentBox.height + borderRadius * 2
+                    : currentBox.y - prevBox.y - prevBox.height + borderRadius * 2;
                 const y = isPrevLower
-                    ? currentBox.y + currentBox.height - barBorderRadius
-                    : prevBox.y + prevBox.height - barBorderRadius;
+                    ? currentBox.y + currentBox.height - borderRadius
+                    : prevBox.y + prevBox.height - borderRadius;
 
                 this.addRoundedRectToPath(path,
                     prevBox.x + prevBox.width + margin,
@@ -523,7 +523,7 @@
                         y: shapeArgs.y + options.verticalMargin,
                         width: shapeArgs.width,
                         height: barHeight,
-                        r: options.barBorderRadius
+                        r: options.borderRadius
                     };
 
                     // Ensure a minimum visible width for zero-duration ranges

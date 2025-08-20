@@ -20,7 +20,7 @@ class AACustomStageChartComposer {
     private static let categories = ["Deep", "Core", "REM", "Awake"]
     
     /// 阶段对应的颜色
-    private static let stageColors = ["#35349D", "#3478F6", "gold", "red"]
+    private static let stageColors = ["#35349D", "#3478F6", "green", "red"]
     
     
     
@@ -230,6 +230,7 @@ class AACustomStageChartComposer {
                 .groupPadding(0)
                 .colorByPoint(false)
                 .envelope(envelope)
+                .borderRadius(barRadius)
                 .states(AAStates()
                     .hover(AAHover().enabled(true)))
                 .dataLabels(AADataLabels().enabled(false)))
