@@ -27,9 +27,6 @@ class AACustomStageChartVC: UIViewController {
     
     // 已迁移到 SwiftUI 控制面板
     
-    // 数据模型
-    private let categories = ["Deep", "Core", "REM", "Awake"]
-    private let stageColors = ["#35349D", "#3478F6", "gold", "red"]
     private var currentDataset: [[String]] = []
     
     // MARK: - Lifecycle
@@ -214,7 +211,7 @@ class AACustomStageChartVC: UIViewController {
     private func updateChart() {
         // 绘制图表
         let chartOptions = updateChartOptions()
-        aaChartView!.aa_drawChartWithChartOptions(chartOptions)
+        aaChartView!.aa_updateChart(options: chartOptions, redraw: true)
     }
     
     // MARK: - Utility Functions
