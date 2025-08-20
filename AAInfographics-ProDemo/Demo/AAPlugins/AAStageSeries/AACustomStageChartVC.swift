@@ -12,7 +12,7 @@ class AACustomStageChartVC: AABaseChartVC {
     // 控制参数
     private var currentMode: String = "connect"
     private var arcsEnabled: Bool = true
-    private var arcsMode: String = "convex"
+    private var arcsMode: String = "concave"
     private var barRadius: Float = 12.0
     private var margin: Float = 8.0
     private var externalRadius: Float = 18.0
@@ -93,7 +93,13 @@ class AACustomStageChartVC: AABaseChartVC {
         ])
 
         
-        updateChart()
+        drawChart()
+    }
+    
+    private func drawChart() {
+        // 绘制图表
+        let chartOptions = AACustomStageChartComposer.defaultOptions
+        aaChartView!.aa_drawChartWithChartOptions(chartOptions)
     }
     
     // MARK: - Data Setup
@@ -217,8 +223,8 @@ class AACustomStageChartVC: AABaseChartVC {
     
     // MARK: - Control Creation Helpers
     private func createModeSegmentedControl() -> UISegmentedControl {
-        modeSegmentedControl = UISegmentedControl(items: ["dilate", "connect"])
-        modeSegmentedControl.selectedSegmentIndex = 1
+        modeSegmentedControl = UISegmentedControl(items: ["connect", "dilate"])
+        modeSegmentedControl.selectedSegmentIndex = 0
         return modeSegmentedControl
     }
     
@@ -229,7 +235,7 @@ class AACustomStageChartVC: AABaseChartVC {
     }
     
     private func createArcsModeSegmentedControl() -> UISegmentedControl {
-        arcsModeSegmentedControl = UISegmentedControl(items: ["convex", "concave"])
+        arcsModeSegmentedControl = UISegmentedControl(items: ["concave", "convex"])
         arcsModeSegmentedControl.selectedSegmentIndex = 0
         return arcsModeSegmentedControl
     }
@@ -550,10 +556,10 @@ class AACustomStageChartVC: AABaseChartVC {
     
     // MARK: - Chart Configuration
     override func chartConfigurationWithSelectedIndex(_ selectedIndex: Int) -> Any? {
-        return createChartOptions()
+        return updateChartOptions()
     }
     
-    private func createChartOptions() -> AAOptions {
+    private func updateChartOptions() -> AAOptions {
         // 创建包络层配置
         let envelope = AACustomStageChartComposer.createEnvelopeConfig(
             mode: currentMode,
@@ -567,7 +573,7 @@ class AACustomStageChartVC: AABaseChartVC {
         )
         
         // 使用 Composer 创建完整的图表配置
-        return AACustomStageChartComposer.createStageChartOptions(
+        return AACustomStageChartComposer.updateStageChartOptions(
             dataset: currentDataset,
             envelope: envelope,
             barRadius: barRadius
@@ -576,7 +582,7 @@ class AACustomStageChartVC: AABaseChartVC {
     
     private func updateChart() {
         // 绘制图表
-        let chartOptions = createChartOptions()
+        let chartOptions = updateChartOptions()
         aaChartView!.aa_drawChartWithChartOptions(chartOptions)
     }
     

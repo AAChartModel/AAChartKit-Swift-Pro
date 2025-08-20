@@ -22,20 +22,36 @@ class AACustomStageChartComposer {
     /// 阶段对应的颜色
     private static let stageColors = ["#35349D", "#3478F6", "gold", "red"]
     
+    /// 默认图表选项
+    public static var defaultOptions = initStageChartOptions()
+    
     
     // MARK: - Public Methods
     
-    /// 创建自定义阶段图表的 AAOptions 配置
-    /// - Parameters:
-    ///   - dataset: 睡眠数据集，格式为 [["开始时间", "结束时间", "阶段"], ...]
-    ///   - envelope: 包络层配置
-    ///   - barRadius: 条形图圆角半径
-    /// - Returns: 配置好的 AAOptions 对象
-    static func createStageChartOptions(
-        dataset: [[String]],
-        envelope: AAEnvelope,
-        barRadius: Float = 12.0
-    ) -> AAOptions {
+    static func initStageChartOptions() -> AAOptions {
+        // 默认的睡眠数据（对应 HTML 中的 ECHARTS_DATASET）
+        let dataset = [
+            ["2024-09-07 06:12", "2024-09-07 06:12", "Awake"],
+            ["2024-09-07 06:15", "2024-09-07 06:18", "Awake"],
+            ["2024-09-07 08:59", "2024-09-07 09:00", "Awake"],
+            ["2024-09-07 05:45", "2024-09-07 06:12", "REM"],
+            ["2024-09-07 07:37", "2024-09-07 07:56", "REM"],
+            ["2024-09-07 08:56", "2024-09-07 08:59", "REM"],
+            ["2024-09-07 09:08", "2024-09-07 09:29", "REM"],
+            ["2024-09-07 03:12", "2024-09-07 03:27", "Core"],
+            ["2024-09-07 04:02", "2024-09-07 04:36", "Core"],
+            ["2024-09-07 04:40", "2024-09-07 04:48", "Core"],
+            ["2024-09-07 04:57", "2024-09-07 05:45", "Core"],
+            ["2024-09-07 06:12", "2024-09-07 06:15", "Core"],
+            ["2024-09-07 06:18", "2024-09-07 07:37", "Core"],
+            ["2024-09-07 07:56", "2024-09-07 08:56", "Core"],
+            ["2024-09-07 09:00", "2024-09-07 09:08", "Core"],
+            ["2024-09-07 09:29", "2024-09-07 10:41", "Core"],
+            ["2024-09-07 03:27", "2024-09-07 04:02", "Deep"],
+            ["2024-09-07 04:36", "2024-09-07 04:40", "Deep"],
+            ["2024-09-07 04:48", "2024-09-07 04:57", "Deep"]
+        ]
+        
         // 系列数据
         let seriesData = buildSeriesData(from: dataset)
         let series = createSeriesConfig(data: seriesData)
@@ -54,11 +70,35 @@ class AACustomStageChartComposer {
             // 提示框配置
             .tooltip(createTooltipConfig())
             // 绘图选项
-            .plotOptions(createPlotOptionsConfig(envelope: envelope, barRadius: barRadius))
+            .plotOptions(createPlotOptionsConfig(envelope: createEnvelopeConfig(), barRadius: 12.0))
             // 系列数据
             .series([series])
         
         return aaOptions
+    }
+    
+    /// 更新自定义阶段图表的 AAOptions 配置
+    /// - Parameters:
+    ///   - dataset: 睡眠数据集，格式为 [["开始时间", "结束时间", "阶段"], ...]
+    ///   - envelope: 包络层配置
+    ///   - barRadius: 条形图圆角半径
+    /// - Returns: 配置好的 AAOptions 对象
+    static func updateStageChartOptions(
+        dataset: [[String]],
+        envelope: AAEnvelope,
+        barRadius: Float = 12.0
+    ) -> AAOptions {
+        // 系列数据
+        let seriesData = buildSeriesData(from: dataset)
+        let series = createSeriesConfig(data: seriesData)
+        
+        let newOptions = defaultOptions
+        
+        newOptions
+            .plotOptions(createPlotOptionsConfig(envelope: envelope, barRadius: barRadius))
+            .series([series])
+        
+        return newOptions
     }
     
     /// 创建包络层配置
@@ -75,7 +115,7 @@ class AACustomStageChartComposer {
     static func createEnvelopeConfig(
         mode: String = "connect",
         arcsEnabled: Bool = true,
-        arcsMode: String = "convex",
+        arcsMode: String = "concave",
         margin: Float = 8.0,
         externalRadius: Float = 18.0,
         opacity: Float = 0.38,
