@@ -54,7 +54,6 @@ class AACustomStageChartVC: UIViewController {
         
         
         
-        setupData()
         setupUI()
         setupConstraints()
         setupActions()
@@ -70,7 +69,7 @@ class AACustomStageChartVC: UIViewController {
                  NSString *jsPath = [[NSBundle mainBundle] pathForResource:@"AADrilldown" ofType:@"js"];
                  self.aaChartView.pluginsArray = @[jsPath];
                  */
-                let jsPath: String = Bundle.main.path(forResource: "AAStageSeries", ofType: "js") ?? ""
+                let jsPath: String = Bundle.main.path(forResource: "AACustomStage", ofType: "js") ?? ""
                 self.aaChartView?.userPluginPaths = [jsPath]
                 
                 //输出查看 AAOption 的 computedProperties 内容
@@ -107,32 +106,7 @@ class AACustomStageChartVC: UIViewController {
         let chartOptions = AACustomStageChartComposer.defaultOptions
         aaChartView!.aa_drawChartWithChartOptions(chartOptions)
     }
-    
-    // MARK: - Data Setup
-    private func setupData() {
-        // 默认的睡眠数据（对应 HTML 中的 ECHARTS_DATASET）
-        currentDataset = [
-            ["2024-09-07 06:12", "2024-09-07 06:12", "Awake"],
-            ["2024-09-07 06:15", "2024-09-07 06:18", "Awake"],
-            ["2024-09-07 08:59", "2024-09-07 09:00", "Awake"],
-            ["2024-09-07 05:45", "2024-09-07 06:12", "REM"],
-            ["2024-09-07 07:37", "2024-09-07 07:56", "REM"],
-            ["2024-09-07 08:56", "2024-09-07 08:59", "REM"],
-            ["2024-09-07 09:08", "2024-09-07 09:29", "REM"],
-            ["2024-09-07 03:12", "2024-09-07 03:27", "Core"],
-            ["2024-09-07 04:02", "2024-09-07 04:36", "Core"],
-            ["2024-09-07 04:40", "2024-09-07 04:48", "Core"],
-            ["2024-09-07 04:57", "2024-09-07 05:45", "Core"],
-            ["2024-09-07 06:12", "2024-09-07 06:15", "Core"],
-            ["2024-09-07 06:18", "2024-09-07 07:37", "Core"],
-            ["2024-09-07 07:56", "2024-09-07 08:56", "Core"],
-            ["2024-09-07 09:00", "2024-09-07 09:08", "Core"],
-            ["2024-09-07 09:29", "2024-09-07 10:41", "Core"],
-            ["2024-09-07 03:27", "2024-09-07 04:02", "Deep"],
-            ["2024-09-07 04:36", "2024-09-07 04:40", "Deep"],
-            ["2024-09-07 04:48", "2024-09-07 04:57", "Deep"]
-        ]
-    }
+
     
     // MARK: - UI Setup
     private func setupUI() {
