@@ -6,7 +6,7 @@
  * in a smooth, semi-transparent "envelope" shape.
  *
  * It inherits from 'columnrange' to leverage its data processing.
- * Requires: highcharts.js, highcharts-more.js OR xrange.js
+ * Requires: highcharts.js and xrange.js
  */
 (function (H) {
     'use strict';
