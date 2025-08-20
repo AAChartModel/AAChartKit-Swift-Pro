@@ -1,5 +1,4 @@
 import UIKit
-import SwiftUI
 
 @available(iOS 10.0, *)
 //https://github.com/apache/echarts-custom-series
@@ -10,9 +9,8 @@ class AACustomStageChartVC: UIViewController {
     private var controlsContainerView: UIView!
     private var chartContainerView: UIView!
     var aaChartView: AAChartView!
-    private var hostingController: UIViewController?
-    @available(iOS 13.0, *)
-    private var stageState: StageControlsState = StageControlsState()
+    private var controlsView: StageControlsViewUIKit!
+    private var shouldResetOnAppear: Bool = true
 
     // 控制参数
     private var currentMode: String = "connect"
@@ -118,43 +116,53 @@ class AACustomStageChartVC: UIViewController {
         chartContainerView.backgroundColor = UIColor.white
         scrollView.addSubview(chartContainerView)
         
-        setupSwiftUIControls()
+        setupUIKitControls()
     }
+    
+    private func setupUIKitControls() {
+        controlsView = StageControlsViewUIKit()
+        controlsView.translatesAutoresizingMaskIntoConstraints = false
+        controlsContainerView.addSubview(controlsView)
+        NSLayoutConstraint.activate([
+            controlsView.topAnchor.constraint(equalTo: controlsContainerView.topAnchor, constant: 12),
+            controlsView.leadingAnchor.constraint(equalTo: controlsContainerView.leadingAnchor, constant: 12),
+            controlsView.trailingAnchor.constraint(equalTo: controlsContainerView.trailingAnchor, constant: -12),
+            controlsView.bottomAnchor.constraint(equalTo: controlsContainerView.bottomAnchor, constant: -12)
+        ])
 
-    private func setupSwiftUIControls() {
-        if #available(iOS 13.0, *) {
-            let view = StageControlsView(
-                state: stageState,
-                onChange: { [weak self] in self?.updateChart() },
-                onRandomData: { [weak self] in self?.generateRandomData() }
-            )
-            let host = UIHostingController(rootView: view)
-            hostingController = host
-            addChild(host)
-            controlsContainerView.addSubview(host.view)
-            host.view.translatesAutoresizingMaskIntoConstraints = false
-            NSLayoutConstraint.activate([
-                host.view.topAnchor.constraint(equalTo: controlsContainerView.topAnchor, constant: 12),
-                host.view.leadingAnchor.constraint(equalTo: controlsContainerView.leadingAnchor, constant: 12),
-                host.view.trailingAnchor.constraint(equalTo: controlsContainerView.trailingAnchor, constant: -12),
-                host.view.bottomAnchor.constraint(equalTo: controlsContainerView.bottomAnchor, constant: -12)
-            ])
-            host.didMove(toParent: self)
-        } else {
-            // Fallback for iOS < 13
-            let label = UILabel()
-            label.text = "需要 iOS 13+ 才能显示控制面板"
-            label.textAlignment = .center
-            label.textColor = .lightGray
-            label.translatesAutoresizingMaskIntoConstraints = false
-            controlsContainerView.addSubview(label)
-            NSLayoutConstraint.activate([
-                label.topAnchor.constraint(equalTo: controlsContainerView.topAnchor, constant: 12),
-                label.leadingAnchor.constraint(equalTo: controlsContainerView.leadingAnchor, constant: 12),
-                label.trailingAnchor.constraint(equalTo: controlsContainerView.trailingAnchor, constant: -12),
-                label.bottomAnchor.constraint(equalTo: controlsContainerView.bottomAnchor, constant: -12),
-                label.heightAnchor.constraint(equalToConstant: 44)
-            ])
+        // 初始同步当前参数
+        var initState = StageControlsStateUIKit()
+        initState.mode = currentMode
+        initState.arcsEnabled = arcsEnabled
+        initState.arcsMode = arcsMode
+        initState.barRadius = barRadius
+        initState.margin = margin
+        initState.externalRadius = externalRadius
+        initState.opacity = opacity
+        initState.seamEpsilon = seamEpsilon
+        initState.sleepSegments = sleepSegments
+        initState.fixedGradient = fixedGradient
+        controlsView.setState(initState, emitChange: false)
+
+        // 回调绑定
+        controlsView.onChange = { [weak self] newState in
+            guard let self = self else { return }
+            self.currentMode = newState.mode
+            self.arcsEnabled = newState.arcsEnabled
+            self.arcsMode = newState.arcsMode
+            self.barRadius = newState.barRadius
+            self.margin = newState.margin
+            self.externalRadius = newState.externalRadius
+            self.opacity = newState.opacity
+            self.seamEpsilon = newState.seamEpsilon
+            self.sleepSegments = newState.sleepSegments
+            self.fixedGradient = newState.fixedGradient
+            self.updateChart()
+        }
+        controlsView.onRandomData = { [weak self] count in
+            guard let self = self else { return }
+            self.currentDataset = AAOptionsData.randomSleepData(count: count)
+            self.updateChart()
         }
     }
     
@@ -183,60 +191,32 @@ class AACustomStageChartVC: UIViewController {
         ])
     }
     
-    // MARK: - Actions handled via SwiftUI callbacks
-    
-    // UIKit 控件已移除，参数变化通过 StageControlsState 驱动
+    // MARK: - Actions handled via UIKit callbacks
     
     // MARK: - Preset Configurations
     private func generateRandomData() {
-        if #available(iOS 13.0, *) {
-            currentDataset = AAOptionsData.randomSleepData(count: stageState.sleepSegments)
-        } else {
-            currentDataset = AAOptionsData.randomSleepData(count: sleepSegments)
-        }
+        currentDataset = AAOptionsData.randomSleepData(count: sleepSegments)
     }
 
     
     private func updateChartOptions() -> AAOptions {
         // 创建包络层配置
-        let envelope = {
-            if #available(iOS 13.0, *) {
-                return AACustomStageChartComposer.createEnvelopeConfig(
-                    mode: stageState.mode.rawValue,
-                    arcsEnabled: stageState.arcsEnabled,
-                    arcsMode: stageState.arcsMode.rawValue,
-                    margin: stageState.margin,
-                    externalRadius: stageState.externalRadius,
-                    opacity: stageState.opacity,
-                    seamEpsilon: stageState.seamEpsilon,
-                    fixedGradient: stageState.fixedGradient
-                )
-            } else {
-                return AACustomStageChartComposer.createEnvelopeConfig(
-                    mode: currentMode,
-                    arcsEnabled: arcsEnabled,
-                    arcsMode: arcsMode,
-                    margin: margin,
-                    externalRadius: externalRadius,
-                    opacity: opacity,
-                    seamEpsilon: seamEpsilon,
-                    fixedGradient: fixedGradient
-                )
-            }
-        }()
-        
-        let barRadiusValue: Float
-        if #available(iOS 13.0, *) {
-            barRadiusValue = stageState.barRadius
-        } else {
-            barRadiusValue = barRadius
-        }
+        let envelope = AACustomStageChartComposer.createEnvelopeConfig(
+            mode: currentMode,
+            arcsEnabled: arcsEnabled,
+            arcsMode: arcsMode,
+            margin: margin,
+            externalRadius: externalRadius,
+            opacity: opacity,
+            seamEpsilon: seamEpsilon,
+            fixedGradient: fixedGradient
+        )
 
         // 使用 Composer 创建完整的图表配置
         return AACustomStageChartComposer.updateStageChartOptions(
             dataset: currentDataset,
             envelope: envelope,
-            barRadius: barRadiusValue
+            barRadius: barRadius
         )
     }
     
@@ -253,5 +233,11 @@ class AACustomStageChartVC: UIViewController {
         return formatter.date(from: dateString)
     }
     
+    
+    // 调试：观察控制器是否被释放，避免无意复用导致状态保留
+    deinit {
+        print("AACustomStageChartVC deinit")
+    }
+
    
 }
