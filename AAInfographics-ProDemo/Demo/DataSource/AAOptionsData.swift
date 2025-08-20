@@ -245,7 +245,11 @@ class AAOptionsData {
                 let remainingSegments = Double(count - i)
                 let maxAllowedDuration = remainingTime - (remainingSegments - 1) * minDuration
                 let effectiveMaxDuration = min(maxDuration, maxAllowedDuration)
-                duration = Double.random(in: minDuration...effectiveMaxDuration)
+                if effectiveMaxDuration < minDuration {
+                    duration = minDuration
+                } else {
+                    duration = Double.random(in: minDuration...effectiveMaxDuration)
+                }
             }
             
             duration = max(minDuration, min(duration, endTime.timeIntervalSince(currentTime)))
