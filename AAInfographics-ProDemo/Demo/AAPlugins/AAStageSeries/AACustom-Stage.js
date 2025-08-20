@@ -1,7 +1,7 @@
 /*
- * Highcharts Envelope Series Plugin
+ * Highcharts Custom Stage Envelope Series Plugin
  *
- * This plugin creates a 'envelope' series type for Highcharts.
+ * This plugin creates a 'customstage' series type for Highcharts.
  * It renders individual tasks as rounded rectangles and wraps them all
  * in a smooth, semi-transparent "envelope" shape.
  *
@@ -15,13 +15,13 @@
     const baseSeries = H.seriesTypes.xrange || H.seriesTypes.columnrange;
     const baseTypeName = H.seriesTypes.xrange ? 'xrange' : (H.seriesTypes.columnrange ? 'columnrange' : null);
     if (!baseTypeName) {
-        console.error("Highcharts Error: The 'envelope' series requires either the 'xrange' or 'columnrange' series type. Please load xrange.js or highcharts-more.js before this plugin.");
+        console.error("Highcharts Error: The 'customstage' series requires either the 'xrange' or 'columnrange' series type. Please load xrange.js or highcharts-more.js before this plugin.");
         return;
     }
 
     const { pick, seriesType } = H;
 
-    seriesType('envelope', baseTypeName,
+    seriesType('customstage', baseTypeName,
         // --- 1. Default Series Options ---
         {
             // Options for individual task bars

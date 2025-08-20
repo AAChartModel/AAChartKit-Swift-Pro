@@ -30,7 +30,7 @@
 		58603BB14202D5D0DF0D4482 /* tilemapForAfricaData.json in Resources */ = {isa = PBXBuildFile; fileRef = 58603C0A468CDC4C59D49149 /* tilemapForAfricaData.json */; };
 		58603DF10ACD2DFCE19E231F /* simpleTilemapData.json in Resources */ = {isa = PBXBuildFile; fileRef = 5860351659A57677CB0A6D84 /* simpleTilemapData.json */; };
 		8405490F2E54269900B57B44 /* AACustomStageChartVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8405490E2E54269900B57B44 /* AACustomStageChartVC.swift */; };
-		840549182E544EC400B57B44 /* AACustomStage.js in Resources */ = {isa = PBXBuildFile; fileRef = 840549172E544EC400B57B44 /* AACustomStage.js */; };
+		840549182E544EC400B57B44 /* AACustom-Stage.js in Resources */ = {isa = PBXBuildFile; fileRef = 840549172E544EC400B57B44 /* AACustom-Stage.js */; };
 		8405491A2E5456DB00B57B44 /* AACustomStageChartComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840549192E5456DB00B57B44 /* AACustomStageChartComposer.swift */; };
 		8405491C2E54578A00B57B44 /* AAEnvelope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8405491B2E54578A00B57B44 /* AAEnvelope.swift */; };
 		8405491E2E545F0400B57B44 /* AASeries+Envelope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8405491D2E545F0400B57B44 /* AASeries+Envelope.swift */; };
@@ -197,7 +197,7 @@
 		5860351659A57677CB0A6D84 /* simpleTilemapData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = simpleTilemapData.json; sourceTree = "<group>"; };
 		58603C0A468CDC4C59D49149 /* tilemapForAfricaData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = tilemapForAfricaData.json; sourceTree = "<group>"; };
 		8405490E2E54269900B57B44 /* AACustomStageChartVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AACustomStageChartVC.swift; sourceTree = "<group>"; };
-		840549172E544EC400B57B44 /* AACustomStage.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = AACustomStage.js; sourceTree = "<group>"; };
+		840549172E544EC400B57B44 /* AACustom-Stage.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "AACustom-Stage.js"; sourceTree = "<group>"; };
 		840549192E5456DB00B57B44 /* AACustomStageChartComposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AACustomStageChartComposer.swift; sourceTree = "<group>"; };
 		8405491B2E54578A00B57B44 /* AAEnvelope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AAEnvelope.swift; sourceTree = "<group>"; };
 		8405491D2E545F0400B57B44 /* AASeries+Envelope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AASeries+Envelope.swift"; sourceTree = "<group>"; };
@@ -540,7 +540,7 @@
 		840549122E544B9800B57B44 /* AAStageSeries */ = {
 			isa = PBXGroup;
 			children = (
-				840549172E544EC400B57B44 /* AACustomStage.js */,
+				840549172E544EC400B57B44 /* AACustom-Stage.js */,
 				8405490E2E54269900B57B44 /* AACustomStageChartVC.swift */,
 				840549192E5456DB00B57B44 /* AACustomStageChartComposer.swift */,
 				8405491B2E54578A00B57B44 /* AAEnvelope.swift */,
@@ -785,7 +785,7 @@
 				44D27DAC255A6C0700D0C636 /* AAJSFiles.bundle in Resources */,
 				84A5691227FEC88700883553 /* packedbubbleSeries.json in Resources */,
 				84A5693B27FEC89F00883553 /* flameData.json in Resources */,
-				840549182E544EC400B57B44 /* AACustomStage.js in Resources */,
+				840549182E544EC400B57B44 /* AACustom-Stage.js in Resources */,
 				84B13F39289E15DB007356C6 /* marathonData.json in Resources */,
 				848970412CF9CAFD00C519A0 /* timeline2Data.json in Resources */,
 				84A5693527FEC89F00883553 /* eulerData.json in Resources */,

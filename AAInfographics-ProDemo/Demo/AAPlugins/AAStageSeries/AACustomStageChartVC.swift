@@ -69,7 +69,7 @@ class AACustomStageChartVC: UIViewController {
                  NSString *jsPath = [[NSBundle mainBundle] pathForResource:@"AADrilldown" ofType:@"js"];
                  self.aaChartView.pluginsArray = @[jsPath];
                  */
-                let jsPath: String = Bundle.main.path(forResource: "AACustomStage", ofType: "js") ?? ""
+                let jsPath: String = Bundle.main.path(forResource: "AACustom-Stage", ofType: "js") ?? ""
                 self.aaChartView?.userPluginPaths = [jsPath]
                 
                 //输出查看 AAOption 的 computedProperties 内容

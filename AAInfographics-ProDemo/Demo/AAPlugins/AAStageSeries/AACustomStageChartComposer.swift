@@ -14,7 +14,7 @@ class AACustomStageChartComposer {
     // MARK: - Properties
     
     /// 图表类型
-    private static let chartTypeEnvelope = "envelope"
+    private static let chartTypeCustomStage = "customstage"
 
     /// 睡眠阶段类别
     private static let categories = ["Deep", "Core", "REM", "Awake"]
@@ -162,7 +162,7 @@ class AACustomStageChartComposer {
     /// 创建图表基本配置
     private static func createChartConfig() -> AAChart {
         return AAChart()
-            .type(chartTypeEnvelope)
+            .type(chartTypeCustomStage)
             .backgroundColor("#ffffff")
     }
     
@@ -236,7 +236,7 @@ class AACustomStageChartComposer {
     /// 创建系列配置
     private static func createSeriesConfig(data: [[String: Any]]) -> AASeriesElement {
         return AASeriesElement()
-            .type(chartTypeEnvelope)
+            .type(chartTypeCustomStage)
             .name("Sleep Stages")
             .data(data)
     }
