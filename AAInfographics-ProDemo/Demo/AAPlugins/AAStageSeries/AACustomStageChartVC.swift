@@ -10,7 +10,7 @@ class AACustomStageChartVC: UIViewController {
     private var chartContainerView: UIView!
     var aaChartView: AAChartView!
     var aaOptions: AAOptions!
-    private var controlsView: StageControlsViewUIKit!
+    private var controlsView: AAStageControlsView!
     private var shouldResetOnAppear: Bool = true
 
     // 控制参数
@@ -107,7 +107,7 @@ class AACustomStageChartVC: UIViewController {
     }
     
     private func setupUIKitControls() {
-        controlsView = StageControlsViewUIKit()
+        controlsView = AAStageControlsView()
         controlsView.translatesAutoresizingMaskIntoConstraints = false
         controlsContainerView.addSubview(controlsView)
         NSLayoutConstraint.activate([
@@ -118,7 +118,7 @@ class AACustomStageChartVC: UIViewController {
         ])
 
         // 初始同步当前参数
-        var initState = StageControlsStateUIKit()
+        var initState = AAStageControlsState()
         initState.mode = currentMode
         initState.arcsEnabled = arcsEnabled
         initState.arcsMode = arcsMode

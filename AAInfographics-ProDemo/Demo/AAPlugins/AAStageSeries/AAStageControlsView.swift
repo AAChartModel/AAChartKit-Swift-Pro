@@ -1,6 +1,6 @@
 import UIKit
 
-struct StageControlsStateUIKit {
+struct AAStageControlsState {
     var mode: String = "connect" // "connect" | "dilate"
     var arcsEnabled: Bool = true
     var arcsMode: String = "concave" // "concave" | "convex"
@@ -13,9 +13,9 @@ struct StageControlsStateUIKit {
     var fixedGradient: Bool = true
 }
 
-final class StageControlsViewUIKit: UIView {
+final class AAStageControlsView: UIView {
     // MARK: - Public callbacks
-    var onChange: ((StageControlsStateUIKit) -> Void)?
+    var onChange: ((AAStageControlsState) -> Void)?
     var onRandomData: ((Int) -> Void)?
 
     // MARK: - UI Elements
@@ -42,7 +42,7 @@ final class StageControlsViewUIKit: UIView {
     private let presetsContainer = UIStackView()
 
     // MARK: - State
-    private var state = StageControlsStateUIKit()
+    private var state = AAStageControlsState()
 
     // MARK: - Init
     override init(frame: CGRect) {
@@ -58,9 +58,9 @@ final class StageControlsViewUIKit: UIView {
     }
 
     // MARK: - Public API
-    func getState() -> StageControlsStateUIKit { state }
+    func getState() -> AAStageControlsState { state }
 
-    func setState(_ newState: StageControlsStateUIKit, emitChange: Bool = true) {
+    func setState(_ newState: AAStageControlsState, emitChange: Bool = true) {
         apply(state: newState, emitChange: emitChange)
     }
 
@@ -185,7 +185,7 @@ final class StageControlsViewUIKit: UIView {
     }
 
     // MARK: - Apply / Update
-    private func apply(state newState: StageControlsStateUIKit, emitChange: Bool) {
+    private func apply(state newState: AAStageControlsState, emitChange: Bool) {
         state = newState
 
         modeSegmented.selectedSegmentIndex = (state.mode == "connect") ? 0 : 1
@@ -214,7 +214,7 @@ final class StageControlsViewUIKit: UIView {
     }
 
     private func notifyChange() {
-        var s = StageControlsStateUIKit()
+        var s = AAStageControlsState()
         s.mode = (modeSegmented.selectedSegmentIndex == 0) ? "connect" : "dilate"
         s.arcsEnabled = arcsSwitch.isOn
         s.arcsMode = (arcsModeSegmented.selectedSegmentIndex == 0) ? "concave" : "convex"
