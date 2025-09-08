@@ -122,7 +122,7 @@ public class ProPluginProvider: AAChartViewPluginProvider {
     // Helper to add scripts based on specific AAOptions properties
     private func addChartPluginScripts(for options: AAOptions, into requiredPaths: inout Set<String>) {
         if options.chart?.parallelCoordinates == true {
-//            if let scriptPath = generateScriptPathWithScriptName("AAParallel-coordinates") {
+//            if let scriptPath = generateScriptPathWithScriptName("AAParallel-Coordinates") {
 //                requiredPaths.insert(scriptPath)
 //            }
         }
