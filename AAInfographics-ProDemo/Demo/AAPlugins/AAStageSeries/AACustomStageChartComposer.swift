@@ -180,8 +180,8 @@ class AACustomStageChartComposer {
         return AAXAxis()
             .type(.datetime)
             .tickInterval(3600 * 1000) // 1小时间隔
-            .gridLineWidth(1)
-            .gridLineDashStyle(.shortDash)
+            .gridLineWidth(2)
+            .gridLineDashStyle(.dot)
             .labels(AALabels()
                 .align(.left)
                 .format("{value:%H:%M}")

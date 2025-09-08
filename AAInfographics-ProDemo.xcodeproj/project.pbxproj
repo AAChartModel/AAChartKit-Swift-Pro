@@ -542,12 +542,10 @@
 		840549122E544B9800B57B44 /* AAStageSeries */ = {
 			isa = PBXGroup;
 			children = (
-				840549172E544EC400B57B44 /* AACustom-Stage.js */,
+				84F0AD362E6ECACB00ECAFA1 /* AAStageSeriesPlugin */,
 				8405490E2E54269900B57B44 /* AACustomStageChartVC.swift */,
 				840549232E557D8B00B57B44 /* AAStageControlsView.swift */,
 				840549192E5456DB00B57B44 /* AACustomStageChartComposer.swift */,
-				8405491B2E54578A00B57B44 /* AAEnvelope.swift */,
-				8405491D2E545F0400B57B44 /* AASeries+Envelope.swift */,
 			);
 			path = AAStageSeries;
 			sourceTree = "<group>";
@@ -649,6 +647,16 @@
 				44D27DB1255A6CE300D0C636 /* SeriesJsonFiles */,
 			);
 			path = DataSource;
+			sourceTree = "<group>";
+		};
+		84F0AD362E6ECACB00ECAFA1 /* AAStageSeriesPlugin */ = {
+			isa = PBXGroup;
+			children = (
+				840549172E544EC400B57B44 /* AACustom-Stage.js */,
+				8405491B2E54578A00B57B44 /* AAEnvelope.swift */,
+				8405491D2E545F0400B57B44 /* AASeries+Envelope.swift */,
+			);
+			path = AAStageSeriesPlugin;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
