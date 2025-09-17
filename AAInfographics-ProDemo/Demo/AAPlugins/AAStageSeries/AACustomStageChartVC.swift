@@ -52,8 +52,23 @@ class AACustomStageChartVC: UIViewController {
          NSString *jsPath = [[NSBundle mainBundle] pathForResource:@"AADrilldown" ofType:@"js"];
          self.aaChartView.pluginsArray = @[jsPath];
          */
-        let jsPath: String = Bundle.main.path(forResource: "AACustom-Stage", ofType: "js") ?? ""
-        self.aaChartView?.userPluginPaths = [jsPath]
+        // 使用正确的Bundle路径和目录结构来加载JS文件
+        let jsPathXrange: String = BundlePathLoader().path(
+            forResource: "AAXrange",
+            ofType: "js",
+            inDirectory: "AAJSFiles.bundle/AAModules"
+        ) ?? ""
+        
+        // AACustom-Stage.js位于项目Demo目录中，使用Bundle.main加载
+        guard let jsPathCustom_Stage = Bundle.main.path(forResource: "AACustom-Stage", ofType: "js") else {
+            print("Error: Could not find AACustom-Stage.js")
+            return
+        }
+
+        self.aaChartView?.userPluginPaths = [
+            jsPathXrange,
+            jsPathCustom_Stage,
+        ]
         
         //输出查看 AAOption 的 computedProperties 内容
         //        AAOptions *aaOptions = [self chartConfigurationWithSelectedIndex:self.selectedIndex];
