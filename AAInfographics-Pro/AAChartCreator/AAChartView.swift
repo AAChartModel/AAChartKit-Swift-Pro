@@ -178,6 +178,7 @@ public class AAChartView: WKWebView {
     private var pluginLoader: AAChartViewPluginLoader = ProPluginLoader(provider: ProPluginProvider())
 
     public var userPluginPaths: Set<String> = []
+    public var pluginDependencies: [String: String] = [:]
 #if DEBUG
     public var shouldPrintOptionsJSON: Bool = true
 #endif
@@ -437,7 +438,11 @@ extension AAChartView: WKUIDelegate {
 extension AAChartView:  WKNavigationDelegate {
     internal func loadAllPluginsAndDrawChart() {
         // Load plugins via loader, then draw chart in completion
-        pluginLoader.loadPluginsIfNeeded(webView: self, userPlugins: userPluginPaths) { [weak self] in
+        pluginLoader.loadPluginsIfNeeded(
+            webView: self,
+            userPlugins: userPluginPaths,
+            dependencies: pluginDependencies
+        ) { [weak self] in
             // Ensure options are ready before drawing
             guard let self = self, self.optionsJson != nil else {
                 self?.debugLog("💀💀💀 AAChartView options not ready after plugin load or view deallocated.")

@@ -169,7 +169,12 @@ public protocol AAChartViewPluginLoader {
     func configure(options: AAOptions)
 
     /// Loads necessary plugins if they haven't been loaded yet.
-    func loadPluginsIfNeeded(webView: WKWebView, userPlugins: Set<String>, completion: @escaping () -> Void)
+    func loadPluginsIfNeeded(
+        webView: WKWebView,
+        userPlugins: Set<String>,
+        dependencies: [String: String],
+        completion: @escaping () -> Void
+    )
 
     /// Executes the pre-draw JavaScript script.
     func executeBeforeDrawScript(webView: WKWebView)
@@ -187,7 +192,12 @@ public class DefaultPluginLoader: AAChartViewPluginLoader {
         // No configuration needed for default
     }
 
-    public func loadPluginsIfNeeded(webView: WKWebView, userPlugins: Set<String>, completion: @escaping () -> Void) {
+    public func loadPluginsIfNeeded(
+        webView: WKWebView,
+        userPlugins: Set<String>,
+        dependencies: [String: String],
+        completion: @escaping () -> Void
+    ) {
         #if DEBUG
         print("ℹ️ DefaultPluginLoader: No plugins to load.")
         #endif
@@ -239,7 +249,12 @@ public class ProPluginLoader: AAChartViewPluginLoader {
         }
     }
 
-    public func loadPluginsIfNeeded(webView: WKWebView, userPlugins: Set<String>, completion: @escaping () -> Void) {
+    public func loadPluginsIfNeeded(
+        webView: WKWebView,
+        userPlugins: Set<String>,
+        dependencies: [String: String],
+        completion: @escaping () -> Void
+    ) {
         let totalRequiredPluginsSet = requiredPluginPaths.union(userPlugins)
         let pluginsToLoad = totalRequiredPluginsSet.subtracting(loadedPluginPaths)
 
@@ -256,19 +271,23 @@ public class ProPluginLoader: AAChartViewPluginLoader {
         }
 
         debugLog("ℹ️ [ProPluginLoader] Preparing to load \(pluginsToLoad.count) new plugin scripts...")
-        loadAndEvaluateCombinedPluginScript(webView: webView, scriptsToLoad: pluginsToLoad) { [weak self] successfullyLoadedPlugins in
-             guard let self = self else { return }
-             self.loadedPluginPaths.formUnion(successfullyLoadedPlugins)
+        loadAndEvaluateCombinedPluginScript(
+            webView: webView,
+            scriptsToLoad: pluginsToLoad,
+            dependencies: dependencies
+        ) { [weak self] successfullyLoadedPlugins in
+            guard let self = self else { return }
+            self.loadedPluginPaths.formUnion(successfullyLoadedPlugins)
 
-             #if DEBUG
-             if successfullyLoadedPlugins.count < pluginsToLoad.count {
-                  print("⚠️ [ProPluginLoader] One or more plugin script files could not be read, or the combined script evaluation failed.")
-             } else if !successfullyLoadedPlugins.isEmpty {
-                  print("✅ [ProPluginLoader] \(successfullyLoadedPlugins.count) new plugin scripts loaded and evaluated successfully.")
-             }
-             print("ℹ️ [ProPluginLoader] Total loaded plugins count: \(self.loadedPluginPaths.count)")
-             #endif
-             completion()
+            #if DEBUG
+            if successfullyLoadedPlugins.count < pluginsToLoad.count {
+                print("⚠️ [ProPluginLoader] One or more plugin script files could not be read, or the combined script evaluation failed.")
+            } else if !successfullyLoadedPlugins.isEmpty {
+                print("✅ [ProPluginLoader] \(successfullyLoadedPlugins.count) new plugin scripts loaded and evaluated successfully.")
+            }
+            print("ℹ️ [ProPluginLoader] Total loaded plugins count: \(self.loadedPluginPaths.count)")
+            #endif
+            completion()
         }
     }
 
@@ -291,15 +310,23 @@ public class ProPluginLoader: AAChartViewPluginLoader {
     // --- Helper methods moved from AAChartView ---
 
     // Helper function to sort plugin paths based on known dependencies
-    private func sortPluginPaths(_ paths: Set<String>) -> [String] {
+    private func sortPluginPaths(
+        _ paths: Set<String>,
+        merging externalDependencies: [String: String]
+    ) -> [String] {
         var sortedPaths = Array(paths)
-        let dependencies: [String: String] = [
+        
+        // Base dependencies that are internal to the library
+        var dependencies: [String: String] = [
             "AADependency-Wheel.js": "AASankey.js",
             "AAOrganization.js": "AASankey.js",
             "AALollipop.js": "AADumbbell.js",
             "AATilemap.js": "AAHeatmap.js",
-            "AAArc-Diagram.js": "AASankey.js" // Added Arc Diagram dependency
+            "AAArc-Diagram.js": "AASankey.js"
         ]
+        
+        // Merge external dependencies, allowing them to override base dependencies if needed
+        dependencies.merge(externalDependencies) { (_, new) in new }
 
         sortedPaths.sort { path1, path2 in
             let file1 = (path1 as NSString).lastPathComponent
@@ -332,6 +359,7 @@ public class ProPluginLoader: AAChartViewPluginLoader {
     private func loadAndEvaluateCombinedPluginScript(
         webView: WKWebView,
         scriptsToLoad: Set<String>,
+        dependencies: [String: String],
         completion: @escaping (Set<String>) -> Void
     ) {
         guard !scriptsToLoad.isEmpty else {
@@ -339,7 +367,7 @@ public class ProPluginLoader: AAChartViewPluginLoader {
             return
         }
 
-        let sortedScriptPaths = sortPluginPaths(scriptsToLoad)
+        let sortedScriptPaths = sortPluginPaths(scriptsToLoad, merging: dependencies)
         var combinedJSString = ""
         var successfullyReadPaths = Set<String>()
 

@@ -70,6 +70,12 @@ class AACustomStageChartVC: UIViewController {
             jsPathCustom_Stage,
         ]
         
+        // 配置它们的依赖关系
+        self.aaChartView?.pluginDependencies = [
+            "AACustom-Stage.js": "AAXrange.js"
+        ]
+
+        
         //输出查看 AAOption 的 computedProperties 内容
         //        AAOptions *aaOptions = [self chartConfigurationWithSelectedIndex:self.selectedIndex];
         self.aaOptions = AACustomStageChartComposer.defaultOptions()
