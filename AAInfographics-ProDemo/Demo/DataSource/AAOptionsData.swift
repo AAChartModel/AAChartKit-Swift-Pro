@@ -292,6 +292,10 @@ class AAOptionsData {
         getJsonDataWithJsonFileName("tilemapForAfricaData")
     }
     
+    public class var treegraphData : [Any] {
+        getJsonDataWithJsonFileName("treegraphData")
+    }
+    
     //https://www.jianshu.com/p/a4b2bd5deca6
     private static func getJsonDataWithJsonFileName(_ jsonFileName: String) -> [Any] {
         let path = Bundle.main.path(forResource: jsonFileName, ofType: "json")

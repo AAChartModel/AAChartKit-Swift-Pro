@@ -72,6 +72,15 @@ class ChartSampleProvider: NSObject {
         ]
     }
     
+    // MARK: - 树形图
+    class func treegraphChartSamples() -> [AAOptions] {
+        return [
+            AATreegraphChartComposer.treegraph(),
+            AATreegraphChartComposer.invertedTreegraph(),
+            AATreegraphChartComposer.treegraphWithBoxLayout(),
+        ]
+    }
+    
     // MARK: - 其他专业图表
     class func otherProChartSamples() -> [AAOptions] {
         return [
@@ -99,11 +108,14 @@ class ChartSampleProvider: NSObject {
     
     // MARK: - 所有专业图表样本（原始方法）
     class func allProTypeSamples() -> [AAOptions] {
-        return relationshipChartSamples() +
-               bubbleChartSamples() +
-               columnVariantChartSamples() +
-               heatAndTreeMapChartSamples() +
-               otherProChartSamples()
+        return (
+            relationshipChartSamples() +
+            bubbleChartSamples() +
+            columnVariantChartSamples() +
+            heatAndTreeMapChartSamples() +
+            treegraphChartSamples() +
+            otherProChartSamples()
+        )
     }
 
 }

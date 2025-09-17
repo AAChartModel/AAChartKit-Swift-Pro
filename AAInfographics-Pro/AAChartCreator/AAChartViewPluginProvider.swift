@@ -84,6 +84,10 @@ public class ProPluginProvider: AAChartViewPluginProvider {
             "AAWindbarb"
         ], // Meteorological
         AAChartType.wordcloud.rawValue       : ["AAWordcloud"], // Text visualization
+        AAChartType.treegraph.rawValue       : [
+            "AATreemap",
+            "AATreegraph"
+        ],
     ]
 
     public func getRequiredPluginPaths(for options: AAOptions) -> Set<String> {
@@ -322,7 +326,8 @@ public class ProPluginLoader: AAChartViewPluginLoader {
             "AAOrganization.js": "AASankey.js",
             "AALollipop.js": "AADumbbell.js",
             "AATilemap.js": "AAHeatmap.js",
-            "AAArc-Diagram.js": "AASankey.js"
+            "AAArc-Diagram.js": "AASankey.js",
+            "AATreegraph.js": "AATreemap.js"
         ]
         
         // Merge external dependencies, allowing them to override base dependencies if needed

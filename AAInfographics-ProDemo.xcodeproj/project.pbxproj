@@ -37,6 +37,8 @@
 		840549242E557D8B00B57B44 /* AAStageControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840549232E557D8B00B57B44 /* AAStageControlsView.swift */; };
 		8418479728B861D200094106 /* AABoxplot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8418479628B861D200094106 /* AABoxplot.swift */; };
 		842EB1B12DEEF57A000166C2 /* AAMixedChartComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842EB1B02DEEF57A000166C2 /* AAMixedChartComposer.swift */; };
+		843E5E0D2E7AD52D0030D36E /* AATreegraphChartComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843E5E0C2E7AD52D0030D36E /* AATreegraphChartComposer.swift */; };
+		843E5E0F2E7AD6390030D36E /* treegraphData.json in Resources */ = {isa = PBXBuildFile; fileRef = 843E5E0E2E7AD6390030D36E /* treegraphData.json */; };
 		8441A76126C2568F007EAAA7 /* AAExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8441A75E26C2568E007EAAA7 /* AAExtension.swift */; };
 		8441A76226C2568F007EAAA7 /* AAColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8441A75F26C2568F007EAAA7 /* AAColor.swift */; };
 		8441A76326C2568F007EAAA7 /* AAGradientColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8441A76026C2568F007EAAA7 /* AAGradientColor.swift */; };
@@ -205,6 +207,8 @@
 		840549232E557D8B00B57B44 /* AAStageControlsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AAStageControlsView.swift; sourceTree = "<group>"; };
 		8418479628B861D200094106 /* AABoxplot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AABoxplot.swift; sourceTree = "<group>"; };
 		842EB1B02DEEF57A000166C2 /* AAMixedChartComposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AAMixedChartComposer.swift; sourceTree = "<group>"; };
+		843E5E0C2E7AD52D0030D36E /* AATreegraphChartComposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AATreegraphChartComposer.swift; sourceTree = "<group>"; };
+		843E5E0E2E7AD6390030D36E /* treegraphData.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = treegraphData.json; sourceTree = "<group>"; };
 		8441A75E26C2568E007EAAA7 /* AAExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AAExtension.swift; sourceTree = "<group>"; };
 		8441A75F26C2568F007EAAA7 /* AAColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AAColor.swift; sourceTree = "<group>"; };
 		8441A76026C2568F007EAAA7 /* AAGradientColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AAGradientColor.swift; sourceTree = "<group>"; };
@@ -479,6 +483,7 @@
 		44D27DB4255A6CE300D0C636 /* DataJsonFiles */ = {
 			isa = PBXGroup;
 			children = (
+				843E5E0E2E7AD6390030D36E /* treegraphData.json */,
 				84A5692927FEC89E00883553 /* arcdiagram1Data.json */,
 				84A5692A27FEC89E00883553 /* arcdiagram2Data.json */,
 				84A5693027FEC89F00883553 /* arcdiagram3Data.json */,
@@ -633,6 +638,7 @@
 				84DEB8BF28FAE57B00BF9423 /* AAHeatOrTreeMapChartComposer.swift */,
 				84DEB8C128FAE58C00BF9423 /* AABubbleChartComposer.swift */,
 				84DEB8C328FAE59F00BF9423 /* AAColumnVariantChartComposer.swift */,
+				843E5E0C2E7AD52D0030D36E /* AATreegraphChartComposer.swift */,
 			);
 			path = Composer;
 			sourceTree = "<group>";
@@ -768,6 +774,7 @@
 				84A5693927FEC89F00883553 /* treemapWithLevelsData.json in Resources */,
 				84A5693A27FEC89F00883553 /* heatmapData.json in Resources */,
 				84A5693127FEC89F00883553 /* sankeyData.json in Resources */,
+				843E5E0F2E7AD6390030D36E /* treegraphData.json in Resources */,
 				84526E0B2CEB401500EB2563 /* AABoost.js in Resources */,
 				84A5694327FEC89F00883553 /* sunburst2Data.json in Resources */,
 				84DEB8CA28FAF3C800BF9423 /* volinPlotElement2Data.json in Resources */,
@@ -858,6 +865,7 @@
 				84B13F3D289E5FAB007356C6 /* AABulletDataElement.swift in Sources */,
 				84DEB8BE28FAE54500BF9423 /* AARelationshipChartComposer.swift in Sources */,
 				844615B3283F580300E26DA4 /* AAPlotOptions.swift in Sources */,
+				843E5E0D2E7AD52D0030D36E /* AATreegraphChartComposer.swift in Sources */,
 				844615BC283F580300E26DA4 /* AAXAxis.swift in Sources */,
 				27F872AB25E797690068380F /* ProjectBundlePathLoader.swift in Sources */,
 				844615A7283F580300E26DA4 /* AAChart.swift in Sources */,
