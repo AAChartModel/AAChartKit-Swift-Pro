@@ -52,27 +52,36 @@ class AACustomStageChartVC: UIViewController {
          NSString *jsPath = [[NSBundle mainBundle] pathForResource:@"AADrilldown" ofType:@"js"];
          self.aaChartView.pluginsArray = @[jsPath];
          */
-        // 使用正确的Bundle路径和目录结构来加载JS文件
+        
+        // 定义JS文件名常量，避免重复拼写
+        let xrangeFileName = "AAXrange"
+        let customStageFileName = "AACustom-Stage"
+        let jsExtension = "js"
+        
+        // 使用正确的 Bundle 路径和目录结构来加载 AAXrange.js 文件
         let jsPathXrange: String = BundlePathLoader().path(
-            forResource: "AAXrange",
-            ofType: "js",
+            forResource: xrangeFileName,
+            ofType: jsExtension,
             inDirectory: "AAJSFiles.bundle/AAModules"
         ) ?? ""
         
-        // AACustom-Stage.js位于项目Demo目录中，使用Bundle.main加载
-        guard let jsPathCustom_Stage = Bundle.main.path(forResource: "AACustom-Stage", ofType: "js") else {
-            print("Error: Could not find AACustom-Stage.js")
+        // 使用 Bundle.main 加载位于项目 Demo 目录中的 AACustom-Stage.js 文件
+        guard let jsPathCustom_Stage = Bundle.main.path(forResource: customStageFileName, ofType: jsExtension) else {
+            print("Error: Could not find \(customStageFileName).\(jsExtension)")
             return
         }
 
+        // 配置需要加载的插件JS文件路径数组
         aaChartView.userPluginPaths = [
             jsPathXrange,
             jsPathCustom_Stage,
         ]
         
-        // 配置它们的依赖关系
+        // 配置它们的依赖关系 - 使用文件名常量构建完整文件名
+        //此处的依赖关系配置非常重要, 关系到 JS 插件的加载顺序
+        // 例如: AAXrange.js 必须在 AACustom-Stage.js 之前加载
         aaChartView.dependencies = [
-            AADependency("AACustom-Stage.js", on: "AAXrange.js"),
+            AADependency("\(customStageFileName).\(jsExtension)", on: "\(xrangeFileName).\(jsExtension)"),
             // 如果还有其他依赖, 继续在这里添加
             // AADependency("pluginC.js", on: "pluginA.js")
         ]
