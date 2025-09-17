@@ -45,8 +45,8 @@ class AACustomStageChartVC: UIViewController {
     private func setupChartView() {
         // 创建新的图表视图
         aaChartView = AAChartView()
-        aaChartView!.isScrollEnabled = false
-        aaChartView!.delegate = self as AAChartViewDelegate
+        aaChartView.isScrollEnabled = false
+        aaChartView.delegate = self as AAChartViewDelegate
         
         /**
          NSString *jsPath = [[NSBundle mainBundle] pathForResource:@"AADrilldown" ofType:@"js"];
@@ -65,15 +65,18 @@ class AACustomStageChartVC: UIViewController {
             return
         }
 
-        self.aaChartView?.userPluginPaths = [
+        aaChartView.userPluginPaths = [
             jsPathXrange,
             jsPathCustom_Stage,
         ]
         
         // 配置它们的依赖关系
-        self.aaChartView?.pluginDependencies = [
-            "AACustom-Stage.js": "AAXrange.js"
+        aaChartView.dependencies = [
+            AADependency("AACustom-Stage.js", on: "AAXrange.js"),
+            // 如果还有其他依赖, 继续在这里添加
+            // AADependency("pluginC.js", on: "pluginA.js")
         ]
+
 
         
         //输出查看 AAOption 的 computedProperties 内容
