@@ -55,7 +55,7 @@ public class AASeries: AAObject {
     public var colorByPoint: Bool?
     public var connectNulls: Bool? //Whether reconnects the broken line of the chart
     public var events: AAEvents?
-    public var shadow: AAShadow?
+    public var shadow: Any?
     public var dataLabels: AADataLabels?
     public var states: AAStates?
     public var allowPointSelect: Bool?
@@ -149,6 +149,12 @@ public class AASeries: AAObject {
     @discardableResult
     public func events(_ prop: AAEvents?) -> AASeries {
         events = prop
+        return self
+    }
+    
+    @discardableResult
+    public func shadow(_ prop: Bool?) -> AASeries {
+        shadow = prop
         return self
     }
     
