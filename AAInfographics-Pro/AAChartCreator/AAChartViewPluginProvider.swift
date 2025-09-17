@@ -79,7 +79,10 @@ public class ProPluginProvider: AAChartViewPluginProvider {
         // --- Specialized & Other Charts ---
         AAChartType.vector.rawValue          : ["AAVector"],
         AAChartType.item.rawValue            : ["AAItem-Series"], // Specific series type
-        AAChartType.windbarb.rawValue        : ["AAWindbarb"], // Meteorological
+        AAChartType.windbarb.rawValue        : [
+            "AADatagrouping",
+            "AAWindbarb"
+        ], // Meteorological
         AAChartType.wordcloud.rawValue       : ["AAWordcloud"], // Text visualization
     ]
 
@@ -122,9 +125,9 @@ public class ProPluginProvider: AAChartViewPluginProvider {
     // Helper to add scripts based on specific AAOptions properties
     private func addChartPluginScripts(for options: AAOptions, into requiredPaths: inout Set<String>) {
         if options.chart?.parallelCoordinates == true {
-//            if let scriptPath = generateScriptPathWithScriptName("AAParallel-Coordinates") {
-//                requiredPaths.insert(scriptPath)
-//            }
+            if let scriptPath = generateScriptPathWithScriptName("AAParallel-Coordinates") {
+                requiredPaths.insert(scriptPath)
+            }
         }
         if options.data != nil {
              if let scriptPath = generateScriptPathWithScriptName("AAData") {
