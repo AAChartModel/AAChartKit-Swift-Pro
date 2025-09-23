@@ -82,6 +82,7 @@ public class AASeriesElement: AAObject {
      
     public var nodes: [Any]?
     public var nodeWidth: Float?
+    public var nodePadding: Float?
     public var cursor: String?
     public var offset: String?            //The offset of an arc diagram nodes column in relation to the plotArea. The offset equal to 50% places nodes in the center of a chart. By default the series is placed so that the biggest node is touching the bottom border of the plotArea. Defaults to '100%'.
     public var linkWeight: Int?           //The global link weight. If not set, width is calculated per link, depending on the weight value. Defaults to undefined.
@@ -387,6 +388,12 @@ public class AASeriesElement: AAObject {
     @discardableResult
     public func nodeWidth(_ prop: Float) -> AASeriesElement {
         nodeWidth = prop
+        return self
+    }
+    
+    @discardableResult
+    public func nodePadding(_ prop: Float) -> AASeriesElement {
+        nodePadding = prop
         return self
     }
     

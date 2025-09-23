@@ -51,6 +51,7 @@ public class AAPlotOptions: AAObject {
     public var treemap: AATreemap?
     public var solidgauge: AASolidgauge?
     public var pictorial: AAPictorial?
+    public var organization: AAOrganization?
     /*---------------------AAInfogrphics-Pro---------------------*/
 
     
@@ -149,6 +150,12 @@ public class AAPlotOptions: AAObject {
     @discardableResult
     public func pictorial(_ prop: AAPictorial) -> AAPlotOptions {
         pictorial = prop
+        return self
+    }
+    
+    @discardableResult
+    public func organization(_ prop: AAOrganization) -> AAPlotOptions {
+        organization = prop
         return self
     }
     /*---------------------AAInfogrphics-Pro---------------------*/

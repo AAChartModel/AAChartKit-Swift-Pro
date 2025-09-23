@@ -296,6 +296,10 @@ class AAOptionsData {
         getJsonDataWithJsonFileName("treegraphData")
     }
     
+    public class var germanicLanguageTreeData: [Any] {
+        getJsonDataWithJsonFileName("germanicLanguageTreeData")
+    }
+    
     //https://www.jianshu.com/p/a4b2bd5deca6
     private static func getJsonDataWithJsonFileName(_ jsonFileName: String) -> [Any] {
         let path = Bundle.main.path(forResource: jsonFileName, ofType: "json")
