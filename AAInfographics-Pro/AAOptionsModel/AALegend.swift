@@ -93,6 +93,12 @@ public class AALegend: AAObject {
     }
     
     @discardableResult
+    public func itemMarginBottom(_ prop: Float?) -> AALegend {
+        itemMarginBottom = prop
+        return self
+    }
+    
+    @discardableResult
     public func itemStyle(_ prop: AAItemStyle?) -> AALegend {
         itemStyle = prop
         return self

@@ -21,7 +21,7 @@ class AAOptionsCSV {
             let jsonData:Any = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.mutableContainers)
             let jsonArr = jsonData as! NSDictionary
             
-            return jsonArr as! NSDictionary
+            return jsonArr 
             
         } catch let error as Error? {
             print("读取本地数据出现错误!",error ?? "WARNING!!!!")

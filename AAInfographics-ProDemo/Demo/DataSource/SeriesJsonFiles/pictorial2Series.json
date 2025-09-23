@@ -1,0 +1,19 @@
+[{
+        "name": "Other",
+        "data": [25, 25]
+    }, {
+        "name": "Essential Fat",
+        "data": [12, 3]
+    },
+    {
+        "name": "Non-Essential Fat",
+        "data": [15, 12]
+    }, {
+        "name": "Muscle Tissue",
+        "data": [36, 45]
+    },
+    {
+        "name": "Bone",
+        "data": [12, 15]
+    }
+    ]

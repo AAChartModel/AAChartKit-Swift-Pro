@@ -728,6 +728,17 @@ class ChartProVC: AABaseChartVC {
     }
 
     public static func parallelCoordinatesSplineChart() -> AAOptions {
+//        shadow: false,
+//                   states: {
+//                       inactive: {
+//                           enabled: false
+//                       },
+//                       hover: {
+//                           halo: {
+//                               size: 0
+//                           }
+//                       }
+//                   },
         AAOptions()
             .chart(AAChart()
                 .type(.spline)
@@ -739,12 +750,15 @@ class ChartProVC: AABaseChartVC {
             .plotOptions(AAPlotOptions()
                 .series(AASeries()
 //                    .animation(false)
+                    .shadow(false)
                     .marker(AAMarker()
                         .enabled(false)
                         .states(AAMarkerStates()
                             .hover(AAMarkerHover()
                                 .enabled(false))))
                     .states(AAStates()
+                        .inactive(AAInactive()
+                            .enabled(false))
                         .hover(AAHover()
                             .halo(AAHalo()
                                 .size(0))))
@@ -755,6 +769,8 @@ class ChartProVC: AABaseChartVC {
                             }
                         """#))))
             .tooltip(AATooltip()
+                .shared(false)
+                .followPointer(true)
                 .pointFormat((#"<span style="color:{point.color}">\u25CF</span>"# +
                               "{series.name}: <b>{point.formattedValue}</b><br/>").aa_toPureJSString()))
             .xAxis(AAXAxis()
@@ -811,8 +827,8 @@ class ChartProVC: AABaseChartVC {
                 return AASeriesElement()
                     .name("Runner")
                     .data(dataSet as! [Any])
-                    .shadow(AAShadow()
-                        .width(0))
+//                    .shadow(AAShadow()
+//                        .width(0))
             }))
     }
     

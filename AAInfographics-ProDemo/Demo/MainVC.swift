@@ -46,6 +46,7 @@ class MainVC: UIViewController {
         "OfficialChartSample | 官方示例",
         "FractalChartListVC | 分形图表列表",
         "Custom Event2 | 自定义交互事件2",
+        "AACustomStageChartVC | 自定义分段图"
     ]
     private var chartTypeNameArr = [
         // "RelationshipChart | 关系类型图表",
@@ -102,6 +103,9 @@ class MainVC: UIViewController {
             "bellcurveChart---钟形曲线混合散点图🔔",
             "bulletChart---子弹图",
             "inverted xrangeChart---倒转的X轴范围图||甘特图||条码图",
+            "pictorial1Chart---象形柱形图1",
+            "pictorial2Chart---象形柱形图2",
+            
         ],
         // "MoreProType | 更多高级类型图表",
         [
@@ -154,6 +158,10 @@ class MainVC: UIViewController {
         // "Custom Event2---自定义交互事件2",
         [
             "Custom Event2---自定义交互事件2",
+        ],
+        // "AACustomStageChartVC | 自定义分段图",
+        [
+            "AACustomStageChartVC | 自定义分段睡眠💤图",
         ],
     ]
     
@@ -296,6 +304,11 @@ extension MainVC: UITableViewDelegate, UITableViewDataSource {
             let vc = CustomClickEventCallbackMessageVC2()
             navigationController?.pushViewController(vc, animated: true)
             
+        case 11:
+            let vc = AACustomStageChartVC()
+//            vc.selectedIndex = indexPath.row
+//            vc.navigationItemTitleArr = chartTypeNameArr[indexPath.section]
+            navigationController?.pushViewController(vc, animated: true)
         default:
             break
         }

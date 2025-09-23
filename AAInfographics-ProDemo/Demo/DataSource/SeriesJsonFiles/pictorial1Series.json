@@ -1,0 +1,24 @@
+[{
+        "name": "Daylight",
+        "data": [6500]
+    }, {
+        "name": "Moonlight",
+        "data": [4000]
+    },
+    {
+        "name": "Morning/Evening Sun",
+        "data": [3500]
+    },
+    {
+        "name": "Lightbulb",
+        "data": [3000]
+    },
+    {
+        "name": "Sunrise/sunset",
+        "data": [2500]
+    },
+    {
+        "name": "Candle flame",
+        "data": [1800]
+    }
+    ]

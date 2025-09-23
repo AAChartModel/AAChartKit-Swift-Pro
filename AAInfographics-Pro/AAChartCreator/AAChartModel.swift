@@ -121,6 +121,8 @@ public enum AAChartType: String {
     case solidgauge
     case histogram
     case bullet
+    case treegraph
+    case pictorial
     /*---------------------AAInfogrphics-Pro---------------------*/
 }
 

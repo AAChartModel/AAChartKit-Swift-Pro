@@ -68,6 +68,12 @@ public class AAChart: AAObject {
     }
     
     @discardableResult
+    public func type(_ prop: String?) -> AAChart {
+        type = prop
+        return self
+    }
+    
+    @discardableResult
     public func backgroundColor(_ prop: Any?) -> AAChart {
         backgroundColor = prop
         return self

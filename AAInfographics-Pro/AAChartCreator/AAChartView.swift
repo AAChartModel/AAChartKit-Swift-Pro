@@ -83,6 +83,18 @@ public class AALeakAvoider : NSObject, WKScriptMessageHandler {
 
 
 @available(iOS 10.0, macCatalyst 13.1, macOS 10.13, *)
+public struct AADependency {
+    let dependent: String // The plugin that has a dependency
+    let on: String        // The plugin it depends on
+
+    public init(_ dependent: String, on dependency: String) {
+        self.dependent = dependent
+        self.on = dependency
+    }
+}
+
+
+@available(iOS 10.0, macCatalyst 13.1, macOS 10.13, *)
 public class AAChartView: WKWebView {
     let kUserContentMessageNameClick = "click"
     let kUserContentMessageNameMouseOver = "mouseover"
@@ -178,6 +190,10 @@ public class AAChartView: WKWebView {
     private var pluginLoader: AAChartViewPluginLoader = ProPluginLoader(provider: ProPluginProvider())
 
     public var userPluginPaths: Set<String> = []
+    
+    /// Configure plugin dependencies using a more readable struct-based array.
+    /// Example: `aaChartView.dependencies = [AADependency("pluginB.js", on: "pluginA.js")]`
+    public var dependencies: [AADependency] = []
 #if DEBUG
     public var shouldPrintOptionsJSON: Bool = true
 #endif
@@ -437,7 +453,16 @@ extension AAChartView: WKUIDelegate {
 extension AAChartView:  WKNavigationDelegate {
     internal func loadAllPluginsAndDrawChart() {
         // Load plugins via loader, then draw chart in completion
-        pluginLoader.loadPluginsIfNeeded(webView: self, userPlugins: userPluginPaths) { [weak self] in
+        // Convert the dependency array to a dictionary for the loader
+        let dependenciesDict = dependencies.reduce(into: [String: String]()) { dict, dependency in
+            dict[dependency.dependent] = dependency.on
+        }
+
+        pluginLoader.loadPluginsIfNeeded(
+            webView: self,
+            userPlugins: userPluginPaths,
+            dependencies: dependenciesDict
+        ) { [weak self] in
             // Ensure options are ready before drawing
             guard let self = self, self.optionsJson != nil else {
                 self?.debugLog("💀💀💀 AAChartView options not ready after plugin load or view deallocated.")
