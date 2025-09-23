@@ -9,6 +9,15 @@ import UIKit
 
 class AAOptionsSeries {
     
+    public class var pictorial1Series : [Any] {
+        getJsonDataWithJsonFileName("pictorial1Series")
+    }
+    
+    public class var pictorial2Series : [Any] {
+        getJsonDataWithJsonFileName("pictorial2Series")
+    }
+    
+    
     public class var packedbubbleSeries : [Any] {
         getJsonDataWithJsonFileName("packedbubbleSeries")
     }

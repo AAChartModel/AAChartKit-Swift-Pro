@@ -25,6 +25,8 @@ class AAColumnVariantChartVC: AABaseChartVC {
         case 6: return AAColumnVariantChartComposer.bellcurveChart()
         case 7: return AAColumnVariantChartComposer.bulletChart()
         case 8: return AAColumnVariantChartComposer.invertedXrangeChart()
+        case 9: return AAPictorialChartComposer.pictorial1Chart()
+        case 10: return AAPictorialChartComposer.pictorial2Chart()
         default: return nil
         }
     }

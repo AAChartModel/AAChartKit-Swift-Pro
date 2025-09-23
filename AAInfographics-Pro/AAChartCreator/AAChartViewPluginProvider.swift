@@ -88,6 +88,7 @@ public class ProPluginProvider: AAChartViewPluginProvider {
             "AATreemap",
             "AATreegraph"
         ],
+        AAChartType.pictorial.rawValue      : ["AAPictorial"], // Icon-based charts
     ]
 
     public func getRequiredPluginPaths(for options: AAOptions) -> Set<String> {

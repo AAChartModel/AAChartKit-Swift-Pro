@@ -103,6 +103,9 @@ class MainVC: UIViewController {
             "bellcurveChart---钟形曲线混合散点图🔔",
             "bulletChart---子弹图",
             "inverted xrangeChart---倒转的X轴范围图||甘特图||条码图",
+            "pictorial1Chart---象形柱形图1",
+            "pictorial2Chart---象形柱形图2",
+            
         ],
         // "MoreProType | 更多高级类型图表",
         [
