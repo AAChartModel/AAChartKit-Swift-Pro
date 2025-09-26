@@ -169,6 +169,17 @@ public class AAOptions: AAObject {
      }
     /*---------------------AAInfogrphics-Pro---------------------*/
 
+    @discardableResult
+    public func beforeDrawChartJavaScript(_ prop: String?) -> AAOptions {
+        beforeDrawChartJavaScript = prop
+        return self
+    }
+    
+    @discardableResult
+    public func afterDrawChartJavaScript(_ prop: String?) -> AAOptions {
+        afterDrawChartJavaScript = prop
+        return self
+    }
     
     public override init() {
         let aaCredits = AACredits()
