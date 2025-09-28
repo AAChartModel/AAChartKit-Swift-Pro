@@ -11,7 +11,7 @@ import WebKit // Import WebKit for WKWebView usage in loader
 // --- New Plugin Loader Protocol and Implementations ---
 
 @available(iOS 10.0, macCatalyst 13.1, macOS 10.13, *)
-public protocol AAChartViewPluginLoaderProtocol {
+internal protocol AAChartViewPluginLoaderProtocol {
     /// Configures the loader with options to determine required plugins and scripts.
     func configure(options: AAOptions)
 
@@ -32,7 +32,7 @@ public protocol AAChartViewPluginLoaderProtocol {
 
 // Default loader for standard version (does nothing)
 @available(iOS 10.0, macCatalyst 13.1, macOS 10.13, *)
-public class DefaultPluginLoader: AAChartViewPluginLoaderProtocol {
+internal class DefaultPluginLoader: AAChartViewPluginLoaderProtocol {
     public init() {}
 
     public func configure(options: AAOptions) {
@@ -62,7 +62,7 @@ public class DefaultPluginLoader: AAChartViewPluginLoaderProtocol {
 
 // Loader for Pro version, handling plugin loading and scripts
 @available(iOS 10.0, macCatalyst 13.1, macOS 10.13, *)
-public class AAChartViewPluginLoader: AAChartViewPluginLoaderProtocol {
+internal class AAChartViewPluginLoader: AAChartViewPluginLoaderProtocol {
     private let pluginProvider: AAChartViewPluginProviderProtocol
     private var requiredPluginPaths: Set<String> = []
     private var loadedPluginPaths: Set<String> = []
