@@ -15,13 +15,13 @@ public class DefaultPluginProvider: AAChartViewPluginProviderProtocol {
     public func getRequiredPluginPaths(for options: AAOptions) -> Set<String> {
         // Standard version might return empty or handle truly common plugins if any exist
         // For now, returning empty as per the abstraction goal.
-        return ProPluginProvider.init().getRequiredPluginPaths(for: options)
+        return AAChartViewPluginProvider.init().getRequiredPluginPaths(for: options)
     }
 }
 
 // Provider for the Pro version, handling specific chart type plugins
 @available(iOS 10.0, macCatalyst 13.1, macOS 10.13, *)
-public class ProPluginProvider: AAChartViewPluginProviderProtocol {
+public class AAChartViewPluginProvider: AAChartViewPluginProviderProtocol {
     public init() {} // Public initializer
 
     // Mapping from chart type rawValue to script names (moved from AAChartView)

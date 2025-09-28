@@ -187,7 +187,7 @@ public class AAChartView: WKWebView {
     internal var optionsJson: String?
 
     // --- Plugin Loader ---
-    private var pluginLoader: AAChartViewPluginLoaderProtocol = ProPluginLoader(provider: ProPluginProvider())
+    private var pluginLoader: AAChartViewPluginLoaderProtocol = AAChartViewPluginLoader(provider: AAChartViewPluginProvider())
 
     public var userPluginPaths: Set<String> = []
     

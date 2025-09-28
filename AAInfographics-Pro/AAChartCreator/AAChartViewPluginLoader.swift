@@ -62,7 +62,7 @@ public class DefaultPluginLoader: AAChartViewPluginLoaderProtocol {
 
 // Loader for Pro version, handling plugin loading and scripts
 @available(iOS 10.0, macCatalyst 13.1, macOS 10.13, *)
-public class ProPluginLoader: AAChartViewPluginLoaderProtocol {
+public class AAChartViewPluginLoader: AAChartViewPluginLoaderProtocol {
     private let pluginProvider: AAChartViewPluginProviderProtocol
     private var requiredPluginPaths: Set<String> = []
     private var loadedPluginPaths: Set<String> = []
