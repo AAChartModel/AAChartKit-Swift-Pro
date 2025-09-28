@@ -3,13 +3,13 @@ import WebKit // Import WebKit for WKWebView usage in loader
 
 // Protocol defining the responsibility for providing required plugin paths
 @available(iOS 10.0, macCatalyst 13.1, macOS 10.13, *)
-public protocol AAChartViewPluginProvider {
+public protocol AAChartViewPluginProviderProtocol {
     func getRequiredPluginPaths(for options: AAOptions) -> Set<String>
 }
 
 // Default provider (can be used for the standard version or as a base)
 @available(iOS 10.0, macCatalyst 13.1, macOS 10.13, *)
-public class DefaultPluginProvider: AAChartViewPluginProvider {
+public class DefaultPluginProvider: AAChartViewPluginProviderProtocol {
     public init() {} // Public initializer
 
     public func getRequiredPluginPaths(for options: AAOptions) -> Set<String> {
@@ -21,7 +21,7 @@ public class DefaultPluginProvider: AAChartViewPluginProvider {
 
 // Provider for the Pro version, handling specific chart type plugins
 @available(iOS 10.0, macCatalyst 13.1, macOS 10.13, *)
-public class ProPluginProvider: AAChartViewPluginProvider {
+public class ProPluginProvider: AAChartViewPluginProviderProtocol {
     public init() {} // Public initializer
 
     // Mapping from chart type rawValue to script names (moved from AAChartView)
