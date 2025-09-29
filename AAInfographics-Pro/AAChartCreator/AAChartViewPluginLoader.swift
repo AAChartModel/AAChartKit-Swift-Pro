@@ -64,6 +64,8 @@ internal class DefaultPluginLoader: AAChartViewPluginLoaderProtocol {
 @available(iOS 10.0, macCatalyst 13.1, macOS 10.13, *)
 internal class AAChartViewPluginLoader: AAChartViewPluginLoaderProtocol {
     private let pluginProvider: AAChartViewPluginProviderProtocol
+    private static let scriptCache = NSCache<NSString, NSString>()
+    private let pluginIOQueue = DispatchQueue(label: "com.aa.chartview.pluginloader.io", qos: .utility)
     private var requiredPluginPaths: Set<String> = []
     private var loadedPluginPaths: Set<String> = []
     private var beforeDrawScript: String?
@@ -211,65 +213,82 @@ internal class AAChartViewPluginLoader: AAChartViewPluginLoaderProtocol {
         completion: @escaping (Set<String>) -> Void
     ) {
         guard !scriptsToLoad.isEmpty else {
-            completion(Set())
+            completeOnMainThread(with: Set(), completion: completion)
             return
         }
 
         let sortedScriptPaths = sortPluginPaths(scriptsToLoad, merging: dependencies)
-        var combinedJSString = ""
-        var successfullyReadPaths = Set<String>()
 
-        for path in sortedScriptPaths {
-            let scriptName = (path as NSString).lastPathComponent
-            do {
-                let jsString = try String(contentsOfFile: path, encoding: .utf8)
+        pluginIOQueue.async { [weak self, weak webView] in
+            guard let self = self, let webView = webView else { return }
+
+            var combinedJSString = ""
+            var successfullyReadPaths = Set<String>()
+
+            for path in sortedScriptPaths {
+                let scriptName = (path as NSString).lastPathComponent
+                let pathKey = path as NSString
+
+                let scriptBody: String
+
+                if let cachedScript = Self.scriptCache.object(forKey: pathKey) {
+                    scriptBody = cachedScript as String
+                } else {
+                    do {
+                        let jsString = try String(contentsOfFile: path, encoding: .utf8)
+                        Self.scriptCache.setObject(jsString as NSString, forKey: pathKey)
+                        scriptBody = jsString
+                    } catch {
+                        self.debugLog("❌ [ProPluginLoader] Failed to read plugin script file '\(scriptName)': \(error). Skipping.")
+                        continue
+                    }
+                }
+
                 combinedJSString += "// --- Start: \(scriptName) ---\n"
-                combinedJSString += jsString
+                combinedJSString += scriptBody
                 combinedJSString += "\n// --- End: \(scriptName) ---\n\n"
                 successfullyReadPaths.insert(path)
-            } catch {
-                debugLog("❌ [ProPluginLoader] Failed to read plugin script file '\(scriptName)': \(error). Skipping.")
             }
-        }
 
-        guard !combinedJSString.isEmpty else {
-            debugLog("⚠️ [ProPluginLoader] No plugin script content could be read. Nothing to evaluate.")
-            completion(Set())
-            return
-        }
+            guard !combinedJSString.isEmpty else {
+                self.debugLog("⚠️ [ProPluginLoader] No plugin script content could be read. Nothing to evaluate.")
+                self.completeOnMainThread(with: Set(), completion: completion)
+                return
+            }
 
-        debugLog("ℹ️ [ProPluginLoader] Evaluating combined plugin scripts (\(successfullyReadPaths.count) files)...")
+            self.debugLog("ℹ️ [ProPluginLoader] Evaluating combined plugin scripts (\(successfullyReadPaths.count) files)...")
 
-        webView.evaluateJavaScript(combinedJSString) { _, error in
-            if let error = error {
-                 var errorDetails = "Error: \(error.localizedDescription)"
-                 if let nsError = error as NSError? {
-                     var userInfoString = ""
-                     if !nsError.userInfo.isEmpty {
-                         userInfoString = "\n    User Info:"
-                         let sortedKeys = nsError.userInfo.keys.sorted { $0.localizedCaseInsensitiveCompare($1) == .orderedAscending }
-                         for key in sortedKeys {
-                             if let value = nsError.userInfo[key] {
-                                 userInfoString += "\n      - \(key): \(value)"
+            self.evaluateOnMainThread(webView: webView, javaScript: combinedJSString) { error in
+                if let error = error {
+                     var errorDetails = "Error: \(error.localizedDescription)"
+                     if let nsError = error as NSError? {
+                         var userInfoString = ""
+                         if !nsError.userInfo.isEmpty {
+                             userInfoString = "\n    User Info:"
+                             let sortedKeys = nsError.userInfo.keys.sorted { $0.localizedCaseInsensitiveCompare($1) == .orderedAscending }
+                             for key in sortedKeys {
+                                 if let value = nsError.userInfo[key] {
+                                     userInfoString += "\n      - \(key): \(value)"
+                                 }
                              }
                          }
+                         errorDetails = """
+                         Error Details:
+                           - Domain: \(nsError.domain)
+                           - Code: \(nsError.code)
+                           - Description: \(nsError.localizedDescription)\(userInfoString)
+                         """
                      }
-                     errorDetails = """
-                     Error Details:
-                       - Domain: \(nsError.domain)
-                       - Code: \(nsError.code)
-                       - Description: \(nsError.localizedDescription)\(userInfoString)
-                     """
-                 }
-                self.debugLog("""
-                ❌ [ProPluginLoader] Error evaluating combined plugin scripts:
-                --------------------------------------------------
-                \(errorDetails)
-                --------------------------------------------------
-                """)
-                completion(Set())
-            } else {
-                completion(successfullyReadPaths)
+                    self.debugLog("""
+                    ❌ [ProPluginLoader] Error evaluating combined plugin scripts:
+                    --------------------------------------------------
+                    \(errorDetails)
+                    --------------------------------------------------
+                    """)
+                    self.completeOnMainThread(with: Set(), completion: completion)
+                } else {
+                    self.completeOnMainThread(with: successfullyReadPaths, completion: completion)
+                }
             }
         }
     }
@@ -277,15 +296,13 @@ internal class AAChartViewPluginLoader: AAChartViewPluginLoaderProtocol {
     // Need a way to evaluate JS safely, similar to AAChartView's method
     // This could be passed in or made static/global if appropriate
     private func safeEvaluateJavaScriptString(webView: WKWebView, _ jsString: String) {
-         webView.evaluateJavaScript(jsString, completionHandler: { (item, error) in
+         evaluateOnMainThread(webView: webView, javaScript: jsString) { error in
              #if DEBUG
-             // Simplified error logging for brevity, reuse AAChartView's detailed logging if needed
-             if error != nil {
-                 print("☠️☠️💀☠️☠️ [ProPluginLoader] JS WARNING: \(error!)")
+             if let error {
+                 print("☠️☠️💀☠️☠️ [ProPluginLoader] JS WARNING: \(error)")
              }
              #endif
-             // Note: Cannot call delegate method aaChartViewDidFinishEvaluate here directly
-         })
+         }
      }
 
     // Debug log helper
@@ -293,5 +310,34 @@ internal class AAChartViewPluginLoader: AAChartViewPluginLoaderProtocol {
         #if DEBUG
         print(message)
         #endif
+    }
+
+    private func evaluateOnMainThread(
+        webView: WKWebView,
+        javaScript: String,
+        completion: @escaping (Error?) -> Void
+    ) {
+        onMainThread {
+            webView.evaluateJavaScript(javaScript) { _, error in
+                completion(error)
+            }
+        }
+    }
+
+    private func completeOnMainThread(
+        with result: Set<String>,
+        completion: @escaping (Set<String>) -> Void
+    ) {
+        onMainThread {
+            completion(result)
+        }
+    }
+
+    private func onMainThread(_ block: @escaping () -> Void) {
+        if Thread.isMainThread {
+            block()
+        } else {
+            DispatchQueue.main.async(execute: block)
+        }
     }
 }
