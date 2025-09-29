@@ -64,7 +64,11 @@ internal class DefaultPluginLoader: AAChartViewPluginLoaderProtocol {
 @available(iOS 10.0, macCatalyst 13.1, macOS 10.13, *)
 internal class AAChartViewPluginLoader: AAChartViewPluginLoaderProtocol {
     private let pluginProvider: AAChartViewPluginProviderProtocol
-    private static let scriptCache = NSCache<NSString, NSString>()
+    private static let scriptCache: NSCache<NSString, NSString> = {
+        let cache = NSCache<NSString, NSString>()
+        cache.countLimit = 64
+        return cache
+    }()
     private let pluginIOQueue = DispatchQueue(label: "com.aa.chartview.pluginloader.io", qos: .utility)
     private var requiredPluginPaths: Set<String> = []
     private var loadedPluginPaths: Set<String> = []
@@ -220,7 +224,18 @@ internal class AAChartViewPluginLoader: AAChartViewPluginLoaderProtocol {
         let sortedScriptPaths = sortPluginPaths(scriptsToLoad, merging: dependencies)
 
         pluginIOQueue.async { [weak self, weak webView] in
-            guard let self = self, let webView = webView else { return }
+            guard let self else {
+                DispatchQueue.main.async {
+                    completion(Set())
+                }
+                return
+            }
+
+            guard let webView else {
+                self.debugLog("⚠️ [ProPluginLoader] WKWebView was deallocated before evaluating plugin scripts. Skipping.")
+                self.completeOnMainThread(with: Set(), completion: completion)
+                return
+            }
 
             var combinedJSString = ""
             var successfullyReadPaths = Set<String>()
