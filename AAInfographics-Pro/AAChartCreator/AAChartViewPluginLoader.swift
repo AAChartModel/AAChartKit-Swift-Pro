@@ -5,13 +5,13 @@
 //  Created by AnAn on 2025/9/28.
 //
 
-import WebKit // Import WebKit for WKWebView usage in loader
+import WebKit
 
 
 // --- New Plugin Loader Protocol and Implementations ---
 
 @available(iOS 10.0, macCatalyst 13.1, macOS 10.13, *)
-internal protocol AAChartViewPluginLoaderProtocol {
+internal protocol AAChartViewPluginLoaderProtocol: AnyObject {
     /// Configures the loader with options to determine required plugins and scripts.
     func configure(options: AAOptions)
 
@@ -32,7 +32,7 @@ internal protocol AAChartViewPluginLoaderProtocol {
 
 // Default loader for standard version (does nothing)
 @available(iOS 10.0, macCatalyst 13.1, macOS 10.13, *)
-internal class DefaultPluginLoader: AAChartViewPluginLoaderProtocol {
+internal final class DefaultPluginLoader: AAChartViewPluginLoaderProtocol {
     public init() {}
 
     public func configure(options: AAOptions) {
@@ -62,7 +62,7 @@ internal class DefaultPluginLoader: AAChartViewPluginLoaderProtocol {
 
 // Loader for Pro version, handling plugin loading and scripts
 @available(iOS 10.0, macCatalyst 13.1, macOS 10.13, *)
-internal class AAChartViewPluginLoader: AAChartViewPluginLoaderProtocol {
+internal final class AAChartViewPluginLoader: AAChartViewPluginLoaderProtocol {
     private let pluginProvider: AAChartViewPluginProviderProtocol
     private static let scriptCache: NSCache<NSString, NSString> = {
         let cache = NSCache<NSString, NSString>()
@@ -145,19 +145,19 @@ internal class AAChartViewPluginLoader: AAChartViewPluginLoaderProtocol {
     }
 
     public func executeBeforeDrawScript(webView: WKWebView) {
-        if let script = beforeDrawScript {
-            debugLog("📝 [ProPluginLoader] Executing BeforeDrawScript...")
-            safeEvaluateJavaScriptString(webView: webView, script)
-            beforeDrawScript = nil // Execute only once
-        }
+        guard let script = beforeDrawScript else { return }
+
+        debugLog("📝 [ProPluginLoader] Executing BeforeDrawScript...")
+        safeEvaluateJavaScriptString(webView: webView, script)
+        beforeDrawScript = nil // Execute only once
     }
 
     public func executeAfterDrawScript(webView: WKWebView) {
-        if let script = afterDrawScript {
-            debugLog("📝 [ProPluginLoader] Executing AfterDrawScript...")
-            safeEvaluateJavaScriptString(webView: webView, script)
-            afterDrawScript = nil // Execute only once
-        }
+        guard let script = afterDrawScript else { return }
+
+        debugLog("📝 [ProPluginLoader] Executing AfterDrawScript...")
+        safeEvaluateJavaScriptString(webView: webView, script)
+        afterDrawScript = nil // Execute only once
     }
 
     // --- Helper methods moved from AAChartView ---
