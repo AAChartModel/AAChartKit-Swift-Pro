@@ -80,26 +80,16 @@ internal final class AAChartViewPluginLoader: AAChartViewPluginLoaderProtocol {
     }
 
     public func configure(options: AAOptions) {
-        // Determine required plugins using the provider
-        self.requiredPluginPaths = pluginProvider.getRequiredPluginPaths(for: options)
+        requiredPluginPaths = pluginProvider.getRequiredPluginPaths(for: options)
         #if DEBUG
-        debugLog("🔌 [ProPluginLoader] Determined requiredPluginPaths: \(requiredPluginPaths.map {($0 as NSString).lastPathComponent})")
+        debugLog("🔌 [ProPluginLoader] Determined requiredPluginPaths: \(requiredPluginPaths.map { ($0 as NSString).lastPathComponent })")
         #endif
 
-        // Store and clear pre/post draw scripts from options
-        if options.beforeDrawChartJavaScript != nil {
-            self.beforeDrawScript = options.beforeDrawChartJavaScript
-            options.beforeDrawChartJavaScript = nil
-        } else {
-            self.beforeDrawScript = nil
-        }
+        beforeDrawScript = options.beforeDrawChartJavaScript
+        options.beforeDrawChartJavaScript = nil
 
-        if options.afterDrawChartJavaScript != nil {
-            self.afterDrawScript = options.afterDrawChartJavaScript
-            options.afterDrawChartJavaScript = nil
-        } else {
-            self.afterDrawScript = nil
-        }
+        afterDrawScript = options.afterDrawChartJavaScript
+        options.afterDrawChartJavaScript = nil
     }
 
     public func loadPluginsIfNeeded(
@@ -244,20 +234,7 @@ internal final class AAChartViewPluginLoader: AAChartViewPluginLoaderProtocol {
                 let scriptName = (path as NSString).lastPathComponent
                 let pathKey = path as NSString
 
-                let scriptBody: String
-
-                if let cachedScript = Self.scriptCache.object(forKey: pathKey) {
-                    scriptBody = cachedScript as String
-                } else {
-                    do {
-                        let jsString = try String(contentsOfFile: path, encoding: .utf8)
-                        Self.scriptCache.setObject(jsString as NSString, forKey: pathKey)
-                        scriptBody = jsString
-                    } catch {
-                        self.debugLog("❌ [ProPluginLoader] Failed to read plugin script file '\(scriptName)': \(error). Skipping.")
-                        continue
-                    }
-                }
+                guard let scriptBody = self.readPluginScript(at: pathKey, name: scriptName) else { continue }
 
                 combinedJSString += "// --- Start: \(scriptName) ---\n"
                 combinedJSString += scriptBody
@@ -336,6 +313,21 @@ internal final class AAChartViewPluginLoader: AAChartViewPluginLoaderProtocol {
             webView.evaluateJavaScript(javaScript) { _, error in
                 completion(error)
             }
+        }
+    }
+
+    private func readPluginScript(at pathKey: NSString, name scriptName: String) -> String? {
+        if let cachedScript = Self.scriptCache.object(forKey: pathKey) {
+            return cachedScript as String
+        }
+
+        do {
+            let jsString = try String(contentsOfFile: pathKey as String, encoding: .utf8)
+            Self.scriptCache.setObject(jsString as NSString, forKey: pathKey)
+            return jsString
+        } catch {
+            debugLog("❌ [ProPluginLoader] Failed to read plugin script file '\(scriptName)': \(error). Skipping.")
+            return nil
         }
     }
 
