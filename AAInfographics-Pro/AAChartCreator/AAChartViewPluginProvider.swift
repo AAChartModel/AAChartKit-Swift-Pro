@@ -1,28 +1,29 @@
 import Foundation
-import WebKit // Import WebKit for WKWebView usage in loader
 
 // Protocol defining the responsibility for providing required plugin paths
 @available(iOS 10.0, macCatalyst 13.1, macOS 10.13, *)
-internal protocol AAChartViewPluginProviderProtocol {
+internal protocol AAChartViewPluginProviderProtocol: AnyObject {
     func getRequiredPluginPaths(for options: AAOptions) -> Set<String>
 }
 
 // Default provider (can be used for the standard version or as a base)
 @available(iOS 10.0, macCatalyst 13.1, macOS 10.13, *)
-internal class DefaultPluginProvider: AAChartViewPluginProviderProtocol {
-    public init() {} // Public initializer
+internal final class DefaultPluginProvider: AAChartViewPluginProviderProtocol {
+    public init() {}
 
     public func getRequiredPluginPaths(for options: AAOptions) -> Set<String> {
-        // Standard version might return empty or handle truly common plugins if any exist
-        // For now, returning empty as per the abstraction goal.
-        return AAChartViewPluginProvider.init().getRequiredPluginPaths(for: options)
+        return Set()
     }
 }
 
 // Provider for the Pro version, handling specific chart type plugins
 @available(iOS 10.0, macCatalyst 13.1, macOS 10.13, *)
-internal class AAChartViewPluginProvider: AAChartViewPluginProviderProtocol {
-    public init() {} // Public initializer
+internal final class AAChartViewPluginProvider: AAChartViewPluginProviderProtocol {
+    public init(bundlePathLoader: BundlePathLoading = BundlePathLoader()) {
+        self.bundlePathLoader = bundlePathLoader
+    }
+
+    private let bundlePathLoader: BundlePathLoading
 
     // Mapping from chart type rawValue to script names (moved from AAChartView)
     private static let chartTypeScriptMapping: [String: [String]] = [
@@ -129,29 +130,25 @@ internal class AAChartViewPluginProvider: AAChartViewPluginProviderProtocol {
 
     // Helper to add scripts based on specific AAOptions properties
     private func addChartPluginScripts(for options: AAOptions, into requiredPaths: inout Set<String>) {
-        if options.chart?.parallelCoordinates == true {
-            if let scriptPath = generateScriptPathWithScriptName("AAParallel-Coordinates") {
-                requiredPaths.insert(scriptPath)
-            }
+        if options.chart?.parallelCoordinates == true,
+           let scriptPath = generateScriptPathWithScriptName("AAParallel-Coordinates") {
+            requiredPaths.insert(scriptPath)
         }
-        if options.data != nil {
-             if let scriptPath = generateScriptPathWithScriptName("AAData") {
-                requiredPaths.insert(scriptPath)
-            }
+
+          if options.data != nil,
+              let scriptPath = generateScriptPathWithScriptName("AAData") {
+            requiredPaths.insert(scriptPath)
         }
-        // Add checks for other options properties that require specific plugins if needed
     }
 
     // Generates the full path for a given script name (moved from AAChartView)
     // Consider moving this to a shared utility if used elsewhere.
     private func generateScriptPathWithScriptName(_ scriptName: String) -> String? {
-        // Assuming BundlePathLoader is accessible here or refactored.
-        // If BundlePathLoader is specific to AAChartView's context,
-        // you might need to pass the bundle or path finding logic differently.
-        guard let path = BundlePathLoader()
+        guard let path = bundlePathLoader
             .path(forResource: scriptName,
                   ofType: "js",
-                  inDirectory: "AAJSFiles.bundle/AAModules")
+                  inDirectory: "AAJSFiles.bundle/AAModules",
+                  forLocalization: nil)
         else {
             #if DEBUG
             print("⚠️ Warning: Could not find path for script '\(scriptName).js'")
@@ -165,5 +162,18 @@ internal class AAChartViewPluginProvider: AAChartViewPluginProviderProtocol {
         return urlStr.path
     }
 }
+
+// MARK: - Bundle Path Loader Abstraction
+
+internal protocol BundlePathLoading {
+    func path(
+        forResource name: String,
+        ofType fileType: String,
+        inDirectory subpath: String?,
+        forLocalization localizationName: String?
+    ) -> String?
+}
+
+extension BundlePathLoader: BundlePathLoading {}
 
 
