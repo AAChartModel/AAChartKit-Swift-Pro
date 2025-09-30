@@ -65,6 +65,7 @@ struct MainView: View {
 
 private struct MainContent: View {
     let sections: [ChartSection]
+    @Environment(\.colorScheme) private var colorScheme
 
     var body: some View {
         ScrollViewReader { proxy in
@@ -81,7 +82,7 @@ private struct MainContent: View {
                     .padding(.trailing, 4)
                 }
             }
-            .background(Color.white)
+            .background(Color(.systemBackground))
         }
     }
 
@@ -101,7 +102,7 @@ private struct MainContent: View {
                                 .padding(.vertical, 8)
                                 .multilineTextAlignment(.leading)
                         }
-                        .listRowBackgroundCompat(Color.white)
+                        .listRowBackgroundCompat(Color(.systemBackground))
                     }
                 } header: {
                     SectionHeader(title: section.title)
@@ -111,7 +112,7 @@ private struct MainContent: View {
             }
         }
         .listStyle(.plain)
-        .background(Color.white)
+        .background(Color(.systemBackground))
 
         if #available(iOS 16.0, *) {
             list
@@ -124,20 +125,36 @@ private struct MainContent: View {
 
 private struct SectionHeader: View {
     let title: String
+    @Environment(\.colorScheme) private var colorScheme
 
     var body: some View {
         Text(title)
             .font(.system(size: 17, weight: .bold))
-            .foregroundColor(Color(hex: 0x7B68EE))
+            .foregroundColor(headerTextColor)
             .frame(maxWidth: .infinity, alignment: .center)
             .padding(.vertical, 10)
-            .background(Color(hex: 0xF5F5F5))
+            .background(headerBackgroundColor)
+    }
+
+    private var headerBackgroundColor: Color {
+        if colorScheme == .dark {
+            return Color(.secondarySystemBackground)
+        }
+        return Color(hex: 0xF5F5F5)
+    }
+
+    private var headerTextColor: Color {
+        if colorScheme == .dark {
+            return Color(hex: 0xC3BCFF)
+        }
+        return Color(hex: 0x7B68EE)
     }
 }
 
 private struct SectionIndexSidebar: View {
     let sections: [ChartSection]
     let onSelect: (ChartSection) -> Void
+    @Environment(\.colorScheme) private var colorScheme
 
     var body: some View {
         VStack(spacing: 6) {
@@ -147,7 +164,7 @@ private struct SectionIndexSidebar: View {
                 } label: {
                     Text(section.indexTitle)
                         .font(.system(size: 12, weight: .semibold))
-                        .foregroundColor(.gray)
+                        .foregroundColor(Color(.secondaryLabel))
                         .padding(.horizontal, 6)
                         .padding(.vertical, 4)
                         .background(sidebarBackground())
@@ -160,10 +177,29 @@ private struct SectionIndexSidebar: View {
     @ViewBuilder
     private func sidebarBackground() -> some View {
         if #available(iOS 15.0, *) {
-            Capsule().fill(.ultraThinMaterial)
+            Capsule()
+                .fill(Color.clear)
+                .background(
+                    Capsule()
+                        .fill(sidebarTintColor)
+                )
         } else {
-            Capsule().fill(Color.white.opacity(0.8))
+            Capsule().fill(sidebarFallbackColor)
         }
+    }
+
+    private var sidebarFallbackColor: Color {
+        if colorScheme == .dark {
+            return Color(.systemGray4).opacity(0.65)
+        }
+        return Color(.systemBackground).opacity(0.8)
+    }
+
+    private var sidebarTintColor: Color {
+        if colorScheme == .dark {
+            return Color(.tertiarySystemBackground).opacity(0.7)
+        }
+        return Color(.systemBackground).opacity(0.85)
     }
 }
 
