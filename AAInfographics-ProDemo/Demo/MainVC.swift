@@ -44,6 +44,7 @@ final class MainVC: UIHostingController<MainView> {
 
 struct MainView: View {
     private let sections = ChartSection.defaultSections()
+    @State private var colorSchemeOverride: ColorScheme? = nil
 
     var body: some View {
         Group {
@@ -51,6 +52,11 @@ struct MainView: View {
                 NavigationStack {
                     MainContent(sections: sections)
                         .navigationTitle("AAInfographics-Pro")
+                        .toolbar {
+                            ToolbarItem(placement: .topBarTrailing) {
+                                ModeToggleButton(colorSchemeOverride: $colorSchemeOverride)
+                            }
+                        }
                 }
             } else {
                 NavigationView {
@@ -58,8 +64,14 @@ struct MainView: View {
                         .navigationBarTitle("AAInfographics-Pro")
                 }
                 .navigationViewStyle(StackNavigationViewStyle())
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        ModeToggleButton(colorSchemeOverride: $colorSchemeOverride)
+                    }
+                }
             }
         }
+        .preferredColorScheme(colorSchemeOverride)
     }
 }
 
@@ -470,6 +482,28 @@ private extension View {
         } else {
             self
         }
+    }
+}
+
+private struct ModeToggleButton: View {
+    @Binding var colorSchemeOverride: ColorScheme?
+    @Environment(\.colorScheme) private var systemColorScheme
+
+    var body: some View {
+        Button(action: toggleMode) {
+            Image(systemName: currentScheme == .dark ? "sun.max.fill" : "moon.stars.fill")
+                .font(.system(size: 18, weight: .semibold))
+        }
+        .accessibilityLabel(currentScheme == .dark ? "切换为日间模式" : "切换为夜间模式")
+        .accessibilityHint("在应用内直接切换外观模式")
+    }
+
+    private var currentScheme: ColorScheme {
+        colorSchemeOverride ?? systemColorScheme
+    }
+
+    private func toggleMode() {
+        colorSchemeOverride = currentScheme == .dark ? .light : .dark
     }
 }
 
