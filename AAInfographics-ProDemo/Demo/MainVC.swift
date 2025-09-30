@@ -146,12 +146,12 @@ private struct SectionCard: View {
             header
 
             VStack(spacing: 12) {
-                ForEach(section.items) { item in
+                ForEach(Array(section.items.enumerated()), id: \.element.id) { itemIndex, item in
                     NavigationLink {
                         ViewControllerHost(builder: item.destination)
                             .ignoresSafeArea()
                     } label: {
-                        SectionItemRow(title: item.title, style: style)
+                        SectionItemRow(title: item.title, style: style, index: itemIndex)
                     }
                     .buttonStyle(.plain)
                 }
@@ -240,6 +240,7 @@ private struct SectionCard: View {
 private struct SectionItemRow: View {
     let title: String
     let style: SectionCardStyle
+    let index: Int
     @Environment(\.colorScheme) private var colorScheme
 
     var body: some View {
@@ -248,8 +249,8 @@ private struct SectionItemRow: View {
                 .fill(style.accentGradient)
                 .frame(width: 42, height: 42)
                 .overlay(
-                    Image(systemName: style.itemIconName)
-                        .font(.system(size: 18, weight: .semibold))
+                    Text(displayIndex)
+                        .font(.system(size: 18, weight: .heavy))
                         .foregroundColor(Color.white)
                 )
 
@@ -293,12 +294,15 @@ private struct SectionItemRow: View {
     private var rowShadowColor: Color {
         colorScheme == .dark ? Color.black.opacity(0.35) : Color.black.opacity(0.1)
     }
+
+    private var displayIndex: String {
+        index < 9 ? "0\(index + 1)" : "\(index + 1)"
+    }
 }
 
 private struct SectionCardStyle {
     let accentColors: [Color]
     let iconName: String
-    let itemIconName: String
 
     var accentGradient: LinearGradient {
         LinearGradient(colors: accentColors, startPoint: .topLeading, endPoint: .bottomTrailing)
@@ -319,71 +323,58 @@ private extension SectionCardStyle {
         let palettes: [SectionCardStyle] = [
             SectionCardStyle(
                 accentColors: [Color(hex: 0x60A5FA), Color(hex: 0x34D399)],
-                iconName: "point.topleft.down.curvedto.point.bottomright.up",
-                itemIconName: "sparkles"
+                iconName: "point.topleft.down.curvedto.point.bottomright.up"
             ),
             SectionCardStyle(
                 accentColors: [Color(hex: 0xF97316), Color(hex: 0xFDE047)],
-                iconName: "flame.fill",
-                itemIconName: "square.grid.3x3.topleft.fill"
+                iconName: "flame.fill"
             ),
             SectionCardStyle(
                 accentColors: [Color(hex: 0xF472B6), Color(hex: 0x8B5CF6)],
-                iconName: "circle.grid.3x3.fill",
-                itemIconName: "circle.hexagonpath.fill"
+                iconName: "circle.grid.3x3.fill"
             ),
             SectionCardStyle(
                 accentColors: [Color(hex: 0x22D3EE), Color(hex: 0x0EA5E9)],
-                iconName: "chart.bar.fill",
-                itemIconName: "chart.bar.xaxis"
+                iconName: "chart.bar.fill"
             ),
             SectionCardStyle(
                 accentColors: [Color(hex: 0xA855F7), Color(hex: 0x6366F1)],
-                iconName: "waveform.path.ecg.rectangle",
-                itemIconName: "waveform.path"
+                iconName: "waveform.path.ecg.rectangle"
             ),
             SectionCardStyle(
                 accentColors: [Color(hex: 0xF87171), Color(hex: 0xFB7185)],
-                iconName: "hand.tap.fill",
-                itemIconName: "hand.point.up.left.fill"
+                iconName: "hand.tap.fill"
             ),
             SectionCardStyle(
                 accentColors: [Color(hex: 0x4ADE80), Color(hex: 0x22C55E)],
-                iconName: "square.grid.2x2.fill",
-                itemIconName: "square.stack.3d.up"
+                iconName: "square.grid.2x2.fill"
             ),
             SectionCardStyle(
                 accentColors: [Color(hex: 0x0EA5E9), Color(hex: 0x6366F1)],
-                iconName: "waveform.path.fill",
-                itemIconName: "waveform"
+                iconName: "waveform.path.fill"
             ),
             SectionCardStyle(
                 accentColors: [Color(hex: 0xF59E0B), Color(hex: 0xF97316)],
-                iconName: "chart.pie.fill",
-                itemIconName: "chart.pie"
+                iconName: "chart.pie.fill"
             ),
             SectionCardStyle(
                 accentColors: [Color(hex: 0x2DD4BF), Color(hex: 0x14B8A6)],
-                iconName: "tree.fill",
-                itemIconName: "leaf.fill"
+                iconName: "tree.fill"
             ),
             SectionCardStyle(
                 accentColors: [Color(hex: 0xFB7185), Color(hex: 0xF472B6)],
-                iconName: "hand.tap",
-                itemIconName: "hand.raised.fill"
+                iconName: "hand.tap"
             ),
             SectionCardStyle(
                 accentColors: [Color(hex: 0x7C3AED), Color(hex: 0x38BDF8)],
-                iconName: "clock.arrow.circlepath",
-                itemIconName: "bed.double.fill"
+                iconName: "clock.arrow.circlepath"
             )
         ]
 
         guard !palettes.isEmpty else {
             return SectionCardStyle(
                 accentColors: [Color(hex: 0x6366F1), Color(hex: 0xEC4899)],
-                iconName: "chart.bar.xaxis",
-                itemIconName: "sparkles"
+                iconName: "chart.bar.xaxis"
             )
         }
 
