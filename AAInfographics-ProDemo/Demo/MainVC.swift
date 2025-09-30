@@ -30,290 +30,417 @@
  
  */
 
-import UIKit
+import SwiftUI
 
-
-class MainVC: UIViewController {
-    private var sectionTitleArr = [
-        "RelationshipChart | 关系类型图表",
-        "HeatOrTreeMapChart | 热力或树形类型图表",
-        "BubbleChart | 气泡类型图表",
-        "ColumnVariantChart | 柱形图(变体)类型图表",
-        "MoreProType | 更多高级类型图表",
-        "Custom Event | 自定义交互事件",
-        "DrilldownChart | 可钻取图表",
-        "BoostChart | 加速图表",
-        "OfficialChartSample | 官方示例",
-        "FractalChartListVC | 分形图表列表",
-        "Custom Event2 | 自定义交互事件2",
-        "AACustomStageChartVC | 自定义分段图"
-    ]
-    private var chartTypeNameArr = [
-        // "RelationshipChart | 关系类型图表",
-        [
-            "sankeyChart---桑基图",
-            "dependencywheelChart---和弦图🎸",
-            "arcdiagramChart1---弧形图1🌈",
-            "arcdiagramChart2---弧形图2🌈",
-            "arcdiagramChart3---弧形图3🌈",
-            "organizationChart---组织结构图",
-            "networkgraphChart---力导关系图✢✣✤✥",
-            "simpleDependencyWheelChart---简单的和弦图🎵",
-        ],
-        // "HeatOrTreeMapChart | 热力或树形类型图表",
-        [
-            "heatmapChart---热力图🌡",
-            "treemapWithColorAxisData---包好色彩轴的矩形树图🌲",
-            "treemapWithLevelsData---包含等级的矩形树图🌲",
-            "drilldownLargeDataTreemapChart---可下钻的大数据量矩形树图🌲",
-            "largeDataHeatmapChart---大数据量热力图🌡",
-
-            "simpleTilemapWithHexagonTileShape---简单的砖块图🧱(六边形蜂巢图🐝)",
-            "simpleTilemapWithCircleTileShape---简单的砖块图🧱(圆形)",
-            "simpleTilemapWithDiamondTileShape---简单的砖块图🧱(菱形)",
-            "simpleTilemapWithSquareTileShape---简单的砖块图🧱(正方形)",
-
-            "tilemapForAfricaWithHexagonTileShape---非洲砖块图🧱(六边形蜂巢图🐝)",
-            "tilemapForAfricaWithCircleTileShape---非洲砖块图🧱(圆形)",
-            "tilemapForAfricaWithDiamondTileShape---非洲砖块图🧱(菱形)",
-            "tilemapForAfricaWithSquareTileShape---非洲砖块图🧱(正方形)",
-
-            "tilemapForAmericaWithHexagonTileShape---美洲砖块图🧱(六边形蜂巢图🐝)",
-            "tilemapForAmericaWithCircleTileShape---美洲砖块图🧱(圆形)",
-            "tilemapForAmericaWithDiamondTileShape---美洲砖块图🧱(菱形)",
-            "tilemapForAmericaWithSquareTileShape---美洲砖块图🧱(正方形)",
-
-        ],
-        // "BubbleChart | 气泡类型图表",
-        [
-            "packedbubbleChart---气泡填充图🎈",
-            "packedbubbleSplitChart---圆堆积图🎈",
-            "packedbubbleSpiralChart---渐进变化的气泡图🎈",
-            "eulerChart---欧拉图",
-            "vennChart---韦恩图",
-        ],
-        // "ColumnVariantChart | 柱形图(变体)类型图表",
-        [
-            "variwideChart---可变宽度的柱形图",
-            "columnpyramidChart---角锥柱形图",
-            "dumbbellChart---哑铃图",
-            "lollipopChart---棒棒糖🍭图",
-            "xrangeChart---X轴范围图||甘特图||条码图",
-            "histogramChart---直方混合散点图📊",
-            "bellcurveChart---钟形曲线混合散点图🔔",
-            "bulletChart---子弹图",
-            "inverted xrangeChart---倒转的X轴范围图||甘特图||条码图",
-            "pictorial1Chart---象形柱形图1",
-            "pictorial2Chart---象形柱形图2",
-            
-        ],
-        // "MoreProType | 更多高级类型图表",
-        [
-            "sunburstChart---旭日图🌞",
-            "streamgraphChart---流图🌊",
-            "vectorChart---向量图🏹",
-            "bellcurveChart---贝尔曲线图",
-            "timelineChart---时序图⌚️",
-            "itemChart---议会项目图🀙🀚🀜🀞🀠🀡",
-            "windbarbChart---风羽图🌪️",
-            "wordcloudChart---词云图☁️",
-            "flameChart---火焰图🔥",
-            "itemChart2---议会项目图2🀙🀚🀜🀞🀠🀡",
-            "itemChart3---议会项目图3🀙🀚🀜🀞🀠🀡",
-            "icicleChart---冰柱图🧊",
-            "sunburstChart2---旭日图☀️",
-            "solidgaugeChart---活动图🏃🏻‍♀️",
-            "parallelCoordinatesSplineChart---平行坐标曲线图",
-            "parallelCoordinatesLineChart---平行坐标折线图📈",
-            "volinPlotChart---小提琴图🎻",
-            "variablepieChart---可变宽度的饼图🍪",
-            "semicircleSolidGaugeChart---半圆形活动图🏃🏻‍♀️",
-        ],
-        // "Custom Event---自定义交互事件",
-        [
-            "Custom Event---自定义交互事件",
-        ],
-        // "DrilldownChart---可钻取图表",
-        [
-            "columnChart---柱形图",
-        ],
-        // "BoostChart---加速图表",
-        [
-            //            case 0: return [AABoostChartComposer lineChart];
-            //            case 1: return [AABoostChartComposer areaChart];
-            //            case 2: return [AABoostChartComposer columnChart];
-            "lineChart---折线图",
-            "areaChart---区域填充图",
-            "columnChart---柱形图",
-            "scatterChartWith1MillionPoints---散点图(100万数据量)",
-        ],
-        // "OfficialChartSample---官方示例",
-        [
-            "columnChart---柱形图",
-        ],
-        //"FractalChartListVC---分形图表列表",
-        [
-            "FractalChartListVC---分形图表列表",
-        ],
-        // "Custom Event2---自定义交互事件2",
-        [
-            "Custom Event2---自定义交互事件2",
-        ],
-        // "AACustomStageChartVC | 自定义分段图",
-        [
-            "AACustomStageChartVC | 自定义分段睡眠💤图",
-        ],
-    ]
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        title = "AAInfographics-Pro"
-        view.backgroundColor = .white
-        setUpMainTableView()
+final class MainVC: UIHostingController<MainView> {
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder, rootView: MainView())
     }
-    
-    private func setUpMainTableView() {
-        let tableView = UITableView()
-        tableView.frame = self.view.bounds
-        tableView.autoresizingMask = [.flexibleWidth , .flexibleHeight]
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.backgroundColor = .white
-        tableView.rowHeight = 45
-        tableView.sectionHeaderHeight = 45
-        view.addSubview(tableView)
-    }
-    
-    private func kRGBColorFromHex(rgbValue: Int) -> (UIColor) {
-        return UIColor(
-            red: ((CGFloat)((rgbValue & 0xFF0000) >> 16)) / 255.0,
-            green: ((CGFloat)((rgbValue & 0xFF00) >> 8)) / 255.0,
-            blue: ((CGFloat)(rgbValue & 0xFF)) / 255.0,
-            alpha: 1.0
-        )
+
+    init() {
+        super.init(rootView: MainView())
     }
 }
 
-extension MainVC: UITableViewDelegate, UITableViewDataSource {
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return chartTypeNameArr.count
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return chartTypeNameArr[section].count
-    }
-    
-    func sectionIndexTitles(for tableView: UITableView) -> [String]? {
-        var listTitles = [String]()
-        for item: String in sectionTitleArr {
-            let titleStr = item.prefix(1)
-            listTitles.append(String(titleStr))
-        }
-        return listTitles
-    }
-    
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let sectionHeaderView = UIView()
-        sectionHeaderView.backgroundColor = kRGBColorFromHex(rgbValue: 0xF5F5F5)//白烟
-        
-        let sectionTitleLabel = UILabel()
-        sectionTitleLabel.frame = sectionHeaderView.bounds
-        sectionTitleLabel.autoresizingMask = [.flexibleWidth , .flexibleHeight]
-        sectionTitleLabel.text = sectionTitleArr[section]
-        sectionTitleLabel.textColor =  kRGBColorFromHex(rgbValue: 0x7B68EE)//熏衣草花の淡紫色
-        sectionTitleLabel.font = .boldSystemFont(ofSize: 17)
-        sectionTitleLabel.textAlignment = .center
-        sectionHeaderView.addSubview(sectionTitleLabel)
-        
-        return sectionHeaderView
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let identifier = "cell"
-        var cell: UITableViewCell! = tableView.dequeueReusableCell(withIdentifier: identifier)
-        if cell == nil {
-            cell = UITableViewCell.init(style: .default, reuseIdentifier: identifier)
-        }
-        
-        let cellTitle = chartTypeNameArr[indexPath.section][indexPath.row]
-        cell?.textLabel?.numberOfLines = 0
-        cell?.textLabel?.text = cellTitle
-        cell?.textLabel?.font = .systemFont(ofSize: 16)
-        cell?.accessoryType = .disclosureIndicator
-        return cell
-    }
-    
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        switch indexPath.section {
-        case 0:
-            let vc = AARelationshipChartVC()
-            vc.selectedIndex = indexPath.row
-            vc.navigationItemTitleArr = chartTypeNameArr[indexPath.section]
-            navigationController?.pushViewController(vc, animated: true)
-        case 1:
-            let vc = AAHeatOrTreeMapChartVC()
-            vc.selectedIndex = indexPath.row
-            vc.navigationItemTitleArr = chartTypeNameArr[indexPath.section]
-            navigationController?.pushViewController(vc, animated: true)
-        case 2:
-            let vc = AABubbleChartVC()
-            vc.selectedIndex = indexPath.row
-            vc.navigationItemTitleArr = chartTypeNameArr[indexPath.section]
-            navigationController?.pushViewController(vc, animated: true)
-        case 3:
-            let vc = AAColumnVariantChartVC()
-            vc.selectedIndex = indexPath.row
-            vc.navigationItemTitleArr = chartTypeNameArr[indexPath.section]
-            navigationController?.pushViewController(vc, animated: true)
-        case 4:
-            let vc = ChartProVC()
-            vc.selectedIndex = indexPath.row
-            vc.navigationItemTitleArr = chartTypeNameArr[indexPath.section]
-            navigationController?.pushViewController(vc, animated: true)
-        case 5:
-            let vc = CustomClickEventCallbackMessageVC()
-            navigationController?.pushViewController(vc, animated: true)
-            
-        case 6:
-            let vc = AADrilldownChartVC()
-            vc.selectedIndex = indexPath.row
-            vc.navigationItemTitleArr = chartTypeNameArr[indexPath.section]
-            navigationController?.pushViewController(vc, animated: true)
-            
-        case 7:
-            let vc = AABoostChartVC()
-            vc.selectedIndex = indexPath.row
-            vc.navigationItemTitleArr = chartTypeNameArr[indexPath.section]
-            navigationController?.pushViewController(vc, animated: true)
-            
-        case 8:
-            let vc = OfficialChartSampleVC()
-//            vc.selectedIndex = indexPath.row
-//            vc.navigationItemTitleArr = chartTypeNameArr[indexPath.section]
-            navigationController?.pushViewController(vc, animated: true)
-            
-        case 9:
-            let vc = ChartListTableViewVC()
-//            vc.selectedIndex = indexPath.row
-//            vc.navigationItemTitleArr = chartTypeNameArr[indexPath.section]
-            navigationController?.pushViewController(vc, animated: true)
-            
-        case 10:
-            let vc = CustomClickEventCallbackMessageVC2()
-            navigationController?.pushViewController(vc, animated: true)
-            
-        case 11:
-            let vc = AACustomStageChartVC()
-//            vc.selectedIndex = indexPath.row
-//            vc.navigationItemTitleArr = chartTypeNameArr[indexPath.section]
-            navigationController?.pushViewController(vc, animated: true)
-        default:
-            break
+struct MainView: View {
+    private let sections = ChartSection.defaultSections()
+
+    var body: some View {
+        Group {
+            if #available(iOS 16.0, *) {
+                NavigationStack {
+                    MainContent(sections: sections)
+                        .navigationTitle("AAInfographics-Pro")
+                }
+            } else {
+                NavigationView {
+                    MainContent(sections: sections)
+                        .navigationBarTitle("AAInfographics-Pro")
+                }
+                .navigationViewStyle(StackNavigationViewStyle())
+            }
         }
     }
-    
-    
-    
 }
+
+private struct MainContent: View {
+    let sections: [ChartSection]
+
+    var body: some View {
+        ScrollViewReader { proxy in
+            ZStack(alignment: .trailing) {
+                listView(proxy: proxy)
+
+                if sections.count > 1 {
+                    SectionIndexSidebar(sections: sections) { target in
+                        withAnimation(.easeInOut) {
+                            proxy.scrollTo(target.id, anchor: .top)
+                        }
+                    }
+                    .padding(.vertical, 16)
+                    .padding(.trailing, 4)
+                }
+            }
+            .background(Color.white)
+        }
+    }
+
+    @ViewBuilder
+    private func listView(proxy: ScrollViewProxy) -> some View {
+        let list = List {
+            ForEach(sections) { section in
+                Section {
+                    ForEach(section.items) { item in
+                        NavigationLink {
+                            ViewControllerHost(builder: item.destination)
+                                .ignoresSafeArea()
+                        } label: {
+                            Text(item.title)
+                                .font(.system(size: 16))
+                                .foregroundColor(.primary)
+                                .padding(.vertical, 8)
+                                .multilineTextAlignment(.leading)
+                        }
+                        .listRowBackgroundCompat(Color.white)
+                    }
+                } header: {
+                    SectionHeader(title: section.title)
+                }
+                .textCase(nil)
+                .id(section.id)
+            }
+        }
+        .listStyle(.plain)
+        .background(Color.white)
+
+        if #available(iOS 16.0, *) {
+            list
+                .scrollContentBackground(.hidden)
+        } else {
+            list
+        }
+    }
+}
+
+private struct SectionHeader: View {
+    let title: String
+
+    var body: some View {
+        Text(title)
+            .font(.system(size: 17, weight: .bold))
+            .foregroundColor(Color(hex: 0x7B68EE))
+            .frame(maxWidth: .infinity, alignment: .center)
+            .padding(.vertical, 10)
+            .background(Color(hex: 0xF5F5F5))
+    }
+}
+
+private struct SectionIndexSidebar: View {
+    let sections: [ChartSection]
+    let onSelect: (ChartSection) -> Void
+
+    var body: some View {
+        VStack(spacing: 6) {
+            ForEach(sections) { section in
+                Button {
+                    onSelect(section)
+                } label: {
+                    Text(section.indexTitle)
+                        .font(.system(size: 12, weight: .semibold))
+                        .foregroundColor(.gray)
+                        .padding(.horizontal, 6)
+                        .padding(.vertical, 4)
+                        .background(sidebarBackground())
+                }
+                .buttonStyle(.plain)
+            }
+        }
+    }
+
+    @ViewBuilder
+    private func sidebarBackground() -> some View {
+        if #available(iOS 15.0, *) {
+            Capsule().fill(.ultraThinMaterial)
+        } else {
+            Capsule().fill(Color.white.opacity(0.8))
+        }
+    }
+}
+
+private struct ChartSection: Identifiable {
+    let id = UUID()
+    let title: String
+    let items: [ChartItem]
+
+    var indexTitle: String {
+        String(title.prefix(1))
+    }
+
+    static func defaultSections() -> [ChartSection] {
+        let sectionTitles = [
+            "RelationshipChart | 关系类型图表",
+            "HeatOrTreeMapChart | 热力或树形类型图表",
+            "BubbleChart | 气泡类型图表",
+            "ColumnVariantChart | 柱形图(变体)类型图表",
+            "MoreProType | 更多高级类型图表",
+            "Custom Event | 自定义交互事件",
+            "DrilldownChart | 可钻取图表",
+            "BoostChart | 加速图表",
+            "OfficialChartSample | 官方示例",
+            "FractalChartListVC | 分形图表列表",
+            "Custom Event2 | 自定义交互事件2",
+            "AACustomStageChartVC | 自定义分段图"
+        ]
+
+        let chartTypeNameArr = [
+            [
+                "sankeyChart---桑基图",
+                "dependencywheelChart---和弦图🎸",
+                "arcdiagramChart1---弧形图1🌈",
+                "arcdiagramChart2---弧形图2🌈",
+                "arcdiagramChart3---弧形图3🌈",
+                "organizationChart---组织结构图",
+                "networkgraphChart---力导关系图✢✣✤✥",
+                "simpleDependencyWheelChart---简单的和弦图🎵",
+            ],
+            [
+                "heatmapChart---热力图🌡",
+                "treemapWithColorAxisData---包好色彩轴的矩形树图🌲",
+                "treemapWithLevelsData---包含等级的矩形树图🌲",
+                "drilldownLargeDataTreemapChart---可下钻的大数据量矩形树图🌲",
+                "largeDataHeatmapChart---大数据量热力图🌡",
+                "simpleTilemapWithHexagonTileShape---简单的砖块图🧱(六边形蜂巢图🐝)",
+                "simpleTilemapWithCircleTileShape---简单的砖块图🧱(圆形)",
+                "simpleTilemapWithDiamondTileShape---简单的砖块图🧱(菱形)",
+                "simpleTilemapWithSquareTileShape---简单的砖块图🧱(正方形)",
+                "tilemapForAfricaWithHexagonTileShape---非洲砖块图🧱(六边形蜂巢图🐝)",
+                "tilemapForAfricaWithCircleTileShape---非洲砖块图🧱(圆形)",
+                "tilemapForAfricaWithDiamondTileShape---非洲砖块图🧱(菱形)",
+                "tilemapForAfricaWithSquareTileShape---非洲砖块图🧱(正方形)",
+                "tilemapForAmericaWithHexagonTileShape---美洲砖块图🧱(六边形蜂巢图🐝)",
+                "tilemapForAmericaWithCircleTileShape---美洲砖块图🧱(圆形)",
+                "tilemapForAmericaWithDiamondTileShape---美洲砖块图🧱(菱形)",
+                "tilemapForAmericaWithSquareTileShape---美洲砖块图🧱(正方形)",
+            ],
+            [
+                "packedbubbleChart---气泡填充图🎈",
+                "packedbubbleSplitChart---圆堆积图🎈",
+                "packedbubbleSpiralChart---渐进变化的气泡图🎈",
+                "eulerChart---欧拉图",
+                "vennChart---韦恩图",
+            ],
+            [
+                "variwideChart---可变宽度的柱形图",
+                "columnpyramidChart---角锥柱形图",
+                "dumbbellChart---哑铃图",
+                "lollipopChart---棒棒糖🍭图",
+                "xrangeChart---X轴范围图||甘特图||条码图",
+                "histogramChart---直方混合散点图📊",
+                "bellcurveChart---钟形曲线混合散点图🔔",
+                "bulletChart---子弹图",
+                "inverted xrangeChart---倒转的X轴范围图||甘特图||条码图",
+                "pictorial1Chart---象形柱形图1",
+                "pictorial2Chart---象形柱形图2",
+            ],
+            [
+                "sunburstChart---旭日图🌞",
+                "streamgraphChart---流图🌊",
+                "vectorChart---向量图🏹",
+                "bellcurveChart---贝尔曲线图",
+                "timelineChart---时序图⌚️",
+                "itemChart---议会项目图🀙🀚🀜🀞🀠🀡",
+                "windbarbChart---风羽图🌪️",
+                "wordcloudChart---词云图☁️",
+                "flameChart---火焰图🔥",
+                "itemChart2---议会项目图2🀙🀚🀜🀞🀠🀡",
+                "itemChart3---议会项目图3🀙🀚🀜🀞🀠🀡",
+                "icicleChart---冰柱图🧊",
+                "sunburstChart2---旭日图☀️",
+                "solidgaugeChart---活动图🏃🏻‍♀️",
+                "parallelCoordinatesSplineChart---平行坐标曲线图",
+                "parallelCoordinatesLineChart---平行坐标折线图📈",
+                "volinPlotChart---小提琴图🎻",
+                "variablepieChart---可变宽度的饼图🍪",
+                "semicircleSolidGaugeChart---半圆形活动图🏃🏻‍♀️",
+            ],
+            [
+                "Custom Event---自定义交互事件",
+            ],
+            [
+                "columnChart---柱形图",
+            ],
+            [
+                "lineChart---折线图",
+                "areaChart---区域填充图",
+                "columnChart---柱形图",
+                "scatterChartWith1MillionPoints---散点图(100万数据量)",
+            ],
+            [
+                "columnChart---柱形图",
+            ],
+            [
+                "FractalChartListVC---分形图表列表",
+            ],
+            [
+                "Custom Event2---自定义交互事件2",
+            ],
+            [
+                "AACustomStageChartVC | 自定义分段睡眠💤图",
+            ],
+        ]
+
+        func makeIndexedItems(_ titles: [String], factory: @escaping (Int, [String]) -> UIViewController) -> [ChartItem] {
+            titles.enumerated().map { index, label in
+                let navigationTitles = titles
+                return ChartItem(title: label) {
+                    factory(index, navigationTitles)
+                }
+            }
+        }
+
+        var sections: [ChartSection] = []
+
+        for (index, title) in sectionTitles.enumerated() {
+            let names = chartTypeNameArr[index]
+            let items: [ChartItem]
+
+            switch index {
+            case 0:
+                items = makeIndexedItems(names) { selectedIndex, navigationTitles in
+                    let vc = AARelationshipChartVC()
+                    vc.selectedIndex = selectedIndex
+                    vc.navigationItemTitleArr = navigationTitles
+                    return vc
+                }
+            case 1:
+                items = makeIndexedItems(names) { selectedIndex, navigationTitles in
+                    let vc = AAHeatOrTreeMapChartVC()
+                    vc.selectedIndex = selectedIndex
+                    vc.navigationItemTitleArr = navigationTitles
+                    return vc
+                }
+            case 2:
+                items = makeIndexedItems(names) { selectedIndex, navigationTitles in
+                    let vc = AABubbleChartVC()
+                    vc.selectedIndex = selectedIndex
+                    vc.navigationItemTitleArr = navigationTitles
+                    return vc
+                }
+            case 3:
+                items = makeIndexedItems(names) { selectedIndex, navigationTitles in
+                    let vc = AAColumnVariantChartVC()
+                    vc.selectedIndex = selectedIndex
+                    vc.navigationItemTitleArr = navigationTitles
+                    return vc
+                }
+            case 4:
+                items = makeIndexedItems(names) { selectedIndex, navigationTitles in
+                    let vc = ChartProVC()
+                    vc.selectedIndex = selectedIndex
+                    vc.navigationItemTitleArr = navigationTitles
+                    return vc
+                }
+            case 5:
+                items = names.map { title in
+                    ChartItem(title: title) {
+                        CustomClickEventCallbackMessageVC()
+                    }
+                }
+            case 6:
+                items = makeIndexedItems(names) { selectedIndex, navigationTitles in
+                    let vc = AADrilldownChartVC()
+                    vc.selectedIndex = selectedIndex
+                    vc.navigationItemTitleArr = navigationTitles
+                    return vc
+                }
+            case 7:
+                items = makeIndexedItems(names) { selectedIndex, navigationTitles in
+                    let vc = AABoostChartVC()
+                    vc.selectedIndex = selectedIndex
+                    vc.navigationItemTitleArr = navigationTitles
+                    return vc
+                }
+            case 8:
+                items = names.map { title in
+                    ChartItem(title: title) {
+                        OfficialChartSampleVC()
+                    }
+                }
+            case 9:
+                items = names.map { title in
+                    ChartItem(title: title) {
+                        ChartListTableViewVC()
+                    }
+                }
+            case 10:
+                items = names.map { title in
+                    ChartItem(title: title) {
+                        CustomClickEventCallbackMessageVC2()
+                    }
+                }
+            case 11:
+                items = names.map { title in
+                    ChartItem(title: title) {
+                        AACustomStageChartVC()
+                    }
+                }
+            default:
+                items = []
+            }
+
+            sections.append(ChartSection(title: title, items: items))
+        }
+
+        return sections
+    }
+}
+
+private struct ChartItem: Identifiable {
+    let id = UUID()
+    let title: String
+    let destination: () -> UIViewController
+}
+
+private struct ViewControllerHost: UIViewControllerRepresentable {
+    let builder: () -> UIViewController
+
+    func makeUIViewController(context: Context) -> UIViewController {
+        builder()
+    }
+
+    func updateUIViewController(_ uiViewController: UIViewController, context: Context) { }
+}
+
+private extension Color {
+    init(hex: Int, alpha: Double = 1.0) {
+        self.init(UIColor(hex: hex, alpha: alpha))
+    }
+}
+
+private extension UIColor {
+    convenience init(hex: Int, alpha: Double = 1.0) {
+        let red = CGFloat((hex & 0xFF0000) >> 16) / 255.0
+        let green = CGFloat((hex & 0x00FF00) >> 8) / 255.0
+        let blue = CGFloat(hex & 0x0000FF) / 255.0
+        self.init(red: red, green: green, blue: blue, alpha: CGFloat(alpha))
+    }
+}
+
+private extension View {
+    @ViewBuilder
+    func listRowBackgroundCompat(_ color: Color) -> some View {
+        if #available(iOS 15.0, *) {
+            listRowBackground(color)
+        } else {
+            self
+        }
+    }
+}
+
+#if DEBUG
+struct MainView_Previews: PreviewProvider {
+    static var previews: some View {
+        MainView()
+    }
+}
+#endif
