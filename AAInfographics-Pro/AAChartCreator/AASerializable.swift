@@ -39,8 +39,7 @@ public class AAObject { }
 @available(iOS 10.0, macCatalyst 13.1, macOS 10.13, *)
 public extension AAObject {
     var classNameString: String {
-        let nameClass: AnyClass! = object_getClass(self)
-        return NSStringFromClass(nameClass)
+        return String(reflecting: type(of: self))
     }
 }
 
@@ -52,31 +51,35 @@ public protocol AASerializableWithComputedProperties {
 
 @available(iOS 10.0, macCatalyst 13.1, macOS 10.13, *)
 public extension AAObject {
+    fileprivate func unwrap(_ value: Any) -> Any? {
+        let mirror = Mirror(reflecting: value)
+        guard mirror.displayStyle == .optional else { return value }
+        guard let child = mirror.children.first else { return nil }
+        return child.value
+    }
     
     fileprivate func loopForMirrorChildren(_ mirrorChildren: Mirror.Children, _ representation: inout [String : Any]) {
         for case let (label?, value) in mirrorChildren {
-            switch value {
-            case let value as AAObject: do {
+            guard let unwrapped = unwrap(value) else { continue }
+            switch unwrapped {
+            case let value as AAObject:
                 representation[label] = value.toDic()
-            }
-                
-            case let value as [AAObject]: do {
-                var aaObjectArr = [Any]()
-                
-                let valueCount = value.count
-                for i in 0 ..< valueCount {
-                    let aaObject = value[i]
-                    let aaObjectDic = aaObject.toDic()
-                    aaObjectArr.append(aaObjectDic as Any)
+            case let value as [AAObject]:
+                representation[label] = value.map { $0.toDic() }
+            case let value as [Any]:
+                let converted = value.compactMap { element -> Any? in
+                    guard let elementValue = unwrap(element) else { return nil }
+                    if let aaObject = elementValue as? AAObject {
+                        return aaObject.toDic()
+                    }
+                    if let nsObject = elementValue as? NSObject {
+                        return nsObject
+                    }
+                    return elementValue
                 }
-                
-                representation[label] = aaObjectArr
-            }
-                
-            case let value as NSObject: do {
+                representation[label] = converted
+            case let value as NSObject:
                 representation[label] = value
-            }
-                
             default:
                 // Ignore any unserializable properties
                 break
@@ -92,9 +95,9 @@ public extension AAObject {
         loopForMirrorChildren(mirrorChildren, &representation)
         
         // 遍历父类的反射子属性
-        let superMirrorChildren = Mirror(reflecting: self).superclassMirror?.children
-        if superMirrorChildren?.count ?? 0 > 0 {
-            loopForMirrorChildren(superMirrorChildren!, &representation)
+        if let superMirrorChildren = Mirror(reflecting: self).superclassMirror?.children,
+           !superMirrorChildren.isEmpty {
+            loopForMirrorChildren(superMirrorChildren, &representation)
         }
         
         // 如果实现了 SerializableWithComputedProperties 协议，获取计算属性
