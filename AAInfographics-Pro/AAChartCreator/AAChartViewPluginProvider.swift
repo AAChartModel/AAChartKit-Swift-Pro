@@ -25,71 +25,91 @@ internal final class AAChartViewPluginProvider: AAChartViewPluginProviderProtoco
 
     private let bundlePathLoader: BundlePathLoading
 
-    // Mapping from chart type rawValue to script names (moved from AAChartView)
-    private static let chartTypeScriptMapping: [String: [String]] = [
+    private enum PluginScript: String {
+        case sankey = "AASankey"
+        case dependencyWheel = "AADependency-Wheel"
+        case networkgraph = "AANetworkgraph"
+        case organization = "AAOrganization"
+        case arcDiagram = "AAArc-Diagram"
+        case venn = "AAVenn"
+        case treemap = "AATreemap"
+        case sunburst = "AASunburst"
+        case flame = "AAFlame"
+        case variablePie = "AAVariable-Pie"
+        case variwide = "AAVariwide"
+        case dumbbell = "AADumbbell"
+        case lollipop = "AALollipop"
+        case histogramBellcurve = "AAHistogram-Bellcurve"
+        case bullet = "AABullet"
+        case heatmap = "AAHeatmap"
+        case tilemap = "AATilemap"
+        case streamgraph = "AAStreamgraph"
+        case xrange = "AAXrange"
+        case timeline = "AATimeline"
+        case solidGauge = "AASolid-Gauge"
+        case vector = "AAVector"
+        case itemSeries = "AAItem-Series"
+        case dataGrouping = "AADatagrouping"
+        case windbarb = "AAWindbarb"
+        case wordcloud = "AAWordcloud"
+        case treegraph = "AATreegraph"
+        case pictorial = "AAPictorial"
+        case parallelCoordinates = "AAParallel-Coordinates"
+        case data = "AAData"
+    }
+
+    private struct ChartPluginConfiguration {
+        let types: Set<AAChartType>
+        let scripts: [PluginScript]
+
+        init(types: [AAChartType], scripts: [PluginScript]) {
+            self.types = Set(types)
+            self.scripts = scripts
+        }
+    }
+
+    private static let pluginConfigurations: [ChartPluginConfiguration] = [
         // --- Flow & Relationship Charts ---
-        AAChartType.sankey.rawValue          : ["AASankey"],
-        AAChartType.dependencywheel.rawValue : [
-            "AASankey",
-            "AADependency-Wheel"
-        ],
-        AAChartType.networkgraph.rawValue    : ["AANetworkgraph"],
-        AAChartType.organization.rawValue    : [
-            "AASankey",
-            "AAOrganization"
-        ],
-        AAChartType.arcdiagram.rawValue      : [
-            "AASankey",
-            "AAArc-Diagram"
-        ],
-        AAChartType.venn.rawValue            : ["AAVenn"], // Can also be considered set theory
+        .init(types: [.sankey], scripts: [.sankey]),
+        .init(types: [.dependencywheel], scripts: [.sankey, .dependencyWheel]),
+        .init(types: [.networkgraph], scripts: [.networkgraph]),
+        .init(types: [.organization], scripts: [.sankey, .organization]),
+        .init(types: [.arcdiagram], scripts: [.sankey, .arcDiagram]),
+        .init(types: [.venn], scripts: [.venn]),
 
         // --- Hierarchical Charts ---
-        AAChartType.treemap.rawValue         : ["AATreemap"],
-        AAChartType.sunburst.rawValue        : ["AASunburst"],
-        AAChartType.flame.rawValue           : ["AAFlame"], // Often used for profiling/hierarchy
+        .init(types: [.treemap], scripts: [.treemap]),
+        .init(types: [.sunburst], scripts: [.sunburst]),
+        .init(types: [.flame], scripts: [.flame]),
 
         // --- Distribution & Comparison Charts ---
-        AAChartType.variablepie.rawValue     : ["AAVariable-Pie"],
-        AAChartType.variwide.rawValue        : ["AAVariwide"],
-        AAChartType.dumbbell.rawValue        : ["AADumbbell"],
-        AAChartType.lollipop.rawValue        : [
-            "AADumbbell",
-            "AALollipop"
-        ],
-        AAChartType.histogram.rawValue       : ["AAHistogram-Bellcurve"],
-        AAChartType.bellcurve.rawValue       : ["AAHistogram-Bellcurve"],
-        AAChartType.bullet.rawValue          : ["AABullet"], // Can also be gauge/indicator
+        .init(types: [.variablepie], scripts: [.variablePie]),
+        .init(types: [.variwide], scripts: [.variwide]),
+        .init(types: [.dumbbell], scripts: [.dumbbell]),
+        .init(types: [.lollipop], scripts: [.dumbbell, .lollipop]),
+        .init(types: [.histogram], scripts: [.histogramBellcurve]),
+        .init(types: [.bellcurve], scripts: [.histogramBellcurve]),
+        .init(types: [.bullet], scripts: [.bullet]),
 
         // --- Heatmap & Matrix Charts ---
-        AAChartType.heatmap.rawValue         : ["AAHeatmap"],
-        AAChartType.tilemap.rawValue         : [
-            "AAHeatmap",
-            "AATilemap"
-        ],
+        .init(types: [.heatmap], scripts: [.heatmap]),
+        .init(types: [.tilemap], scripts: [.heatmap, .tilemap]),
 
         // --- Time, Range & Stream Charts ---
-        AAChartType.streamgraph.rawValue     : ["AAStreamgraph"],
-        AAChartType.xrange.rawValue          : ["AAXrange"],
-        AAChartType.timeline.rawValue        : ["AATimeline"],
+        .init(types: [.streamgraph], scripts: [.streamgraph]),
+        .init(types: [.xrange], scripts: [.xrange]),
+        .init(types: [.timeline], scripts: [.timeline]),
 
         // --- Gauge & Indicator Charts ---
-        AAChartType.solidgauge.rawValue      : ["AASolid-Gauge"],
-        // AAChartType.bullet is listed under Distribution/Comparison but fits here too
+        .init(types: [.solidgauge], scripts: [.solidGauge]),
 
         // --- Specialized & Other Charts ---
-        AAChartType.vector.rawValue          : ["AAVector"],
-        AAChartType.item.rawValue            : ["AAItem-Series"], // Specific series type
-        AAChartType.windbarb.rawValue        : [
-            "AADatagrouping",
-            "AAWindbarb"
-        ], // Meteorological
-        AAChartType.wordcloud.rawValue       : ["AAWordcloud"], // Text visualization
-        AAChartType.treegraph.rawValue       : [
-            "AATreemap",
-            "AATreegraph"
-        ],
-        AAChartType.pictorial.rawValue      : ["AAPictorial"], // Icon-based charts
+        .init(types: [.vector], scripts: [.vector]),
+        .init(types: [.item], scripts: [.itemSeries]),
+        .init(types: [.windbarb], scripts: [.dataGrouping, .windbarb]),
+        .init(types: [.wordcloud], scripts: [.wordcloud]),
+        .init(types: [.treegraph], scripts: [.treemap, .treegraph]),
+        .init(types: [.pictorial], scripts: [.pictorial])
     ]
 
     public func getRequiredPluginPaths(for options: AAOptions) -> Set<String> {
@@ -118,11 +138,19 @@ internal final class AAChartViewPluginProvider: AAChartViewPluginProviderProtoco
 
     // Helper to add scripts based on chart type string
     private func addChartPluginScripts(forType chartType: String, into requiredPaths: inout Set<String>) {
-        guard let scriptNames = Self.chartTypeScriptMapping[chartType] else {
+        guard let resolvedType = AAChartType(rawValue: chartType) else {
             return
         }
-        scriptNames.forEach { scriptName in
-            if let scriptPath = generateScriptPathWithScriptName(scriptName) {
+
+        let scripts = Self.pluginConfigurations.reduce(into: Set<PluginScript>()) { result, configuration in
+            guard configuration.types.contains(resolvedType) else {
+                return
+            }
+            configuration.scripts.forEach { result.insert($0) }
+        }
+
+        scripts.forEach { script in
+            if let scriptPath = generateScriptPath(for: script) {
                 requiredPaths.insert(scriptPath)
             }
         }
@@ -131,19 +159,20 @@ internal final class AAChartViewPluginProvider: AAChartViewPluginProviderProtoco
     // Helper to add scripts based on specific AAOptions properties
     private func addChartPluginScripts(for options: AAOptions, into requiredPaths: inout Set<String>) {
         if options.chart?.parallelCoordinates == true,
-           let scriptPath = generateScriptPathWithScriptName("AAParallel-Coordinates") {
+           let scriptPath = generateScriptPath(for: .parallelCoordinates) {
             requiredPaths.insert(scriptPath)
         }
 
-          if options.data != nil,
-              let scriptPath = generateScriptPathWithScriptName("AAData") {
+        if options.data != nil,
+           let scriptPath = generateScriptPath(for: .data) {
             requiredPaths.insert(scriptPath)
         }
     }
 
     // Generates the full path for a given script name (moved from AAChartView)
     // Consider moving this to a shared utility if used elsewhere.
-    private func generateScriptPathWithScriptName(_ scriptName: String) -> String? {
+    private func generateScriptPath(for script: PluginScript) -> String? {
+        let scriptName = script.rawValue
         guard let path = bundlePathLoader
             .path(forResource: scriptName,
                   ofType: "js",
