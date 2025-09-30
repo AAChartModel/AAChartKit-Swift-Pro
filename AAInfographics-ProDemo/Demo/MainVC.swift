@@ -45,8 +45,10 @@ final class MainVC: UIHostingController<MainView> {
 struct MainView: View {
     private let sections = ChartSection.defaultSections()
     @State private var colorSchemeOverride: ColorScheme? = nil
+    @Environment(\.colorScheme) private var systemColorScheme
 
     var body: some View {
+        let resolvedScheme = colorSchemeOverride ?? systemColorScheme
         Group {
             if #available(iOS 16.0, *) {
                 NavigationStack {
@@ -71,6 +73,7 @@ struct MainView: View {
                 }
             }
         }
+        .environment(\.colorScheme, resolvedScheme)
         .preferredColorScheme(colorSchemeOverride)
     }
 }
@@ -82,84 +85,309 @@ private struct MainContent: View {
     var body: some View {
         ScrollViewReader { proxy in
             ZStack(alignment: .trailing) {
-                listView(proxy: proxy)
+                GradientBackground(colorScheme: colorScheme)
+
+                ScrollView {
+                    LazyVStack(spacing: 28, pinnedViews: []) {
+                        ForEach(Array(sections.enumerated()), id: \.element.id) { index, section in
+                            SectionCard(section: section, index: index)
+                                .id(section.id)
+                        }
+                    }
+                    .padding(.horizontal, 20)
+                    .padding(.vertical, 32)
+                }
 
                 if sections.count > 1 {
                     SectionIndexSidebar(sections: sections) { target in
-                        withAnimation(.easeInOut) {
+                        withAnimation(.spring(response: 0.4, dampingFraction: 0.85, blendDuration: 0.3)) {
                             proxy.scrollTo(target.id, anchor: .top)
                         }
                     }
-                    .padding(.vertical, 16)
-                    .padding(.trailing, 4)
+                    .padding(.vertical, 32)
+                    .padding(.trailing, 6)
                 }
             }
-            .background(Color(.systemBackground))
-        }
-    }
-
-    @ViewBuilder
-    private func listView(proxy: ScrollViewProxy) -> some View {
-        let list = List {
-            ForEach(sections) { section in
-                Section {
-                    ForEach(section.items) { item in
-                        NavigationLink {
-                            ViewControllerHost(builder: item.destination)
-                                .ignoresSafeArea()
-                        } label: {
-                            Text(item.title)
-                                .font(.system(size: 16))
-                                .foregroundColor(.primary)
-                                .padding(.vertical, 8)
-                                .multilineTextAlignment(.leading)
-                        }
-                        .listRowBackgroundCompat(Color(.systemBackground))
-                    }
-                } header: {
-                    SectionHeader(title: section.title)
-                }
-                .textCase(nil)
-                .id(section.id)
-            }
-        }
-        .listStyle(.plain)
-        .background(Color(.systemBackground))
-
-        if #available(iOS 16.0, *) {
-            list
-                .scrollContentBackground(.hidden)
-        } else {
-            list
         }
     }
 }
 
-private struct SectionHeader: View {
+private struct GradientBackground: View {
+    let colorScheme: ColorScheme
+
+    var body: some View {
+        LinearGradient(
+            colors: gradientColors,
+            startPoint: .topLeading,
+            endPoint: .bottomTrailing
+        )
+        .ignoresSafeArea()
+    }
+
+    private var gradientColors: [Color] {
+        if colorScheme == .dark {
+            return [Color(hex: 0x0F172A), Color(hex: 0x111827), Color(hex: 0x1F2937)]
+        }
+        return [Color(hex: 0xF4F7FF), Color(hex: 0xFDF3FF), Color(hex: 0xFEF6F0)]
+    }
+}
+
+private struct SectionCard: View {
+    let section: ChartSection
+    let index: Int
+    @Environment(\.colorScheme) private var colorScheme
+
+    private var style: SectionCardStyle {
+        .palette(for: index)
+    }
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 18) {
+            header
+
+            VStack(spacing: 12) {
+                ForEach(section.items) { item in
+                    NavigationLink {
+                        ViewControllerHost(builder: item.destination)
+                            .ignoresSafeArea()
+                    } label: {
+                        SectionItemRow(title: item.title, style: style)
+                    }
+                    .buttonStyle(.plain)
+                }
+            }
+        }
+        .padding(22)
+        .background(
+            RoundedRectangle(cornerRadius: 28, style: .continuous)
+                .fill(cardFillColor)
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: 28, style: .continuous)
+                .strokeBorder(style.borderGradient, lineWidth: 1)
+                .opacity(colorScheme == .dark ? 0.35 : 0.55)
+        )
+        .clipShape(RoundedRectangle(cornerRadius: 28, style: .continuous))
+        .shadow(color: shadowColor, radius: 18, x: 0, y: 14)
+    }
+
+    private var header: some View {
+        HStack(alignment: .center, spacing: 16) {
+            ZStack {
+                Circle()
+                    .fill(style.accentGradient)
+                    .frame(width: 52, height: 52)
+                    .shadow(color: style.highlightShadow(colorScheme: colorScheme), radius: 12, x: 0, y: 8)
+
+                Image(systemName: style.iconName)
+                    .font(.system(size: 22, weight: .semibold))
+                    .foregroundColor(Color.white)
+            }
+
+            VStack(alignment: .leading, spacing: 4) {
+                Text(section.primaryTitle)
+                    .font(.system(size: 18, weight: .semibold))
+                    .foregroundColor(primaryTextColor)
+
+                if let subtitle = section.secondaryTitle {
+                    Text(subtitle)
+                        .font(.system(size: 13, weight: .medium))
+                        .foregroundColor(secondaryTextColor)
+                }
+            }
+
+            Spacer(minLength: 12)
+
+            Text("\(section.items.count) 示例")
+                .font(.caption)
+                .fontWeight(.semibold)
+                .foregroundColor(chipForegroundColor)
+                .padding(.horizontal, 12)
+                .padding(.vertical, 6)
+                .background(
+                    Capsule(style: .continuous)
+                        .fill(chipBackgroundColor)
+                )
+        }
+    }
+
+    private var cardFillColor: Color {
+        colorScheme == .dark ? Color.white.opacity(0.1) : Color.white.opacity(0.78)
+    }
+
+    private var shadowColor: Color {
+        colorScheme == .dark ? Color.black.opacity(0.48) : Color.black.opacity(0.12)
+    }
+
+    private var primaryTextColor: Color {
+        colorScheme == .dark ? Color.white : Color(hex: 0x111827)
+    }
+
+    private var secondaryTextColor: Color {
+        colorScheme == .dark ? Color.white.opacity(0.6) : Color(hex: 0x4B5563)
+    }
+
+    private var chipForegroundColor: Color {
+        colorScheme == .dark ? Color.white.opacity(0.85) : Color(hex: 0x1F2937)
+    }
+
+    private var chipBackgroundColor: Color {
+        let base = style.accentColors.first ?? Color.blue
+        return base.opacity(colorScheme == .dark ? 0.35 : 0.2)
+    }
+}
+
+private struct SectionItemRow: View {
     let title: String
+    let style: SectionCardStyle
     @Environment(\.colorScheme) private var colorScheme
 
     var body: some View {
-        Text(title)
-            .font(.system(size: 17, weight: .bold))
-            .foregroundColor(headerTextColor)
-            .frame(maxWidth: .infinity, alignment: .center)
-            .padding(.vertical, 10)
-            .background(headerBackgroundColor)
+        HStack(spacing: 14) {
+            RoundedRectangle(cornerRadius: 14, style: .continuous)
+                .fill(style.accentGradient)
+                .frame(width: 42, height: 42)
+                .overlay(
+                    Image(systemName: style.itemIconName)
+                        .font(.system(size: 18, weight: .semibold))
+                        .foregroundColor(Color.white)
+                )
+
+            Text(title)
+                .font(.system(size: 15, weight: .semibold))
+                .foregroundColor(rowTextColor)
+                .multilineTextAlignment(.leading)
+
+            Spacer(minLength: 8)
+
+            Image(systemName: "chevron.right")
+                .font(.system(size: 15, weight: .semibold))
+                .foregroundColor(rowChevronColor)
+        }
+        .padding(.vertical, 12)
+        .padding(.horizontal, 14)
+        .background(
+            RoundedRectangle(cornerRadius: 20, style: .continuous)
+                .fill(rowBackgroundColor)
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: 20, style: .continuous)
+                .stroke(Color.white.opacity(colorScheme == .dark ? 0.08 : 0.2), lineWidth: 0.6)
+        )
+        .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
+        .shadow(color: rowShadowColor, radius: 8, x: 0, y: 6)
     }
 
-    private var headerBackgroundColor: Color {
-        if colorScheme == .dark {
-            return Color(.secondarySystemBackground)
-        }
-        return Color(hex: 0xF5F5F5)
+    private var rowBackgroundColor: Color {
+        colorScheme == .dark ? Color.white.opacity(0.08) : Color.white.opacity(0.6)
     }
 
-    private var headerTextColor: Color {
-        if colorScheme == .dark {
-            return Color(hex: 0xC3BCFF)
+    private var rowTextColor: Color {
+        colorScheme == .dark ? Color.white.opacity(0.9) : Color(hex: 0x1F2933)
+    }
+
+    private var rowChevronColor: Color {
+        colorScheme == .dark ? Color.white.opacity(0.65) : Color.black.opacity(0.35)
+    }
+
+    private var rowShadowColor: Color {
+        colorScheme == .dark ? Color.black.opacity(0.35) : Color.black.opacity(0.1)
+    }
+}
+
+private struct SectionCardStyle {
+    let accentColors: [Color]
+    let iconName: String
+    let itemIconName: String
+
+    var accentGradient: LinearGradient {
+        LinearGradient(colors: accentColors, startPoint: .topLeading, endPoint: .bottomTrailing)
+    }
+
+    var borderGradient: LinearGradient {
+        LinearGradient(colors: accentColors.map { $0.opacity(0.75) }, startPoint: .topLeading, endPoint: .bottomTrailing)
+    }
+
+    func highlightShadow(colorScheme: ColorScheme) -> Color {
+        let base = accentColors.last ?? .blue
+        return base.opacity(colorScheme == .dark ? 0.45 : 0.35)
+    }
+}
+
+private extension SectionCardStyle {
+    static func palette(for index: Int) -> SectionCardStyle {
+        let palettes: [SectionCardStyle] = [
+            SectionCardStyle(
+                accentColors: [Color(hex: 0x60A5FA), Color(hex: 0x34D399)],
+                iconName: "point.topleft.down.curvedto.point.bottomright.up",
+                itemIconName: "sparkles"
+            ),
+            SectionCardStyle(
+                accentColors: [Color(hex: 0xF97316), Color(hex: 0xFDE047)],
+                iconName: "flame.fill",
+                itemIconName: "square.grid.3x3.topleft.fill"
+            ),
+            SectionCardStyle(
+                accentColors: [Color(hex: 0xF472B6), Color(hex: 0x8B5CF6)],
+                iconName: "circle.grid.3x3.fill",
+                itemIconName: "circle.hexagonpath.fill"
+            ),
+            SectionCardStyle(
+                accentColors: [Color(hex: 0x22D3EE), Color(hex: 0x0EA5E9)],
+                iconName: "chart.bar.fill",
+                itemIconName: "chart.bar.xaxis"
+            ),
+            SectionCardStyle(
+                accentColors: [Color(hex: 0xA855F7), Color(hex: 0x6366F1)],
+                iconName: "waveform.path.ecg.rectangle",
+                itemIconName: "waveform.path"
+            ),
+            SectionCardStyle(
+                accentColors: [Color(hex: 0xF87171), Color(hex: 0xFB7185)],
+                iconName: "hand.tap.fill",
+                itemIconName: "hand.point.up.left.fill"
+            ),
+            SectionCardStyle(
+                accentColors: [Color(hex: 0x4ADE80), Color(hex: 0x22C55E)],
+                iconName: "square.grid.2x2.fill",
+                itemIconName: "square.stack.3d.up"
+            ),
+            SectionCardStyle(
+                accentColors: [Color(hex: 0x0EA5E9), Color(hex: 0x6366F1)],
+                iconName: "waveform.path.fill",
+                itemIconName: "waveform"
+            ),
+            SectionCardStyle(
+                accentColors: [Color(hex: 0xF59E0B), Color(hex: 0xF97316)],
+                iconName: "chart.pie.fill",
+                itemIconName: "chart.pie"
+            ),
+            SectionCardStyle(
+                accentColors: [Color(hex: 0x2DD4BF), Color(hex: 0x14B8A6)],
+                iconName: "tree.fill",
+                itemIconName: "leaf.fill"
+            ),
+            SectionCardStyle(
+                accentColors: [Color(hex: 0xFB7185), Color(hex: 0xF472B6)],
+                iconName: "hand.tap",
+                itemIconName: "hand.raised.fill"
+            ),
+            SectionCardStyle(
+                accentColors: [Color(hex: 0x7C3AED), Color(hex: 0x38BDF8)],
+                iconName: "clock.arrow.circlepath",
+                itemIconName: "bed.double.fill"
+            )
+        ]
+
+        guard !palettes.isEmpty else {
+            return SectionCardStyle(
+                accentColors: [Color(hex: 0x6366F1), Color(hex: 0xEC4899)],
+                iconName: "chart.bar.xaxis",
+                itemIconName: "sparkles"
+            )
         }
-        return Color(hex: 0x7B68EE)
+
+        return palettes[index % palettes.count]
     }
 }
 
@@ -176,42 +404,45 @@ private struct SectionIndexSidebar: View {
                 } label: {
                     Text(section.indexTitle)
                         .font(.system(size: 12, weight: .semibold))
-                        .foregroundColor(Color(.secondaryLabel))
-                        .padding(.horizontal, 6)
-                        .padding(.vertical, 4)
-                        .background(sidebarBackground())
+                        .foregroundColor(sidebarTextColor)
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 5)
+                        .background(sidebarBackground)
                 }
                 .buttonStyle(.plain)
             }
         }
     }
 
-    @ViewBuilder
-    private func sidebarBackground() -> some View {
-        if #available(iOS 15.0, *) {
-            Capsule()
-                .fill(Color.clear)
-                .background(
-                    Capsule()
-                        .fill(sidebarTintColor)
+    private var sidebarBackground: some View {
+        Capsule()
+            .fill(
+                LinearGradient(
+                    colors: sidebarGradientColors,
+                    startPoint: .top,
+                    endPoint: .bottom
                 )
-        } else {
-            Capsule().fill(sidebarFallbackColor)
-        }
+            )
+            .overlay(
+                Capsule()
+                    .stroke(Color.white.opacity(colorScheme == .dark ? 0.25 : 0.4), lineWidth: 0.8)
+            )
+            .shadow(color: sidebarShadowColor, radius: 6, x: 0, y: 3)
     }
 
-    private var sidebarFallbackColor: Color {
+    private var sidebarGradientColors: [Color] {
         if colorScheme == .dark {
-            return Color(.systemGray4).opacity(0.65)
+            return [Color.white.opacity(0.18), Color.white.opacity(0.07)]
         }
-        return Color(.systemBackground).opacity(0.8)
+        return [Color.white.opacity(0.92), Color.white.opacity(0.65)]
     }
 
-    private var sidebarTintColor: Color {
-        if colorScheme == .dark {
-            return Color(.tertiarySystemBackground).opacity(0.7)
-        }
-        return Color(.systemBackground).opacity(0.85)
+    private var sidebarShadowColor: Color {
+        colorScheme == .dark ? Color.black.opacity(0.45) : Color.black.opacity(0.18)
+    }
+
+    private var sidebarTextColor: Color {
+        colorScheme == .dark ? Color.white.opacity(0.8) : Color.black.opacity(0.7)
     }
 }
 
@@ -443,6 +674,20 @@ private struct ChartSection: Identifiable {
     }
 }
 
+private extension ChartSection {
+    var primaryTitle: String {
+        let pieces = title.split(separator: "|", maxSplits: 1, omittingEmptySubsequences: true)
+        guard let first = pieces.first else { return title }
+        return first.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+
+    var secondaryTitle: String? {
+        let pieces = title.split(separator: "|", maxSplits: 1, omittingEmptySubsequences: true)
+        guard pieces.count > 1 else { return nil }
+        return pieces[1].trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+}
+
 private struct ChartItem: Identifiable {
     let id = UUID()
     let title: String
@@ -451,12 +696,31 @@ private struct ChartItem: Identifiable {
 
 private struct ViewControllerHost: UIViewControllerRepresentable {
     let builder: () -> UIViewController
+    @Environment(\.colorScheme) private var colorScheme
 
     func makeUIViewController(context: Context) -> UIViewController {
-        builder()
+        let viewController = builder()
+        viewController.overrideUserInterfaceStyle = uiStyle(for: colorScheme)
+        return viewController
     }
 
-    func updateUIViewController(_ uiViewController: UIViewController, context: Context) { }
+    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {
+        let targetStyle = uiStyle(for: colorScheme)
+        if uiViewController.overrideUserInterfaceStyle != targetStyle {
+            uiViewController.overrideUserInterfaceStyle = targetStyle
+        }
+    }
+
+    private func uiStyle(for scheme: ColorScheme) -> UIUserInterfaceStyle {
+        switch scheme {
+        case .dark:
+            return .dark
+        case .light:
+            return .light
+        @unknown default:
+            return .unspecified
+        }
+    }
 }
 
 private extension Color {
@@ -474,32 +738,45 @@ private extension UIColor {
     }
 }
 
-private extension View {
-    @ViewBuilder
-    func listRowBackgroundCompat(_ color: Color) -> some View {
-        if #available(iOS 15.0, *) {
-            listRowBackground(color)
-        } else {
-            self
-        }
-    }
-}
-
 private struct ModeToggleButton: View {
     @Binding var colorSchemeOverride: ColorScheme?
     @Environment(\.colorScheme) private var systemColorScheme
 
     var body: some View {
         Button(action: toggleMode) {
-            Image(systemName: currentScheme == .dark ? "sun.max.fill" : "moon.stars.fill")
-                .font(.system(size: 18, weight: .semibold))
+            ZStack {
+                Circle()
+                    .fill(buttonGradient)
+                    .frame(width: 40, height: 40)
+                    .overlay(
+                        Circle()
+                            .stroke(Color.white.opacity(0.25), lineWidth: 0.8)
+                    )
+                    .shadow(color: buttonShadow, radius: 8, x: 0, y: 4)
+
+                Image(systemName: currentScheme == .dark ? "sun.max.fill" : "moon.stars.fill")
+                    .font(.system(size: 18, weight: .semibold))
+                    .foregroundColor(Color.white)
+            }
         }
+        .buttonStyle(.plain)
         .accessibilityLabel(currentScheme == .dark ? "切换为日间模式" : "切换为夜间模式")
         .accessibilityHint("在应用内直接切换外观模式")
     }
 
     private var currentScheme: ColorScheme {
         colorSchemeOverride ?? systemColorScheme
+    }
+
+    private var buttonGradient: LinearGradient {
+        if currentScheme == .dark {
+            return LinearGradient(colors: [Color(hex: 0xFACC15), Color(hex: 0xF97316)], startPoint: .topLeading, endPoint: .bottomTrailing)
+        }
+        return LinearGradient(colors: [Color(hex: 0x6366F1), Color(hex: 0xEC4899)], startPoint: .topLeading, endPoint: .bottomTrailing)
+    }
+
+    private var buttonShadow: Color {
+        currentScheme == .dark ? Color.black.opacity(0.45) : Color.black.opacity(0.2)
     }
 
     private func toggleMode() {
