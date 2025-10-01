@@ -1,5 +1,49 @@
 import Foundation
 
+// MARK: - Shared Plugin Script Definition
+
+/// Enum representing all available plugin scripts
+@available(iOS 10.0, macCatalyst 13.1, macOS 10.13, *)
+internal enum PluginScript: String {
+    case sankey = "AASankey"
+    case dependencyWheel = "AADependency-Wheel"
+    case networkgraph = "AANetworkgraph"
+    case organization = "AAOrganization"
+    case arcDiagram = "AAArc-Diagram"
+    case venn = "AAVenn"
+    case treemap = "AATreemap"
+    case sunburst = "AASunburst"
+    case flame = "AAFlame"
+    case variablePie = "AAVariable-Pie"
+    case variwide = "AAVariwide"
+    case dumbbell = "AADumbbell"
+    case lollipop = "AALollipop"
+    case histogramBellcurve = "AAHistogram-Bellcurve"
+    case bullet = "AABullet"
+    case heatmap = "AAHeatmap"
+    case tilemap = "AATilemap"
+    case streamgraph = "AAStreamgraph"
+    case xrange = "AAXrange"
+    case timeline = "AATimeline"
+    case solidGauge = "AASolid-Gauge"
+    case vector = "AAVector"
+    case itemSeries = "AAItem-Series"
+    case dataGrouping = "AADatagrouping"
+    case windbarb = "AAWindbarb"
+    case wordcloud = "AAWordcloud"
+    case treegraph = "AATreegraph"
+    case pictorial = "AAPictorial"
+    case parallelCoordinates = "AAParallel-Coordinates"
+    case data = "AAData"
+    
+    /// Returns the complete JavaScript file name with .js extension
+    var fileName: String {
+        return rawValue + ".js"
+    }
+}
+
+// MARK: - Plugin Provider Protocol
+
 // Protocol defining the responsibility for providing required plugin paths
 @available(iOS 10.0, macCatalyst 13.1, macOS 10.13, *)
 internal protocol AAChartViewPluginProviderProtocol: AnyObject {
@@ -24,39 +68,6 @@ internal final class AAChartViewPluginProvider: AAChartViewPluginProviderProtoco
     }
 
     private let bundlePathLoader: BundlePathLoading
-
-    private enum PluginScript: String {
-        case sankey = "AASankey"
-        case dependencyWheel = "AADependency-Wheel"
-        case networkgraph = "AANetworkgraph"
-        case organization = "AAOrganization"
-        case arcDiagram = "AAArc-Diagram"
-        case venn = "AAVenn"
-        case treemap = "AATreemap"
-        case sunburst = "AASunburst"
-        case flame = "AAFlame"
-        case variablePie = "AAVariable-Pie"
-        case variwide = "AAVariwide"
-        case dumbbell = "AADumbbell"
-        case lollipop = "AALollipop"
-        case histogramBellcurve = "AAHistogram-Bellcurve"
-        case bullet = "AABullet"
-        case heatmap = "AAHeatmap"
-        case tilemap = "AATilemap"
-        case streamgraph = "AAStreamgraph"
-        case xrange = "AAXrange"
-        case timeline = "AATimeline"
-        case solidGauge = "AASolid-Gauge"
-        case vector = "AAVector"
-        case itemSeries = "AAItem-Series"
-        case dataGrouping = "AADatagrouping"
-        case windbarb = "AAWindbarb"
-        case wordcloud = "AAWordcloud"
-        case treegraph = "AATreegraph"
-        case pictorial = "AAPictorial"
-        case parallelCoordinates = "AAParallel-Coordinates"
-        case data = "AAData"
-    }
 
     private struct ChartPluginConfiguration {
         let types: Set<AAChartType>
@@ -173,6 +184,7 @@ internal final class AAChartViewPluginProvider: AAChartViewPluginProviderProtoco
     // Consider moving this to a shared utility if used elsewhere.
     private func generateScriptPath(for script: PluginScript) -> String? {
         let scriptName = script.rawValue
+        let fullScriptName = script.fileName
         guard let path = bundlePathLoader
             .path(forResource: scriptName,
                   ofType: "js",
@@ -180,9 +192,9 @@ internal final class AAChartViewPluginProvider: AAChartViewPluginProviderProtoco
                   forLocalization: nil)
         else {
             #if DEBUG
-            print("⚠️ Warning: Could not find path for script '\(scriptName).js'")
+            print("⚠️ Warning: Could not find path for script '\(fullScriptName)'")
             //断言
-            assert(false, "⚠️ Warning: Could not find path for script '\(scriptName).js'")
+            assert(false, "⚠️ Warning: Could not find path for script '\(fullScriptName)'")
             #endif
             return nil
         }

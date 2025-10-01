@@ -152,6 +152,38 @@ internal final class AAChartViewPluginLoader: AAChartViewPluginLoaderProtocol {
 
     // --- Helper methods moved from AAChartView ---
 
+    // MARK: - Plugin Dependency Management
+    
+    /// Configuration for plugin dependencies
+    private struct PluginDependencyConfiguration {
+        let plugin: PluginScript
+        let dependencies: [PluginScript]
+        
+        init(plugin: PluginScript, dependencies: [PluginScript]) {
+            self.plugin = plugin
+            self.dependencies = dependencies
+        }
+    }
+    
+    /// Centralized plugin dependency configurations
+    /// Note: Uses shared PluginScript enum from AAChartViewPluginProvider
+    private static let pluginDependencies: [PluginDependencyConfiguration] = [
+        .init(plugin: .dependencyWheel, dependencies: [.sankey]),
+        .init(plugin: .organization, dependencies: [.sankey]),
+        .init(plugin: .arcDiagram, dependencies: [.sankey]),
+        .init(plugin: .lollipop, dependencies: [.dumbbell]),
+        .init(plugin: .tilemap, dependencies: [.heatmap]),
+        .init(plugin: .treegraph, dependencies: [.treemap])
+    ]
+    
+    /// Priority plugins that should be loaded first
+    private static let priorityPlugins: [PluginScript] = [
+        .sankey,
+        .heatmap,
+        .dumbbell,
+        .treemap
+    ]
+
     // Helper function to sort plugin paths based on known dependencies
     private func sortPluginPaths(
         _ paths: Set<String>,
@@ -159,31 +191,29 @@ internal final class AAChartViewPluginLoader: AAChartViewPluginLoaderProtocol {
     ) -> [String] {
         var sortedPaths = Array(paths)
         
-        // Base dependencies that are internal to the library
-        var dependencies: [String: String] = [
-            "AADependency-Wheel.js": "AASankey.js",
-            "AAOrganization.js": "AASankey.js",
-            "AALollipop.js": "AADumbbell.js",
-            "AATilemap.js": "AAHeatmap.js",
-            "AAArc-Diagram.js": "AASankey.js",
-            "AATreegraph.js": "AATreemap.js"
-        ]
+        // Build internal dependencies map from configurations
+        let internalDependencies = Self.pluginDependencies.reduce(into: [String: String]()) { result, config in
+            result[config.plugin.fileName] = config.dependencies.first?.fileName
+        }
         
-        // Merge external dependencies, allowing them to override base dependencies if needed
+        // Merge external dependencies, allowing them to override internal dependencies if needed
+        var dependencies = internalDependencies
         dependencies.merge(externalDependencies) { (_, new) in new }
 
         sortedPaths.sort { path1, path2 in
             let file1 = (path1 as NSString).lastPathComponent
             let file2 = (path2 as NSString).lastPathComponent
 
+            // Check explicit dependencies
             if let dependency = dependencies[file2], dependency == file1 { return true }
             if let dependency = dependencies[file1], dependency == file2 { return false }
-            if file1 == "AASankey.js" && file2 != "AASankey.js" { return true }
-            if file2 == "AASankey.js" && file1 != "AASankey.js" { return false }
-            if file1 == "AAHeatmap.js" && file2 != "AAHeatmap.js" { return true } // Prioritize Heatmap for Tilemap
-            if file2 == "AAHeatmap.js" && file1 != "AAHeatmap.js" { return false }
-            if file1 == "AADumbbell.js" && file2 != "AADumbbell.js" { return true } // Prioritize Dumbbell for Lollipop
-            if file2 == "AADumbbell.js" && file1 != "AADumbbell.js" { return false }
+            
+            // Check priority plugins
+            for priorityPlugin in Self.priorityPlugins {
+                let priorityFileName = priorityPlugin.fileName
+                if file1 == priorityFileName && file2 != priorityFileName { return true }
+                if file2 == priorityFileName && file1 != priorityFileName { return false }
+            }
 
             return path1 < path2
         }
