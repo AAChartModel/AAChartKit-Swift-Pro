@@ -43,6 +43,17 @@ internal enum AAChartPluginScriptType: String {
     var fileName: String {
         return rawValue + ".js"
     }
+    
+    /// Returns the directory prefix for the plugin script
+    /// Highcharts-More and Funnel are in AAMaster, others are in AAModules
+    var directoryPrefix: String {
+        switch self {
+        case .highchartsMore, .funnel:
+            return "AAMaster"
+        default:
+            return "AAModules"
+        }
+    }
 }
 
 // MARK: - Plugin Provider Protocol
@@ -213,10 +224,7 @@ internal final class AAChartViewPluginProvider: AAChartViewPluginProviderProtoco
     private func generateScriptPath(for script: AAChartPluginScriptType) -> String? {
         let scriptName = script.rawValue
         let fullScriptName = script.fileName
-        
-        //如果 script 的 name 为 Highcharts-more 或者是 funnel
-        //路径前缀为 AAMaster, 其他情况为 AAModules
-        let directoryPrefix = (script == .highchartsMore || script == .funnel) ? "AAMaster" : "AAModules"
+        let directoryPrefix = script.directoryPrefix
         
         guard let path = bundlePathLoader
             .path(forResource: scriptName,
