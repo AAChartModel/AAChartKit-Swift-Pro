@@ -4,7 +4,7 @@ import Foundation
 
 /// Enum representing all available plugin scripts
 @available(iOS 10.0, macCatalyst 13.1, macOS 10.13, *)
-internal enum PluginScript: String {
+internal enum AAChartPluginScriptType: String {
     case sankey = "AASankey"
     case dependencyWheel = "AADependency-Wheel"
     case networkgraph = "AANetworkgraph"
@@ -52,7 +52,7 @@ internal protocol AAChartViewPluginProviderProtocol: AnyObject {
 
 // Default provider (can be used for the standard version or as a base)
 @available(iOS 10.0, macCatalyst 13.1, macOS 10.13, *)
-internal final class DefaultPluginProvider: AAChartViewPluginProviderProtocol {
+internal final class AAChartViewDefaultPluginProvider: AAChartViewPluginProviderProtocol {
     public init() {}
 
     public func getRequiredPluginPaths(for options: AAOptions) -> Set<String> {
@@ -63,23 +63,23 @@ internal final class DefaultPluginProvider: AAChartViewPluginProviderProtocol {
 // Provider for the Pro version, handling specific chart type plugins
 @available(iOS 10.0, macCatalyst 13.1, macOS 10.13, *)
 internal final class AAChartViewPluginProvider: AAChartViewPluginProviderProtocol {
-    public init(bundlePathLoader: BundlePathLoading = BundlePathLoader()) {
+    public init(bundlePathLoader: AAChartBundlePathLoadingProtocol = BundlePathLoader()) {
         self.bundlePathLoader = bundlePathLoader
     }
 
-    private let bundlePathLoader: BundlePathLoading
+    private let bundlePathLoader: AAChartBundlePathLoadingProtocol
 
-    private struct ChartPluginConfiguration {
+    private struct AAChartPluginConfiguration {
         let types: Set<AAChartType>
-        let scripts: [PluginScript]
+        let scripts: [AAChartPluginScriptType]
 
-        init(types: [AAChartType], scripts: [PluginScript]) {
+        init(types: [AAChartType], scripts: [AAChartPluginScriptType]) {
             self.types = Set(types)
             self.scripts = scripts
         }
     }
 
-    private static let pluginConfigurations: [ChartPluginConfiguration] = [
+    private static let pluginConfigurations: [AAChartPluginConfiguration] = [
         // --- Flow & Relationship Charts ---
         .init(types: [.sankey], scripts: [.sankey]),
         .init(types: [.dependencywheel], scripts: [.sankey, .dependencyWheel]),
@@ -153,7 +153,7 @@ internal final class AAChartViewPluginProvider: AAChartViewPluginProviderProtoco
             return
         }
 
-        let scripts = Self.pluginConfigurations.reduce(into: Set<PluginScript>()) { result, configuration in
+        let scripts = Self.pluginConfigurations.reduce(into: Set<AAChartPluginScriptType>()) { result, configuration in
             guard configuration.types.contains(resolvedType) else {
                 return
             }
@@ -182,7 +182,7 @@ internal final class AAChartViewPluginProvider: AAChartViewPluginProviderProtoco
 
     // Generates the full path for a given script name (moved from AAChartView)
     // Consider moving this to a shared utility if used elsewhere.
-    private func generateScriptPath(for script: PluginScript) -> String? {
+    private func generateScriptPath(for script: AAChartPluginScriptType) -> String? {
         let scriptName = script.rawValue
         let fullScriptName = script.fileName
         guard let path = bundlePathLoader
@@ -206,7 +206,7 @@ internal final class AAChartViewPluginProvider: AAChartViewPluginProviderProtoco
 
 // MARK: - Bundle Path Loader Abstraction
 
-internal protocol BundlePathLoading {
+internal protocol AAChartBundlePathLoadingProtocol {
     func path(
         forResource name: String,
         ofType fileType: String,
@@ -215,6 +215,6 @@ internal protocol BundlePathLoading {
     ) -> String?
 }
 
-extension BundlePathLoader: BundlePathLoading {}
+extension BundlePathLoader: AAChartBundlePathLoadingProtocol {}
 
 

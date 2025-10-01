@@ -156,10 +156,10 @@ internal final class AAChartViewPluginLoader: AAChartViewPluginLoaderProtocol {
     
     /// Configuration for plugin dependencies
     private struct PluginDependencyConfiguration {
-        let plugin: PluginScript
-        let dependencies: [PluginScript]
+        let plugin: AAChartPluginScriptType
+        let dependencies: [AAChartPluginScriptType]
         
-        init(plugin: PluginScript, dependencies: [PluginScript]) {
+        init(plugin: AAChartPluginScriptType, dependencies: [AAChartPluginScriptType]) {
             self.plugin = plugin
             self.dependencies = dependencies
         }
@@ -177,7 +177,7 @@ internal final class AAChartViewPluginLoader: AAChartViewPluginLoaderProtocol {
     ]
     
     /// Priority plugins that should be loaded first
-    private static let priorityPlugins: [PluginScript] = [
+    private static let priorityPlugins: [AAChartPluginScriptType] = [
         .sankey,
         .heatmap,
         .dumbbell,
