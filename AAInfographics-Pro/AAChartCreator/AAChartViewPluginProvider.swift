@@ -5,9 +5,11 @@ import Foundation
 /// Enum representing all available plugin scripts
 @available(iOS 10.0, macCatalyst 13.1, macOS 10.13, *)
 internal enum AAChartPluginScriptType: String {
-    case funnel = "AAFunnel"
+    //AAInfographics normal version plugins
     case highchartsMore = "AAHighcharts-More"
+    case funnel = "AAFunnel"
     
+    //AAInfographics pro version plugins
     case sankey = "AASankey"
     case dependencyWheel = "AADependency-Wheel"
     case networkgraph = "AANetworkgraph"
@@ -234,7 +236,6 @@ internal final class AAChartViewPluginProvider: AAChartViewPluginProviderProtoco
         else {
             #if DEBUG
             print("⚠️ Warning: Could not find path for script '\(fullScriptName)'")
-            //断言
             assert(false, "⚠️ Warning: Could not find path for script '\(fullScriptName)'")
             #endif
             return nil
