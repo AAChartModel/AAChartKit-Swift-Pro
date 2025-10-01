@@ -5,6 +5,9 @@ import Foundation
 /// Enum representing all available plugin scripts
 @available(iOS 10.0, macCatalyst 13.1, macOS 10.13, *)
 internal enum AAChartPluginScriptType: String {
+    case funnel = "AAFunnel"
+    case highchartsMore = "AAHighcharts-More"
+    
     case sankey = "AASankey"
     case dependencyWheel = "AADependency-Wheel"
     case networkgraph = "AANetworkgraph"
@@ -80,6 +83,24 @@ internal final class AAChartViewPluginProvider: AAChartViewPluginProviderProtoco
     }
 
     private static let pluginConfigurations: [AAChartPluginConfiguration] = [
+        // --- Advanced Charts requiring Highcharts-More ---
+        .init(types: [
+            .columnpyramid,
+            .bubble,
+            .packedbubble,
+            .arearange,
+            .areasplinerange,
+            .columnrange,
+            .gauge,
+            .boxplot,
+            .errorbar,
+            .waterfall,
+            .polygon
+        ], scripts: [.highchartsMore]),
+        
+        // --- Funnel & Pyramid Charts ---
+        .init(types: [.funnel, .pyramid], scripts: [.funnel]),
+        
         // --- Flow & Relationship Charts ---
         .init(types: [.sankey], scripts: [.sankey]),
         .init(types: [.dependencywheel], scripts: [.sankey, .dependencyWheel]),
@@ -169,6 +190,13 @@ internal final class AAChartViewPluginProvider: AAChartViewPluginProviderProtoco
 
     // Helper to add scripts based on specific AAOptions properties
     private func addChartPluginScripts(for options: AAOptions, into requiredPaths: inout Set<String>) {
+        // For polar charts, Highcharts-More is required
+        if options.chart?.polar == true {
+            if let scriptPath = generateScriptPath(for: .highchartsMore) {
+                requiredPaths.insert(scriptPath)
+            }
+        }
+        
         if options.chart?.parallelCoordinates == true,
            let scriptPath = generateScriptPath(for: .parallelCoordinates) {
             requiredPaths.insert(scriptPath)
@@ -185,10 +213,15 @@ internal final class AAChartViewPluginProvider: AAChartViewPluginProviderProtoco
     private func generateScriptPath(for script: AAChartPluginScriptType) -> String? {
         let scriptName = script.rawValue
         let fullScriptName = script.fileName
+        
+        //如果 script 的 name 为 Highcharts-more 或者是 funnel
+        //路径前缀为 AAMaster, 其他情况为 AAModules
+        let directoryPrefix = (script == .highchartsMore || script == .funnel) ? "AAMaster" : "AAModules"
+        
         guard let path = bundlePathLoader
             .path(forResource: scriptName,
                   ofType: "js",
-                  inDirectory: "AAJSFiles.bundle/AAModules",
+                  inDirectory: "AAJSFiles.bundle/\(directoryPrefix)",
                   forLocalization: nil)
         else {
             #if DEBUG
