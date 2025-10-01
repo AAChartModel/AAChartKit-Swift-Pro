@@ -78,20 +78,20 @@ class SpecialChartComposer {
             .dataLabelsEnabled(false)//是否显示数字
             .markerSymbolStyle(.borderBlank)//折线连接点样式
             .markerRadius(7)//折线连接点半径长度,为0时相当于没有折线连接点
-//            .series([
-//                AASeriesElement()
-//                    .name("Berlin")
-//                    .data([450, 432, 401, 454, 590, 530, 510])
-//                    .step(.right), //折线连接点靠右👉
-//                AASeriesElement()
-//                    .name("New York")
-//                    .data([220, 282, 201, 234, 290, 430, 410])
-//                    .step(.center),//折线连接点居中
-//                AASeriesElement()
-//                    .name("Tokyo")
-//                    .data([120, 132, 101, 134, 90, 230, 210])
-//                    .step(.left),//折线连接点靠左边👈
-//            ])
+            .series([
+                AASeriesElement()
+                    .name("Berlin")
+                    .data([450, 432, 401, 454, 590, 530, 510])
+                    .step(.right), //折线连接点靠右👉
+                AASeriesElement()
+                    .name("New York")
+                    .data([220, 282, 201, 234, 290, 430, 410])
+                    .step(.center),//折线连接点居中
+                AASeriesElement()
+                    .name("Tokyo")
+                    .data([120, 132, 101, 134, 90, 230, 210])
+                    .step(.left),//折线连接点靠左边👈
+            ])
     }
     
     static func stepAreaChart() -> AAChartModel {
