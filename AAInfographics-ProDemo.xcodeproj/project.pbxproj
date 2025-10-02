@@ -426,14 +426,9 @@
 		44D27D32255A62F000D0C636 /* AAChartCreator */ = {
 			isa = PBXGroup;
 			children = (
-				84461588283F57C600E26DA4 /* AAChartModel.swift */,
-				84461585283F57C500E26DA4 /* AAChartView.swift */,
-				844736272DAF90C60040CCCE /* AAChartView+API.swift */,
-				844736292DAFA2330040CCCE /* AAChartViewPluginProvider.swift */,
-				845F428D2E89344E00CE65AB /* AAChartViewPluginLoader.swift */,
-				84461584283F57C500E26DA4 /* AAOptions.swift */,
+				845F42B22E8EBA3B00CE65AB /* AAChartView */,
+				845F42B32E8EBA5300CE65AB /* AAChartOptions */,
 				84461586283F57C500E26DA4 /* AASerializable.swift */,
-				84461587283F57C500E26DA4 /* AASeriesElement.swift */,
 			);
 			path = AAChartCreator;
 			sourceTree = "<group>";
@@ -617,6 +612,27 @@
 				84526E042CEB3CA500EB2563 /* AAOptions+Boost.swift */,
 			);
 			path = AABoost;
+			sourceTree = "<group>";
+		};
+		845F42B22E8EBA3B00CE65AB /* AAChartView */ = {
+			isa = PBXGroup;
+			children = (
+				84461585283F57C500E26DA4 /* AAChartView.swift */,
+				844736272DAF90C60040CCCE /* AAChartView+API.swift */,
+				844736292DAFA2330040CCCE /* AAChartViewPluginProvider.swift */,
+				845F428D2E89344E00CE65AB /* AAChartViewPluginLoader.swift */,
+			);
+			path = AAChartView;
+			sourceTree = "<group>";
+		};
+		845F42B32E8EBA5300CE65AB /* AAChartOptions */ = {
+			isa = PBXGroup;
+			children = (
+				84461588283F57C600E26DA4 /* AAChartModel.swift */,
+				84461584283F57C500E26DA4 /* AAOptions.swift */,
+				84461587283F57C500E26DA4 /* AASeriesElement.swift */,
+			);
+			path = AAChartOptions;
 			sourceTree = "<group>";
 		};
 		84B238C1283F707400193B9A /* AAInfographics-Pro */ = {
