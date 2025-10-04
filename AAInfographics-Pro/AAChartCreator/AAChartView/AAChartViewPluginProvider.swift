@@ -124,14 +124,14 @@ internal final class AAChartViewPluginProvider: AAChartViewPluginProviderProtoco
 
         // --- Hierarchical Charts ---
         .init(types: [.treemap], scripts: [.treemap]),
-        .init(types: [.sunburst], scripts: [.sunburst]),
-        .init(types: [.flame], scripts: [.flame]),
+        .init(types: [.sunburst], scripts: [.highchartsMore, .sunburst]),
+        .init(types: [.flame], scripts: [.highchartsMore, .flame]),
 
         // --- Distribution & Comparison Charts ---
         .init(types: [.variablepie], scripts: [.variablePie]),
         .init(types: [.variwide], scripts: [.variwide]),
-        .init(types: [.dumbbell], scripts: [.dumbbell]),
-        .init(types: [.lollipop], scripts: [.dumbbell, .lollipop]),
+        .init(types: [.dumbbell], scripts: [.highchartsMore, .dumbbell]),
+        .init(types: [.lollipop], scripts: [.highchartsMore, .dumbbell, .lollipop]),
         .init(types: [.histogram], scripts: [.histogramBellcurve]),
         .init(types: [.bellcurve], scripts: [.histogramBellcurve]),
         .init(types: [.bullet], scripts: [.bullet]),
@@ -146,7 +146,7 @@ internal final class AAChartViewPluginProvider: AAChartViewPluginProviderProtoco
         .init(types: [.timeline], scripts: [.timeline]),
 
         // --- Gauge & Indicator Charts ---
-        .init(types: [.solidgauge], scripts: [.solidGauge]),
+        .init(types: [.solidgauge], scripts: [.highchartsMore, .solidGauge]),
 
         // --- Specialized & Other Charts ---
         .init(types: [.vector], scripts: [.vector]),

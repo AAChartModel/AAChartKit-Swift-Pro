@@ -171,6 +171,7 @@ internal final class AAChartViewPluginLoader: AAChartViewPluginLoaderProtocol {
         .init(plugin: .dependencyWheel, dependencies: [.sankey]),
         .init(plugin: .organization, dependencies: [.sankey]),
         .init(plugin: .arcDiagram, dependencies: [.sankey]),
+        .init(plugin: .dumbbell, dependencies: [.highchartsMore]),
         .init(plugin: .lollipop, dependencies: [.dumbbell]),
         .init(plugin: .tilemap, dependencies: [.heatmap]),
         .init(plugin: .treegraph, dependencies: [.treemap])
