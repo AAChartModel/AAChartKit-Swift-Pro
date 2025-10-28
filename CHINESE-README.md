@@ -1,6 +1,6 @@
 # AAInfographics-Pro 
-AAInfographics 的进阶 Pro 版本
 
+AAInfographics-Pro 是 AAInfographics 的进阶专业版，这是一款专为 iOS、iPadOS 和 macOS 设计的优雅的声明式图表框架。作为更强大的数据可视化框架，AAInfographics-Pro 支持更多精美图表类型，包括钟形曲线图、子弹图、柱状金字塔图、圆柱图、依赖关系图、热力图、直方图、网络关系图、组织结构图、打包气泡图、帕累托图、桑基图系列图表、实心仪表盘流程图、和弦图、树状图、矩形图、概率分布图、向量图、维恩图、风羽图、词云图等多样化图表展示。
 
 ### Heat and tree maps
 
