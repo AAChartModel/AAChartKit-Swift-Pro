@@ -127,7 +127,10 @@ public class AAChartView: WKWebView {
 #if os(iOS)
     public var isScrollEnabled: Bool? {
         willSet {
-            scrollView.isScrollEnabled = newValue!
+            guard let newValue = newValue else {
+                return
+            }
+            scrollView.isScrollEnabled = newValue
         }
     }
 #endif
@@ -135,8 +138,11 @@ public class AAChartView: WKWebView {
     
     public var isClearBackgroundColor: Bool? {
         willSet {
+            guard let newValue = newValue else {
+                return
+            }
 #if os(iOS)
-            if newValue! == true {
+            if newValue {
                 backgroundColor = .clear
                 isOpaque = false
             } else {
@@ -144,7 +150,7 @@ public class AAChartView: WKWebView {
                 isOpaque = true
             }
 #elseif os(macOS)
-            if newValue! == true {
+            if newValue {
                 layer?.backgroundColor = .clear
                 layer?.isOpaque = false
             } else {
@@ -157,30 +163,39 @@ public class AAChartView: WKWebView {
     
     public var isSeriesHidden: Bool? {
         willSet {
-            if optionsJson != nil {
-                let jsStr = "setChartSeriesHidden('\(newValue!)')"
-                safeEvaluateJavaScriptString(jsStr)
+            guard optionsJson != nil, let newValue = newValue else {
+                return
             }
+
+            let hiddenLiteral = javaScriptStringLiteral(String(newValue))
+            let jsStr = "setChartSeriesHidden(\(hiddenLiteral))"
+            safeEvaluateJavaScriptString(jsStr)
         }
     }
     
     /// Content width of AAChartView
     public var contentWidth: CGFloat? {
         willSet {
-            if optionsJson != nil {
-                let jsStr = "setTheChartViewContentWidth('\(newValue!)')"
-                safeEvaluateJavaScriptString(jsStr)
+            guard optionsJson != nil, let newValue = newValue else {
+                return
             }
+
+            let widthLiteral = javaScriptStringLiteral(String(describing: newValue))
+            let jsStr = "setTheChartViewContentWidth(\(widthLiteral))"
+            safeEvaluateJavaScriptString(jsStr)
         }
     }
     
     /// Content height of AAChartView
     public var contentHeight: CGFloat? {
         willSet {
-            if optionsJson != nil {
-                let jsStr = "setTheChartViewContentHeight('\(newValue!)')"
-                safeEvaluateJavaScriptString(jsStr)
+            guard optionsJson != nil, let newValue = newValue else {
+                return
             }
+
+            let heightLiteral = javaScriptStringLiteral(String(describing: newValue))
+            let jsStr = "setTheChartViewContentHeight(\(heightLiteral))"
+            safeEvaluateJavaScriptString(jsStr)
         }
     }
     
@@ -224,12 +239,15 @@ public class AAChartView: WKWebView {
         pluginLoader.executeBeforeDrawScript(webView: self)
 
         // Check if optionsJson is ready before drawing
-        guard optionsJson != nil else {
+        guard let optionsJson = optionsJson else {
             debugLog("💀💀💀 Attempted to draw chart before optionsJson was configured.")
             return
         }
 
-        let jsStr = "loadTheHighChartView('\(optionsJson!)','\(contentWidth ?? 0)','\(contentHeight ?? 0)');"
+        let optionsJsonLiteral = javaScriptStringLiteral(optionsJson)
+        let contentWidthLiteral = javaScriptStringLiteral(String(describing: contentWidth ?? 0))
+        let contentHeightLiteral = javaScriptStringLiteral(String(describing: contentHeight ?? 0))
+        let jsStr = "loadTheHighChartView(\(optionsJsonLiteral),\(contentWidthLiteral),\(contentHeightLiteral));"
         safeEvaluateJavaScriptString(jsStr)
 
         // Execute post-draw script via loader
@@ -382,6 +400,18 @@ public class AAChartView: WKWebView {
         print(message)
 #endif
     }
+
+    /// Creates a valid JavaScript string literal (with surrounding quotes) for arbitrary text.
+    private func javaScriptStringLiteral(_ value: String) -> String {
+        guard
+            let jsonData = try? JSONSerialization.data(withJSONObject: [value], options: []),
+            let jsonArrayString = String(data: jsonData, encoding: .utf8)
+        else {
+            return "\"\""
+        }
+
+        return String(jsonArrayString.dropFirst().dropLast())
+    }
     
     
     deinit {
@@ -423,8 +453,14 @@ extension AAChartView: WKUIDelegate {
         alert.messageText = "JS WARNING"
         alert.informativeText = message
         alert.addButton(withTitle: "Okay")
-        
-        alert.beginSheetModal(for: NSApplication.shared.mainWindow!) { (response) in
+
+        guard let mainWindow = NSApplication.shared.mainWindow else {
+            print("Unable to find main window for JS warning alert. Completing JavaScript alert handler.")
+            completionHandler()
+            return
+        }
+
+        alert.beginSheetModal(for: mainWindow) { (response) in
             if response == NSApplication.ModalResponse.alertFirstButtonReturn {
                 completionHandler()
             }
@@ -484,11 +520,17 @@ extension AAChartView:  WKNavigationDelegate {
 extension AAChartView: WKScriptMessageHandler {
     open func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         if message.name == kUserContentMessageNameClick {
-            let messageBody = message.body as! [String: Any]
+            guard let messageBody = message.body as? [String: Any] else {
+                debugLog("⚠️ Invalid click event message body type: \(type(of: message.body))")
+                return
+            }
             let clickEventMessageModel = getEventMessageModel(messageBody: messageBody, eventType: AAClickEventMessageModel.self)
             delegate?.aaChartView?(self, clickEventMessage: clickEventMessageModel)
         } else if message.name == kUserContentMessageNameMouseOver {
-            let messageBody = message.body as! [String: Any]
+            guard let messageBody = message.body as? [String: Any] else {
+                debugLog("⚠️ Invalid mouseover event message body type: \(type(of: message.body))")
+                return
+            }
             let moveOverEventMessageModel = getEventMessageModel(messageBody: messageBody, eventType: AAMoveOverEventMessageModel.self)
             delegate?.aaChartView?(self, moveOverEventMessage: moveOverEventMessageModel)
         }
@@ -521,6 +563,5 @@ extension AAChartView {
         }
     }
 }
-
 
 
