@@ -12,7 +12,8 @@ import WebKit
 
 @available(iOS 10.0, macCatalyst 13.1, macOS 10.13, *)
 internal protocol AAChartViewPluginLoaderProtocol: AnyObject {
-    /// Configures the loader with options to determine required plugins and scripts.
+    /// Configures required plugins and consumes `before/afterDrawChartJavaScript`
+    /// from options so they can be executed exactly once by the loader.
     func configure(options: AAOptions)
 
     /// Loads necessary plugins if they haven't been loaded yet.
@@ -48,7 +49,7 @@ internal final class DefaultPluginLoader: AAChartViewPluginLoaderProtocol {
         #if DEBUG
         print("ℹ️ DefaultPluginLoader: No plugins to load.")
         #endif
-        completion() // Immediately complete
+        completeOnMainThread(completion)
     }
 
     public func executeBeforeDrawScript(webView: WKWebView) {
@@ -57,6 +58,14 @@ internal final class DefaultPluginLoader: AAChartViewPluginLoaderProtocol {
 
     public func executeAfterDrawScript(webView: WKWebView) {
         // No post-draw script for default
+    }
+
+    private func completeOnMainThread(_ completion: @escaping () -> Void) {
+        if Thread.isMainThread {
+            completion()
+        } else {
+            DispatchQueue.main.async(execute: completion)
+        }
     }
 }
 
@@ -85,6 +94,7 @@ internal final class AAChartViewPluginLoader: AAChartViewPluginLoaderProtocol {
         debugLog("🔌 [ProPluginLoader] Determined requiredPluginPaths: \(requiredPluginPaths.map { ($0 as NSString).lastPathComponent })")
         #endif
 
+        // Consume one-shot scripts from options so chart drawing stays idempotent.
         beforeDrawScript = options.beforeDrawChartJavaScript
         options.beforeDrawChartJavaScript = nil
 
@@ -109,7 +119,7 @@ internal final class AAChartViewPluginLoader: AAChartViewPluginLoaderProtocol {
                 debugLog("ℹ️ [ProPluginLoader] All required plugins (count: \(totalRequiredPluginsSet.count)) already loaded.")
             }
             #endif
-            completion()
+            completeOnMainThread(completion)
             return
         }
 
@@ -119,7 +129,14 @@ internal final class AAChartViewPluginLoader: AAChartViewPluginLoaderProtocol {
             scriptsToLoad: pluginsToLoad,
             dependencies: dependencies
         ) { [weak self] successfullyLoadedPlugins in
-            guard let self = self else { return }
+            guard let self = self else {
+                if Thread.isMainThread {
+                    completion()
+                } else {
+                    DispatchQueue.main.async(execute: completion)
+                }
+                return
+            }
             self.loadedPluginPaths.formUnion(successfullyLoadedPlugins)
 
             #if DEBUG
@@ -130,7 +147,7 @@ internal final class AAChartViewPluginLoader: AAChartViewPluginLoaderProtocol {
             }
             print("ℹ️ [ProPluginLoader] Total loaded plugins count: \(self.loadedPluginPaths.count)")
             #endif
-            completion()
+            self.completeOnMainThread(completion)
         }
     }
 
@@ -185,38 +202,96 @@ internal final class AAChartViewPluginLoader: AAChartViewPluginLoaderProtocol {
         .treemap
     ]
 
+    private static let priorityByFileName: [String: Int] = {
+        Dictionary(uniqueKeysWithValues: priorityPlugins.enumerated().map { index, plugin in
+            (plugin.fileName, index)
+        })
+    }()
+
     // Helper function to sort plugin paths based on known dependencies
     private func sortPluginPaths(
         _ paths: Set<String>,
         merging externalDependencies: [String: String]
     ) -> [String] {
-        var sortedPaths = Array(paths)
-        
-        // Build internal dependencies map from configurations
-        let internalDependencies = Self.pluginDependencies.reduce(into: [String: String]()) { result, config in
-            result[config.plugin.fileName] = config.dependencies.first?.fileName
+        guard paths.count > 1 else {
+            return Array(paths).sorted()
         }
-        
-        // Merge external dependencies, allowing them to override internal dependencies if needed
-        var dependencies = internalDependencies
-        dependencies.merge(externalDependencies) { (_, new) in new }
 
-        sortedPaths.sort { path1, path2 in
-            let file1 = (path1 as NSString).lastPathComponent
-            let file2 = (path2 as NSString).lastPathComponent
+        let fileNameToPath = paths.reduce(into: [String: String]()) { result, path in
+            let fileName = (path as NSString).lastPathComponent
+            if let existing = result[fileName], existing <= path {
+                return
+            }
+            result[fileName] = path
+        }
 
-            // Check explicit dependencies
-            if let dependency = dependencies[file2], dependency == file1 { return true }
-            if let dependency = dependencies[file1], dependency == file2 { return false }
-            
-            // Check priority plugins
-            for priorityPlugin in Self.priorityPlugins {
-                let priorityFileName = priorityPlugin.fileName
-                if file1 == priorityFileName && file2 != priorityFileName { return true }
-                if file2 == priorityFileName && file1 != priorityFileName { return false }
+        let dependencyMap = mergedDependencies(merging: externalDependencies)
+
+        var adjacencyList = [String: Set<String>]()
+        var inDegree = [String: Int]()
+        paths.forEach { inDegree[$0] = 0 }
+
+        for (dependentFileName, dependencyFileNames) in dependencyMap {
+            guard let dependentPath = fileNameToPath[dependentFileName] else {
+                continue
             }
 
-            return path1 < path2
+            for dependencyFileName in dependencyFileNames {
+                guard
+                    let dependencyPath = fileNameToPath[dependencyFileName],
+                    dependencyPath != dependentPath
+                else {
+                    continue
+                }
+
+                if adjacencyList[dependencyPath, default: []].insert(dependentPath).inserted {
+                    inDegree[dependentPath, default: 0] += 1
+                }
+            }
+        }
+
+        func sortByPriorityThenPath(_ candidatePaths: [String]) -> [String] {
+            candidatePaths.sorted { lhs, rhs in
+                let lhsFileName = (lhs as NSString).lastPathComponent
+                let rhsFileName = (rhs as NSString).lastPathComponent
+
+                let lhsPriority = Self.priorityByFileName[lhsFileName] ?? Int.max
+                let rhsPriority = Self.priorityByFileName[rhsFileName] ?? Int.max
+                if lhsPriority != rhsPriority {
+                    return lhsPriority < rhsPriority
+                }
+                return lhs < rhs
+            }
+        }
+
+        var zeroInDegreePaths = sortByPriorityThenPath(
+            paths.filter { (inDegree[$0] ?? 0) == 0 }
+        )
+        var sortedPaths: [String] = []
+        sortedPaths.reserveCapacity(paths.count)
+
+        while let nextPath = zeroInDegreePaths.first {
+            zeroInDegreePaths.removeFirst()
+            sortedPaths.append(nextPath)
+
+            for dependentPath in adjacencyList[nextPath] ?? [] {
+                let updatedInDegree = (inDegree[dependentPath] ?? 0) - 1
+                inDegree[dependentPath] = updatedInDegree
+                if updatedInDegree == 0 {
+                    zeroInDegreePaths.append(dependentPath)
+                }
+            }
+            zeroInDegreePaths = sortByPriorityThenPath(zeroInDegreePaths)
+        }
+
+        if sortedPaths.count != paths.count {
+            let unresolvedPaths = paths.subtracting(Set(sortedPaths))
+            let fallbackPaths = sortByPriorityThenPath(Array(unresolvedPaths))
+            sortedPaths.append(contentsOf: fallbackPaths)
+
+            #if DEBUG
+            debugLog("⚠️ [ProPluginLoader] Cyclic or unresolved plugin dependencies detected. Falling back to priority/name ordering for unresolved scripts.")
+            #endif
         }
 
         #if DEBUG
@@ -228,6 +303,34 @@ internal final class AAChartViewPluginLoader: AAChartViewPluginLoaderProtocol {
         #endif
 
         return sortedPaths
+    }
+
+    private func mergedDependencies(merging externalDependencies: [String: String]) -> [String: Set<String>] {
+        var dependencies = [String: Set<String>]()
+
+        for configuration in Self.pluginDependencies {
+            let dependent = configuration.plugin.fileName
+            let requiredFiles = configuration.dependencies.map { $0.fileName }
+            dependencies[dependent, default: []].formUnion(requiredFiles)
+        }
+
+        for (dependentRaw, dependencyRaw) in externalDependencies {
+            let dependent = normalizedFileName(from: dependentRaw)
+            let dependency = normalizedFileName(from: dependencyRaw)
+
+            guard !dependent.isEmpty, !dependency.isEmpty else {
+                continue
+            }
+            // Keep compatibility with previous behavior where external definitions override internal ones.
+            dependencies[dependent] = [dependency]
+        }
+
+        return dependencies
+    }
+
+    private func normalizedFileName(from pathOrFileName: String) -> String {
+        let fileName = (pathOrFileName as NSString).lastPathComponent
+        return fileName.isEmpty ? pathOrFileName : fileName
     }
 
     // Function to load and evaluate scripts as a single combined batch
@@ -258,7 +361,8 @@ internal final class AAChartViewPluginLoader: AAChartViewPluginLoaderProtocol {
                 return
             }
 
-            var combinedJSString = ""
+            var scriptChunks: [String] = []
+            scriptChunks.reserveCapacity(sortedScriptPaths.count * 3)
             var successfullyReadPaths = Set<String>()
 
             for path in sortedScriptPaths {
@@ -267,12 +371,13 @@ internal final class AAChartViewPluginLoader: AAChartViewPluginLoaderProtocol {
 
                 guard let scriptBody = self.readPluginScript(at: pathKey, name: scriptName) else { continue }
 
-                combinedJSString += "// --- Start: \(scriptName) ---\n"
-                combinedJSString += scriptBody
-                combinedJSString += "\n// --- End: \(scriptName) ---\n\n"
+                scriptChunks.append("// --- Start: \(scriptName) ---")
+                scriptChunks.append(scriptBody)
+                scriptChunks.append("// --- End: \(scriptName) ---")
                 successfullyReadPaths.insert(path)
             }
 
+            let combinedJSString = scriptChunks.joined(separator: "\n")
             guard !combinedJSString.isEmpty else {
                 self.debugLog("⚠️ [ProPluginLoader] No plugin script content could be read. Nothing to evaluate.")
                 self.completeOnMainThread(with: Set(), completion: completion)
@@ -371,6 +476,12 @@ internal final class AAChartViewPluginLoader: AAChartViewPluginLoaderProtocol {
         }
     }
 
+    private func completeOnMainThread(_ completion: @escaping () -> Void) {
+        onMainThread {
+            completion()
+        }
+    }
+
     private func onMainThread(_ block: @escaping () -> Void) {
         if Thread.isMainThread {
             block()
@@ -379,3 +490,15 @@ internal final class AAChartViewPluginLoader: AAChartViewPluginLoaderProtocol {
         }
     }
 }
+
+#if DEBUG
+@available(iOS 10.0, macCatalyst 13.1, macOS 10.13, *)
+extension AAChartViewPluginLoader {
+    internal func sortedPluginPathsForTesting(
+        _ paths: Set<String>,
+        dependencies: [String: String]
+    ) -> [String] {
+        sortPluginPaths(paths, merging: dependencies)
+    }
+}
+#endif

@@ -84,6 +84,7 @@ internal final class AAChartViewPluginProvider: AAChartViewPluginProviderProtoco
     }
 
     private let bundlePathLoader: AAChartBundlePathLoadingProtocol
+    private var scriptPathCache: [AAChartPluginScriptType: String] = [:]
 
     private struct AAChartPluginConfiguration {
         let types: Set<AAChartType>
@@ -157,41 +158,57 @@ internal final class AAChartViewPluginProvider: AAChartViewPluginProviderProtoco
         .init(types: [.pictorial], scripts: [.pictorial])
     ]
 
+    private static let scriptsByChartType: [AAChartType: Set<AAChartPluginScriptType>] = {
+        var mapping: [AAChartType: Set<AAChartPluginScriptType>] = [:]
+        for configuration in pluginConfigurations {
+            for chartType in configuration.types {
+                mapping[chartType, default: []].formUnion(configuration.scripts)
+            }
+        }
+        return mapping
+    }()
+
     public func getRequiredPluginPaths(for options: AAOptions) -> Set<String> {
         var requiredPaths = Set<String>()
 
         // Check for plugins based on AAOptions properties
         addChartPluginScripts(for: options, into: &requiredPaths)
 
+        var chartTypes = Set<AAChartType>()
+
         // Check for plugins based on the main chart type
-        if let chartType = options.chart?.type {
-            addChartPluginScripts(forType: chartType, into: &requiredPaths)
+        if let chartType = resolveChartType(from: options.chart?.type) {
+            chartTypes.insert(chartType)
         }
 
         // Check for plugins based on individual series types
         if let seriesArray = options.series {
-            for seriesElement in seriesArray {
-                if let finalSeriesElement = seriesElement as? AASeriesElement,
-                   let seriesType = finalSeriesElement.type {
-                    addChartPluginScripts(forType: seriesType, into: &requiredPaths)
+            for case let seriesElement as AASeriesElement in seriesArray {
+                guard let seriesType = resolveChartType(from: seriesElement.type) else {
+                    continue
                 }
+                chartTypes.insert(seriesType)
             }
+        }
+
+        chartTypes.forEach { chartType in
+            addChartPluginScripts(forType: chartType, into: &requiredPaths)
         }
 
         return requiredPaths
     }
 
-    // Helper to add scripts based on chart type string
-    private func addChartPluginScripts(forType chartType: String, into requiredPaths: inout Set<String>) {
-        guard let resolvedType = AAChartType(rawValue: chartType) else {
-            return
+    private func resolveChartType(from rawValue: String?) -> AAChartType? {
+        guard let rawValue else {
+            return nil
         }
+        return AAChartType(rawValue: rawValue)
+    }
 
-        let scripts = Self.pluginConfigurations.reduce(into: Set<AAChartPluginScriptType>()) { result, configuration in
-            guard configuration.types.contains(resolvedType) else {
-                return
-            }
-            configuration.scripts.forEach { result.insert($0) }
+    // Helper to add scripts based on chart type
+    private func addChartPluginScripts(forType chartType: AAChartType, into requiredPaths: inout Set<String>) {
+        guard let scripts = Self.scriptsByChartType[chartType] else {
+            return
         }
 
         scripts.forEach { script in
@@ -224,6 +241,10 @@ internal final class AAChartViewPluginProvider: AAChartViewPluginProviderProtoco
     // Generates the full path for a given script name (moved from AAChartView)
     // Consider moving this to a shared utility if used elsewhere.
     private func generateScriptPath(for script: AAChartPluginScriptType) -> String? {
+        if let cachedPath = scriptPathCache[script] {
+            return cachedPath
+        }
+
         let scriptName = script.rawValue
         let fullScriptName = script.fileName
         let directoryPrefix = script.directoryPrefix
@@ -240,9 +261,9 @@ internal final class AAChartViewPluginProvider: AAChartViewPluginProviderProtoco
             #endif
             return nil
         }
-        
-        let urlStr = NSURL.fileURL(withPath: path)
-        return urlStr.path
+
+        scriptPathCache[script] = path
+        return path
     }
 }
 
@@ -258,5 +279,4 @@ internal protocol AAChartBundlePathLoadingProtocol {
 }
 
 extension BundlePathLoader: AAChartBundlePathLoadingProtocol {}
-
 
