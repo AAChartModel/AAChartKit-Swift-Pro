@@ -32,33 +32,102 @@
 
 import SwiftUI
 
+final class ThemePreferenceStore: ObservableObject {
+    @Published var colorSchemeOverride: ColorScheme?
+}
+
 final class MainVC: UIHostingController<MainView> {
+    private let themeStore = ThemePreferenceStore()
+    private var floatingButtonHostController: UIHostingController<FloatingModeToggleOverlay>?
+
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder, rootView: MainView())
+        super.init(coder: aDecoder, rootView: MainView(themeStore: themeStore))
     }
 
     init() {
-        super.init(rootView: MainView())
+        super.init(rootView: MainView(themeStore: themeStore))
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        installFloatingModeButtonIfNeeded()
+        floatingButtonHostController?.view.isHidden = false
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+
+        if isMovingFromParent || isBeingDismissed {
+            if let hostController = floatingButtonHostController {
+                hostController.willMove(toParent: nil)
+                hostController.view.removeFromSuperview()
+                hostController.removeFromParent()
+            }
+            floatingButtonHostController = nil
+        } else {
+            floatingButtonHostController?.view.isHidden = true
+        }
+    }
+
+    private func installFloatingModeButtonIfNeeded() {
+        guard let navigationController else {
+            return
+        }
+        guard let containerView = navigationController.view else {
+            return
+        }
+
+        if let hostController = floatingButtonHostController {
+            if hostController.parent !== navigationController {
+                hostController.willMove(toParent: nil)
+                hostController.view.removeFromSuperview()
+                hostController.removeFromParent()
+
+                navigationController.addChild(hostController)
+                containerView.addSubview(hostController.view)
+                hostController.didMove(toParent: navigationController)
+            }
+
+            if hostController.view.superview !== containerView {
+                hostController.view.removeFromSuperview()
+                containerView.addSubview(hostController.view)
+            }
+            return
+        }
+
+        let hostController = UIHostingController(
+            rootView: FloatingModeToggleOverlay(themeStore: themeStore)
+        )
+        hostController.view.backgroundColor = .clear
+        hostController.view.translatesAutoresizingMaskIntoConstraints = false
+        hostController.view.isOpaque = false
+        hostController.view.clipsToBounds = false
+
+        navigationController.addChild(hostController)
+        containerView.addSubview(hostController.view)
+        NSLayoutConstraint.activate([
+            hostController.view.widthAnchor.constraint(equalToConstant: 52),
+            hostController.view.heightAnchor.constraint(equalToConstant: 52),
+            hostController.view.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 16),
+            hostController.view.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -70),
+        ])
+        hostController.didMove(toParent: navigationController)
+        floatingButtonHostController = hostController
     }
 }
 
 struct MainView: View {
+    @ObservedObject var themeStore: ThemePreferenceStore
     private let sections = ChartSection.defaultSections()
-    @State private var colorSchemeOverride: ColorScheme? = nil
     @Environment(\.colorScheme) private var systemColorScheme
 
     var body: some View {
-        let resolvedScheme = colorSchemeOverride ?? systemColorScheme
+        let resolvedScheme = themeStore.colorSchemeOverride ?? systemColorScheme
         Group {
             if #available(iOS 16.0, *) {
                 NavigationStack {
                     MainContent(sections: sections)
                         .navigationTitle("AAInfographics-Pro")
-                        .toolbar {
-                            ToolbarItem(placement: .topBarTrailing) {
-                                ModeToggleButton(colorSchemeOverride: $colorSchemeOverride)
-                            }
-                        }
                 }
             } else {
                 NavigationView {
@@ -66,21 +135,17 @@ struct MainView: View {
                         .navigationBarTitle("AAInfographics-Pro")
                 }
                 .navigationViewStyle(StackNavigationViewStyle())
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        ModeToggleButton(colorSchemeOverride: $colorSchemeOverride)
-                    }
-                }
             }
         }
         .environment(\.colorScheme, resolvedScheme)
-        .preferredColorScheme(colorSchemeOverride)
+        .preferredColorScheme(themeStore.colorSchemeOverride)
     }
 }
 
 private struct MainContent: View {
     let sections: [ChartSection]
     @State private var activeRoute: MainRoute?
+    @Environment(\.colorScheme) private var colorScheme
 
     private static let accentPalette: [Int] = [
         0x5470c6,
@@ -127,18 +192,22 @@ private struct MainContent: View {
     }
 
     var body: some View {
-        ZStack {
-            AASectionedListView(sections: listSections) { selection in
-                let item = sections[selection.sectionIndex].items[selection.itemIndex]
-                activeRoute = MainRoute(destination: item.destination)
-            }
+        ZStack(alignment: .topTrailing) {
+            MainContentBackground(colorScheme: colorScheme)
 
-            NavigationLink(
-                destination: routeDestination,
-                isActive: activeRouteBinding,
-                label: { EmptyView() }
-            )
-            .hidden()
+            ZStack {
+                AASectionedListView(sections: listSections) { selection in
+                    let item = sections[selection.sectionIndex].items[selection.itemIndex]
+                    activeRoute = MainRoute(destination: item.destination)
+                }
+
+                NavigationLink(
+                    destination: routeDestination,
+                    isActive: activeRouteBinding,
+                    label: { EmptyView() }
+                )
+                .hidden()
+            }
         }
     }
 
@@ -161,6 +230,33 @@ private struct MainContent: View {
         } else {
             EmptyView()
         }
+    }
+}
+
+private struct MainContentBackground: View {
+    let colorScheme: ColorScheme
+
+    var body: some View {
+        LinearGradient(
+            gradient: Gradient(colors: gradientColors),
+            startPoint: .topLeading,
+            endPoint: .bottomTrailing
+        )
+        .ignoresSafeArea()
+    }
+
+    private var gradientColors: [Color] {
+        if colorScheme == .dark {
+            return [
+                Color(red: 0.05, green: 0.05, blue: 0.08),
+                Color(red: 0.10, green: 0.10, blue: 0.15)
+            ]
+        }
+
+        return [
+            Color(red: 0.98, green: 0.98, blue: 1.0),
+            Color(red: 0.95, green: 0.95, blue: 0.98)
+        ]
     }
 }
 
@@ -491,27 +587,29 @@ private extension UIColor {
 }
 
 private struct ModeToggleButton: View {
-    @Binding var colorSchemeOverride: ColorScheme?
+    @ObservedObject var themeStore: ThemePreferenceStore
     @Environment(\.colorScheme) private var systemColorScheme
 
     var body: some View {
         Button(action: toggleMode) {
             ZStack {
                 Circle()
-                    .fill(buttonGradient)
-                    .frame(width: 40, height: 40)
+                    .fill(accentGradient)
+                    .frame(width: 48, height: 48)
                     .overlay(
                         Circle()
-                            .stroke(Color.white.opacity(0.25), lineWidth: 0.8)
+                            .stroke(Color.white.opacity(colorScheme == .dark ? 0.22 : 0.35), lineWidth: 0.9)
                     )
-                    .shadow(color: buttonShadow, radius: 8, x: 0, y: 4)
+                    .shadow(color: buttonShadow, radius: 10, x: 0, y: 5)
 
-                Image(systemName: currentScheme == .dark ? "sun.max.fill" : "moon.stars.fill")
+                Image(systemName: buttonSymbolName)
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 18, height: 18)
-                    .foregroundColor(Color.white)
+                    .frame(width: 20, height: 20)
+                    .foregroundColor(.white)
             }
+            .frame(width: 52, height: 52)
+            .contentShape(Circle())
         }
         .buttonStyle(.plain)
         .accessibilityLabel(currentScheme == .dark ? "切换为日间模式" : "切换为夜间模式")
@@ -519,10 +617,14 @@ private struct ModeToggleButton: View {
     }
 
     private var currentScheme: ColorScheme {
-        colorSchemeOverride ?? systemColorScheme
+        themeStore.colorSchemeOverride ?? systemColorScheme
     }
 
-    private var buttonGradient: LinearGradient {
+    private var colorScheme: ColorScheme {
+        currentScheme
+    }
+
+    private var accentGradient: LinearGradient {
         if currentScheme == .dark {
             return LinearGradient(colors: [Color(hex: 0xFACC15), Color(hex: 0xF97316)], startPoint: .topLeading, endPoint: .bottomTrailing)
         }
@@ -533,11 +635,15 @@ private struct ModeToggleButton: View {
         currentScheme == .dark ? Color.black.opacity(0.45) : Color.black.opacity(0.2)
     }
 
+    private var buttonSymbolName: String {
+        currentScheme == .dark ? "sun.max.fill" : "moon.stars.fill"
+    }
+
     private func toggleMode() {
         let targetScheme: ColorScheme = currentScheme == .dark ? .light : .dark
         guard let window = activeWindow else {
             withAnimation(.easeInOut(duration: 0.28)) {
-                colorSchemeOverride = targetScheme
+                themeStore.colorSchemeOverride = targetScheme
             }
             return
         }
@@ -546,7 +652,7 @@ private struct ModeToggleButton: View {
             to: targetScheme,
             on: window
         ) {
-            colorSchemeOverride = targetScheme
+            themeStore.colorSchemeOverride = targetScheme
         }
     }
 
@@ -555,6 +661,14 @@ private struct ModeToggleButton: View {
             .compactMap { $0 as? UIWindowScene }
             .flatMap(\.windows)
             .first(where: \.isKeyWindow)
+    }
+}
+
+private struct FloatingModeToggleOverlay: View {
+    @ObservedObject var themeStore: ThemePreferenceStore
+
+    var body: some View {
+        ModeToggleButton(themeStore: themeStore)
     }
 }
 
@@ -803,7 +917,7 @@ private final class ThemeTransitionOrbView: UIView {
 #if DEBUG
 struct MainView_Previews: PreviewProvider {
     static var previews: some View {
-        MainView()
+        MainView(themeStore: ThemePreferenceStore())
     }
 }
 #endif
