@@ -108,7 +108,7 @@ final class MainVC: UIHostingController<MainView> {
         NSLayoutConstraint.activate([
             hostController.view.widthAnchor.constraint(equalToConstant: 52),
             hostController.view.heightAnchor.constraint(equalToConstant: 52),
-            hostController.view.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 16),
+            hostController.view.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 46),
             hostController.view.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -70),
         ])
         hostController.didMove(toParent: navigationController)
@@ -594,19 +594,32 @@ private struct ModeToggleButton: View {
         Button(action: toggleMode) {
             ZStack {
                 Circle()
-                    .fill(accentGradient)
+                    .fill(glassBaseFill)
                     .frame(width: 48, height: 48)
                     .overlay(
                         Circle()
-                            .stroke(Color.white.opacity(colorScheme == .dark ? 0.22 : 0.35), lineWidth: 0.9)
+                            .fill(highlightFill)
+                            .scaleEffect(0.78)
+                            .offset(x: -6, y: -7)
+                    )
+                    .overlay(
+                        Circle()
+                            .stroke(glassBorderColor, lineWidth: 1)
+                    )
+                    .overlay(
+                        Circle()
+                            .stroke(Color.white.opacity(colorScheme == .dark ? 0.18 : 0.30), lineWidth: 0.6)
+                            .blur(radius: 0.4)
+                            .scaleEffect(0.96)
                     )
                     .shadow(color: buttonShadow, radius: 10, x: 0, y: 5)
+                    .shadow(color: glassGlowColor, radius: 12, x: 0, y: 3)
 
                 Image(systemName: buttonSymbolName)
                     .resizable()
                     .scaledToFit()
                     .frame(width: 20, height: 20)
-                    .foregroundColor(.white)
+                    .foregroundColor(symbolColor)
             }
             .frame(width: 52, height: 52)
             .contentShape(Circle())
@@ -624,19 +637,77 @@ private struct ModeToggleButton: View {
         currentScheme
     }
 
-    private var accentGradient: LinearGradient {
+    private var glassBaseFill: LinearGradient {
         if currentScheme == .dark {
-            return LinearGradient(colors: [Color(hex: 0xFACC15), Color(hex: 0xF97316)], startPoint: .topLeading, endPoint: .bottomTrailing)
+            return LinearGradient(
+                colors: [
+                    Color.white.opacity(0.16),
+                    Color.white.opacity(0.08)
+                ],
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
         }
-        return LinearGradient(colors: [Color(hex: 0x6366F1), Color(hex: 0xEC4899)], startPoint: .topLeading, endPoint: .bottomTrailing)
+
+        return LinearGradient(
+            colors: [
+                Color.white.opacity(0.38),
+                Color.white.opacity(0.18)
+            ],
+            startPoint: .topLeading,
+            endPoint: .bottomTrailing
+        )
+    }
+
+    private var highlightFill: LinearGradient {
+        if currentScheme == .dark {
+            return LinearGradient(
+                colors: [
+                    Color.white.opacity(0.22),
+                    Color.white.opacity(0.03)
+                ],
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+        }
+
+        return LinearGradient(
+            colors: [
+                Color.white.opacity(0.46),
+                Color.white.opacity(0.04)
+            ],
+            startPoint: .topLeading,
+            endPoint: .bottomTrailing
+        )
+    }
+
+    private var glassBorderColor: Color {
+        if currentScheme == .dark {
+            return Color.white.opacity(0.26)
+        }
+        return Color.white.opacity(0.55)
     }
 
     private var buttonShadow: Color {
         currentScheme == .dark ? Color.black.opacity(0.45) : Color.black.opacity(0.2)
     }
 
+    private var glassGlowColor: Color {
+        if currentScheme == .dark {
+            return Color(hex: 0x8B5CF6).opacity(0.20)
+        }
+        return Color.white.opacity(0.14)
+    }
+
     private var buttonSymbolName: String {
         currentScheme == .dark ? "sun.max.fill" : "moon.stars.fill"
+    }
+
+    private var symbolColor: Color {
+        if currentScheme == .dark {
+            return Color(hex: 0xFDE68A)
+        }
+        return Color(hex: 0x4338CA)
     }
 
     private func toggleMode() {
