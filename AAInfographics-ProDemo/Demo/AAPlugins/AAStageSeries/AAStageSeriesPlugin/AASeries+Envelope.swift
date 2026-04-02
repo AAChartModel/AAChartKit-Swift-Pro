@@ -33,6 +33,18 @@ extension AASeries: AASerializableWithComputedProperties {
         if envelope != nil {
             dict["envelope"] = envelope?.toDic() as Any
         }
+
+        if groupZPadding != nil {
+            dict["groupZPadding"] = groupZPadding
+        }
+
+        if depth != nil {
+            dict["depth"] = depth
+        }
+
+        if grouping != nil {
+            dict["grouping"] = grouping
+        }
         
         return dict
     }

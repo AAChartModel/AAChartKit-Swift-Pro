@@ -53,6 +53,10 @@ extension AAOptions: AASerializableWithComputedProperties {
         if boost != nil {
             dict["boost"] = boost?.toDic() as Any
         }
+
+        if zAxis != nil {
+            dict["zAxis"] = zAxis?.toDic() as Any
+        }
         
         return dict
     }

@@ -95,6 +95,31 @@ class AAHeatOrTreeMapChartComposer {
                     .data(AAOptionsData.treemapWithLevelsData)
             ])
     }
+
+    static func treemapWithLevelsData2() -> AAOptions {
+        AAOptions()
+            .chart(AAChart()
+                .type(.treemap))
+            .title(AATitle()
+                .text("Highcharts Treemap with Grouped Levels"))
+            .series([
+                AASeriesElement()
+                    .type(.treemap)
+                    .allowDrillToNode(true)
+                    .levels([
+                        AALevelsElement()
+                            .level(1)
+                            .dataLabels(AADataLabels()
+                                .enabled(true))
+                            .borderWidth(3),
+                        AALevelsElement()
+                            .level(2)
+                            .dataLabels(AADataLabels()
+                                .enabled(true))
+                    ])
+                    .data(AAOptionsData.treemapWithLevels2Data)
+            ])
+    }
     
     static func drilldownLargeDataTreemapChart() -> AAOptions {
             AAOptions()
@@ -190,6 +215,82 @@ class AAHeatOrTreeMapChartComposer {
                         .headerFormat("Temperature")
                         .pointFormat("{point.x:%e %b, %Y} {point.y}:00: {point.value} ℃"))
                     .turboThreshold(10000)
+            ])
+    }
+
+    static func calendarHeatmap() -> AAOptions {
+        AAOptions()
+            .chart(AAChart()
+                .type(.heatmap))
+            .title(AATitle()
+                .text("Day temperature in Oslo, Norway July 2023")
+                .align(.left))
+            .subtitle(AASubtitle()
+                .text("Temperature variation at day through July")
+                .align(.left))
+            .tooltip(AATooltip()
+                .enabled(true)
+                .outside(true)
+                .headerFormat("")
+                .formatter(#"""
+                function () {
+                    if (this.point && this.point.custom && this.point.custom.empty) {
+                        return 'No data';
+                    }
+                    return Highcharts.dateFormat('%A, %b %e, %Y', this.point.date);
+                }
+                """#))
+            .xAxis(AAXAxis()
+                .categories(["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"])
+                .opposite(true)
+                .lineWidth(26)
+                .offset(13)
+                .lineColor("rgba(27, 26, 37, 0.2)")
+                .labels(AALabels()
+                    .rotation(0)
+                    .y(20)
+                    .style(AAStyle()
+                        .fontWeight(.bold))))
+            .yAxis(AAYAxis()
+                .min(0)
+                .max(5)
+                .visible(false))
+            .legend(AALegend()
+                .align(.right)
+                .layout(.vertical)
+                .verticalAlign(.middle))
+            .colorAxis(AAColorAxis()
+                .startOnTick(true)
+                .endOnTick(true)
+                .min(0)
+                .stops([
+                    [0.2, "lightblue"],
+                    [0.4, "#CBDFC8"],
+                    [0.6, "#F3E99E"],
+                    [0.9, "#F9A05C"]
+                ])
+                .labels(AALabels()
+                    .format("{value} °C")))
+            .series([
+                AASeriesElement()
+                    .type(.heatmap)
+                    .keys(["x", "y", "value", "date", "id"])
+                    .data(AAOptionsData.calendarHeatmapData)
+                    .borderWidth(2)
+                    .dataLabels(AADataLabels()
+                        .enabled(true)
+                        .formatter(#"""
+                        function () {
+                            if (this.point && this.point.custom && this.point.custom.empty) {
+                                return '';
+                            }
+                            const value = this.point.value;
+                            return typeof value === 'number' ? value.toFixed(1) + '°' : '';
+                        }
+                        """#)
+                        .style(AAStyle()
+                            .textOutline("none")
+                            .fontWeight(.regular)))
             ])
     }
 
@@ -591,4 +692,3 @@ class AAHeatOrTreeMapChartComposer {
         return aaOptions
     }
 }
-

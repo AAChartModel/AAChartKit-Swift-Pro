@@ -456,6 +456,8 @@ private struct ChartSection: Identifiable {
             "Custom Event | 自定义交互事件",
             "DrilldownChart | 可钻取图表",
             "BoostChart | 加速图表",
+            "Options3DChart | 3D图表",
+            "Gallery | 画廊",
             "OfficialChartSample | 官方示例",
             "FractalChartListVC | 分形图表列表",
             "Custom Event2 | 自定义交互事件2",
@@ -472,13 +474,20 @@ private struct ChartSection: Identifiable {
                 "organizationChart---组织结构图",
                 "networkgraphChart---力导关系图✢✣✤✥",
                 "simpleDependencyWheelChart---简单的和弦图🎵",
+                "neuralNetworkChart---神经网络图",
+                "carnivoraPhylogenyOrganizationChart---食肉目动物系统发育组织图",
+                "germanicLanguageTreeChart---日耳曼语系树图",
+                "sankeyDiagramChart---桑基图(能源流向)",
+                "verticalSankeyChart---垂直桑基图",
             ],
             [
                 "heatmapChart---热力图🌡",
+                "largeDataHeatmapChart---大数据量热力图🌡",
+                "calendarHeatmap---日历热力图🗓",
                 "treemapWithColorAxisData---包好色彩轴的矩形树图🌲",
                 "treemapWithLevelsData---包含等级的矩形树图🌲",
+                "treemapWithLevelsData2---包含等级的矩形树图2🌲",
                 "drilldownLargeDataTreemapChart---可下钻的大数据量矩形树图🌲",
-                "largeDataHeatmapChart---大数据量热力图🌡",
                 "simpleTilemapWithHexagonTileShape---简单的砖块图🧱(六边形蜂巢图🐝)",
                 "simpleTilemapWithCircleTileShape---简单的砖块图🧱(圆形)",
                 "simpleTilemapWithDiamondTileShape---简单的砖块图🧱(菱形)",
@@ -491,6 +500,9 @@ private struct ChartSection: Identifiable {
                 "tilemapForAmericaWithCircleTileShape---美洲砖块图🧱(圆形)",
                 "tilemapForAmericaWithDiamondTileShape---美洲砖块图🧱(菱形)",
                 "tilemapForAmericaWithSquareTileShape---美洲砖块图🧱(正方形)",
+                "treegraphChart---树图🌲",
+                "invertedTreegraphChart---倒置树图🌲",
+                "treegraphWithBoxLayoutChart---盒布局树图🌲",
             ],
             [
                 "packedbubbleChart---气泡填充图🎈",
@@ -498,6 +510,9 @@ private struct ChartSection: Identifiable {
                 "packedbubbleSpiralChart---渐进变化的气泡图🎈",
                 "eulerChart---欧拉图",
                 "vennChart---韦恩图",
+                "vennChart2---韦恩图2",
+                "eulerChart2---欧拉图2",
+                "bubbleStellarChart---极坐标行星气泡图🪐",
             ],
             [
                 "variwideChart---可变宽度的柱形图",
@@ -543,10 +558,30 @@ private struct ChartSection: Identifiable {
                 "lineChart---折线图",
                 "areaChart---区域填充图",
                 "columnChart---柱形图",
-                "scatterChartWith1MillionPoints---散点图(100万数据量)",
+                "lineChartWithHundredsOfSeries---多序列折线图",
+                "scatterChartOptions---高密度散点图",
+                "areaRangeChart---区域范围图",
+                "columnRangeChart---柱形范围图",
+                "bubbleChart---气泡图",
+                "heatMapChart---热力图",
+                "stackingAreaChart---堆积面积图",
+                "stackingColumnChart---堆积柱形图",
             ],
             [
-                "columnChart---柱形图",
+                "_3DColumnWithStackingRandomData---3D堆积随机柱形图",
+                "_3DColumnWithStackingAndGrouping---3D分组堆积柱形图",
+                "_3DBarWithStackingRandomData---3D堆积随机条形图",
+                "_3DBarWithStackingAndGrouping---3D分组堆积条形图",
+                "_3DAreaChart---3D区域图",
+                "_3DScatterChart---3D散点图",
+                "_3DPieChart---3D环形饼图",
+            ],
+            [
+                "UITableView 画廊",
+                "UICollectionView 画廊",
+            ],
+            [
+                "OfficialChartSample---官方示例网格",
             ],
             [
                 "FractalChartListVC---分形图表列表",
@@ -631,24 +666,37 @@ private struct ChartSection: Identifiable {
                     return vc
                 }
             case 8:
-                items = names.map { title in
-                    ChartItem(title: title) {
-                        OfficialChartSampleVC()
-                    }
+                items = makeIndexedItems(names) { selectedIndex, navigationTitles in
+                    let vc = AAOptions3DChartVC()
+                    vc.selectedIndex = selectedIndex
+                    vc.navigationItemTitleArr = navigationTitles
+                    return vc
                 }
             case 9:
-                items = names.map { title in
+                items = names.enumerated().map { row, title in
                     ChartItem(title: title) {
-                        ChartListTableViewVC()
+                        row == 0 ? ProChartTableGalleryVC() : ProChartCollectionGalleryVC()
                     }
                 }
             case 10:
                 items = names.map { title in
                     ChartItem(title: title) {
-                        CustomClickEventCallbackMessageVC2()
+                        OfficialChartSampleVC()
                     }
                 }
             case 11:
+                items = names.map { title in
+                    ChartItem(title: title) {
+                        FractalChartListVC()
+                    }
+                }
+            case 12:
+                items = names.map { title in
+                    ChartItem(title: title) {
+                        CustomClickEventCallbackMessageVC2()
+                    }
+                }
+            case 13:
                 items = names.map { title in
                     ChartItem(title: title) {
                         AACustomStageChartVC()

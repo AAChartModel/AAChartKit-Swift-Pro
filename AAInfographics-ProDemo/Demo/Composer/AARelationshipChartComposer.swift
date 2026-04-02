@@ -298,6 +298,140 @@ class AARelationshipChartComposer {
                             )
                 ])
     }
+
+    static func neuralNetworkChart() -> AAOptions {
+        let layers: [(nodes: Int, activation: String, label: String)] = [
+            (1, "tanh", "Input Layer (#0)"),
+            (6, "tanh", "Hidden Layer #1 (tanh)"),
+            (6, "ReLU", "Hidden Layer #2 (ReLU)"),
+            (6, "ReLU", "Hidden Layer #3 (ReLU)"),
+            (2, "sigmoid", "Output Layer (sigmoid)")
+        ]
+
+        func generateSeriesData(_ current: [Int] = []) -> [[Int]] {
+            if current.count == layers.count {
+                return [current]
+            }
+
+            let layerIndex = current.count
+            return (0..<layers[layerIndex].nodes).flatMap { node in
+                generateSeriesData(current + [node])
+            }
+        }
+
+        let yAxes = layers.map { layer in
+            AAYAxis()
+                .min(0)
+                .max(Double(layer.nodes))
+                .title(AATitle()
+                    .text(""))
+        }
+
+        return AAOptions()
+            .chart(AAChart()
+                .type(.line)
+                .parallelCoordinates(true)
+                .inverted(true))
+            .title(AATitle()
+                .text("Visualizing a neural network with Highcharts")
+                .align(.left))
+            .subtitle(AASubtitle()
+                .text("You can use the parallel-coordinates module to visualize a neural network.")
+                .align(.left))
+            .plotOptions(AAPlotOptions()
+                .series(AASeries()
+                    .marker(AAMarker()
+                        .symbol(AAChartSymbolType.circle.rawValue)
+                        .enabled(true)
+                        .radius(10)
+                        .fillColor("white")
+                        .lineWidth(1.5)
+                        .lineColor("#7f30a6")
+                        .states(AAMarkerStates()
+                            .hover(AAMarkerHover()
+                                .lineColor("#fa56fc"))))
+                    .states(AAStates()
+                        .inactive(AAInactive()
+                            .enabled(false))
+                        .hover(AAHover()
+                            .color("#7f30a6")
+                            .lineWidthPlus(0)))))
+            .xAxis(AAXAxis()
+                .categories(layers.map(\.label)))
+            .colors(["#a752d1"])
+            .yAxisArray(yAxes)
+            .series(generateSeriesData().map { dataSet in
+                AASeriesElement()
+                    .name("Runner")
+                    .data(dataSet.map { $0 as Any })
+            })
+    }
+
+    static func carnivoraPhylogenyOrganizationChart() -> AAOptions {
+        AAOptions()
+            .chart(AAChart()
+                .inverted(false))
+            .title(AATitle()
+                .text("Carnivora Phylogeny"))
+            .subtitle(AASubtitle()
+                .text("Tracing the Evolutionary Relationship of Carnivores"))
+            .plotOptions(AAPlotOptions()
+                .series(AASeries()))
+            .series([
+                AASeriesElement()
+                    .type(.organization)
+                    .name("Carnivora Phyologeny")
+                    .keys(["from", "to"])
+                    .data([
+                        ["Carnivora", "Felidae"],
+                        ["Carnivora", "Mustelidae"],
+                        ["Carnivora", "Canidae"],
+                        ["Felidae", "Panthera"],
+                        ["Mustelidae", "Taxidea"],
+                        ["Mustelidae", "Lutra"],
+                        ["Panthera", "Panthera pardus"],
+                        ["Taxidea", "Taxidea taxus"],
+                        ["Lutra", "Lutra lutra"],
+                        ["Canidae", "Canis"],
+                        ["Canis", "Canis latrans"],
+                        ["Canis", "Canis lupus"]
+                    ])
+                    .levels([
+                        AALevelsElement()
+                            .level(0)
+                            .color("#DEDDCF")
+                            .dataLabels(AADataLabels()
+                                .color("black")),
+                        AALevelsElement()
+                            .level(1)
+                            .color("#DEDDCF")
+                            .dataLabels(AADataLabels()
+                                .color("black"))
+                            .height(25),
+                        AALevelsElement()
+                            .level(2)
+                            .color("#DEDDCF")
+                            .dataLabels(AADataLabels()
+                                .color("black")),
+                        AALevelsElement()
+                            .level(3)
+                            .dataLabels(AADataLabels()
+                                .color("black"))
+                    ])
+                    .nodes(AAOptionsData.carnivoraPhylogenyNodesData)
+                    .colorByPoint(false)
+                    .borderColor("black")
+                    .borderWidth(2)
+                    .nodeWidth(22.0)
+            ])
+            .tooltip(AATooltip()
+                .outside(true)
+                .formatter(#"""
+                function () {
+                    return this.point && this.point.custom ? this.point.custom.info : '';
+                }
+                """#))
+    }
     
     
 }

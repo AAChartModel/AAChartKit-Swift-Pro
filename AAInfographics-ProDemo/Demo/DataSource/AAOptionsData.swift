@@ -55,6 +55,10 @@ class AAOptionsData {
     public class var vennData : [Any] {
         getJsonDataWithJsonFileName("vennData")
     }
+
+    public class var vennData2: [Any] {
+        getJsonDataWithJsonFileName("vennData2")
+    }
     
     public class var lollipopData : [Any] {
         getJsonDataWithJsonFileName("lollipopData")
@@ -66,6 +70,10 @@ class AAOptionsData {
     
     public class var treemapWithLevelsData : [Any] {
         getJsonDataWithJsonFileName("treemapWithLevelsData")
+    }
+
+    public class var treemapWithLevels2Data: [Any] {
+        getJsonDataWithJsonFileName("treemapWithLevels2Data")
     }
     
     public class var bellcurveData : [Any] {
@@ -100,6 +108,10 @@ class AAOptionsData {
         getJsonDataWithJsonFileName("eulerData")
     }
 
+    public class var eulerData2: [Any] {
+        getJsonDataWithJsonFileName("eulerData2")
+    }
+
     
     public class var organizationData : [Any] {
         getJsonDataWithJsonFileName("organizationData")
@@ -107,6 +119,10 @@ class AAOptionsData {
     
     public class var organizationNodesData : [Any] {
         getJsonDataWithJsonFileName("organizationNodesData")
+    }
+
+    public class var carnivoraPhylogenyNodesData: [Any] {
+        getJsonDataWithJsonFileName("carnivoraPhylogenyNodesData")
     }
     
     
@@ -299,6 +315,11 @@ class AAOptionsData {
     public class var germanicLanguageTreeData: [Any] {
         getJsonDataWithJsonFileName("germanicLanguageTreeData")
     }
+
+    public class var calendarHeatmapData: [Any] {
+        let originalDataArr = getJsonDataWithJsonFileName("calendarHeatmapData")
+        return generateCalendarHeatmapChartData(originalDataArr)
+    }
     
     //https://www.jianshu.com/p/a4b2bd5deca6
     private static func getJsonDataWithJsonFileName(_ jsonFileName: String) -> [Any] {
@@ -315,6 +336,67 @@ class AAOptionsData {
             print("读取本地数据出现错误!",error ?? "WARNING!!!!")
         }
         return [Any]()
+    }
+
+    private static func generateCalendarHeatmapChartData(_ data: [Any]) -> [Any] {
+        guard !data.isEmpty else {
+            return []
+        }
+
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let calendar = Calendar.current
+
+        guard
+            let firstItem = data.first as? [String: Any],
+            let firstDateString = firstItem["date"] as? String,
+            let firstDate = dateFormatter.date(from: firstDateString)
+        else {
+            return data
+        }
+
+        let firstWeekday = calendar.component(.weekday, from: firstDate) - 1
+        var chartData: [[String: Any]] = []
+
+        for emptyDay in 0..<firstWeekday {
+            chartData.append([
+                "x": emptyDay,
+                "y": 5,
+                "value": NSNull(),
+                "date": NSNull(),
+                "custom": ["empty": true]
+            ])
+        }
+
+        for (index, element) in data.enumerated() {
+            guard
+                let item = element as? [String: Any],
+                let dateString = item["date"] as? String,
+                let date = dateFormatter.date(from: dateString)
+            else {
+                continue
+            }
+
+            let day = index + 1
+            let xCoordinate = (firstWeekday + day - 1) % 7
+            let yCoordinate = Int(floor(Double(firstWeekday + day - 1) / 7.0))
+            let temperature = item["temperature"] ?? NSNull()
+
+            let dayFormatter = DateFormatter()
+            dayFormatter.dateFormat = "MMM d"
+            let monthDay = dayFormatter.string(from: date)
+
+            chartData.append([
+                "x": xCoordinate,
+                "y": yCoordinate,
+                "value": temperature,
+                "date": Int(date.timeIntervalSince1970 * 1000),
+                "id": day,
+                "custom": ["monthDay": monthDay]
+            ])
+        }
+
+        return chartData
     }
     
 }

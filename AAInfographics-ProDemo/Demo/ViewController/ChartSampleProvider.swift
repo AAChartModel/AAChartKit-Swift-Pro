@@ -20,6 +20,11 @@ class ChartSampleProvider: NSObject {
             AARelationshipChartComposer.organizationChart(),
             AARelationshipChartComposer.networkgraphChart(),
             AARelationshipChartComposer.simpleDependencyWheelChart(),
+            AARelationshipChartComposer.neuralNetworkChart(),
+            AARelationshipChartComposer.carnivoraPhylogenyOrganizationChart(),
+            AAOrganizationChartComposer.germanicLanguageTreeChart(),
+            AASankeyChartComposer.sankeyDiagramChart(),
+            AASankeyChartComposer.verticalSankeyChart(),
         ]
     }
     
@@ -31,6 +36,9 @@ class ChartSampleProvider: NSObject {
             AABubbleChartComposer.packedbubbleSpiralChart(),
             AABubbleChartComposer.eulerChart(),
             AABubbleChartComposer.vennChart(),
+            AABubbleChartComposer.vennChart2(),
+            AABubbleChartComposer.eulerChart2(),
+            AABubbleStellarChartComposer.bubbleStellarChart(),
         ]
     }
     
@@ -46,6 +54,8 @@ class ChartSampleProvider: NSObject {
             AAColumnVariantChartComposer.histogramChart(),
             AAColumnVariantChartComposer.bellcurveChart(),
             AAColumnVariantChartComposer.bulletChart(),
+            AAPictorialChartComposer.pictorial1Chart(),
+            AAPictorialChartComposer.pictorial2Chart(),
         ]
     }
     
@@ -53,10 +63,12 @@ class ChartSampleProvider: NSObject {
     class func heatAndTreeMapChartSamples() -> [AAOptions] {
         return [
             AAHeatOrTreeMapChartComposer.heatmapChart(),
+            AAHeatOrTreeMapChartComposer.largeDataHeatmapChart(),
+            AAHeatOrTreeMapChartComposer.calendarHeatmap(),
             AAHeatOrTreeMapChartComposer.treemapWithColorAxisData(),
             AAHeatOrTreeMapChartComposer.treemapWithLevelsData(),
+            AAHeatOrTreeMapChartComposer.treemapWithLevelsData2(),
             AAHeatOrTreeMapChartComposer.drilldownLargeDataTreemapChart(),
-            AAHeatOrTreeMapChartComposer.largeDataHeatmapChart(),
             AAHeatOrTreeMapChartComposer.simpleTilemapWithHexagonTileShape(),
             AAHeatOrTreeMapChartComposer.simpleTilemapWithCircleTileShape(),
             AAHeatOrTreeMapChartComposer.simpleTilemapWithDiamondTileShape(),
@@ -69,6 +81,9 @@ class ChartSampleProvider: NSObject {
             AAHeatOrTreeMapChartComposer.tilemapChartForAmericaWithCircleTileShape(),
             AAHeatOrTreeMapChartComposer.tilemapChartForAmericaWithDiamondTileShape(),
             AAHeatOrTreeMapChartComposer.tilemapChartForAmericaWithSquareTileShape(),
+            AATreegraphChartComposer.treegraph(),
+            AATreegraphChartComposer.invertedTreegraph(),
+            AATreegraphChartComposer.treegraphWithBoxLayout(),
         ]
     }
     
@@ -98,8 +113,8 @@ class ChartSampleProvider: NSObject {
             ChartProVC.icicleChart(),
             ChartProVC.sunburstChart2(),
             ChartProVC.solidgaugeChart(),
-//            ChartProVC.parallelCoordinatesSplineChart(),
-//            ChartProVC.parallelCoordinatesLineChart(),
+            ChartProVC.parallelCoordinatesSplineChart(),
+            ChartProVC.parallelCoordinatesLineChart(),
             ChartProVC.volinPlotChart(),
             ChartProVC.variablepieChart(),
             ChartProVC.semicircleSolidGaugeChart(),
@@ -113,7 +128,6 @@ class ChartSampleProvider: NSObject {
             bubbleChartSamples() +
             columnVariantChartSamples() +
             heatAndTreeMapChartSamples() +
-            treegraphChartSamples() +
             otherProChartSamples()
         )
     }

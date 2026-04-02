@@ -10,14 +10,19 @@ let package = Package(
      products: [
          .library(name: "AAInfographics-Pro", targets: ["AAInfographics-Pro"])
      ],
-     targets: [
-        .target(
-			name: "AAInfographics-Pro",
-			path: "AAInfographics-Pro",
-            exclude: ["Info.plist", "ProjectBundlePathLoader.swift"],
-			resources: [
-				.copy("AAJSFiles.bundle")
-			]
-        )
-     ]
+	    targets: [
+	        .target(
+				name: "AAInfographics-Pro",
+				path: "AAInfographics-Pro",
+	            exclude: ["ProjectBundlePathLoader.swift"],
+				resources: [
+					.copy("AAJSFiles.bundle")
+				]
+	        ),
+            .testTarget(
+                name: "AAInfographicsProTests",
+                dependencies: ["AAInfographics-Pro"],
+                path: "Tests/AAInfographicsProTests"
+            )
+	     ]
  )

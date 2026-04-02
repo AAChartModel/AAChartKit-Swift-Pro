@@ -7,7 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		18A4D1743F67F0447280DF3E /* carnivoraPhylogenyNodesData.json in Resources */ = {isa = PBXBuildFile; fileRef = 031FA25AEBD002067434BEEB /* carnivoraPhylogenyNodesData.json */; };
 		27F872AB25E797690068380F /* ProjectBundlePathLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F872A925E797690068380F /* ProjectBundlePathLoader.swift */; };
+		2B099722033BC67BAD8E1339 /* ProChartCollectionGalleryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D15ABEB01664F911F388BA /* ProChartCollectionGalleryVC.swift */; };
+		3C718053F21E2041F152CCC7 /* verticalSankeySeries.json in Resources */ = {isa = PBXBuildFile; fileRef = 9B9FFAB91DFDEC0030F432E3 /* verticalSankeySeries.json */; };
+		3CEBD7F64322B3C07A7D61CB /* vennData2.json in Resources */ = {isa = PBXBuildFile; fileRef = 569DAE3CD9560FA3528F57E9 /* vennData2.json */; };
 		44D27C73255A3CAF00D0C636 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D27C72255A3CAF00D0C636 /* AppDelegate.swift */; };
 		44D27C75255A3CAF00D0C636 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D27C74255A3CAF00D0C636 /* SceneDelegate.swift */; };
 		44D27C77255A3CAF00D0C636 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D27C76255A3CAF00D0C636 /* ViewController.swift */; };
@@ -27,8 +31,14 @@
 		44D27E07255A793200D0C636 /* AAOptionsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D27E06255A793200D0C636 /* AAOptionsData.swift */; };
 		44D27E0C255ADE1E00D0C636 /* AAOptionsSeries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D27E0B255ADE1E00D0C636 /* AAOptionsSeries.swift */; };
 		44D27E11255ADF1300D0C636 /* ChartProVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D27E10255ADF1300D0C636 /* ChartProVC.swift */; };
+		489DF35C09B73985793A4B21 /* sankeyDiagramSeries.json in Resources */ = {isa = PBXBuildFile; fileRef = 11CA6D3D1C0395C9F7480150 /* sankeyDiagramSeries.json */; };
+		49D5376CB5A2BE8702E91C86 /* calendarHeatmapData.json in Resources */ = {isa = PBXBuildFile; fileRef = 4DFEB3CEF1D35CEF82EE7DF3 /* calendarHeatmapData.json */; };
+		51F9CCB73C46F582D7DB12E6 /* AAOptions+ZAxis.swift in Sources */ = {isa = PBXBuildFile; fileRef = A46EE72930260964A98A479D /* AAOptions+ZAxis.swift */; };
+		55DE11B4F6D3B5578719B924 /* ProChartCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A0BD50425C383EE625907B2 /* ProChartCollectionCell.swift */; };
 		58603BB14202D5D0DF0D4482 /* tilemapForAfricaData.json in Resources */ = {isa = PBXBuildFile; fileRef = 58603C0A468CDC4C59D49149 /* tilemapForAfricaData.json */; };
 		58603DF10ACD2DFCE19E231F /* simpleTilemapData.json in Resources */ = {isa = PBXBuildFile; fileRef = 5860351659A57677CB0A6D84 /* simpleTilemapData.json */; };
+		5A309F2C3EC6E1C20747A547 /* stellarChartData.json in Resources */ = {isa = PBXBuildFile; fileRef = 915E52E891945C039595787A /* stellarChartData.json */; };
+		6FDD1DAC3CD8D701796BCE20 /* AASeries+Depth.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00BC5EB12AC1CFC9BAE540B /* AASeries+Depth.swift */; };
 		8405490F2E54269900B57B44 /* AACustomStageChartVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8405490E2E54269900B57B44 /* AACustomStageChartVC.swift */; };
 		840549182E544EC400B57B44 /* AACustom-Stage.js in Resources */ = {isa = PBXBuildFile; fileRef = 840549172E544EC400B57B44 /* AACustom-Stage.js */; };
 		8405491A2E5456DB00B57B44 /* AACustomStageChartComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840549192E5456DB00B57B44 /* AACustomStageChartComposer.swift */; };
@@ -160,6 +170,16 @@
 		84DEB8C828FAF3C800BF9423 /* simpleDependencyWheelData.json in Resources */ = {isa = PBXBuildFile; fileRef = 84DEB8C528FAF3C700BF9423 /* simpleDependencyWheelData.json */; };
 		84DEB8C928FAF3C800BF9423 /* volinPlotElement1Data.json in Resources */ = {isa = PBXBuildFile; fileRef = 84DEB8C628FAF3C700BF9423 /* volinPlotElement1Data.json */; };
 		84DEB8CA28FAF3C800BF9423 /* volinPlotElement2Data.json in Resources */ = {isa = PBXBuildFile; fileRef = 84DEB8C728FAF3C700BF9423 /* volinPlotElement2Data.json */; };
+		8F4EDB0EEEEBE4EB5019342E /* AAOptions3DChartComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46047BC9E5C473360F35941 /* AAOptions3DChartComposer.swift */; };
+		A6A5EB7C8CAEB1B3FC51E787 /* AAChart+Options3D.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB3682B50757E0CBA6947BCA /* AAChart+Options3D.swift */; };
+		A71F9A4B3707A496641A4383 /* ProChartTableGalleryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6692FC651DC7D47B3AB651A /* ProChartTableGalleryVC.swift */; };
+		A7E436969DBBF70A150C39F4 /* eulerData2.json in Resources */ = {isa = PBXBuildFile; fileRef = 56AA3C5290B4EA4B98035482 /* eulerData2.json */; };
+		B6F6967A570DEBF1965D75AC /* AABubbleStellarChartComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1746F8FE5315C6159945D416 /* AABubbleStellarChartComposer.swift */; };
+		BCC203942326646A6438A3F5 /* AASankeyChartComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F25949D183E4B3A4BE4FA6E /* AASankeyChartComposer.swift */; };
+		C8A893BCD3B89A70EEB1C498 /* AAHighcharts-3D.js in Resources */ = {isa = PBXBuildFile; fileRef = 4CE8B37D53BDFE447B428B4C /* AAHighcharts-3D.js */; };
+		DDAEED2C2F2C8675187AC1F0 /* AAOptions3D.swift in Sources */ = {isa = PBXBuildFile; fileRef = A043575A653D686F26391533 /* AAOptions3D.swift */; };
+		F21D88F922192DA20823F89B /* AAOptions3DChartVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB406AFA19E4C816EE64197 /* AAOptions3DChartVC.swift */; };
+		F2C80CB08D246683DC413956 /* treemapWithLevels2Data.json in Resources */ = {isa = PBXBuildFile; fileRef = E48DD0F2B8DE442D7F52E99D /* treemapWithLevels2Data.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -180,7 +200,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		031FA25AEBD002067434BEEB /* carnivoraPhylogenyNodesData.json */ = {isa = PBXFileReference; includeInIndex = 1; path = carnivoraPhylogenyNodesData.json; sourceTree = "<group>"; };
+		11CA6D3D1C0395C9F7480150 /* sankeyDiagramSeries.json */ = {isa = PBXFileReference; includeInIndex = 1; path = sankeyDiagramSeries.json; sourceTree = "<group>"; };
+		1746F8FE5315C6159945D416 /* AABubbleStellarChartComposer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AABubbleStellarChartComposer.swift; sourceTree = "<group>"; };
 		27F872A925E797690068380F /* ProjectBundlePathLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectBundlePathLoader.swift; sourceTree = "<group>"; };
+		3F25949D183E4B3A4BE4FA6E /* AASankeyChartComposer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AASankeyChartComposer.swift; sourceTree = "<group>"; };
 		4490AFC8255C08B300C27B2D /* AAInfographics-ProDemo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "AAInfographics-ProDemo.entitlements"; sourceTree = "<group>"; };
 		44D27C6F255A3CAF00D0C636 /* AAInfographics-ProDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AAInfographics-ProDemo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		44D27C72255A3CAF00D0C636 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -207,8 +231,13 @@
 		44D27E06255A793200D0C636 /* AAOptionsData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AAOptionsData.swift; sourceTree = "<group>"; };
 		44D27E0B255ADE1E00D0C636 /* AAOptionsSeries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AAOptionsSeries.swift; sourceTree = "<group>"; };
 		44D27E10255ADF1300D0C636 /* ChartProVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartProVC.swift; sourceTree = "<group>"; };
+		4CE8B37D53BDFE447B428B4C /* AAHighcharts-3D.js */ = {isa = PBXFileReference; includeInIndex = 1; path = "AAHighcharts-3D.js"; sourceTree = "<group>"; };
+		4DFEB3CEF1D35CEF82EE7DF3 /* calendarHeatmapData.json */ = {isa = PBXFileReference; includeInIndex = 1; path = calendarHeatmapData.json; sourceTree = "<group>"; };
+		569DAE3CD9560FA3528F57E9 /* vennData2.json */ = {isa = PBXFileReference; includeInIndex = 1; path = vennData2.json; sourceTree = "<group>"; };
+		56AA3C5290B4EA4B98035482 /* eulerData2.json */ = {isa = PBXFileReference; includeInIndex = 1; path = eulerData2.json; sourceTree = "<group>"; };
 		5860351659A57677CB0A6D84 /* simpleTilemapData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = simpleTilemapData.json; sourceTree = "<group>"; };
 		58603C0A468CDC4C59D49149 /* tilemapForAfricaData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = tilemapForAfricaData.json; sourceTree = "<group>"; };
+		6DB406AFA19E4C816EE64197 /* AAOptions3DChartVC.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AAOptions3DChartVC.swift; sourceTree = "<group>"; };
 		8405490E2E54269900B57B44 /* AACustomStageChartVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AACustomStageChartVC.swift; sourceTree = "<group>"; };
 		840549172E544EC400B57B44 /* AACustom-Stage.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "AACustom-Stage.js"; sourceTree = "<group>"; };
 		840549192E5456DB00B57B44 /* AACustomStageChartComposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AACustomStageChartComposer.swift; sourceTree = "<group>"; };
@@ -341,6 +370,17 @@
 		84DEB8C528FAF3C700BF9423 /* simpleDependencyWheelData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = simpleDependencyWheelData.json; sourceTree = "<group>"; };
 		84DEB8C628FAF3C700BF9423 /* volinPlotElement1Data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = volinPlotElement1Data.json; sourceTree = "<group>"; };
 		84DEB8C728FAF3C700BF9423 /* volinPlotElement2Data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = volinPlotElement2Data.json; sourceTree = "<group>"; };
+		8A0BD50425C383EE625907B2 /* ProChartCollectionCell.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ProChartCollectionCell.swift; sourceTree = "<group>"; };
+		915E52E891945C039595787A /* stellarChartData.json */ = {isa = PBXFileReference; includeInIndex = 1; path = stellarChartData.json; sourceTree = "<group>"; };
+		9B9FFAB91DFDEC0030F432E3 /* verticalSankeySeries.json */ = {isa = PBXFileReference; includeInIndex = 1; path = verticalSankeySeries.json; sourceTree = "<group>"; };
+		A043575A653D686F26391533 /* AAOptions3D.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AAOptions3D.swift; sourceTree = "<group>"; };
+		A46EE72930260964A98A479D /* AAOptions+ZAxis.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "AAOptions+ZAxis.swift"; sourceTree = "<group>"; };
+		B3D15ABEB01664F911F388BA /* ProChartCollectionGalleryVC.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ProChartCollectionGalleryVC.swift; sourceTree = "<group>"; };
+		B46047BC9E5C473360F35941 /* AAOptions3DChartComposer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AAOptions3DChartComposer.swift; sourceTree = "<group>"; };
+		D00BC5EB12AC1CFC9BAE540B /* AASeries+Depth.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "AASeries+Depth.swift"; sourceTree = "<group>"; };
+		D6692FC651DC7D47B3AB651A /* ProChartTableGalleryVC.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ProChartTableGalleryVC.swift; sourceTree = "<group>"; };
+		E48DD0F2B8DE442D7F52E99D /* treemapWithLevels2Data.json */ = {isa = PBXFileReference; includeInIndex = 1; path = treemapWithLevels2Data.json; sourceTree = "<group>"; };
+		FB3682B50757E0CBA6947BCA /* AAChart+Options3D.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "AAChart+Options3D.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -494,6 +534,8 @@
 				84DD6C3A2E8244E000B3D195 /* pictorial2Series.json */,
 				84A5691027FEC88700883553 /* packedbubbleSeries.json */,
 				84A5690F27FEC88700883553 /* streamgraphSeries.json */,
+				11CA6D3D1C0395C9F7480150 /* sankeyDiagramSeries.json */,
+				9B9FFAB91DFDEC0030F432E3 /* verticalSankeySeries.json */,
 			);
 			path = SeriesJsonFiles;
 			sourceTree = "<group>";
@@ -540,6 +582,12 @@
 				84DEB8C728FAF3C700BF9423 /* volinPlotElement2Data.json */,
 				5860351659A57677CB0A6D84 /* simpleTilemapData.json */,
 				58603C0A468CDC4C59D49149 /* tilemapForAfricaData.json */,
+				4DFEB3CEF1D35CEF82EE7DF3 /* calendarHeatmapData.json */,
+				031FA25AEBD002067434BEEB /* carnivoraPhylogenyNodesData.json */,
+				56AA3C5290B4EA4B98035482 /* eulerData2.json */,
+				569DAE3CD9560FA3528F57E9 /* vennData2.json */,
+				E48DD0F2B8DE442D7F52E99D /* treemapWithLevels2Data.json */,
+				915E52E891945C039595787A /* stellarChartData.json */,
 			);
 			path = DataJsonFiles;
 			sourceTree = "<group>";
@@ -582,6 +630,7 @@
 				840549122E544B9800B57B44 /* AAStageSeries */,
 				84526E012CEB3B7600EB2563 /* AABoost */,
 				84526E002CEB3B4E00EB2563 /* AADrilldown */,
+				FAF34F4EC47C7BFFBF1B2566 /* AAOptions3D */,
 			);
 			path = AAPlugins;
 			sourceTree = "<group>";
@@ -668,6 +717,9 @@
 				8466E3902DB1F2E300DBF03B /* ChartSampleProvider.swift */,
 				8466E3922DB1F5FA00DBF03B /* ChartSampleTableViewCell.swift */,
 				8466E3932DB1F5FA00DBF03B /* ChartSampleTableViewCell.xib */,
+				D6692FC651DC7D47B3AB651A /* ProChartTableGalleryVC.swift */,
+				B3D15ABEB01664F911F388BA /* ProChartCollectionGalleryVC.swift */,
+				8A0BD50425C383EE625907B2 /* ProChartCollectionCell.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -685,6 +737,8 @@
 				84DD6C352E8240EE00B3D195 /* AAPictorialChartComposer.swift */,
 				84DD6C372E8242C400B3D195 /* AAPictorialPaths.swift */,
 				84DD6C3F2E8249F100B3D195 /* AAOrganizationChartComposer.swift */,
+				3F25949D183E4B3A4BE4FA6E /* AASankeyChartComposer.swift */,
+				1746F8FE5315C6159945D416 /* AABubbleStellarChartComposer.swift */,
 			);
 			path = Composer;
 			sourceTree = "<group>";
@@ -709,6 +763,21 @@
 				8405491D2E545F0400B57B44 /* AASeries+Envelope.swift */,
 			);
 			path = AAStageSeriesPlugin;
+			sourceTree = "<group>";
+		};
+		FAF34F4EC47C7BFFBF1B2566 /* AAOptions3D */ = {
+			isa = PBXGroup;
+			children = (
+				A043575A653D686F26391533 /* AAOptions3D.swift */,
+				FB3682B50757E0CBA6947BCA /* AAChart+Options3D.swift */,
+				A46EE72930260964A98A479D /* AAOptions+ZAxis.swift */,
+				D00BC5EB12AC1CFC9BAE540B /* AASeries+Depth.swift */,
+				B46047BC9E5C473360F35941 /* AAOptions3DChartComposer.swift */,
+				6DB406AFA19E4C816EE64197 /* AAOptions3DChartVC.swift */,
+				4CE8B37D53BDFE447B428B4C /* AAHighcharts-3D.js */,
+			);
+			name = AAOptions3D;
+			path = AAOptions3D;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -865,6 +934,15 @@
 				84A5694B27FEC89F00883553 /* timelineData.json in Resources */,
 				58603DF10ACD2DFCE19E231F /* simpleTilemapData.json in Resources */,
 				58603BB14202D5D0DF0D4482 /* tilemapForAfricaData.json in Resources */,
+				49D5376CB5A2BE8702E91C86 /* calendarHeatmapData.json in Resources */,
+				18A4D1743F67F0447280DF3E /* carnivoraPhylogenyNodesData.json in Resources */,
+				A7E436969DBBF70A150C39F4 /* eulerData2.json in Resources */,
+				3CEBD7F64322B3C07A7D61CB /* vennData2.json in Resources */,
+				F2C80CB08D246683DC413956 /* treemapWithLevels2Data.json in Resources */,
+				5A309F2C3EC6E1C20747A547 /* stellarChartData.json in Resources */,
+				489DF35C09B73985793A4B21 /* sankeyDiagramSeries.json in Resources */,
+				3C718053F21E2041F152CCC7 /* verticalSankeySeries.json in Resources */,
+				C8A893BCD3B89A70EEB1C498 /* AAHighcharts-3D.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -989,6 +1067,17 @@
 				845BABEC2D02D2EB004C15D4 /* OfficialChartSampleVC.swift in Sources */,
 				84DEB8BC28FAE50500BF9423 /* AAColumnVariantChartVC.swift in Sources */,
 				84DD6C3E2E8248AB00B3D195 /* AAOrganization.swift in Sources */,
+				BCC203942326646A6438A3F5 /* AASankeyChartComposer.swift in Sources */,
+				B6F6967A570DEBF1965D75AC /* AABubbleStellarChartComposer.swift in Sources */,
+				A71F9A4B3707A496641A4383 /* ProChartTableGalleryVC.swift in Sources */,
+				2B099722033BC67BAD8E1339 /* ProChartCollectionGalleryVC.swift in Sources */,
+				55DE11B4F6D3B5578719B924 /* ProChartCollectionCell.swift in Sources */,
+				DDAEED2C2F2C8675187AC1F0 /* AAOptions3D.swift in Sources */,
+				A6A5EB7C8CAEB1B3FC51E787 /* AAChart+Options3D.swift in Sources */,
+				51F9CCB73C46F582D7DB12E6 /* AAOptions+ZAxis.swift in Sources */,
+				6FDD1DAC3CD8D701796BCE20 /* AASeries+Depth.swift in Sources */,
+				8F4EDB0EEEEBE4EB5019342E /* AAOptions3DChartComposer.swift in Sources */,
+				F21D88F922192DA20823F89B /* AAOptions3DChartVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
