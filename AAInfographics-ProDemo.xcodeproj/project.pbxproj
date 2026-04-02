@@ -22,6 +22,7 @@
 		44D27C95255A3CB400D0C636 /* AAInfographics_ProDemoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D27C94255A3CB400D0C636 /* AAInfographics_ProDemoUITests.swift */; };
 		44D27D91255A631500D0C636 /* AABaseChartVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D27D7E255A631500D0C636 /* AABaseChartVC.swift */; };
 		44D27DA4255A64A700D0C636 /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D27DA3255A64A700D0C636 /* MainVC.swift */; };
+		9A4B7C102F06B6E100C0D001 /* AASectionedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4B7C112F06B6E100C0D001 /* AASectionedList.swift */; };
 		44D27DAC255A6C0700D0C636 /* AAJSFiles.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 44D27DAB255A6C0700D0C636 /* AAJSFiles.bundle */; };
 		44D27DEB255A6DD100D0C636 /* AAColorAxis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D27DEA255A6DD100D0C636 /* AAColorAxis.swift */; };
 		44D27DF3255A706C00D0C636 /* AALevelsElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D27DF2255A706C00D0C636 /* AALevelsElement.swift */; };
@@ -222,6 +223,7 @@
 		44D27C96255A3CB400D0C636 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		44D27D7E255A631500D0C636 /* AABaseChartVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AABaseChartVC.swift; sourceTree = "<group>"; };
 		44D27DA3255A64A700D0C636 /* MainVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
+		9A4B7C112F06B6E100C0D001 /* AASectionedList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AASectionedList.swift; sourceTree = "<group>"; };
 		44D27DAB255A6C0700D0C636 /* AAJSFiles.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AAJSFiles.bundle; sourceTree = "<group>"; };
 		44D27DEA255A6DD100D0C636 /* AAColorAxis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AAColorAxis.swift; sourceTree = "<group>"; };
 		44D27DF2255A706C00D0C636 /* AALevelsElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AALevelsElement.swift; sourceTree = "<group>"; };
@@ -434,6 +436,7 @@
 			children = (
 				4490AFC8255C08B300C27B2D /* AAInfographics-ProDemo.entitlements */,
 				44D27D76255A631500D0C636 /* Demo */,
+				9A4B7C122F06B6E100C0D001 /* SharedUI */,
 				44D27C72255A3CAF00D0C636 /* AppDelegate.swift */,
 				44D27C74255A3CAF00D0C636 /* SceneDelegate.swift */,
 				44D27C76255A3CAF00D0C636 /* ViewController.swift */,
@@ -525,6 +528,22 @@
 				84526DF52CEB302F00EB2563 /* AAPlugins */,
 			);
 			path = Demo;
+			sourceTree = "<group>";
+		};
+		9A4B7C122F06B6E100C0D001 /* SharedUI */ = {
+			isa = PBXGroup;
+			children = (
+				9A4B7C132F06B6E100C0D001 /* AASectionedList */,
+			);
+			path = SharedUI;
+			sourceTree = "<group>";
+		};
+		9A4B7C132F06B6E100C0D001 /* AASectionedList */ = {
+			isa = PBXGroup;
+			children = (
+				9A4B7C112F06B6E100C0D001 /* AASectionedList.swift */,
+			);
+			path = AASectionedList;
 			sourceTree = "<group>";
 		};
 		44D27DB1255A6CE300D0C636 /* SeriesJsonFiles */ = {
@@ -968,6 +987,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8405491E2E545F0400B57B44 /* AASeries+Envelope.swift in Sources */,
+				9A4B7C102F06B6E100C0D001 /* AASectionedList.swift in Sources */,
 				84B13F33289D09EA007356C6 /* AAHeatmap.swift in Sources */,
 				844615A9283F580300E26DA4 /* AAScrollablePlotArea.swift in Sources */,
 				44D27DA4255A64A700D0C636 /* MainVC.swift in Sources */,

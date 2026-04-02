@@ -80,371 +80,98 @@ struct MainView: View {
 
 private struct MainContent: View {
     let sections: [ChartSection]
-    @Environment(\.colorScheme) private var colorScheme
+    @State private var activeRoute: MainRoute?
 
-    var body: some View {
-        ScrollViewReader { proxy in
-            ZStack(alignment: .trailing) {
-                GradientBackground(colorScheme: colorScheme)
+    private static let accentPalette: [Int] = [
+        0x5470c6,
+        0x91cc75,
+        0xfac858,
+        0xee6666,
+        0x73c0de,
+        0x3ba272,
+        0xfc8452,
+        0x9a60b4,
+        0xea7ccc,
+        0x5470c6,
+        0x91cc75,
+        0xfac858,
+        0xee6666,
+        0x73c0de,
+        0x3ba272,
+        0xfc8452,
+        0x9a60b4,
+        0xea7ccc,
+    ]
 
-                ScrollView {
-                    LazyVStack(spacing: 28, pinnedViews: []) {
-                        ForEach(Array(sections.enumerated()), id: \.element.id) { index, section in
-                            SectionCard(section: section, index: index)
-                                .id(section.id)
-                        }
-                    }
-                    .padding(.horizontal, 20)
-                    .padding(.vertical, 32)
-                }
-
-                if sections.count > 1 {
-                    SectionIndexSidebar(sections: sections) { target in
-                        withAnimation(.spring(response: 0.4, dampingFraction: 0.85, blendDuration: 0.3)) {
-                            proxy.scrollTo(target.id, anchor: .top)
-                        }
-                    }
-                    .padding(.vertical, 32)
-                    .padding(.trailing, 6)
-                }
-            }
-        }
-    }
-}
-
-private struct GradientBackground: View {
-    let colorScheme: ColorScheme
-
-    var body: some View {
-        LinearGradient(
-            colors: gradientColors,
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing
-        )
-        .ignoresSafeArea()
-    }
-
-    private var gradientColors: [Color] {
-        if colorScheme == .dark {
-            return [Color(hex: 0x0F172A), Color(hex: 0x111827), Color(hex: 0x1F2937)]
-        }
-        return [Color(hex: 0xF4F7FF), Color(hex: 0xFDF3FF), Color(hex: 0xFEF6F0)]
-    }
-}
-
-private struct SectionCard: View {
-    let section: ChartSection
-    let index: Int
-    @Environment(\.colorScheme) private var colorScheme
-
-    private var style: SectionCardStyle {
-        .palette(for: index)
-    }
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 18) {
-            header
-
-            VStack(spacing: 12) {
-                ForEach(Array(section.items.enumerated()), id: \.element.id) { itemIndex, item in
-                    NavigationLink {
-                        ViewControllerHost(builder: item.destination)
-                            .ignoresSafeArea()
-                    } label: {
-                        SectionItemRow(title: item.title, style: style, index: itemIndex)
-                    }
-                    .buttonStyle(.plain)
-                }
-            }
-        }
-        .padding(22)
-        .background(
-            RoundedRectangle(cornerRadius: 28, style: .continuous)
-                .fill(cardFillColor)
-        )
-        .overlay(
-            RoundedRectangle(cornerRadius: 28, style: .continuous)
-                .strokeBorder(style.borderGradient, lineWidth: 1)
-                .opacity(colorScheme == .dark ? 0.35 : 0.55)
-        )
-        .clipShape(RoundedRectangle(cornerRadius: 28, style: .continuous))
-        .shadow(color: shadowColor, radius: 18, x: 0, y: 14)
-    }
-
-    private var header: some View {
-        HStack(alignment: .center, spacing: 16) {
-            ZStack {
-                Circle()
-                    .fill(style.accentGradient)
-                    .frame(width: 52, height: 52)
-                    .shadow(color: style.highlightShadow(colorScheme: colorScheme), radius: 12, x: 0, y: 8)
-
-                Image(systemName: style.iconName)
-                    .font(.system(size: 22, weight: .semibold))
-                    .foregroundColor(Color.white)
-            }
-
-            VStack(alignment: .leading, spacing: 4) {
-                Text(section.primaryTitle)
-                    .font(.system(size: 18, weight: .semibold))
-                    .foregroundColor(primaryTextColor)
-
-                if let subtitle = section.secondaryTitle {
-                    Text(subtitle)
-                        .font(.system(size: 13, weight: .medium))
-                        .foregroundColor(secondaryTextColor)
-                }
-            }
-
-            Spacer(minLength: 12)
-
-            Text("\(section.items.count) 示例")
-                .font(.caption)
-                .fontWeight(.semibold)
-                .foregroundColor(chipForegroundColor)
-                .padding(.horizontal, 12)
-                .padding(.vertical, 6)
-                .background(
-                    Capsule(style: .continuous)
-                        .fill(chipBackgroundColor)
+    private var listSections: [AASectionedListSection] {
+        sections.enumerated().map { sectionIndex, section in
+            let accentColor = Color(
+                hex: Self.accentPalette[sectionIndex % Self.accentPalette.count]
+            )
+            let items = section.items.enumerated().map { itemIndex, item in
+                AASectionedListItem(
+                    id: AnyHashable(IndexPath(row: itemIndex, section: sectionIndex)),
+                    title: item.title,
+                    subtitle: "Chart Example #\(itemIndex + 1)",
+                    badgeText: "\(itemIndex + 1)"
                 )
-        }
-    }
-
-    private var cardFillColor: Color {
-        colorScheme == .dark ? Color.white.opacity(0.1) : Color.white.opacity(0.78)
-    }
-
-    private var shadowColor: Color {
-        colorScheme == .dark ? Color.black.opacity(0.48) : Color.black.opacity(0.12)
-    }
-
-    private var primaryTextColor: Color {
-        colorScheme == .dark ? Color.white : Color(hex: 0x111827)
-    }
-
-    private var secondaryTextColor: Color {
-        colorScheme == .dark ? Color.white.opacity(0.6) : Color(hex: 0x4B5563)
-    }
-
-    private var chipForegroundColor: Color {
-        colorScheme == .dark ? Color.white.opacity(0.85) : Color(hex: 0x1F2937)
-    }
-
-    private var chipBackgroundColor: Color {
-        let base = style.accentColors.first ?? Color.blue
-        return base.opacity(colorScheme == .dark ? 0.35 : 0.2)
-    }
-}
-
-private struct SectionItemRow: View {
-    let title: String
-    let style: SectionCardStyle
-    let index: Int
-    @Environment(\.colorScheme) private var colorScheme
-
-    var body: some View {
-        HStack(spacing: 14) {
-            RoundedRectangle(cornerRadius: 14, style: .continuous)
-                .fill(style.accentGradient)
-                .frame(width: 42, height: 42)
-                .overlay(
-                    Text(displayIndex)
-                        .font(.system(size: 18, weight: .heavy))
-                        .foregroundColor(Color.white)
-                )
-
-            Text(title)
-                .font(.system(size: 15, weight: .semibold))
-                .foregroundColor(rowTextColor)
-                .multilineTextAlignment(.leading)
-
-            Spacer(minLength: 8)
-
-            Image(systemName: "chevron.right")
-                .font(.system(size: 15, weight: .semibold))
-                .foregroundColor(rowChevronColor)
-        }
-        .padding(.vertical, 12)
-        .padding(.horizontal, 14)
-        .background(
-            RoundedRectangle(cornerRadius: 20, style: .continuous)
-                .fill(rowBackgroundColor)
-        )
-        .overlay(
-            RoundedRectangle(cornerRadius: 20, style: .continuous)
-                .stroke(Color.white.opacity(colorScheme == .dark ? 0.08 : 0.2), lineWidth: 0.6)
-        )
-        .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
-        .shadow(color: rowShadowColor, radius: 8, x: 0, y: 6)
-    }
-
-    private var rowBackgroundColor: Color {
-        colorScheme == .dark ? Color.white.opacity(0.08) : Color.white.opacity(0.6)
-    }
-
-    private var rowTextColor: Color {
-        colorScheme == .dark ? Color.white.opacity(0.9) : Color(hex: 0x1F2933)
-    }
-
-    private var rowChevronColor: Color {
-        colorScheme == .dark ? Color.white.opacity(0.65) : Color.black.opacity(0.35)
-    }
-
-    private var rowShadowColor: Color {
-        colorScheme == .dark ? Color.black.opacity(0.35) : Color.black.opacity(0.1)
-    }
-
-    private var displayIndex: String {
-        index < 9 ? "0\(index + 1)" : "\(index + 1)"
-    }
-}
-
-private struct SectionCardStyle {
-    let accentColors: [Color]
-    let iconName: String
-
-    var accentGradient: LinearGradient {
-        LinearGradient(colors: accentColors, startPoint: .topLeading, endPoint: .bottomTrailing)
-    }
-
-    var borderGradient: LinearGradient {
-        LinearGradient(colors: accentColors.map { $0.opacity(0.75) }, startPoint: .topLeading, endPoint: .bottomTrailing)
-    }
-
-    func highlightShadow(colorScheme: ColorScheme) -> Color {
-        let base = accentColors.last ?? .blue
-        return base.opacity(colorScheme == .dark ? 0.45 : 0.35)
-    }
-}
-
-private extension SectionCardStyle {
-    static func palette(for index: Int) -> SectionCardStyle {
-        let palettes: [SectionCardStyle] = [
-            SectionCardStyle(
-                accentColors: [Color(hex: 0x60A5FA), Color(hex: 0x34D399)],
-                iconName: "point.topleft.down.curvedto.point.bottomright.up"
-            ),
-            SectionCardStyle(
-                accentColors: [Color(hex: 0xF97316), Color(hex: 0xFDE047)],
-                iconName: "flame.fill"
-            ),
-            SectionCardStyle(
-                accentColors: [Color(hex: 0xF472B6), Color(hex: 0x8B5CF6)],
-                iconName: "circle.grid.3x3.fill"
-            ),
-            SectionCardStyle(
-                accentColors: [Color(hex: 0x22D3EE), Color(hex: 0x0EA5E9)],
-                iconName: "chart.bar.fill"
-            ),
-            SectionCardStyle(
-                accentColors: [Color(hex: 0xA855F7), Color(hex: 0x6366F1)],
-                iconName: "waveform.path.ecg.rectangle"
-            ),
-            SectionCardStyle(
-                accentColors: [Color(hex: 0xF87171), Color(hex: 0xFB7185)],
-                iconName: "hand.tap.fill"
-            ),
-            SectionCardStyle(
-                accentColors: [Color(hex: 0x4ADE80), Color(hex: 0x22C55E)],
-                iconName: "square.grid.2x2.fill"
-            ),
-            SectionCardStyle(
-                accentColors: [Color(hex: 0x0EA5E9), Color(hex: 0x6366F1)],
-                iconName: "waveform.path.fill"
-            ),
-            SectionCardStyle(
-                accentColors: [Color(hex: 0xF59E0B), Color(hex: 0xF97316)],
-                iconName: "chart.pie.fill"
-            ),
-            SectionCardStyle(
-                accentColors: [Color(hex: 0x2DD4BF), Color(hex: 0x14B8A6)],
-                iconName: "tree.fill"
-            ),
-            SectionCardStyle(
-                accentColors: [Color(hex: 0xFB7185), Color(hex: 0xF472B6)],
-                iconName: "hand.tap"
-            ),
-            SectionCardStyle(
-                accentColors: [Color(hex: 0x7C3AED), Color(hex: 0x38BDF8)],
-                iconName: "clock.arrow.circlepath"
-            )
-        ]
-
-        guard !palettes.isEmpty else {
-            return SectionCardStyle(
-                accentColors: [Color(hex: 0x6366F1), Color(hex: 0xEC4899)],
-                iconName: "chart.bar.xaxis"
-            )
-        }
-
-        return palettes[index % palettes.count]
-    }
-}
-
-private struct SectionIndexSidebar: View {
-    let sections: [ChartSection]
-    let onSelect: (ChartSection) -> Void
-    @Environment(\.colorScheme) private var colorScheme
-
-    var body: some View {
-        VStack(spacing: 6) {
-            ForEach(sections) { section in
-                Button {
-                    onSelect(section)
-                } label: {
-                    Text(section.indexTitle)
-                        .font(.system(size: 12, weight: .semibold))
-                        .foregroundColor(sidebarTextColor)
-                        .padding(.horizontal, 8)
-                        .padding(.vertical, 5)
-                        .background(sidebarBackground)
-                }
-                .buttonStyle(.plain)
             }
+
+            return AASectionedListSection(
+                id: AnyHashable(sectionIndex),
+                title: section.title,
+                accentColor: accentColor,
+                items: items
+            )
         }
     }
 
-    private var sidebarBackground: some View {
-        Capsule()
-            .fill(
-                LinearGradient(
-                    colors: sidebarGradientColors,
-                    startPoint: .top,
-                    endPoint: .bottom
-                )
-            )
-            .overlay(
-                Capsule()
-                    .stroke(Color.white.opacity(colorScheme == .dark ? 0.25 : 0.4), lineWidth: 0.8)
-            )
-            .shadow(color: sidebarShadowColor, radius: 6, x: 0, y: 3)
-    }
+    var body: some View {
+        ZStack {
+            AASectionedListView(sections: listSections) { selection in
+                let item = sections[selection.sectionIndex].items[selection.itemIndex]
+                activeRoute = MainRoute(destination: item.destination)
+            }
 
-    private var sidebarGradientColors: [Color] {
-        if colorScheme == .dark {
-            return [Color.white.opacity(0.18), Color.white.opacity(0.07)]
+            NavigationLink(
+                destination: routeDestination,
+                isActive: activeRouteBinding,
+                label: { EmptyView() }
+            )
+            .hidden()
         }
-        return [Color.white.opacity(0.92), Color.white.opacity(0.65)]
     }
 
-    private var sidebarShadowColor: Color {
-        colorScheme == .dark ? Color.black.opacity(0.45) : Color.black.opacity(0.18)
+    private var activeRouteBinding: Binding<Bool> {
+        Binding(
+            get: { activeRoute != nil },
+            set: { isActive in
+                if !isActive {
+                    activeRoute = nil
+                }
+            }
+        )
     }
 
-    private var sidebarTextColor: Color {
-        colorScheme == .dark ? Color.white.opacity(0.8) : Color.black.opacity(0.7)
+    @ViewBuilder
+    private var routeDestination: some View {
+        if let activeRoute {
+            ViewControllerHost(builder: activeRoute.destination)
+                .ignoresSafeArea()
+        } else {
+            EmptyView()
+        }
     }
+}
+
+private struct MainRoute {
+    let destination: () -> UIViewController
 }
 
 private struct ChartSection: Identifiable {
     let id = UUID()
     let title: String
     let items: [ChartItem]
-
-    var indexTitle: String {
-        String(title.prefix(1))
-    }
 
     static func defaultSections() -> [ChartSection] {
         let sectionTitles = [
@@ -710,20 +437,6 @@ private struct ChartSection: Identifiable {
         }
 
         return sections
-    }
-}
-
-private extension ChartSection {
-    var primaryTitle: String {
-        let pieces = title.split(separator: "|", maxSplits: 1, omittingEmptySubsequences: true)
-        guard let first = pieces.first else { return title }
-        return first.trimmingCharacters(in: .whitespacesAndNewlines)
-    }
-
-    var secondaryTitle: String? {
-        let pieces = title.split(separator: "|", maxSplits: 1, omittingEmptySubsequences: true)
-        guard pieces.count > 1 else { return nil }
-        return pieces[1].trimmingCharacters(in: .whitespacesAndNewlines)
     }
 }
 
