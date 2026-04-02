@@ -507,7 +507,9 @@ private struct ModeToggleButton: View {
                     .shadow(color: buttonShadow, radius: 8, x: 0, y: 4)
 
                 Image(systemName: currentScheme == .dark ? "sun.max.fill" : "moon.stars.fill")
-                    .font(.system(size: 18, weight: .semibold))
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 18, height: 18)
                     .foregroundColor(Color.white)
             }
         }
@@ -532,7 +534,269 @@ private struct ModeToggleButton: View {
     }
 
     private func toggleMode() {
-        colorSchemeOverride = currentScheme == .dark ? .light : .dark
+        let targetScheme: ColorScheme = currentScheme == .dark ? .light : .dark
+        guard let window = activeWindow else {
+            withAnimation(.easeInOut(duration: 0.28)) {
+                colorSchemeOverride = targetScheme
+            }
+            return
+        }
+
+        ThemeTransitionAnimator.animate(
+            to: targetScheme,
+            on: window
+        ) {
+            colorSchemeOverride = targetScheme
+        }
+    }
+
+    private var activeWindow: UIWindow? {
+        UIApplication.shared.connectedScenes
+            .compactMap { $0 as? UIWindowScene }
+            .flatMap(\.windows)
+            .first(where: \.isKeyWindow)
+    }
+}
+
+private enum ThemeTransitionAnimator {
+    static func animate(
+        to targetScheme: ColorScheme,
+        on window: UIWindow,
+        applyTheme: @escaping () -> Void
+    ) {
+        if UIAccessibility.isReduceMotionEnabled {
+            UIView.transition(
+                with: window,
+                duration: 0.28,
+                options: [.transitionCrossDissolve, .allowAnimatedContent]
+            ) {
+                applyTheme()
+            }
+            return
+        }
+
+        let palette = palette(for: targetScheme)
+        let overlay = UIView(frame: window.bounds)
+        overlay.isUserInteractionEnabled = false
+        overlay.backgroundColor = .clear
+
+        let snapshotView = window.snapshotView(afterScreenUpdates: false) ?? UIView(frame: overlay.bounds)
+        snapshotView.frame = overlay.bounds
+        overlay.addSubview(snapshotView)
+
+        let tintView = UIView(frame: overlay.bounds)
+        tintView.backgroundColor = palette.background
+        tintView.alpha = 0
+        overlay.addSubview(tintView)
+
+        let origin = CGPoint(
+            x: overlay.bounds.width - 42,
+            y: window.safeAreaInsets.top + 24
+        )
+
+        let primaryOrb = ThemeTransitionOrbView(frame: CGRect(x: 0, y: 0, width: 124, height: 124))
+        primaryOrb.center = origin
+        primaryOrb.configure(colors: palette.primaryOrbColors)
+        primaryOrb.transform = CGAffineTransform(scaleX: 0.18, y: 0.18)
+        primaryOrb.alpha = 0.95
+        overlay.addSubview(primaryOrb)
+
+        let secondaryOrb = ThemeTransitionOrbView(frame: CGRect(x: 0, y: 0, width: 88, height: 88))
+        secondaryOrb.center = origin
+        secondaryOrb.configure(colors: palette.secondaryOrbColors)
+        secondaryOrb.transform = CGAffineTransform(scaleX: 0.12, y: 0.12)
+        secondaryOrb.alpha = 0.52
+        overlay.addSubview(secondaryOrb)
+
+        let glowView = UIView(frame: CGRect(x: 0, y: 0, width: 72, height: 72))
+        glowView.center = origin
+        glowView.backgroundColor = palette.glowColor
+        glowView.layer.cornerRadius = 36
+        glowView.alpha = 0
+        overlay.addSubview(glowView)
+
+        let badgeView = UIVisualEffectView(effect: UIBlurEffect(style: blurStyle(for: targetScheme)))
+        badgeView.frame = CGRect(x: 0, y: 0, width: 58, height: 58)
+        badgeView.center = origin
+        badgeView.clipsToBounds = true
+        badgeView.layer.cornerRadius = 29
+        badgeView.layer.borderWidth = 1
+        badgeView.layer.borderColor = UIColor.white.withAlphaComponent(0.22).cgColor
+        badgeView.contentView.backgroundColor = palette.badgeFillColor
+        badgeView.alpha = 0
+        badgeView.transform = CGAffineTransform(scaleX: 0.55, y: 0.55)
+
+        let symbolImageView = UIImageView(
+            image: UIImage(
+                systemName: symbolName(for: targetScheme),
+                withConfiguration: UIImage.SymbolConfiguration(pointSize: 22, weight: .semibold)
+            )
+        )
+        symbolImageView.tintColor = .white
+        symbolImageView.contentMode = .scaleAspectFit
+        symbolImageView.frame = CGRect(x: 0, y: 0, width: 24, height: 24)
+        symbolImageView.center = CGPoint(x: 29, y: 29)
+        badgeView.contentView.addSubview(symbolImageView)
+        overlay.addSubview(badgeView)
+
+        window.addSubview(overlay)
+
+        let maxDimension = max(overlay.bounds.width, overlay.bounds.height)
+        let primaryScale = (maxDimension / 124) * 3.2
+        let secondaryScale = (maxDimension / 88) * 2.6
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.16) {
+            applyTheme()
+        }
+
+        UIView.animateKeyframes(
+            withDuration: 0.92,
+            delay: 0,
+            options: [.calculationModeCubic, .beginFromCurrentState]
+        ) {
+            UIView.addKeyframe(withRelativeStartTime: 0.00, relativeDuration: 0.22) {
+                tintView.alpha = targetScheme == .dark ? 0.18 : 0.24
+                glowView.alpha = 0.48
+                glowView.transform = CGAffineTransform(scaleX: 1.7, y: 1.7)
+                badgeView.alpha = 1
+                badgeView.transform = CGAffineTransform(scaleX: 1.08, y: 1.08)
+            }
+
+            UIView.addKeyframe(withRelativeStartTime: 0.03, relativeDuration: 0.60) {
+                primaryOrb.transform = CGAffineTransform(scaleX: primaryScale, y: primaryScale)
+                primaryOrb.alpha = 0
+                secondaryOrb.transform = CGAffineTransform(scaleX: secondaryScale, y: secondaryScale)
+                secondaryOrb.alpha = 0
+            }
+
+            UIView.addKeyframe(withRelativeStartTime: 0.14, relativeDuration: 0.38) {
+                snapshotView.alpha = 0
+            }
+
+            UIView.addKeyframe(withRelativeStartTime: 0.18, relativeDuration: 0.28) {
+                badgeView.transform = CGAffineTransform(translationX: 0, y: -16).scaledBy(x: 0.9, y: 0.9)
+                badgeView.alpha = 0
+                glowView.alpha = 0
+            }
+
+            UIView.addKeyframe(withRelativeStartTime: 0.46, relativeDuration: 0.24) {
+                tintView.alpha = 0
+            }
+        } completion: { _ in
+            overlay.removeFromSuperview()
+        }
+    }
+
+    private static func symbolName(for scheme: ColorScheme) -> String {
+        switch scheme {
+        case .dark:
+            return "moon.stars.fill"
+        case .light:
+            return "sun.max.fill"
+        @unknown default:
+            return "circle.fill"
+        }
+    }
+
+    private static func blurStyle(for scheme: ColorScheme) -> UIBlurEffect.Style {
+        switch scheme {
+        case .dark:
+            return .systemUltraThinMaterialDark
+        case .light:
+            return .systemUltraThinMaterialLight
+        @unknown default:
+            return .systemUltraThinMaterial
+        }
+    }
+
+    private static func palette(for scheme: ColorScheme) -> ThemeTransitionPalette {
+        switch scheme {
+        case .dark:
+            return ThemeTransitionPalette(
+                background: UIColor(hex: 0x020617),
+                primaryOrbColors: [
+                    UIColor(hex: 0x38BDF8).withAlphaComponent(0.96),
+                    UIColor(hex: 0x312E81).withAlphaComponent(0.72),
+                    UIColor(hex: 0x020617).withAlphaComponent(0.02),
+                ],
+                secondaryOrbColors: [
+                    UIColor(hex: 0x818CF8).withAlphaComponent(0.70),
+                    UIColor(hex: 0x1D4ED8).withAlphaComponent(0.28),
+                    UIColor(hex: 0x020617).withAlphaComponent(0.01),
+                ],
+                glowColor: UIColor(hex: 0x60A5FA).withAlphaComponent(0.36),
+                badgeFillColor: UIColor(hex: 0x0F172A).withAlphaComponent(0.35)
+            )
+        case .light:
+            return ThemeTransitionPalette(
+                background: UIColor(hex: 0xFFF7ED),
+                primaryOrbColors: [
+                    UIColor(hex: 0xFDE68A).withAlphaComponent(0.98),
+                    UIColor(hex: 0xFB923C).withAlphaComponent(0.74),
+                    UIColor(hex: 0xFFF7ED).withAlphaComponent(0.02),
+                ],
+                secondaryOrbColors: [
+                    UIColor(hex: 0xFDBA74).withAlphaComponent(0.66),
+                    UIColor(hex: 0xF97316).withAlphaComponent(0.24),
+                    UIColor(hex: 0xFFF7ED).withAlphaComponent(0.01),
+                ],
+                glowColor: UIColor(hex: 0xFDBA74).withAlphaComponent(0.32),
+                badgeFillColor: UIColor.white.withAlphaComponent(0.22)
+            )
+        @unknown default:
+            return ThemeTransitionPalette(
+                background: .black,
+                primaryOrbColors: [
+                    UIColor.white.withAlphaComponent(0.9),
+                    UIColor.gray.withAlphaComponent(0.35),
+                    UIColor.clear,
+                ],
+                secondaryOrbColors: [
+                    UIColor.white.withAlphaComponent(0.6),
+                    UIColor.gray.withAlphaComponent(0.2),
+                    UIColor.clear,
+                ],
+                glowColor: UIColor.white.withAlphaComponent(0.25),
+                badgeFillColor: UIColor.white.withAlphaComponent(0.18)
+            )
+        }
+    }
+}
+
+private struct ThemeTransitionPalette {
+    let background: UIColor
+    let primaryOrbColors: [UIColor]
+    let secondaryOrbColors: [UIColor]
+    let glowColor: UIColor
+    let badgeFillColor: UIColor
+}
+
+private final class ThemeTransitionOrbView: UIView {
+    override class var layerClass: AnyClass {
+        CAGradientLayer.self
+    }
+
+    private var gradientLayer: CAGradientLayer {
+        layer as! CAGradientLayer
+    }
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        isUserInteractionEnabled = false
+        layer.cornerRadius = frame.width / 2
+        layer.masksToBounds = true
+        gradientLayer.type = .radial
+        gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.5)
+        gradientLayer.endPoint = CGPoint(x: 1.0, y: 1.0)
+        gradientLayer.locations = [0, 0.42, 1]
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    func configure(colors: [UIColor]) {
+        gradientLayer.colors = colors.map(\.cgColor)
     }
 }
 
