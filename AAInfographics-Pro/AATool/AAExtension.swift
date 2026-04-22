@@ -69,6 +69,35 @@ public extension String {
         pureJSStr = pureJSStr.replacingOccurrences(of: "\u{2029}", with: "\\u2029")
         return pureJSStr
     }
+
+    func aa_toPureHTMLString() -> String {
+        var pureJSStr = self
+        pureJSStr = pureJSStr.replacingOccurrences(of: "'", with: "\"")
+        pureJSStr = pureJSStr.replacingOccurrences(of: "\0", with: "")
+        pureJSStr = pureJSStr.replacingOccurrences(of: "\n", with: "")
+        pureJSStr = pureJSStr.replacingOccurrences(of: "\\", with: "\\\\")
+        pureJSStr = pureJSStr.replacingOccurrences(of: "\"", with: "\\\"")
+        pureJSStr = pureJSStr.replacingOccurrences(of: "\n", with: "\\n")
+        pureJSStr = pureJSStr.replacingOccurrences(of: "\r", with: "\\r")
+        pureJSStr = pureJSStr.replacingOccurrences(of: "\u{000C}", with: "\\f")
+        pureJSStr = pureJSStr.replacingOccurrences(of: "\u{2028}", with: "\\u2028")
+        pureJSStr = pureJSStr.replacingOccurrences(of: "\u{2029}", with: "\\u2029")
+        return pureJSStr
+    }
+
+    func aa_toPureCSVString() -> String {
+        var pureJSStr = "(\(self))"
+        pureJSStr = pureJSStr.replacingOccurrences(of: "'", with: "\"")
+        pureJSStr = pureJSStr.replacingOccurrences(of: "\0", with: "")
+        pureJSStr = pureJSStr.replacingOccurrences(of: "\\", with: "\\\\")
+        pureJSStr = pureJSStr.replacingOccurrences(of: "\"", with: "\\\"")
+        pureJSStr = pureJSStr.replacingOccurrences(of: "\n", with: "\\n")
+        pureJSStr = pureJSStr.replacingOccurrences(of: "\r", with: "\\r")
+        pureJSStr = pureJSStr.replacingOccurrences(of: "\u{000C}", with: "\\f")
+        pureJSStr = pureJSStr.replacingOccurrences(of: "\u{2028}", with: "\\u2028")
+        pureJSStr = pureJSStr.replacingOccurrences(of: "\u{2029}", with: "\\u2029")
+        return pureJSStr
+    }
     
 }
 
@@ -95,5 +124,4 @@ public extension AAChartModel {
         AAOptionsConstructor.configureChartOptions(self)
     }
 }
-
 

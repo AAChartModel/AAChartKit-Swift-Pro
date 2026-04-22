@@ -30,6 +30,12 @@
  
  */
 
+public enum AAChartLineStepType: String {
+    case left
+    case center
+    case right
+}
+
 public class AASeriesElement: AAObject {
     public var type: String?               //A chart type series. If the type option is not specified, it is inherited from `chart.type`.
     public var name: String?               //The name of the series as shown in the legend, tooltip etc.
@@ -232,6 +238,12 @@ public class AASeriesElement: AAObject {
     @discardableResult
     public func step(_ prop: Any) -> AASeriesElement {
         step = prop
+        return self
+    }
+    
+    @discardableResult
+    public func step(_ prop: AAChartLineStepType) -> Self {
+        step = prop.rawValue
         return self
     }
     

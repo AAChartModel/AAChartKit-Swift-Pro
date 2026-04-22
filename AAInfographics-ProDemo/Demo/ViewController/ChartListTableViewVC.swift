@@ -11,11 +11,40 @@ class ChartListTableViewVC: UIViewController, UITableViewDelegate, UITableViewDa
     let kChartSampleTableViewCellIdentifier = "ChartSampleTableViewCell"
     
     private var tableView: UITableView!
+//    
+//    // 图表示例数据
+//    private let chartExamples = (
+////        ChartSampleProvider.allProTypeSamples()
+//        
+//    )
+    
     
     // 图表示例数据
-    private let chartExamples = (
-        ChartSampleProvider.allProTypeSamples()
-    )
+    private let chartExamples = [
+        SpecialChartComposer.polarColumnChart().aa_toAAOptions(),
+        SpecialChartComposer.polarBarChart().aa_toAAOptions(),
+        SpecialChartComposer.polarLineChart().aa_toAAOptions(),
+        SpecialChartComposer.polarAreaChart().aa_toAAOptions(),
+        SpecialChartComposer.stepLineChart().aa_toAAOptions(),
+        SpecialChartComposer.stepAreaChart().aa_toAAOptions(),
+        SpecialChartComposer.pieChart().aa_toAAOptions(),
+        SpecialChartComposer.bubbleChart().aa_toAAOptions(),
+        SpecialChartComposer.packedbubbleChart().aa_toAAOptions(),
+        SpecialChartComposer.scatterChart().aa_toAAOptions(),
+        SpecialChartComposer.arearangeChart().aa_toAAOptions(),
+        SpecialChartComposer.areasplinerangeChart().aa_toAAOptions(),
+        SpecialChartComposer.columnrangeChart().aa_toAAOptions(),
+        SpecialChartComposer.boxplotChart().aa_toAAOptions(),
+        SpecialChartComposer.waterfallChart().aa_toAAOptions(),
+        SpecialChartComposer.pyramidChart().aa_toAAOptions(),
+        SpecialChartComposer.funnelChart().aa_toAAOptions(),
+        SpecialChartComposer.errorbarChart().aa_toAAOptions(),
+        SpecialChartComposer.gaugeChart().aa_toAAOptions(),
+        SpecialChartComposer.polygonChart().aa_toAAOptions(),
+        SpecialChartComposer.columnpyramidChart().aa_toAAOptions(),
+    ]
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()

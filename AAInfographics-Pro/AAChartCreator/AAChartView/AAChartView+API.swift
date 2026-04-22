@@ -33,7 +33,6 @@
 import Foundation
 
 // MARK: - Configure Chart View Content With AAChartModel
-@available(iOS 10.0, macCatalyst 13.1, macOS 10.13, *)
 extension AAChartView {
     /// Function of drawing chart view
     ///
@@ -63,7 +62,6 @@ extension AAChartView {
 
 
 // MARK: - Configure Chart View Content With AAOptions
-@available(iOS 10.0, macCatalyst 13.1, macOS 10.13, *)
 extension AAChartView {
     /// Function of drawing chart view
     ///
@@ -114,7 +112,6 @@ extension AAChartView {
 
 
 // MARK: - Additional update Chart View Content methods
-@available(iOS 10.0, macCatalyst 13.1, macOS 10.13, *)
 extension AAChartView {
     /// A common chart update function
     /// (you can update any chart element) to open, close, delete, add, resize, reformat, etc. elements in the chart.
@@ -321,7 +318,6 @@ extension AAChartView {
 
 
 // MARK: - JSONSerialization
-@available(iOS 10.0, macCatalyst 13.1, macOS 10.13, *)
 extension AAChartView {
     
     private func getJSONStringFromDictionary(dictionary: [String: Any]) -> String {

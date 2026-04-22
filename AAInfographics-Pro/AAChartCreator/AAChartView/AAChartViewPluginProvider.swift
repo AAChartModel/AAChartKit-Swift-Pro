@@ -1,0 +1,277 @@
+import Foundation
+
+// MARK: - Shared Plugin Script Definition
+
+/// Enum representing all available plugin scripts
+internal enum AAChartPluginScriptType: String {
+    //AAInfographics normal version plugins
+    case highchartsMore = "AAHighcharts-More"
+    case funnel = "AAFunnel"
+    
+    //AAInfographics pro version plugins
+    case sankey = "AASankey"
+    case dependencyWheel = "AADependency-Wheel"
+    case networkgraph = "AANetworkgraph"
+    case organization = "AAOrganization"
+    case arcDiagram = "AAArc-Diagram"
+    case venn = "AAVenn"
+    case treemap = "AATreemap"
+    case sunburst = "AASunburst"
+    case flame = "AAFlame"
+    case variablePie = "AAVariable-Pie"
+    case variwide = "AAVariwide"
+    case dumbbell = "AADumbbell"
+    case lollipop = "AALollipop"
+    case histogramBellcurve = "AAHistogram-Bellcurve"
+    case bullet = "AABullet"
+    case heatmap = "AAHeatmap"
+    case tilemap = "AATilemap"
+    case streamgraph = "AAStreamgraph"
+    case xrange = "AAXrange"
+    case timeline = "AATimeline"
+    case solidGauge = "AASolid-Gauge"
+    case vector = "AAVector"
+    case itemSeries = "AAItem-Series"
+    case dataGrouping = "AADatagrouping"
+    case windbarb = "AAWindbarb"
+    case wordcloud = "AAWordcloud"
+    case treegraph = "AATreegraph"
+    case pictorial = "AAPictorial"
+    case parallelCoordinates = "AAParallel-Coordinates"
+    case data = "AAData"
+    
+    /// Returns the complete JavaScript file name with .js extension
+    var fileName: String {
+        return rawValue + ".js"
+    }
+    
+    /// Returns the directory prefix for the plugin script
+    /// Highcharts-More and Funnel are in AAMaster, others are in AAModules
+    var directoryPrefix: String {
+        switch self {
+        case .highchartsMore, .funnel:
+            return "AAMaster"
+        default:
+            return "AAModules"
+        }
+    }
+}
+
+// MARK: - Plugin Provider Protocol
+
+// Protocol defining the responsibility for providing required plugin paths
+internal protocol AAChartViewPluginProviderProtocol: AnyObject {
+    func getRequiredPluginPaths(for options: AAOptions) -> Set<String>
+}
+
+// Default provider (can be used for the standard version or as a base)
+internal final class AAChartViewDefaultPluginProvider: AAChartViewPluginProviderProtocol {
+    public init() {}
+
+    public func getRequiredPluginPaths(for options: AAOptions) -> Set<String> {
+        return Set()
+    }
+}
+
+// Provider for the Pro version, handling specific chart type plugins
+internal final class AAChartViewPluginProvider: AAChartViewPluginProviderProtocol {
+    public init(bundlePathLoader: AAChartBundlePathLoadingProtocol = BundlePathLoader()) {
+        self.bundlePathLoader = bundlePathLoader
+    }
+
+    private let bundlePathLoader: AAChartBundlePathLoadingProtocol
+    private var scriptPathCache: [AAChartPluginScriptType: String] = [:]
+
+    private struct AAChartPluginConfiguration {
+        let types: Set<AAChartType>
+        let scripts: [AAChartPluginScriptType]
+
+        init(types: [AAChartType], scripts: [AAChartPluginScriptType]) {
+            self.types = Set(types)
+            self.scripts = scripts
+        }
+    }
+
+    private static let pluginConfigurations: [AAChartPluginConfiguration] = [
+        // --- Advanced Charts requiring Highcharts-More ---
+        .init(types: [
+            .columnpyramid,
+            .bubble,
+            .packedbubble,
+            .arearange,
+            .areasplinerange,
+            .columnrange,
+            .gauge,
+            .boxplot,
+            .errorbar,
+            .waterfall,
+            .polygon
+        ], scripts: [.highchartsMore]),
+        
+        // --- Funnel & Pyramid Charts ---
+        .init(types: [.funnel, .pyramid], scripts: [.funnel]),
+        
+        // --- Flow & Relationship Charts ---
+        .init(types: [.sankey], scripts: [.sankey]),
+        .init(types: [.dependencywheel], scripts: [.sankey, .dependencyWheel]),
+        .init(types: [.networkgraph], scripts: [.networkgraph]),
+        .init(types: [.organization], scripts: [.sankey, .organization]),
+        .init(types: [.arcdiagram], scripts: [.sankey, .arcDiagram]),
+        .init(types: [.venn], scripts: [.venn]),
+
+        // --- Hierarchical Charts ---
+        .init(types: [.treemap], scripts: [.treemap]),
+        .init(types: [.sunburst], scripts: [.highchartsMore, .sunburst]),
+        .init(types: [.flame], scripts: [.highchartsMore, .flame]),
+
+        // --- Distribution & Comparison Charts ---
+        .init(types: [.variablepie], scripts: [.variablePie]),
+        .init(types: [.variwide], scripts: [.variwide]),
+        .init(types: [.dumbbell], scripts: [.highchartsMore, .dumbbell]),
+        .init(types: [.lollipop], scripts: [.highchartsMore, .dumbbell, .lollipop]),
+        .init(types: [.histogram], scripts: [.histogramBellcurve]),
+        .init(types: [.bellcurve], scripts: [.histogramBellcurve]),
+        .init(types: [.bullet], scripts: [.bullet]),
+
+        // --- Heatmap & Matrix Charts ---
+        .init(types: [.heatmap], scripts: [.heatmap]),
+        .init(types: [.tilemap], scripts: [.heatmap, .tilemap]),
+
+        // --- Time, Range & Stream Charts ---
+        .init(types: [.streamgraph], scripts: [.streamgraph]),
+        .init(types: [.xrange], scripts: [.xrange]),
+        .init(types: [.timeline], scripts: [.timeline]),
+
+        // --- Gauge & Indicator Charts ---
+        .init(types: [.solidgauge], scripts: [.highchartsMore, .solidGauge]),
+
+        // --- Specialized & Other Charts ---
+        .init(types: [.vector], scripts: [.vector]),
+        .init(types: [.item], scripts: [.itemSeries]),
+        .init(types: [.windbarb], scripts: [.dataGrouping, .windbarb]),
+        .init(types: [.wordcloud], scripts: [.wordcloud]),
+        .init(types: [.treegraph], scripts: [.treemap, .treegraph]),
+        .init(types: [.pictorial], scripts: [.pictorial])
+    ]
+
+    private static let scriptsByChartType: [AAChartType: Set<AAChartPluginScriptType>] = {
+        var mapping: [AAChartType: Set<AAChartPluginScriptType>] = [:]
+        for configuration in pluginConfigurations {
+            for chartType in configuration.types {
+                mapping[chartType, default: []].formUnion(configuration.scripts)
+            }
+        }
+        return mapping
+    }()
+
+    public func getRequiredPluginPaths(for options: AAOptions) -> Set<String> {
+        var requiredPaths = Set<String>()
+
+        // Check for plugins based on AAOptions properties
+        addChartPluginScripts(for: options, into: &requiredPaths)
+
+        var chartTypes = Set<AAChartType>()
+
+        // Check for plugins based on the main chart type
+        if let chartType = resolveChartType(from: options.chart?.type) {
+            chartTypes.insert(chartType)
+        }
+
+        // Check for plugins based on individual series types
+        if let seriesArray = options.series {
+            for case let seriesElement as AASeriesElement in seriesArray {
+                guard let seriesType = resolveChartType(from: seriesElement.type) else {
+                    continue
+                }
+                chartTypes.insert(seriesType)
+            }
+        }
+
+        chartTypes.forEach { chartType in
+            addChartPluginScripts(forType: chartType, into: &requiredPaths)
+        }
+
+        return requiredPaths
+    }
+
+    private func resolveChartType(from rawValue: String?) -> AAChartType? {
+        guard let rawValue else {
+            return nil
+        }
+        return AAChartType(rawValue: rawValue)
+    }
+
+    // Helper to add scripts based on chart type
+    private func addChartPluginScripts(forType chartType: AAChartType, into requiredPaths: inout Set<String>) {
+        guard let scripts = Self.scriptsByChartType[chartType] else {
+            return
+        }
+
+        scripts.forEach { script in
+            if let scriptPath = generateScriptPath(for: script) {
+                requiredPaths.insert(scriptPath)
+            }
+        }
+    }
+
+    // Helper to add scripts based on specific AAOptions properties
+    private func addChartPluginScripts(for options: AAOptions, into requiredPaths: inout Set<String>) {
+        // For polar charts, Highcharts-More is required
+        if options.chart?.polar == true {
+            if let scriptPath = generateScriptPath(for: .highchartsMore) {
+                requiredPaths.insert(scriptPath)
+            }
+        }
+        
+        if options.chart?.parallelCoordinates == true,
+           let scriptPath = generateScriptPath(for: .parallelCoordinates) {
+            requiredPaths.insert(scriptPath)
+        }
+
+        if options.data != nil,
+           let scriptPath = generateScriptPath(for: .data) {
+            requiredPaths.insert(scriptPath)
+        }
+    }
+
+    // Generates the full path for a given script name (moved from AAChartView)
+    // Consider moving this to a shared utility if used elsewhere.
+    private func generateScriptPath(for script: AAChartPluginScriptType) -> String? {
+        if let cachedPath = scriptPathCache[script] {
+            return cachedPath
+        }
+
+        let scriptName = script.rawValue
+        let fullScriptName = script.fileName
+        let directoryPrefix = script.directoryPrefix
+        
+        guard let path = bundlePathLoader
+            .path(forResource: scriptName,
+                  ofType: "js",
+                  inDirectory: "AAJSFiles.bundle/\(directoryPrefix)",
+                  forLocalization: nil)
+        else {
+            #if DEBUG
+            print("⚠️ Warning: Could not find path for script '\(fullScriptName)'")
+            assert(false, "⚠️ Warning: Could not find path for script '\(fullScriptName)'")
+            #endif
+            return nil
+        }
+
+        scriptPathCache[script] = path
+        return path
+    }
+}
+
+// MARK: - Bundle Path Loader Abstraction
+
+internal protocol AAChartBundlePathLoadingProtocol {
+    func path(
+        forResource name: String,
+        ofType fileType: String,
+        inDirectory subpath: String?,
+        forLocalization localizationName: String?
+    ) -> String?
+}
+
+extension BundlePathLoader: AAChartBundlePathLoadingProtocol {}

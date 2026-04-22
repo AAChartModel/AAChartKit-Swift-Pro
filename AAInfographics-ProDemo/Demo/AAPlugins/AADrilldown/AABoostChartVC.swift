@@ -29,35 +29,19 @@ class AABoostChartVC: AABaseChartVC {
 
     override func chartConfigurationWithSelectedIndex(_ selectedIndex: Int) -> Any? {
         switch (selectedIndex) {
-        /**
-         case 0: return [AABoostChartComposer lineChart];
-         case 1: return [AABoostChartComposer areaChart];
-         case 2: return [AABoostChartComposer columnChart];
-         */
-            
-            /**
-             //分形曼德尔布罗特图
-             class func fractalMandelbrot() -> AAOptions
-             
-             //分形谢尔宾斯基树图
-             class func fractalSierpinskiTreeData() -> AAOptions
-             
-             //分形谢尔宾斯基三角形图
-             class func fractalSierpinskiTriangleData() -> AAOptions
-             
-             //分形谢尔宾斯基地毯图
-             class func fractalSierpinskiCarpetData() -> AAOptions
-             */
-            
-        case 0: return AABoostFractalChartComposer.fractalMandelbrot()
-        case 1: return AABoostFractalChartComposer.fractalSierpinskiTreeData()
-        case 2: return AABoostFractalChartComposer.fractalSierpinskiTriangleData()
-        case 3: return AABoostFractalChartComposer.fractalSierpinskiCarpetData()
-            
-            
+        case 0: return AABoostChartComposer.lineChart()
+        case 1: return AABoostChartComposer.areaChart()
+        case 2: return AABoostChartComposer.columnChart()
+        case 3: return AABoostChartComposer.lineChartWithHundredsOfSeries()
+        case 4: return AABoostChartComposer.scatterChartOptions()
+        case 5: return AABoostChartComposer.areaRangeChart()
+        case 6: return AABoostChartComposer.columnRangeChart()
+        case 7: return AABoostChartComposer.bubbleChart()
+        case 8: return AABoostChartComposer.heatMapChart()
+        case 9: return AABoostChartComposer.stackingAreaChart()
+        case 10: return AABoostChartComposer.stackingColumnChart()
         default: return nil
         }
     }
 
 }
-

@@ -12,6 +12,10 @@ class AAOptionsCSV {
     public class var csvData: NSDictionary {
         getJsonCsvDataWithJsonFileName("bigHeatmapData")
     }
+
+    public class var stellarChartData: NSDictionary {
+        getJsonCsvDataWithJsonFileName("stellarChartData")
+    }
     
     private static func getJsonCsvDataWithJsonFileName(_ jsonFileName: String) -> NSDictionary {
         let path = Bundle.main.path(forResource: jsonFileName, ofType: "json")
@@ -30,4 +34,3 @@ class AAOptionsCSV {
     }
     
 }
-

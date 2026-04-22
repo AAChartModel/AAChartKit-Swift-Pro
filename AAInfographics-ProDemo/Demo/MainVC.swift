@@ -30,290 +30,1015 @@
  
  */
 
-import UIKit
+import SwiftUI
 
+final class ThemePreferenceStore: ObservableObject {
+    @Published var colorSchemeOverride: ColorScheme?
+}
 
-class MainVC: UIViewController {
-    private var sectionTitleArr = [
-        "RelationshipChart | 关系类型图表",
-        "HeatOrTreeMapChart | 热力或树形类型图表",
-        "BubbleChart | 气泡类型图表",
-        "ColumnVariantChart | 柱形图(变体)类型图表",
-        "MoreProType | 更多高级类型图表",
-        "Custom Event | 自定义交互事件",
-        "DrilldownChart | 可钻取图表",
-        "BoostChart | 加速图表",
-        "OfficialChartSample | 官方示例",
-        "FractalChartListVC | 分形图表列表",
-        "Custom Event2 | 自定义交互事件2",
-        "AACustomStageChartVC | 自定义分段图"
-    ]
-    private var chartTypeNameArr = [
-        // "RelationshipChart | 关系类型图表",
-        [
-            "sankeyChart---桑基图",
-            "dependencywheelChart---和弦图🎸",
-            "arcdiagramChart1---弧形图1🌈",
-            "arcdiagramChart2---弧形图2🌈",
-            "arcdiagramChart3---弧形图3🌈",
-            "organizationChart---组织结构图",
-            "networkgraphChart---力导关系图✢✣✤✥",
-            "simpleDependencyWheelChart---简单的和弦图🎵",
-        ],
-        // "HeatOrTreeMapChart | 热力或树形类型图表",
-        [
-            "heatmapChart---热力图🌡",
-            "treemapWithColorAxisData---包好色彩轴的矩形树图🌲",
-            "treemapWithLevelsData---包含等级的矩形树图🌲",
-            "drilldownLargeDataTreemapChart---可下钻的大数据量矩形树图🌲",
-            "largeDataHeatmapChart---大数据量热力图🌡",
+final class MainVC: UIHostingController<MainView> {
+    private let themeStore = ThemePreferenceStore()
+    private var floatingButtonHostController: UIHostingController<FloatingModeToggleOverlay>?
 
-            "simpleTilemapWithHexagonTileShape---简单的砖块图🧱(六边形蜂巢图🐝)",
-            "simpleTilemapWithCircleTileShape---简单的砖块图🧱(圆形)",
-            "simpleTilemapWithDiamondTileShape---简单的砖块图🧱(菱形)",
-            "simpleTilemapWithSquareTileShape---简单的砖块图🧱(正方形)",
-
-            "tilemapForAfricaWithHexagonTileShape---非洲砖块图🧱(六边形蜂巢图🐝)",
-            "tilemapForAfricaWithCircleTileShape---非洲砖块图🧱(圆形)",
-            "tilemapForAfricaWithDiamondTileShape---非洲砖块图🧱(菱形)",
-            "tilemapForAfricaWithSquareTileShape---非洲砖块图🧱(正方形)",
-
-            "tilemapForAmericaWithHexagonTileShape---美洲砖块图🧱(六边形蜂巢图🐝)",
-            "tilemapForAmericaWithCircleTileShape---美洲砖块图🧱(圆形)",
-            "tilemapForAmericaWithDiamondTileShape---美洲砖块图🧱(菱形)",
-            "tilemapForAmericaWithSquareTileShape---美洲砖块图🧱(正方形)",
-
-        ],
-        // "BubbleChart | 气泡类型图表",
-        [
-            "packedbubbleChart---气泡填充图🎈",
-            "packedbubbleSplitChart---圆堆积图🎈",
-            "packedbubbleSpiralChart---渐进变化的气泡图🎈",
-            "eulerChart---欧拉图",
-            "vennChart---韦恩图",
-        ],
-        // "ColumnVariantChart | 柱形图(变体)类型图表",
-        [
-            "variwideChart---可变宽度的柱形图",
-            "columnpyramidChart---角锥柱形图",
-            "dumbbellChart---哑铃图",
-            "lollipopChart---棒棒糖🍭图",
-            "xrangeChart---X轴范围图||甘特图||条码图",
-            "histogramChart---直方混合散点图📊",
-            "bellcurveChart---钟形曲线混合散点图🔔",
-            "bulletChart---子弹图",
-            "inverted xrangeChart---倒转的X轴范围图||甘特图||条码图",
-            "pictorial1Chart---象形柱形图1",
-            "pictorial2Chart---象形柱形图2",
-            
-        ],
-        // "MoreProType | 更多高级类型图表",
-        [
-            "sunburstChart---旭日图🌞",
-            "streamgraphChart---流图🌊",
-            "vectorChart---向量图🏹",
-            "bellcurveChart---贝尔曲线图",
-            "timelineChart---时序图⌚️",
-            "itemChart---议会项目图🀙🀚🀜🀞🀠🀡",
-            "windbarbChart---风羽图🌪️",
-            "wordcloudChart---词云图☁️",
-            "flameChart---火焰图🔥",
-            "itemChart2---议会项目图2🀙🀚🀜🀞🀠🀡",
-            "itemChart3---议会项目图3🀙🀚🀜🀞🀠🀡",
-            "icicleChart---冰柱图🧊",
-            "sunburstChart2---旭日图☀️",
-            "solidgaugeChart---活动图🏃🏻‍♀️",
-            "parallelCoordinatesSplineChart---平行坐标曲线图",
-            "parallelCoordinatesLineChart---平行坐标折线图📈",
-            "volinPlotChart---小提琴图🎻",
-            "variablepieChart---可变宽度的饼图🍪",
-            "semicircleSolidGaugeChart---半圆形活动图🏃🏻‍♀️",
-        ],
-        // "Custom Event---自定义交互事件",
-        [
-            "Custom Event---自定义交互事件",
-        ],
-        // "DrilldownChart---可钻取图表",
-        [
-            "columnChart---柱形图",
-        ],
-        // "BoostChart---加速图表",
-        [
-            //            case 0: return [AABoostChartComposer lineChart];
-            //            case 1: return [AABoostChartComposer areaChart];
-            //            case 2: return [AABoostChartComposer columnChart];
-            "lineChart---折线图",
-            "areaChart---区域填充图",
-            "columnChart---柱形图",
-            "scatterChartWith1MillionPoints---散点图(100万数据量)",
-        ],
-        // "OfficialChartSample---官方示例",
-        [
-            "columnChart---柱形图",
-        ],
-        //"FractalChartListVC---分形图表列表",
-        [
-            "FractalChartListVC---分形图表列表",
-        ],
-        // "Custom Event2---自定义交互事件2",
-        [
-            "Custom Event2---自定义交互事件2",
-        ],
-        // "AACustomStageChartVC | 自定义分段图",
-        [
-            "AACustomStageChartVC | 自定义分段睡眠💤图",
-        ],
-    ]
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        title = "AAInfographics-Pro"
-        view.backgroundColor = .white
-        setUpMainTableView()
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder, rootView: MainView(themeStore: themeStore))
     }
-    
-    private func setUpMainTableView() {
-        let tableView = UITableView()
-        tableView.frame = self.view.bounds
-        tableView.autoresizingMask = [.flexibleWidth , .flexibleHeight]
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.backgroundColor = .white
-        tableView.rowHeight = 45
-        tableView.sectionHeaderHeight = 45
-        view.addSubview(tableView)
+
+    init() {
+        super.init(rootView: MainView(themeStore: themeStore))
     }
-    
-    private func kRGBColorFromHex(rgbValue: Int) -> (UIColor) {
-        return UIColor(
-            red: ((CGFloat)((rgbValue & 0xFF0000) >> 16)) / 255.0,
-            green: ((CGFloat)((rgbValue & 0xFF00) >> 8)) / 255.0,
-            blue: ((CGFloat)(rgbValue & 0xFF)) / 255.0,
-            alpha: 1.0
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        installFloatingModeButtonIfNeeded()
+        floatingButtonHostController?.view.isHidden = false
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+
+        if isMovingFromParent || isBeingDismissed {
+            if let hostController = floatingButtonHostController {
+                hostController.willMove(toParent: nil)
+                hostController.view.removeFromSuperview()
+                hostController.removeFromParent()
+            }
+            floatingButtonHostController = nil
+        } else {
+            floatingButtonHostController?.view.isHidden = true
+        }
+    }
+
+    private func installFloatingModeButtonIfNeeded() {
+        guard let navigationController else {
+            return
+        }
+        guard let containerView = navigationController.view else {
+            return
+        }
+
+        if let hostController = floatingButtonHostController {
+            if hostController.parent !== navigationController {
+                hostController.willMove(toParent: nil)
+                hostController.view.removeFromSuperview()
+                hostController.removeFromParent()
+
+                navigationController.addChild(hostController)
+                containerView.addSubview(hostController.view)
+                hostController.didMove(toParent: navigationController)
+            }
+
+            if hostController.view.superview !== containerView {
+                hostController.view.removeFromSuperview()
+                containerView.addSubview(hostController.view)
+            }
+            return
+        }
+
+        let hostController = UIHostingController(
+            rootView: FloatingModeToggleOverlay(themeStore: themeStore)
+        )
+        hostController.view.backgroundColor = .clear
+        hostController.view.translatesAutoresizingMaskIntoConstraints = false
+        hostController.view.isOpaque = false
+        hostController.view.clipsToBounds = false
+
+        navigationController.addChild(hostController)
+        containerView.addSubview(hostController.view)
+        NSLayoutConstraint.activate([
+            hostController.view.widthAnchor.constraint(equalToConstant: 52),
+            hostController.view.heightAnchor.constraint(equalToConstant: 52),
+            hostController.view.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 46),
+            hostController.view.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -70),
+        ])
+        hostController.didMove(toParent: navigationController)
+        floatingButtonHostController = hostController
+    }
+}
+
+struct MainView: View {
+    @ObservedObject var themeStore: ThemePreferenceStore
+    private let sections = ChartSection.defaultSections()
+    @Environment(\.colorScheme) private var systemColorScheme
+
+    var body: some View {
+        let resolvedScheme = themeStore.colorSchemeOverride ?? systemColorScheme
+        Group {
+            if #available(iOS 16.0, *) {
+                NavigationStack {
+                    MainContent(sections: sections)
+                        .navigationTitle("AAInfographics-Pro")
+                }
+            } else {
+                NavigationView {
+                    MainContent(sections: sections)
+                        .navigationBarTitle("AAInfographics-Pro")
+                }
+                .navigationViewStyle(StackNavigationViewStyle())
+            }
+        }
+        .environment(\.colorScheme, resolvedScheme)
+        .preferredColorScheme(themeStore.colorSchemeOverride)
+    }
+}
+
+private struct MainContent: View {
+    let sections: [ChartSection]
+    @State private var activeRoute: MainRoute?
+    @Environment(\.colorScheme) private var colorScheme
+
+    private static let accentPalette: [Int] = [
+        0x5470c6,
+        0x91cc75,
+        0xfac858,
+        0xee6666,
+        0x73c0de,
+        0x3ba272,
+        0xfc8452,
+        0x9a60b4,
+        0xea7ccc,
+        0x5470c6,
+        0x91cc75,
+        0xfac858,
+        0xee6666,
+        0x73c0de,
+        0x3ba272,
+        0xfc8452,
+        0x9a60b4,
+        0xea7ccc,
+    ]
+
+    @available(iOS 14.0, macCatalyst 14.0, *)
+    private var listSections: [AASectionedListSection] {
+        sections.enumerated().map { sectionIndex, section in
+            let accentColor = Color(
+                hex: Self.accentPalette[sectionIndex % Self.accentPalette.count]
+            )
+            let items = section.items.enumerated().map { itemIndex, item in
+                AASectionedListItem(
+                    id: AnyHashable(IndexPath(row: itemIndex, section: sectionIndex)),
+                    title: item.title,
+                    subtitle: "Chart Example #\(itemIndex + 1)",
+                    badgeText: "\(itemIndex + 1)"
+                )
+            }
+
+            return AASectionedListSection(
+                id: AnyHashable(sectionIndex),
+                title: section.title,
+                accentColor: accentColor,
+                items: items
+            )
+        }
+    }
+
+    var body: some View {
+        ZStack(alignment: .topTrailing) {
+            MainContentBackground(colorScheme: colorScheme)
+
+            ZStack {
+                if #available(iOS 14.0, macCatalyst 14.0, *) {
+                    modernSectionedList
+                } else {
+                    legacySectionedList
+                }
+
+                NavigationLink(
+                    destination: routeDestination,
+                    isActive: activeRouteBinding,
+                    label: { EmptyView() }
+                )
+                .hidden()
+            }
+        }
+    }
+
+    @available(iOS 14.0, macCatalyst 14.0, *)
+    @ViewBuilder
+    private var modernSectionedList: some View {
+        AASectionedListView(sections: listSections) { selection in
+            let item = sections[selection.sectionIndex].items[selection.itemIndex]
+            activeRoute = MainRoute(destination: item.destination)
+        }
+    }
+
+    @ViewBuilder
+    private var legacySectionedList: some View {
+        List {
+            ForEach(sections.indices, id: \.self) { sectionIndex in
+                let section = sections[sectionIndex]
+
+                Section(header: Text(section.title)) {
+                    ForEach(section.items.indices, id: \.self) { itemIndex in
+                        let item = section.items[itemIndex]
+
+                        Button {
+                            activeRoute = MainRoute(destination: item.destination)
+                        } label: {
+                            HStack {
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text(item.title)
+                                        .foregroundColor(.primary)
+
+                                    Text("Chart Example #\(itemIndex + 1)")
+                                        .font(.caption)
+                                        .foregroundColor(.secondary)
+                                }
+
+                                Spacer()
+
+                                Text("\(itemIndex + 1)")
+                                    .font(.caption.weight(.semibold))
+                                    .foregroundColor(.secondary)
+                            }
+                            .contentShape(Rectangle())
+                        }
+                        .buttonStyle(PlainButtonStyle())
+                    }
+                }
+            }
+        }
+        .listStyle(GroupedListStyle())
+    }
+
+    private var activeRouteBinding: Binding<Bool> {
+        Binding(
+            get: { activeRoute != nil },
+            set: { isActive in
+                if !isActive {
+                    activeRoute = nil
+                }
+            }
         )
     }
+
+    @ViewBuilder
+    private var routeDestination: some View {
+        if let activeRoute {
+            ViewControllerHost(builder: activeRoute.destination)
+                .edgesIgnoringSafeArea(.all)
+        } else {
+            EmptyView()
+        }
+    }
 }
 
-extension MainVC: UITableViewDelegate, UITableViewDataSource {
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return chartTypeNameArr.count
+private struct MainContentBackground: View {
+    let colorScheme: ColorScheme
+
+    var body: some View {
+        LinearGradient(
+            gradient: Gradient(colors: gradientColors),
+            startPoint: .topLeading,
+            endPoint: .bottomTrailing
+        )
+        .edgesIgnoringSafeArea(.all)
     }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return chartTypeNameArr[section].count
-    }
-    
-    func sectionIndexTitles(for tableView: UITableView) -> [String]? {
-        var listTitles = [String]()
-        for item: String in sectionTitleArr {
-            let titleStr = item.prefix(1)
-            listTitles.append(String(titleStr))
+
+    private var gradientColors: [Color] {
+        if colorScheme == .dark {
+            return [
+                Color(red: 0.05, green: 0.05, blue: 0.08),
+                Color(red: 0.10, green: 0.10, blue: 0.15)
+            ]
         }
-        return listTitles
+
+        return [
+            Color(red: 0.98, green: 0.98, blue: 1.0),
+            Color(red: 0.95, green: 0.95, blue: 0.98)
+        ]
     }
-    
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let sectionHeaderView = UIView()
-        sectionHeaderView.backgroundColor = kRGBColorFromHex(rgbValue: 0xF5F5F5)//白烟
-        
-        let sectionTitleLabel = UILabel()
-        sectionTitleLabel.frame = sectionHeaderView.bounds
-        sectionTitleLabel.autoresizingMask = [.flexibleWidth , .flexibleHeight]
-        sectionTitleLabel.text = sectionTitleArr[section]
-        sectionTitleLabel.textColor =  kRGBColorFromHex(rgbValue: 0x7B68EE)//熏衣草花の淡紫色
-        sectionTitleLabel.font = .boldSystemFont(ofSize: 17)
-        sectionTitleLabel.textAlignment = .center
-        sectionHeaderView.addSubview(sectionTitleLabel)
-        
-        return sectionHeaderView
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let identifier = "cell"
-        var cell: UITableViewCell! = tableView.dequeueReusableCell(withIdentifier: identifier)
-        if cell == nil {
-            cell = UITableViewCell.init(style: .default, reuseIdentifier: identifier)
-        }
-        
-        let cellTitle = chartTypeNameArr[indexPath.section][indexPath.row]
-        cell?.textLabel?.numberOfLines = 0
-        cell?.textLabel?.text = cellTitle
-        cell?.textLabel?.font = .systemFont(ofSize: 16)
-        cell?.accessoryType = .disclosureIndicator
-        return cell
-    }
-    
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        switch indexPath.section {
-        case 0:
-            let vc = AARelationshipChartVC()
-            vc.selectedIndex = indexPath.row
-            vc.navigationItemTitleArr = chartTypeNameArr[indexPath.section]
-            navigationController?.pushViewController(vc, animated: true)
-        case 1:
-            let vc = AAHeatOrTreeMapChartVC()
-            vc.selectedIndex = indexPath.row
-            vc.navigationItemTitleArr = chartTypeNameArr[indexPath.section]
-            navigationController?.pushViewController(vc, animated: true)
-        case 2:
-            let vc = AABubbleChartVC()
-            vc.selectedIndex = indexPath.row
-            vc.navigationItemTitleArr = chartTypeNameArr[indexPath.section]
-            navigationController?.pushViewController(vc, animated: true)
-        case 3:
-            let vc = AAColumnVariantChartVC()
-            vc.selectedIndex = indexPath.row
-            vc.navigationItemTitleArr = chartTypeNameArr[indexPath.section]
-            navigationController?.pushViewController(vc, animated: true)
-        case 4:
-            let vc = ChartProVC()
-            vc.selectedIndex = indexPath.row
-            vc.navigationItemTitleArr = chartTypeNameArr[indexPath.section]
-            navigationController?.pushViewController(vc, animated: true)
-        case 5:
-            let vc = CustomClickEventCallbackMessageVC()
-            navigationController?.pushViewController(vc, animated: true)
-            
-        case 6:
-            let vc = AADrilldownChartVC()
-            vc.selectedIndex = indexPath.row
-            vc.navigationItemTitleArr = chartTypeNameArr[indexPath.section]
-            navigationController?.pushViewController(vc, animated: true)
-            
-        case 7:
-            let vc = AABoostChartVC()
-            vc.selectedIndex = indexPath.row
-            vc.navigationItemTitleArr = chartTypeNameArr[indexPath.section]
-            navigationController?.pushViewController(vc, animated: true)
-            
-        case 8:
-            let vc = OfficialChartSampleVC()
-//            vc.selectedIndex = indexPath.row
-//            vc.navigationItemTitleArr = chartTypeNameArr[indexPath.section]
-            navigationController?.pushViewController(vc, animated: true)
-            
-        case 9:
-            let vc = ChartListTableViewVC()
-//            vc.selectedIndex = indexPath.row
-//            vc.navigationItemTitleArr = chartTypeNameArr[indexPath.section]
-            navigationController?.pushViewController(vc, animated: true)
-            
-        case 10:
-            let vc = CustomClickEventCallbackMessageVC2()
-            navigationController?.pushViewController(vc, animated: true)
-            
-        case 11:
-            let vc = AACustomStageChartVC()
-//            vc.selectedIndex = indexPath.row
-//            vc.navigationItemTitleArr = chartTypeNameArr[indexPath.section]
-            navigationController?.pushViewController(vc, animated: true)
-        default:
-            break
-        }
-    }
-    
-    
-    
 }
+
+private struct MainRoute {
+    let destination: () -> UIViewController
+}
+
+private struct ChartSection: Identifiable {
+    let id = UUID()
+    let title: String
+    let items: [ChartItem]
+
+    static func defaultSections() -> [ChartSection] {
+        let sectionTitles = [
+            "RelationshipChart | 关系类型图表",
+            "HeatOrTreeMapChart | 热力或树形类型图表",
+            "BubbleChart | 气泡类型图表",
+            "ColumnVariantChart | 柱形图(变体)类型图表",
+            "MoreProType | 更多高级类型图表",
+            "Custom Event | 自定义交互事件",
+            "DrilldownChart | 可钻取图表",
+            "BoostChart | 加速图表",
+            "Options3DChart | 3D图表",
+            "Gallery | 画廊",
+            "OfficialChartSample | 官方示例",
+            "FractalChartListVC | 分形图表列表",
+            "Custom Event2 | 自定义交互事件2",
+            "AACustomStageChartVC | 自定义分段图"
+        ]
+
+        let chartTypeNameArr = [
+            [
+                "sankeyChart---桑基图",
+                "dependencywheelChart---和弦图🎸",
+                "arcdiagramChart1---弧形图1🌈",
+                "arcdiagramChart2---弧形图2🌈",
+                "arcdiagramChart3---弧形图3🌈",
+                "organizationChart---组织结构图",
+                "networkgraphChart---力导关系图✢✣✤✥",
+                "simpleDependencyWheelChart---简单的和弦图🎵",
+                "neuralNetworkChart---神经网络图",
+                "carnivoraPhylogenyOrganizationChart---食肉目动物系统发育组织图",
+                "germanicLanguageTreeChart---日耳曼语系树图",
+                "sankeyDiagramChart---桑基图(能源流向)",
+                "verticalSankeyChart---垂直桑基图",
+            ],
+            [
+                "heatmapChart---热力图🌡",
+                "largeDataHeatmapChart---大数据量热力图🌡",
+                "calendarHeatmap---日历热力图🗓",
+                "treemapWithColorAxisData---包好色彩轴的矩形树图🌲",
+                "treemapWithLevelsData---包含等级的矩形树图🌲",
+                "treemapWithLevelsData2---包含等级的矩形树图2🌲",
+                "drilldownLargeDataTreemapChart---可下钻的大数据量矩形树图🌲",
+                "simpleTilemapWithHexagonTileShape---简单的砖块图🧱(六边形蜂巢图🐝)",
+                "simpleTilemapWithCircleTileShape---简单的砖块图🧱(圆形)",
+                "simpleTilemapWithDiamondTileShape---简单的砖块图🧱(菱形)",
+                "simpleTilemapWithSquareTileShape---简单的砖块图🧱(正方形)",
+                "tilemapForAfricaWithHexagonTileShape---非洲砖块图🧱(六边形蜂巢图🐝)",
+                "tilemapForAfricaWithCircleTileShape---非洲砖块图🧱(圆形)",
+                "tilemapForAfricaWithDiamondTileShape---非洲砖块图🧱(菱形)",
+                "tilemapForAfricaWithSquareTileShape---非洲砖块图🧱(正方形)",
+                "tilemapForAmericaWithHexagonTileShape---美洲砖块图🧱(六边形蜂巢图🐝)",
+                "tilemapForAmericaWithCircleTileShape---美洲砖块图🧱(圆形)",
+                "tilemapForAmericaWithDiamondTileShape---美洲砖块图🧱(菱形)",
+                "tilemapForAmericaWithSquareTileShape---美洲砖块图🧱(正方形)",
+                "treegraphChart---树图🌲",
+                "invertedTreegraphChart---倒置树图🌲",
+                "treegraphWithBoxLayoutChart---盒布局树图🌲",
+            ],
+            [
+                "packedbubbleChart---气泡填充图🎈",
+                "packedbubbleSplitChart---圆堆积图🎈",
+                "packedbubbleSpiralChart---渐进变化的气泡图🎈",
+                "eulerChart---欧拉图",
+                "vennChart---韦恩图",
+                "vennChart2---韦恩图2",
+                "eulerChart2---欧拉图2",
+                "bubbleStellarChart---极坐标行星气泡图🪐",
+            ],
+            [
+                "variwideChart---可变宽度的柱形图",
+                "columnpyramidChart---角锥柱形图",
+                "dumbbellChart---哑铃图",
+                "lollipopChart---棒棒糖🍭图",
+                "xrangeChart---X轴范围图||甘特图||条码图",
+                "histogramChart---直方混合散点图📊",
+                "bellcurveChart---钟形曲线混合散点图🔔",
+                "bulletChart---子弹图",
+                "inverted xrangeChart---倒转的X轴范围图||甘特图||条码图",
+                "pictorial1Chart---象形柱形图1",
+                "pictorial2Chart---象形柱形图2",
+            ],
+            [
+                "sunburstChart---旭日图🌞",
+                "streamgraphChart---流图🌊",
+                "vectorChart---向量图🏹",
+                "bellcurveChart---贝尔曲线图",
+                "timelineChart---时序图⌚️",
+                "itemChart---议会项目图🀙🀚🀜🀞🀠🀡",
+                "windbarbChart---风羽图🌪️",
+                "wordcloudChart---词云图☁️",
+                "flameChart---火焰图🔥",
+                "itemChart2---议会项目图2🀙🀚🀜🀞🀠🀡",
+                "itemChart3---议会项目图3🀙🀚🀜🀞🀠🀡",
+                "icicleChart---冰柱图🧊",
+                "sunburstChart2---旭日图☀️",
+                "solidgaugeChart---活动图🏃🏻‍♀️",
+                "parallelCoordinatesSplineChart---平行坐标曲线图",
+                "parallelCoordinatesLineChart---平行坐标折线图📈",
+                "volinPlotChart---小提琴图🎻",
+                "variablepieChart---可变宽度的饼图🍪",
+                "semicircleSolidGaugeChart---半圆形活动图🏃🏻‍♀️",
+            ],
+            [
+                "Custom Event---自定义交互事件",
+            ],
+            [
+                "columnChart---柱形图",
+            ],
+            [
+                "lineChart---折线图",
+                "areaChart---区域填充图",
+                "columnChart---柱形图",
+                "lineChartWithHundredsOfSeries---多序列折线图",
+                "scatterChartOptions---高密度散点图",
+                "areaRangeChart---区域范围图",
+                "columnRangeChart---柱形范围图",
+                "bubbleChart---气泡图",
+                "heatMapChart---热力图",
+                "stackingAreaChart---堆积面积图",
+                "stackingColumnChart---堆积柱形图",
+            ],
+            [
+                "_3DColumnWithStackingRandomData---3D堆积随机柱形图",
+                "_3DColumnWithStackingAndGrouping---3D分组堆积柱形图",
+                "_3DBarWithStackingRandomData---3D堆积随机条形图",
+                "_3DBarWithStackingAndGrouping---3D分组堆积条形图",
+                "_3DAreaChart---3D区域图",
+                "_3DScatterChart---3D散点图",
+                "_3DPieChart---3D环形饼图",
+            ],
+            [
+                "UITableView 画廊",
+                "UICollectionView 画廊",
+            ],
+            [
+                "OfficialChartSample---官方示例网格",
+            ],
+            [
+                "FractalChartListVC---分形图表列表",
+            ],
+            [
+                "Custom Event2---自定义交互事件2",
+            ],
+            [
+                "AACustomStageChartVC | 自定义分段睡眠💤图",
+            ],
+        ]
+
+        func makeIndexedItems(_ titles: [String], factory: @escaping (Int, [String]) -> UIViewController) -> [ChartItem] {
+            titles.enumerated().map { index, label in
+                let navigationTitles = titles
+                return ChartItem(title: label) {
+                    factory(index, navigationTitles)
+                }
+            }
+        }
+
+        var sections: [ChartSection] = []
+
+        for (index, title) in sectionTitles.enumerated() {
+            let names = chartTypeNameArr[index]
+            let items: [ChartItem]
+
+            switch index {
+            case 0:
+                items = makeIndexedItems(names) { selectedIndex, navigationTitles in
+                    let vc = AARelationshipChartVC()
+                    vc.selectedIndex = selectedIndex
+                    vc.navigationItemTitleArr = navigationTitles
+                    return vc
+                }
+            case 1:
+                items = makeIndexedItems(names) { selectedIndex, navigationTitles in
+                    let vc = AAHeatOrTreeMapChartVC()
+                    vc.selectedIndex = selectedIndex
+                    vc.navigationItemTitleArr = navigationTitles
+                    return vc
+                }
+            case 2:
+                items = makeIndexedItems(names) { selectedIndex, navigationTitles in
+                    let vc = AABubbleChartVC()
+                    vc.selectedIndex = selectedIndex
+                    vc.navigationItemTitleArr = navigationTitles
+                    return vc
+                }
+            case 3:
+                items = makeIndexedItems(names) { selectedIndex, navigationTitles in
+                    let vc = AAColumnVariantChartVC()
+                    vc.selectedIndex = selectedIndex
+                    vc.navigationItemTitleArr = navigationTitles
+                    return vc
+                }
+            case 4:
+                items = makeIndexedItems(names) { selectedIndex, navigationTitles in
+                    let vc = ChartProVC()
+                    vc.selectedIndex = selectedIndex
+                    vc.navigationItemTitleArr = navigationTitles
+                    return vc
+                }
+            case 5:
+                items = names.map { title in
+                    ChartItem(title: title) {
+                        CustomClickEventCallbackMessageVC()
+                    }
+                }
+            case 6:
+                items = makeIndexedItems(names) { selectedIndex, navigationTitles in
+                    let vc = AADrilldownChartVC()
+                    vc.selectedIndex = selectedIndex
+                    vc.navigationItemTitleArr = navigationTitles
+                    return vc
+                }
+            case 7:
+                items = makeIndexedItems(names) { selectedIndex, navigationTitles in
+                    let vc = AABoostChartVC()
+                    vc.selectedIndex = selectedIndex
+                    vc.navigationItemTitleArr = navigationTitles
+                    return vc
+                }
+            case 8:
+                items = makeIndexedItems(names) { selectedIndex, navigationTitles in
+                    let vc = AAOptions3DChartVC()
+                    vc.selectedIndex = selectedIndex
+                    vc.navigationItemTitleArr = navigationTitles
+                    return vc
+                }
+            case 9:
+                items = names.enumerated().map { row, title in
+                    ChartItem(title: title) {
+                        row == 0 ? ProChartTableGalleryVC() : ProChartCollectionGalleryVC()
+                    }
+                }
+            case 10:
+                items = names.map { title in
+                    ChartItem(title: title) {
+                        OfficialChartSampleVC()
+                    }
+                }
+            case 11:
+                items = names.map { title in
+                    ChartItem(title: title) {
+                        FractalChartListVC()
+                    }
+                }
+            case 12:
+                items = names.map { title in
+                    ChartItem(title: title) {
+                        CustomClickEventCallbackMessageVC2()
+                    }
+                }
+            case 13:
+                items = names.map { title in
+                    ChartItem(title: title) {
+                        AACustomStageChartVC()
+                    }
+                }
+            default:
+                items = []
+            }
+
+            sections.append(ChartSection(title: title, items: items))
+        }
+
+        return sections
+    }
+}
+
+private struct ChartItem: Identifiable {
+    let id = UUID()
+    let title: String
+    let destination: () -> UIViewController
+}
+
+private struct ViewControllerHost: UIViewControllerRepresentable {
+    let builder: () -> UIViewController
+    @Environment(\.colorScheme) private var colorScheme
+
+    func makeUIViewController(context: Context) -> UIViewController {
+        let viewController = builder()
+        viewController.overrideUserInterfaceStyle = uiStyle(for: colorScheme)
+        return viewController
+    }
+
+    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {
+        let targetStyle = uiStyle(for: colorScheme)
+        if uiViewController.overrideUserInterfaceStyle != targetStyle {
+            uiViewController.overrideUserInterfaceStyle = targetStyle
+        }
+    }
+
+    private func uiStyle(for scheme: ColorScheme) -> UIUserInterfaceStyle {
+        switch scheme {
+        case .dark:
+            return .dark
+        case .light:
+            return .light
+        @unknown default:
+            return .unspecified
+        }
+    }
+}
+
+private extension Color {
+    init(hex: Int, alpha: Double = 1.0) {
+        self.init(UIColor(hex: hex, alpha: alpha))
+    }
+}
+
+private extension UIColor {
+    convenience init(hex: Int, alpha: Double = 1.0) {
+        let red = CGFloat((hex & 0xFF0000) >> 16) / 255.0
+        let green = CGFloat((hex & 0x00FF00) >> 8) / 255.0
+        let blue = CGFloat(hex & 0x0000FF) / 255.0
+        self.init(red: red, green: green, blue: blue, alpha: CGFloat(alpha))
+    }
+}
+
+private struct ModeToggleButton: View {
+    @ObservedObject var themeStore: ThemePreferenceStore
+    @Environment(\.colorScheme) private var systemColorScheme
+
+    var body: some View {
+        Button(action: toggleMode) {
+            ZStack {
+                Circle()
+                    .fill(glassBaseFill)
+                    .frame(width: 48, height: 48)
+                    .overlay(
+                        Circle()
+                            .fill(highlightFill)
+                            .scaleEffect(0.78)
+                            .offset(x: -6, y: -7)
+                    )
+                    .overlay(
+                        Circle()
+                            .stroke(glassBorderColor, lineWidth: 1)
+                    )
+                    .overlay(
+                        Circle()
+                            .stroke(Color.white.opacity(colorScheme == .dark ? 0.18 : 0.30), lineWidth: 0.6)
+                            .blur(radius: 0.4)
+                            .scaleEffect(0.96)
+                    )
+                    .shadow(color: buttonShadow, radius: 10, x: 0, y: 5)
+                    .shadow(color: glassGlowColor, radius: 12, x: 0, y: 3)
+
+                Image(systemName: buttonSymbolName)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 20, height: 20)
+                    .foregroundColor(symbolColor)
+            }
+            .frame(width: 52, height: 52)
+            .contentShape(Circle())
+        }
+        .buttonStyle(.plain)
+        .accessibility(label: Text(currentScheme == .dark ? "切换为日间模式" : "切换为夜间模式"))
+        .accessibility(hint: Text("在应用内直接切换外观模式"))
+    }
+
+    private var currentScheme: ColorScheme {
+        themeStore.colorSchemeOverride ?? systemColorScheme
+    }
+
+    private var colorScheme: ColorScheme {
+        currentScheme
+    }
+
+    private var glassBaseFill: LinearGradient {
+        if currentScheme == .dark {
+            return LinearGradient(
+                colors: [
+                    Color.white.opacity(0.16),
+                    Color.white.opacity(0.08)
+                ],
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+        }
+
+        return LinearGradient(
+            colors: [
+                Color.white.opacity(0.38),
+                Color.white.opacity(0.18)
+            ],
+            startPoint: .topLeading,
+            endPoint: .bottomTrailing
+        )
+    }
+
+    private var highlightFill: LinearGradient {
+        if currentScheme == .dark {
+            return LinearGradient(
+                colors: [
+                    Color.white.opacity(0.22),
+                    Color.white.opacity(0.03)
+                ],
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+        }
+
+        return LinearGradient(
+            colors: [
+                Color.white.opacity(0.46),
+                Color.white.opacity(0.04)
+            ],
+            startPoint: .topLeading,
+            endPoint: .bottomTrailing
+        )
+    }
+
+    private var glassBorderColor: Color {
+        if currentScheme == .dark {
+            return Color.white.opacity(0.26)
+        }
+        return Color.white.opacity(0.55)
+    }
+
+    private var buttonShadow: Color {
+        currentScheme == .dark ? Color.black.opacity(0.45) : Color.black.opacity(0.2)
+    }
+
+    private var glassGlowColor: Color {
+        if currentScheme == .dark {
+            return Color(hex: 0x8B5CF6).opacity(0.20)
+        }
+        return Color.white.opacity(0.14)
+    }
+
+    private var buttonSymbolName: String {
+        currentScheme == .dark ? "sun.max.fill" : "moon.stars.fill"
+    }
+
+    private var symbolColor: Color {
+        if currentScheme == .dark {
+            return Color(hex: 0xFDE68A)
+        }
+        return Color(hex: 0x4338CA)
+    }
+
+    private func toggleMode() {
+        let targetScheme: ColorScheme = currentScheme == .dark ? .light : .dark
+        guard let window = activeWindow else {
+            withAnimation(.easeInOut(duration: 0.28)) {
+                themeStore.colorSchemeOverride = targetScheme
+            }
+            return
+        }
+
+        ThemeTransitionAnimator.animate(
+            to: targetScheme,
+            on: window
+        ) {
+            themeStore.colorSchemeOverride = targetScheme
+        }
+    }
+
+    private var activeWindow: UIWindow? {
+        UIApplication.shared.connectedScenes
+            .compactMap { $0 as? UIWindowScene }
+            .flatMap(\.windows)
+            .first(where: \.isKeyWindow)
+    }
+}
+
+private struct FloatingModeToggleOverlay: View {
+    @ObservedObject var themeStore: ThemePreferenceStore
+
+    var body: some View {
+        ModeToggleButton(themeStore: themeStore)
+    }
+}
+
+private enum ThemeTransitionAnimator {
+    static func animate(
+        to targetScheme: ColorScheme,
+        on window: UIWindow,
+        applyTheme: @escaping () -> Void
+    ) {
+        if UIAccessibility.isReduceMotionEnabled {
+            UIView.transition(
+                with: window,
+                duration: 0.28,
+                options: [.transitionCrossDissolve, .allowAnimatedContent]
+            ) {
+                applyTheme()
+            }
+            return
+        }
+
+        let palette = palette(for: targetScheme)
+        let overlay = UIView(frame: window.bounds)
+        overlay.isUserInteractionEnabled = false
+        overlay.backgroundColor = .clear
+
+        let snapshotView = window.snapshotView(afterScreenUpdates: false) ?? UIView(frame: overlay.bounds)
+        snapshotView.frame = overlay.bounds
+        overlay.addSubview(snapshotView)
+
+        let tintView = UIView(frame: overlay.bounds)
+        tintView.backgroundColor = palette.background
+        tintView.alpha = 0
+        overlay.addSubview(tintView)
+
+        let origin = CGPoint(
+            x: overlay.bounds.width - 42,
+            y: window.safeAreaInsets.top + 24
+        )
+
+        let primaryOrb = ThemeTransitionOrbView(frame: CGRect(x: 0, y: 0, width: 124, height: 124))
+        primaryOrb.center = origin
+        primaryOrb.configure(colors: palette.primaryOrbColors)
+        primaryOrb.transform = CGAffineTransform(scaleX: 0.18, y: 0.18)
+        primaryOrb.alpha = 0.95
+        overlay.addSubview(primaryOrb)
+
+        let secondaryOrb = ThemeTransitionOrbView(frame: CGRect(x: 0, y: 0, width: 88, height: 88))
+        secondaryOrb.center = origin
+        secondaryOrb.configure(colors: palette.secondaryOrbColors)
+        secondaryOrb.transform = CGAffineTransform(scaleX: 0.12, y: 0.12)
+        secondaryOrb.alpha = 0.52
+        overlay.addSubview(secondaryOrb)
+
+        let glowView = UIView(frame: CGRect(x: 0, y: 0, width: 72, height: 72))
+        glowView.center = origin
+        glowView.backgroundColor = palette.glowColor
+        glowView.layer.cornerRadius = 36
+        glowView.alpha = 0
+        overlay.addSubview(glowView)
+
+        let badgeView = UIVisualEffectView(effect: UIBlurEffect(style: blurStyle(for: targetScheme)))
+        badgeView.frame = CGRect(x: 0, y: 0, width: 58, height: 58)
+        badgeView.center = origin
+        badgeView.clipsToBounds = true
+        badgeView.layer.cornerRadius = 29
+        badgeView.layer.borderWidth = 1
+        badgeView.layer.borderColor = UIColor.white.withAlphaComponent(0.22).cgColor
+        badgeView.contentView.backgroundColor = palette.badgeFillColor
+        badgeView.alpha = 0
+        badgeView.transform = CGAffineTransform(scaleX: 0.55, y: 0.55)
+
+        let symbolImageView = UIImageView(
+            image: UIImage(
+                systemName: symbolName(for: targetScheme),
+                withConfiguration: UIImage.SymbolConfiguration(pointSize: 22, weight: .semibold)
+            )
+        )
+        symbolImageView.tintColor = .white
+        symbolImageView.contentMode = .scaleAspectFit
+        symbolImageView.frame = CGRect(x: 0, y: 0, width: 24, height: 24)
+        symbolImageView.center = CGPoint(x: 29, y: 29)
+        badgeView.contentView.addSubview(symbolImageView)
+        overlay.addSubview(badgeView)
+
+        window.addSubview(overlay)
+
+        let maxDimension = max(overlay.bounds.width, overlay.bounds.height)
+        let primaryScale = (maxDimension / 124) * 3.2
+        let secondaryScale = (maxDimension / 88) * 2.6
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.16) {
+            applyTheme()
+        }
+
+        UIView.animateKeyframes(
+            withDuration: 0.92,
+            delay: 0,
+            options: [.calculationModeCubic, .beginFromCurrentState]
+        ) {
+            UIView.addKeyframe(withRelativeStartTime: 0.00, relativeDuration: 0.22) {
+                tintView.alpha = targetScheme == .dark ? 0.18 : 0.24
+                glowView.alpha = 0.48
+                glowView.transform = CGAffineTransform(scaleX: 1.7, y: 1.7)
+                badgeView.alpha = 1
+                badgeView.transform = CGAffineTransform(scaleX: 1.08, y: 1.08)
+            }
+
+            UIView.addKeyframe(withRelativeStartTime: 0.03, relativeDuration: 0.60) {
+                primaryOrb.transform = CGAffineTransform(scaleX: primaryScale, y: primaryScale)
+                primaryOrb.alpha = 0
+                secondaryOrb.transform = CGAffineTransform(scaleX: secondaryScale, y: secondaryScale)
+                secondaryOrb.alpha = 0
+            }
+
+            UIView.addKeyframe(withRelativeStartTime: 0.14, relativeDuration: 0.38) {
+                snapshotView.alpha = 0
+            }
+
+            UIView.addKeyframe(withRelativeStartTime: 0.18, relativeDuration: 0.28) {
+                badgeView.transform = CGAffineTransform(translationX: 0, y: -16).scaledBy(x: 0.9, y: 0.9)
+                badgeView.alpha = 0
+                glowView.alpha = 0
+            }
+
+            UIView.addKeyframe(withRelativeStartTime: 0.46, relativeDuration: 0.24) {
+                tintView.alpha = 0
+            }
+        } completion: { _ in
+            overlay.removeFromSuperview()
+        }
+    }
+
+    private static func symbolName(for scheme: ColorScheme) -> String {
+        switch scheme {
+        case .dark:
+            return "moon.stars.fill"
+        case .light:
+            return "sun.max.fill"
+        @unknown default:
+            return "circle.fill"
+        }
+    }
+
+    private static func blurStyle(for scheme: ColorScheme) -> UIBlurEffect.Style {
+        switch scheme {
+        case .dark:
+            return .systemUltraThinMaterialDark
+        case .light:
+            return .systemUltraThinMaterialLight
+        @unknown default:
+            return .systemUltraThinMaterial
+        }
+    }
+
+    private static func palette(for scheme: ColorScheme) -> ThemeTransitionPalette {
+        switch scheme {
+        case .dark:
+            return ThemeTransitionPalette(
+                background: UIColor(hex: 0x020617),
+                primaryOrbColors: [
+                    UIColor(hex: 0x38BDF8).withAlphaComponent(0.96),
+                    UIColor(hex: 0x312E81).withAlphaComponent(0.72),
+                    UIColor(hex: 0x020617).withAlphaComponent(0.02),
+                ],
+                secondaryOrbColors: [
+                    UIColor(hex: 0x818CF8).withAlphaComponent(0.70),
+                    UIColor(hex: 0x1D4ED8).withAlphaComponent(0.28),
+                    UIColor(hex: 0x020617).withAlphaComponent(0.01),
+                ],
+                glowColor: UIColor(hex: 0x60A5FA).withAlphaComponent(0.36),
+                badgeFillColor: UIColor(hex: 0x0F172A).withAlphaComponent(0.35)
+            )
+        case .light:
+            return ThemeTransitionPalette(
+                background: UIColor(hex: 0xFFF7ED),
+                primaryOrbColors: [
+                    UIColor(hex: 0xFDE68A).withAlphaComponent(0.98),
+                    UIColor(hex: 0xFB923C).withAlphaComponent(0.74),
+                    UIColor(hex: 0xFFF7ED).withAlphaComponent(0.02),
+                ],
+                secondaryOrbColors: [
+                    UIColor(hex: 0xFDBA74).withAlphaComponent(0.66),
+                    UIColor(hex: 0xF97316).withAlphaComponent(0.24),
+                    UIColor(hex: 0xFFF7ED).withAlphaComponent(0.01),
+                ],
+                glowColor: UIColor(hex: 0xFDBA74).withAlphaComponent(0.32),
+                badgeFillColor: UIColor.white.withAlphaComponent(0.22)
+            )
+        @unknown default:
+            return ThemeTransitionPalette(
+                background: .black,
+                primaryOrbColors: [
+                    UIColor.white.withAlphaComponent(0.9),
+                    UIColor.gray.withAlphaComponent(0.35),
+                    UIColor.clear,
+                ],
+                secondaryOrbColors: [
+                    UIColor.white.withAlphaComponent(0.6),
+                    UIColor.gray.withAlphaComponent(0.2),
+                    UIColor.clear,
+                ],
+                glowColor: UIColor.white.withAlphaComponent(0.25),
+                badgeFillColor: UIColor.white.withAlphaComponent(0.18)
+            )
+        }
+    }
+}
+
+private struct ThemeTransitionPalette {
+    let background: UIColor
+    let primaryOrbColors: [UIColor]
+    let secondaryOrbColors: [UIColor]
+    let glowColor: UIColor
+    let badgeFillColor: UIColor
+}
+
+private final class ThemeTransitionOrbView: UIView {
+    override class var layerClass: AnyClass {
+        CAGradientLayer.self
+    }
+
+    private var gradientLayer: CAGradientLayer {
+        layer as! CAGradientLayer
+    }
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        isUserInteractionEnabled = false
+        layer.cornerRadius = frame.width / 2
+        layer.masksToBounds = true
+        gradientLayer.type = .radial
+        gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.5)
+        gradientLayer.endPoint = CGPoint(x: 1.0, y: 1.0)
+        gradientLayer.locations = [0, 0.42, 1]
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    func configure(colors: [UIColor]) {
+        gradientLayer.colors = colors.map(\.cgColor)
+    }
+}
+
+#if DEBUG
+struct MainView_Previews: PreviewProvider {
+    static var previews: some View {
+        MainView(themeStore: ThemePreferenceStore())
+    }
+}
+#endif

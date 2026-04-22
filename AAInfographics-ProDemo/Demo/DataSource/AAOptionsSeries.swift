@@ -25,6 +25,14 @@ class AAOptionsSeries {
     public class var streamgraphSeries : [Any] {
         getJsonDataWithJsonFileName("streamgraphSeries")
     }
+
+    public class var sankeyDiagramSeries: [Any] {
+        getJsonDataWithJsonFileName("sankeyDiagramSeries")
+    }
+
+    public class var verticalSankeySeries: [Any] {
+        getJsonDataWithJsonFileName("verticalSankeySeries")
+    }
     
     //https://www.jianshu.com/p/a4b2bd5deca6
     private static func getJsonDataWithJsonFileName(_ jsonFileName: String) -> [Any] {

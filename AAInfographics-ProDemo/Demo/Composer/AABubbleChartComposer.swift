@@ -112,6 +112,25 @@ class AABubbleChartComposer {
                     .data(AAOptionsData.vennData)
             ])
     }
+
+    static func vennChart2() -> AAOptions {
+        AAOptions()
+            .chart(AAChart()
+                .type(.venn))
+            .title(AATitle()
+                .text("Relationship between Euler and Venn diagrams")
+                .align(.left))
+            .tooltip(AATooltip()
+                .enabled(true)
+                .headerFormat((#"<span style="color:{point.color}">\u2022</span>"#
+                               + #"<span style="font-size: 14px"> {point.point.name}</span><br/>"#).aa_toPureJSString())
+                .pointFormat(#"{point.longDescription}<br><span style="font-size: 10px">Source: Wikipedia</span>"#.aa_toPureJSString()))
+            .series([
+                AASeriesElement()
+                    .type(.venn)
+                    .data(AAOptionsData.vennData2)
+            ])
+    }
     
     static func eulerChart() -> AAOptions {
         AAOptions()
@@ -131,7 +150,48 @@ class AABubbleChartComposer {
                     .data(AAOptionsData.eulerData),
             ])
     }
+
+    static func eulerChart2() -> AAOptions {
+        AAOptions()
+            .chart(AAChart()
+                .type(.venn))
+            .title(AATitle()
+                .text("Highsoft products relationships"))
+            .subtitle(AASubtitle()
+                .text("Highcharts Core, Stock, Maps, Gantt, and Dashboards"))
+            .tooltip(AATooltip()
+                .enabled(true)
+                .headerFormat("")
+                .pointFormat(#"""
+                {#if (eq 1 point.sets.length)}
+                Product:<br><b>Highcharts {point.sets.0}</b>
+                {else}
+                Products:<br>
+                {#each point.sets}
+                Highcharts <b>{this}</b>{#unless @last} and {/unless}
+                {/each}<br><br>
+                Shared components:<br>
+                <b>{point.name}</b><br>
+                {/if}
+                """#.aa_toPureJSString2()))
+            .series([
+                AASeriesElement()
+                    .type(.venn)
+                    .colors([
+                        "rgb(180, 210, 255)",
+                        "rgb(180, 255, 210)",
+                        "rgb(180, 235, 235)",
+                        "rgb(200, 200, 200)",
+                        "rgb(170, 230, 250)",
+                        "rgb(170, 250, 230)",
+                        "rgb(170, 240, 240)",
+                        "rgb(190, 190, 190)",
+                        "rgb(160, 220, 245)",
+                        "rgb(160, 245, 220)"
+                    ])
+                    .data(AAOptionsData.eulerData2)
+            ])
+    }
     
 }
-
 
