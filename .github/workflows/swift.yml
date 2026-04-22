@@ -1,19 +1,21 @@
-# name: Swift
+name: Swift
 
-# on:
-#   push:
-#     branches: [ "master" ]
-#   pull_request:
-#     branches: [ "master" ]
+on:
+  push:
+    branches: ["master", "main"]
+  pull_request:
+    branches: ["master", "main"]
+  workflow_dispatch:
 
-# jobs:
-#   build:
+jobs:
+  build:
+    runs-on: macos-latest
 
-#     runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
 
-#     steps:
-#     - uses: actions/checkout@v3
-#     - name: Build
-#       run: swift build -v
-#     - name: Run tests
-#       run: swift test -v
+      - name: Build
+        run: swift build --verbose
+
+      - name: Run tests
+        run: swift test --verbose
