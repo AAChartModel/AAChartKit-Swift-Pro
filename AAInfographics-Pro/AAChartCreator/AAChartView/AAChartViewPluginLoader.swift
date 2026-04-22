@@ -10,7 +10,6 @@ import WebKit
 
 // --- New Plugin Loader Protocol and Implementations ---
 
-@available(iOS 10.0, macCatalyst 13.1, macOS 10.13, *)
 internal protocol AAChartViewPluginLoaderProtocol: AnyObject {
     /// Configures required plugins and consumes `before/afterDrawChartJavaScript`
     /// from options so they can be executed exactly once by the loader.
@@ -32,7 +31,6 @@ internal protocol AAChartViewPluginLoaderProtocol: AnyObject {
 }
 
 // Default loader for standard version (does nothing)
-@available(iOS 10.0, macCatalyst 13.1, macOS 10.13, *)
 internal final class DefaultPluginLoader: AAChartViewPluginLoaderProtocol {
     public init() {}
 
@@ -70,7 +68,6 @@ internal final class DefaultPluginLoader: AAChartViewPluginLoaderProtocol {
 }
 
 // Loader for Pro version, handling plugin loading and scripts
-@available(iOS 10.0, macCatalyst 13.1, macOS 10.13, *)
 internal final class AAChartViewPluginLoader: AAChartViewPluginLoaderProtocol {
     private let pluginProvider: AAChartViewPluginProviderProtocol
     private static let scriptCache: NSCache<NSString, NSString> = {
@@ -492,7 +489,6 @@ internal final class AAChartViewPluginLoader: AAChartViewPluginLoaderProtocol {
 }
 
 #if DEBUG
-@available(iOS 10.0, macCatalyst 13.1, macOS 10.13, *)
 extension AAChartViewPluginLoader {
     internal func sortedPluginPathsForTesting(
         _ paths: Set<String>,

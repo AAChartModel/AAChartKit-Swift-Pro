@@ -3,7 +3,6 @@ import Foundation
 // MARK: - Shared Plugin Script Definition
 
 /// Enum representing all available plugin scripts
-@available(iOS 10.0, macCatalyst 13.1, macOS 10.13, *)
 internal enum AAChartPluginScriptType: String {
     //AAInfographics normal version plugins
     case highchartsMore = "AAHighcharts-More"
@@ -61,13 +60,11 @@ internal enum AAChartPluginScriptType: String {
 // MARK: - Plugin Provider Protocol
 
 // Protocol defining the responsibility for providing required plugin paths
-@available(iOS 10.0, macCatalyst 13.1, macOS 10.13, *)
 internal protocol AAChartViewPluginProviderProtocol: AnyObject {
     func getRequiredPluginPaths(for options: AAOptions) -> Set<String>
 }
 
 // Default provider (can be used for the standard version or as a base)
-@available(iOS 10.0, macCatalyst 13.1, macOS 10.13, *)
 internal final class AAChartViewDefaultPluginProvider: AAChartViewPluginProviderProtocol {
     public init() {}
 
@@ -77,7 +74,6 @@ internal final class AAChartViewDefaultPluginProvider: AAChartViewPluginProvider
 }
 
 // Provider for the Pro version, handling specific chart type plugins
-@available(iOS 10.0, macCatalyst 13.1, macOS 10.13, *)
 internal final class AAChartViewPluginProvider: AAChartViewPluginProviderProtocol {
     public init(bundlePathLoader: AAChartBundlePathLoadingProtocol = BundlePathLoader()) {
         self.bundlePathLoader = bundlePathLoader
@@ -279,4 +275,3 @@ internal protocol AAChartBundlePathLoadingProtocol {
 }
 
 extension BundlePathLoader: AAChartBundlePathLoadingProtocol {}
-

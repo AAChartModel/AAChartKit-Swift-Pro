@@ -36,20 +36,17 @@ import Foundation
 public class AAObject { }
 
 
-@available(iOS 10.0, macCatalyst 13.1, macOS 10.13, *)
 public extension AAObject {
     var classNameString: String {
         return String(reflecting: type(of: self))
     }
 }
 
-@available(iOS 10.0, macCatalyst 13.1, macOS 10.13, *)
 public protocol AASerializableWithComputedProperties {
     /// 返回计算属性的键值对
     func computedProperties() -> [String: Any]
 }
 
-@available(iOS 10.0, macCatalyst 13.1, macOS 10.13, *)
 public extension AAObject {
     fileprivate func unwrap(_ value: Any) -> Any? {
         let mirror = Mirror(reflecting: value)
@@ -122,4 +119,3 @@ public extension AAObject {
     }
     
 }
-

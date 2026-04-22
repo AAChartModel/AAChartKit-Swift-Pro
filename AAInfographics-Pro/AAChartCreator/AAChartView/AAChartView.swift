@@ -32,7 +32,6 @@
 
 import WebKit
 
-@available(iOS 10.0, macCatalyst 13.1, macOS 10.13, *)
 @objc public protocol AAChartViewDelegate: NSObjectProtocol {
     @objc optional func aaChartViewDidFinishLoad(_ aaChartView: AAChartView)
     @objc optional func aaChartViewDidFinishEvaluate(_ aaChartView: AAChartView)
@@ -41,7 +40,6 @@ import WebKit
 }
 
 /// Refer to: https://api.highcharts.com/class-reference/Highcharts.Point
-@available(iOS 10.0, macCatalyst 13.1, macOS 10.13, *)
 public class AAEventMessageModel: NSObject {
     public var name: String?
     public var x: Float?
@@ -56,15 +54,12 @@ public class AAEventMessageModel: NSObject {
 }
 
 
-@available(iOS 10.0, macCatalyst 13.1, macOS 10.13, *)
 public class AAClickEventMessageModel: AAEventMessageModel {}
 
-@available(iOS 10.0, macCatalyst 13.1, macOS 10.13, *)
 public class AAMoveOverEventMessageModel: AAEventMessageModel {}
 
 
 /// Refer to: https://stackoverflow.com/questions/26383031/wkwebview-causes-my-view-controller-to-leak
-@available(iOS 10.0, macCatalyst 13.1, macOS 10.13, *)
 public class AALeakAvoider : NSObject, WKScriptMessageHandler {
     weak var delegate : WKScriptMessageHandler?
     
@@ -82,7 +77,6 @@ public class AALeakAvoider : NSObject, WKScriptMessageHandler {
 }
 
 
-@available(iOS 10.0, macCatalyst 13.1, macOS 10.13, *)
 public struct AADependency {
     let dependent: String // The plugin that has a dependency
     let on: String        // The plugin it depends on
@@ -94,7 +88,6 @@ public struct AADependency {
 }
 
 
-@available(iOS 10.0, macCatalyst 13.1, macOS 10.13, *)
 public class AAChartView: WKWebView {
     let kUserContentMessageNameClick = "click"
     let kUserContentMessageNameMouseOver = "mouseover"
@@ -423,7 +416,6 @@ public class AAChartView: WKWebView {
 
 
 // MARK: - WKUIDelegate
-@available(iOS 10.0, macCatalyst 13.1, macOS 10.13, *)
 extension AAChartView: WKUIDelegate {
     open func webView(
         _ webView: WKWebView,
@@ -485,7 +477,6 @@ extension AAChartView: WKUIDelegate {
 
 
 // MARK: - WKNavigationDelegate
-@available(iOS 10.0, macCatalyst 13.1, macOS 10.13, *)
 extension AAChartView:  WKNavigationDelegate {
     internal func loadAllPluginsAndDrawChart() {
         // Load plugins via loader, then draw chart in completion
@@ -516,7 +507,6 @@ extension AAChartView:  WKNavigationDelegate {
 
 
 // MARK: - WKScriptMessageHandler
-@available(iOS 10.0, macCatalyst 13.1, macOS 10.13, *)
 extension AAChartView: WKScriptMessageHandler {
     open func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         if message.name == kUserContentMessageNameClick {
@@ -539,7 +529,6 @@ extension AAChartView: WKScriptMessageHandler {
 
 
 // MARK: - Event Message Model
-@available(iOS 10.0, macCatalyst 13.1, macOS 10.13, *)
 extension AAChartView {
     private func getEventMessageModel<T: AAEventMessageModel>(messageBody: [String: Any], eventType: T.Type) -> T {
         let eventMessageModel = T()
@@ -563,5 +552,3 @@ extension AAChartView {
         }
     }
 }
-
-
