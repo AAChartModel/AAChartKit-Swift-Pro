@@ -168,6 +168,7 @@ private struct MainContent: View {
         0xea7ccc,
     ]
 
+    @available(iOS 14.0, macCatalyst 14.0, *)
     private var listSections: [AASectionedListSection] {
         sections.enumerated().map { sectionIndex, section in
             let accentColor = Color(
@@ -196,9 +197,10 @@ private struct MainContent: View {
             MainContentBackground(colorScheme: colorScheme)
 
             ZStack {
-                AASectionedListView(sections: listSections) { selection in
-                    let item = sections[selection.sectionIndex].items[selection.itemIndex]
-                    activeRoute = MainRoute(destination: item.destination)
+                if #available(iOS 14.0, macCatalyst 14.0, *) {
+                    modernSectionedList
+                } else {
+                    legacySectionedList
                 }
 
                 NavigationLink(
@@ -209,6 +211,54 @@ private struct MainContent: View {
                 .hidden()
             }
         }
+    }
+
+    @available(iOS 14.0, macCatalyst 14.0, *)
+    @ViewBuilder
+    private var modernSectionedList: some View {
+        AASectionedListView(sections: listSections) { selection in
+            let item = sections[selection.sectionIndex].items[selection.itemIndex]
+            activeRoute = MainRoute(destination: item.destination)
+        }
+    }
+
+    @ViewBuilder
+    private var legacySectionedList: some View {
+        List {
+            ForEach(sections.indices, id: \.self) { sectionIndex in
+                let section = sections[sectionIndex]
+
+                Section(header: Text(section.title)) {
+                    ForEach(section.items.indices, id: \.self) { itemIndex in
+                        let item = section.items[itemIndex]
+
+                        Button {
+                            activeRoute = MainRoute(destination: item.destination)
+                        } label: {
+                            HStack {
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text(item.title)
+                                        .foregroundColor(.primary)
+
+                                    Text("Chart Example #\(itemIndex + 1)")
+                                        .font(.caption)
+                                        .foregroundColor(.secondary)
+                                }
+
+                                Spacer()
+
+                                Text("\(itemIndex + 1)")
+                                    .font(.caption.weight(.semibold))
+                                    .foregroundColor(.secondary)
+                            }
+                            .contentShape(Rectangle())
+                        }
+                        .buttonStyle(PlainButtonStyle())
+                    }
+                }
+            }
+        }
+        .listStyle(GroupedListStyle())
     }
 
     private var activeRouteBinding: Binding<Bool> {
@@ -226,7 +276,7 @@ private struct MainContent: View {
     private var routeDestination: some View {
         if let activeRoute {
             ViewControllerHost(builder: activeRoute.destination)
-                .ignoresSafeArea()
+                .edgesIgnoringSafeArea(.all)
         } else {
             EmptyView()
         }
@@ -242,7 +292,7 @@ private struct MainContentBackground: View {
             startPoint: .topLeading,
             endPoint: .bottomTrailing
         )
-        .ignoresSafeArea()
+        .edgesIgnoringSafeArea(.all)
     }
 
     private var gradientColors: [Color] {
@@ -625,8 +675,8 @@ private struct ModeToggleButton: View {
             .contentShape(Circle())
         }
         .buttonStyle(.plain)
-        .accessibilityLabel(currentScheme == .dark ? "切换为日间模式" : "切换为夜间模式")
-        .accessibilityHint("在应用内直接切换外观模式")
+        .accessibility(label: Text(currentScheme == .dark ? "切换为日间模式" : "切换为夜间模式"))
+        .accessibility(hint: Text("在应用内直接切换外观模式"))
     }
 
     private var currentScheme: ColorScheme {

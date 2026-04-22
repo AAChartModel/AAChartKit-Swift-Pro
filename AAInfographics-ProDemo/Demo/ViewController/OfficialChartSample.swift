@@ -92,22 +92,9 @@ struct GridView: View {
            return Array(0...optionsItems.count-1)
        }
 
-
-    // 定义网格的列
-    let columns: [GridItem] = [
-        GridItem(.flexible()),  // 列宽自动调整
-//        GridItem(.flexible()),  // 列宽自动调整
-//        GridItem(.flexible()),  // 列宽自动调整
-//        GridItem(.flexible()),  // 列宽自动调整
-//        GridItem(.flexible()),  // 列宽自动调整
-
-//        GridItem(.flexible()),
-//        GridItem(.flexible())   // 3 列
-    ]
-
     var body: some View {
         ScrollView { // 添加滚动视图支持
-            LazyVGrid(columns: columns, spacing: 16) { // 设置列和间距
+            VStack(spacing: 16) {
                 ForEach(items, id: \.self) { item in
 //                 //添加一个充满的红色背景视图
 //                    RoundedRectangle(cornerRadius: 10)
